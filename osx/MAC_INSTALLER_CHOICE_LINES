@@ -1,0 +1,62 @@
+    <line choice="org.globus.bundle.ccommonlibs">
+
+        <line choice="org.globus.package.globus_common"/>
+        <line choice="org.globus.package.globus_xio"/>
+        <line choice="org.globus.package.globus_callout"/>
+        <line choice="org.globus.package.globus_xio_gsi_driver"/>
+        <line choice="org.globus.package.globus_io"/>
+        <line choice="org.globus.package.globus_usage"/>
+        <line choice="org.globus.package.globus_xio_pipe_driver"/>
+        <line choice="org.globus.package.globus_xio_rate_driver"/>
+        <line choice="org.globus.package.globus_xio_popen_driver"/>
+        <line choice="org.globus.package.globus_gass_transfer"/>
+        <line choice="org.globus.package.globus_xioperf"/>
+    </line>
+    <line choice="org.globus.bundle.gridftp">
+
+        <line choice="org.globus.package.globus_gfork"/>
+        <line choice="org.globus.package.globus_ftp_control"/>
+        <line choice="org.globus.package.globus_gridftp_server_control"/>
+        <line choice="org.globus.package.globus_net_manager"/>
+        <line choice="org.globus.package.globus_gridftp_server"/>
+        <line choice="org.globus.package.globus_ftp_client"/>
+        <line choice="org.globus.package.globus_gass_copy"/>
+        <line choice="org.globus.package.globus_xio_gridftp_multicast"/>
+        <line choice="org.globus.package.globus_xio_gridftp_driver"/>
+    </line>
+    <line choice="org.globus.bundle.gsi">
+
+        <line choice="org.globus.package.globus_gsi_openssl_error"/>
+        <line choice="org.globus.package.globus_gsi_proxy_ssl"/>
+        <line choice="org.globus.package.globus_openssl_module"/>
+        <line choice="org.globus.package.globus_gsi_cert_utils"/>
+        <line choice="org.globus.package.globus_gsi_sysconfig"/>
+        <line choice="org.globus.package.globus_gsi_callback"/>
+        <line choice="org.globus.package.globus_gsi_credential"/>
+        <line choice="org.globus.package.globus_gsi_proxy_core"/>
+        <line choice="org.globus.package.globus_gssapi_gsi"/>
+        <line choice="org.globus.package.globus_gss_assist"/>
+        <line choice="org.globus.package.globus_gssapi_error"/>
+        <line choice="org.globus.package.globus_authz_callout_error"/>
+        <line choice="org.globus.package.globus_authz"/>
+        <line choice="org.globus.package.globus_simple_ca"/>
+        <line choice="org.globus.package.globus_gridmap_callout_error"/>
+        <line choice="org.globus.package.globus_gridmap_callout"/>
+        <line choice="org.globus.package.globus_gridmap_verify_myproxy_callout"/>
+        <line choice="org.globus.package.globus_gridmap_eppn_callout"/>
+        <line choice="org.globus.package.globus_proxy_utils"/>
+    </line>
+    <line choice="org.globus.bundle.gram5">
+
+        <line choice="org.globus.package.globus_gram_protocol"/>
+        <line choice="org.globus.package.globus_gass_cache"/>
+        <line choice="org.globus.package.globus_rsl"/>
+        <line choice="org.globus.package.globus_gass_server_ez"/>
+        <line choice="org.globus.package.globus_gram_client"/>
+        <line choice="org.globus.package.globus_gass_cache_program"/>
+        <line choice="org.globus.package.globus_gram_client_tools"/>
+    </line>
+    <line choice="org.globus.bundle.gsi-openssh">
+
+        <line choice="org.globus.package.gsi_openssh"/>
+    </line>

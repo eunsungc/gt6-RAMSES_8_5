@@ -1,0 +1,1061 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body style="background-color: white">
+
+
+
+<h1 id="NAME">NAME</h1>
+
+<p>Globus::GRAM::Error - GRAM Protocol Error Constants</p>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p>The Globus::GRAM::Error module defines symbolic names for the Error constants in the GRAM Protocol.</p>
+
+<p>The Globus::GRAM::Error module methods return an object consisting of an integer erorr code, and (optionally) a string explaining the error.</p>
+
+<h2 id="Methods">Methods</h2>
+
+<dl>
+
+<dt id="error-new-Globus::GRAM::Error-number-string">$error = new Globus::GRAM::Error($number, $string);</dt>
+<dd>
+
+<p>Create a new error object with the given error number and string description. This is called by the error-specific factory methods described below.</p>
+
+</dd>
+<dt id="error-string">$error-&gt;string()</dt>
+<dd>
+
+<p>Return the error string associated with a Globus::GRAM::Error object.</p>
+
+</dd>
+<dt id="error-value">$error-&gt;value()</dt>
+<dd>
+
+<p>Return the integer error code associated with a Globus::GRAM::Error object.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::PARAMETER_NOT_SUPPORTED">$error = Globus::GRAM::Error::PARAMETER_NOT_SUPPORTED()</dt>
+<dd>
+
+<p>Create a new PARAMETER_NOT_SUPPORTED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_REQUEST">$error = Globus::GRAM::Error::INVALID_REQUEST()</dt>
+<dd>
+
+<p>Create a new INVALID_REQUEST GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::NO_RESOURCES">$error = Globus::GRAM::Error::NO_RESOURCES()</dt>
+<dd>
+
+<p>Create a new NO_RESOURCES GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::BAD_DIRECTORY">$error = Globus::GRAM::Error::BAD_DIRECTORY()</dt>
+<dd>
+
+<p>Create a new BAD_DIRECTORY GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::EXECUTABLE_NOT_FOUND">$error = Globus::GRAM::Error::EXECUTABLE_NOT_FOUND()</dt>
+<dd>
+
+<p>Create a new EXECUTABLE_NOT_FOUND GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INSUFFICIENT_FUNDS">$error = Globus::GRAM::Error::INSUFFICIENT_FUNDS()</dt>
+<dd>
+
+<p>Create a new INSUFFICIENT_FUNDS GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::AUTHORIZATION">$error = Globus::GRAM::Error::AUTHORIZATION()</dt>
+<dd>
+
+<p>Create a new AUTHORIZATION GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::USER_CANCELLED">$error = Globus::GRAM::Error::USER_CANCELLED()</dt>
+<dd>
+
+<p>Create a new USER_CANCELLED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::SYSTEM_CANCELLED">$error = Globus::GRAM::Error::SYSTEM_CANCELLED()</dt>
+<dd>
+
+<p>Create a new SYSTEM_CANCELLED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::PROTOCOL_FAILED">$error = Globus::GRAM::Error::PROTOCOL_FAILED()</dt>
+<dd>
+
+<p>Create a new PROTOCOL_FAILED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::STDIN_NOT_FOUND">$error = Globus::GRAM::Error::STDIN_NOT_FOUND()</dt>
+<dd>
+
+<p>Create a new STDIN_NOT_FOUND GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::CONNECTION_FAILED">$error = Globus::GRAM::Error::CONNECTION_FAILED()</dt>
+<dd>
+
+<p>Create a new CONNECTION_FAILED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_MAXTIME">$error = Globus::GRAM::Error::INVALID_MAXTIME()</dt>
+<dd>
+
+<p>Create a new INVALID_MAXTIME GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_COUNT">$error = Globus::GRAM::Error::INVALID_COUNT()</dt>
+<dd>
+
+<p>Create a new INVALID_COUNT GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::NULL_SPECIFICATION_TREE">$error = Globus::GRAM::Error::NULL_SPECIFICATION_TREE()</dt>
+<dd>
+
+<p>Create a new NULL_SPECIFICATION_TREE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::JM_FAILED_ALLOW_ATTACH">$error = Globus::GRAM::Error::JM_FAILED_ALLOW_ATTACH()</dt>
+<dd>
+
+<p>Create a new JM_FAILED_ALLOW_ATTACH GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::JOB_EXECUTION_FAILED">$error = Globus::GRAM::Error::JOB_EXECUTION_FAILED()</dt>
+<dd>
+
+<p>Create a new JOB_EXECUTION_FAILED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_PARADYN">$error = Globus::GRAM::Error::INVALID_PARADYN()</dt>
+<dd>
+
+<p>Create a new INVALID_PARADYN GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_JOBTYPE">$error = Globus::GRAM::Error::INVALID_JOBTYPE()</dt>
+<dd>
+
+<p>Create a new INVALID_JOBTYPE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_GRAM_MYJOB">$error = Globus::GRAM::Error::INVALID_GRAM_MYJOB()</dt>
+<dd>
+
+<p>Create a new INVALID_GRAM_MYJOB GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::BAD_SCRIPT_ARG_FILE">$error = Globus::GRAM::Error::BAD_SCRIPT_ARG_FILE()</dt>
+<dd>
+
+<p>Create a new BAD_SCRIPT_ARG_FILE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::ARG_FILE_CREATION_FAILED">$error = Globus::GRAM::Error::ARG_FILE_CREATION_FAILED()</dt>
+<dd>
+
+<p>Create a new ARG_FILE_CREATION_FAILED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_JOBSTATE">$error = Globus::GRAM::Error::INVALID_JOBSTATE()</dt>
+<dd>
+
+<p>Create a new INVALID_JOBSTATE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_SCRIPT_REPLY">$error = Globus::GRAM::Error::INVALID_SCRIPT_REPLY()</dt>
+<dd>
+
+<p>Create a new INVALID_SCRIPT_REPLY GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_SCRIPT_STATUS">$error = Globus::GRAM::Error::INVALID_SCRIPT_STATUS()</dt>
+<dd>
+
+<p>Create a new INVALID_SCRIPT_STATUS GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::JOBTYPE_NOT_SUPPORTED">$error = Globus::GRAM::Error::JOBTYPE_NOT_SUPPORTED()</dt>
+<dd>
+
+<p>Create a new JOBTYPE_NOT_SUPPORTED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::UNIMPLEMENTED">$error = Globus::GRAM::Error::UNIMPLEMENTED()</dt>
+<dd>
+
+<p>Create a new UNIMPLEMENTED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::TEMP_SCRIPT_FILE_FAILED">$error = Globus::GRAM::Error::TEMP_SCRIPT_FILE_FAILED()</dt>
+<dd>
+
+<p>Create a new TEMP_SCRIPT_FILE_FAILED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::USER_PROXY_NOT_FOUND">$error = Globus::GRAM::Error::USER_PROXY_NOT_FOUND()</dt>
+<dd>
+
+<p>Create a new USER_PROXY_NOT_FOUND GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::OPENING_USER_PROXY">$error = Globus::GRAM::Error::OPENING_USER_PROXY()</dt>
+<dd>
+
+<p>Create a new OPENING_USER_PROXY GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::JOB_CANCEL_FAILED">$error = Globus::GRAM::Error::JOB_CANCEL_FAILED()</dt>
+<dd>
+
+<p>Create a new JOB_CANCEL_FAILED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::MALLOC_FAILED">$error = Globus::GRAM::Error::MALLOC_FAILED()</dt>
+<dd>
+
+<p>Create a new MALLOC_FAILED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::DUCT_INIT_FAILED">$error = Globus::GRAM::Error::DUCT_INIT_FAILED()</dt>
+<dd>
+
+<p>Create a new DUCT_INIT_FAILED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::DUCT_LSP_FAILED">$error = Globus::GRAM::Error::DUCT_LSP_FAILED()</dt>
+<dd>
+
+<p>Create a new DUCT_LSP_FAILED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_HOST_COUNT">$error = Globus::GRAM::Error::INVALID_HOST_COUNT()</dt>
+<dd>
+
+<p>Create a new INVALID_HOST_COUNT GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::UNSUPPORTED_PARAMETER">$error = Globus::GRAM::Error::UNSUPPORTED_PARAMETER()</dt>
+<dd>
+
+<p>Create a new UNSUPPORTED_PARAMETER GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_QUEUE">$error = Globus::GRAM::Error::INVALID_QUEUE()</dt>
+<dd>
+
+<p>Create a new INVALID_QUEUE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_PROJECT">$error = Globus::GRAM::Error::INVALID_PROJECT()</dt>
+<dd>
+
+<p>Create a new INVALID_PROJECT GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_EVALUATION_FAILED">$error = Globus::GRAM::Error::RSL_EVALUATION_FAILED()</dt>
+<dd>
+
+<p>Create a new RSL_EVALUATION_FAILED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::BAD_RSL_ENVIRONMENT">$error = Globus::GRAM::Error::BAD_RSL_ENVIRONMENT()</dt>
+<dd>
+
+<p>Create a new BAD_RSL_ENVIRONMENT GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::DRYRUN">$error = Globus::GRAM::Error::DRYRUN()</dt>
+<dd>
+
+<p>Create a new DRYRUN GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::ZERO_LENGTH_RSL">$error = Globus::GRAM::Error::ZERO_LENGTH_RSL()</dt>
+<dd>
+
+<p>Create a new ZERO_LENGTH_RSL GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::STAGING_EXECUTABLE">$error = Globus::GRAM::Error::STAGING_EXECUTABLE()</dt>
+<dd>
+
+<p>Create a new STAGING_EXECUTABLE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::STAGING_STDIN">$error = Globus::GRAM::Error::STAGING_STDIN()</dt>
+<dd>
+
+<p>Create a new STAGING_STDIN GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_JOB_MANAGER_TYPE">$error = Globus::GRAM::Error::INVALID_JOB_MANAGER_TYPE()</dt>
+<dd>
+
+<p>Create a new INVALID_JOB_MANAGER_TYPE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::BAD_ARGUMENTS">$error = Globus::GRAM::Error::BAD_ARGUMENTS()</dt>
+<dd>
+
+<p>Create a new BAD_ARGUMENTS GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::GATEKEEPER_MISCONFIGURED">$error = Globus::GRAM::Error::GATEKEEPER_MISCONFIGURED()</dt>
+<dd>
+
+<p>Create a new GATEKEEPER_MISCONFIGURED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::BAD_RSL">$error = Globus::GRAM::Error::BAD_RSL()</dt>
+<dd>
+
+<p>Create a new BAD_RSL GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::VERSION_MISMATCH">$error = Globus::GRAM::Error::VERSION_MISMATCH()</dt>
+<dd>
+
+<p>Create a new VERSION_MISMATCH GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_ARGUMENTS">$error = Globus::GRAM::Error::RSL_ARGUMENTS()</dt>
+<dd>
+
+<p>Create a new RSL_ARGUMENTS GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_COUNT">$error = Globus::GRAM::Error::RSL_COUNT()</dt>
+<dd>
+
+<p>Create a new RSL_COUNT GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_DIRECTORY">$error = Globus::GRAM::Error::RSL_DIRECTORY()</dt>
+<dd>
+
+<p>Create a new RSL_DIRECTORY GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_DRYRUN">$error = Globus::GRAM::Error::RSL_DRYRUN()</dt>
+<dd>
+
+<p>Create a new RSL_DRYRUN GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_ENVIRONMENT">$error = Globus::GRAM::Error::RSL_ENVIRONMENT()</dt>
+<dd>
+
+<p>Create a new RSL_ENVIRONMENT GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_EXECUTABLE">$error = Globus::GRAM::Error::RSL_EXECUTABLE()</dt>
+<dd>
+
+<p>Create a new RSL_EXECUTABLE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_HOST_COUNT">$error = Globus::GRAM::Error::RSL_HOST_COUNT()</dt>
+<dd>
+
+<p>Create a new RSL_HOST_COUNT GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_JOBTYPE">$error = Globus::GRAM::Error::RSL_JOBTYPE()</dt>
+<dd>
+
+<p>Create a new RSL_JOBTYPE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_MAXTIME">$error = Globus::GRAM::Error::RSL_MAXTIME()</dt>
+<dd>
+
+<p>Create a new RSL_MAXTIME GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_MYJOB">$error = Globus::GRAM::Error::RSL_MYJOB()</dt>
+<dd>
+
+<p>Create a new RSL_MYJOB GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_PARADYN">$error = Globus::GRAM::Error::RSL_PARADYN()</dt>
+<dd>
+
+<p>Create a new RSL_PARADYN GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_PROJECT">$error = Globus::GRAM::Error::RSL_PROJECT()</dt>
+<dd>
+
+<p>Create a new RSL_PROJECT GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_QUEUE">$error = Globus::GRAM::Error::RSL_QUEUE()</dt>
+<dd>
+
+<p>Create a new RSL_QUEUE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_STDERR">$error = Globus::GRAM::Error::RSL_STDERR()</dt>
+<dd>
+
+<p>Create a new RSL_STDERR GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_STDIN">$error = Globus::GRAM::Error::RSL_STDIN()</dt>
+<dd>
+
+<p>Create a new RSL_STDIN GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_STDOUT">$error = Globus::GRAM::Error::RSL_STDOUT()</dt>
+<dd>
+
+<p>Create a new RSL_STDOUT GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::OPENING_JOBMANAGER_SCRIPT">$error = Globus::GRAM::Error::OPENING_JOBMANAGER_SCRIPT()</dt>
+<dd>
+
+<p>Create a new OPENING_JOBMANAGER_SCRIPT GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::CREATING_PIPE">$error = Globus::GRAM::Error::CREATING_PIPE()</dt>
+<dd>
+
+<p>Create a new CREATING_PIPE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::FCNTL_FAILED">$error = Globus::GRAM::Error::FCNTL_FAILED()</dt>
+<dd>
+
+<p>Create a new FCNTL_FAILED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::STDOUT_FILENAME_FAILED">$error = Globus::GRAM::Error::STDOUT_FILENAME_FAILED()</dt>
+<dd>
+
+<p>Create a new STDOUT_FILENAME_FAILED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::STDERR_FILENAME_FAILED">$error = Globus::GRAM::Error::STDERR_FILENAME_FAILED()</dt>
+<dd>
+
+<p>Create a new STDERR_FILENAME_FAILED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::FORKING_EXECUTABLE">$error = Globus::GRAM::Error::FORKING_EXECUTABLE()</dt>
+<dd>
+
+<p>Create a new FORKING_EXECUTABLE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::EXECUTABLE_PERMISSIONS">$error = Globus::GRAM::Error::EXECUTABLE_PERMISSIONS()</dt>
+<dd>
+
+<p>Create a new EXECUTABLE_PERMISSIONS GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::OPENING_STDOUT">$error = Globus::GRAM::Error::OPENING_STDOUT()</dt>
+<dd>
+
+<p>Create a new OPENING_STDOUT GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::OPENING_STDERR">$error = Globus::GRAM::Error::OPENING_STDERR()</dt>
+<dd>
+
+<p>Create a new OPENING_STDERR GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::OPENING_CACHE_USER_PROXY">$error = Globus::GRAM::Error::OPENING_CACHE_USER_PROXY()</dt>
+<dd>
+
+<p>Create a new OPENING_CACHE_USER_PROXY GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::OPENING_CACHE">$error = Globus::GRAM::Error::OPENING_CACHE()</dt>
+<dd>
+
+<p>Create a new OPENING_CACHE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INSERTING_CLIENT_CONTACT">$error = Globus::GRAM::Error::INSERTING_CLIENT_CONTACT()</dt>
+<dd>
+
+<p>Create a new INSERTING_CLIENT_CONTACT GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::CLIENT_CONTACT_NOT_FOUND">$error = Globus::GRAM::Error::CLIENT_CONTACT_NOT_FOUND()</dt>
+<dd>
+
+<p>Create a new CLIENT_CONTACT_NOT_FOUND GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::CONTACTING_JOB_MANAGER">$error = Globus::GRAM::Error::CONTACTING_JOB_MANAGER()</dt>
+<dd>
+
+<p>Create a new CONTACTING_JOB_MANAGER GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_JOB_CONTACT">$error = Globus::GRAM::Error::INVALID_JOB_CONTACT()</dt>
+<dd>
+
+<p>Create a new INVALID_JOB_CONTACT GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::UNDEFINED_EXE">$error = Globus::GRAM::Error::UNDEFINED_EXE()</dt>
+<dd>
+
+<p>Create a new UNDEFINED_EXE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::CONDOR_ARCH">$error = Globus::GRAM::Error::CONDOR_ARCH()</dt>
+<dd>
+
+<p>Create a new CONDOR_ARCH GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::CONDOR_OS">$error = Globus::GRAM::Error::CONDOR_OS()</dt>
+<dd>
+
+<p>Create a new CONDOR_OS GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_MIN_MEMORY">$error = Globus::GRAM::Error::RSL_MIN_MEMORY()</dt>
+<dd>
+
+<p>Create a new RSL_MIN_MEMORY GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_MAX_MEMORY">$error = Globus::GRAM::Error::RSL_MAX_MEMORY()</dt>
+<dd>
+
+<p>Create a new RSL_MAX_MEMORY GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_MIN_MEMORY">$error = Globus::GRAM::Error::INVALID_MIN_MEMORY()</dt>
+<dd>
+
+<p>Create a new INVALID_MIN_MEMORY GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_MAX_MEMORY">$error = Globus::GRAM::Error::INVALID_MAX_MEMORY()</dt>
+<dd>
+
+<p>Create a new INVALID_MAX_MEMORY GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::HTTP_FRAME_FAILED">$error = Globus::GRAM::Error::HTTP_FRAME_FAILED()</dt>
+<dd>
+
+<p>Create a new HTTP_FRAME_FAILED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::HTTP_UNFRAME_FAILED">$error = Globus::GRAM::Error::HTTP_UNFRAME_FAILED()</dt>
+<dd>
+
+<p>Create a new HTTP_UNFRAME_FAILED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::HTTP_PACK_FAILED">$error = Globus::GRAM::Error::HTTP_PACK_FAILED()</dt>
+<dd>
+
+<p>Create a new HTTP_PACK_FAILED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::HTTP_UNPACK_FAILED">$error = Globus::GRAM::Error::HTTP_UNPACK_FAILED()</dt>
+<dd>
+
+<p>Create a new HTTP_UNPACK_FAILED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_JOB_QUERY">$error = Globus::GRAM::Error::INVALID_JOB_QUERY()</dt>
+<dd>
+
+<p>Create a new INVALID_JOB_QUERY GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::SERVICE_NOT_FOUND">$error = Globus::GRAM::Error::SERVICE_NOT_FOUND()</dt>
+<dd>
+
+<p>Create a new SERVICE_NOT_FOUND GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::JOB_QUERY_DENIAL">$error = Globus::GRAM::Error::JOB_QUERY_DENIAL()</dt>
+<dd>
+
+<p>Create a new JOB_QUERY_DENIAL GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::CALLBACK_NOT_FOUND">$error = Globus::GRAM::Error::CALLBACK_NOT_FOUND()</dt>
+<dd>
+
+<p>Create a new CALLBACK_NOT_FOUND GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::BAD_GATEKEEPER_CONTACT">$error = Globus::GRAM::Error::BAD_GATEKEEPER_CONTACT()</dt>
+<dd>
+
+<p>Create a new BAD_GATEKEEPER_CONTACT GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::POE_NOT_FOUND">$error = Globus::GRAM::Error::POE_NOT_FOUND()</dt>
+<dd>
+
+<p>Create a new POE_NOT_FOUND GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::MPIRUN_NOT_FOUND">$error = Globus::GRAM::Error::MPIRUN_NOT_FOUND()</dt>
+<dd>
+
+<p>Create a new MPIRUN_NOT_FOUND GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_START_TIME">$error = Globus::GRAM::Error::RSL_START_TIME()</dt>
+<dd>
+
+<p>Create a new RSL_START_TIME GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_RESERVATION_HANDLE">$error = Globus::GRAM::Error::RSL_RESERVATION_HANDLE()</dt>
+<dd>
+
+<p>Create a new RSL_RESERVATION_HANDLE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_MAX_WALL_TIME">$error = Globus::GRAM::Error::RSL_MAX_WALL_TIME()</dt>
+<dd>
+
+<p>Create a new RSL_MAX_WALL_TIME GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_MAX_WALL_TIME">$error = Globus::GRAM::Error::INVALID_MAX_WALL_TIME()</dt>
+<dd>
+
+<p>Create a new INVALID_MAX_WALL_TIME GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_MAX_CPU_TIME">$error = Globus::GRAM::Error::RSL_MAX_CPU_TIME()</dt>
+<dd>
+
+<p>Create a new RSL_MAX_CPU_TIME GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_MAX_CPU_TIME">$error = Globus::GRAM::Error::INVALID_MAX_CPU_TIME()</dt>
+<dd>
+
+<p>Create a new INVALID_MAX_CPU_TIME GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::JM_SCRIPT_NOT_FOUND">$error = Globus::GRAM::Error::JM_SCRIPT_NOT_FOUND()</dt>
+<dd>
+
+<p>Create a new JM_SCRIPT_NOT_FOUND GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::JM_SCRIPT_PERMISSIONS">$error = Globus::GRAM::Error::JM_SCRIPT_PERMISSIONS()</dt>
+<dd>
+
+<p>Create a new JM_SCRIPT_PERMISSIONS GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::SIGNALING_JOB">$error = Globus::GRAM::Error::SIGNALING_JOB()</dt>
+<dd>
+
+<p>Create a new SIGNALING_JOB GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::UNKNOWN_SIGNAL_TYPE">$error = Globus::GRAM::Error::UNKNOWN_SIGNAL_TYPE()</dt>
+<dd>
+
+<p>Create a new UNKNOWN_SIGNAL_TYPE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::GETTING_JOBID">$error = Globus::GRAM::Error::GETTING_JOBID()</dt>
+<dd>
+
+<p>Create a new GETTING_JOBID GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::WAITING_FOR_COMMIT">$error = Globus::GRAM::Error::WAITING_FOR_COMMIT()</dt>
+<dd>
+
+<p>Create a new WAITING_FOR_COMMIT GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::COMMIT_TIMED_OUT">$error = Globus::GRAM::Error::COMMIT_TIMED_OUT()</dt>
+<dd>
+
+<p>Create a new COMMIT_TIMED_OUT GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_SAVE_STATE">$error = Globus::GRAM::Error::RSL_SAVE_STATE()</dt>
+<dd>
+
+<p>Create a new RSL_SAVE_STATE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_RESTART">$error = Globus::GRAM::Error::RSL_RESTART()</dt>
+<dd>
+
+<p>Create a new RSL_RESTART GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_TWO_PHASE_COMMIT">$error = Globus::GRAM::Error::RSL_TWO_PHASE_COMMIT()</dt>
+<dd>
+
+<p>Create a new RSL_TWO_PHASE_COMMIT GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_TWO_PHASE_COMMIT">$error = Globus::GRAM::Error::INVALID_TWO_PHASE_COMMIT()</dt>
+<dd>
+
+<p>Create a new INVALID_TWO_PHASE_COMMIT GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_STDOUT_POSITION">$error = Globus::GRAM::Error::RSL_STDOUT_POSITION()</dt>
+<dd>
+
+<p>Create a new RSL_STDOUT_POSITION GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_STDOUT_POSITION">$error = Globus::GRAM::Error::INVALID_STDOUT_POSITION()</dt>
+<dd>
+
+<p>Create a new INVALID_STDOUT_POSITION GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_STDERR_POSITION">$error = Globus::GRAM::Error::RSL_STDERR_POSITION()</dt>
+<dd>
+
+<p>Create a new RSL_STDERR_POSITION GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_STDERR_POSITION">$error = Globus::GRAM::Error::INVALID_STDERR_POSITION()</dt>
+<dd>
+
+<p>Create a new INVALID_STDERR_POSITION GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RESTART_FAILED">$error = Globus::GRAM::Error::RESTART_FAILED()</dt>
+<dd>
+
+<p>Create a new RESTART_FAILED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::NO_STATE_FILE">$error = Globus::GRAM::Error::NO_STATE_FILE()</dt>
+<dd>
+
+<p>Create a new NO_STATE_FILE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::READING_STATE_FILE">$error = Globus::GRAM::Error::READING_STATE_FILE()</dt>
+<dd>
+
+<p>Create a new READING_STATE_FILE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::WRITING_STATE_FILE">$error = Globus::GRAM::Error::WRITING_STATE_FILE()</dt>
+<dd>
+
+<p>Create a new WRITING_STATE_FILE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::OLD_JM_ALIVE">$error = Globus::GRAM::Error::OLD_JM_ALIVE()</dt>
+<dd>
+
+<p>Create a new OLD_JM_ALIVE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::TTL_EXPIRED">$error = Globus::GRAM::Error::TTL_EXPIRED()</dt>
+<dd>
+
+<p>Create a new TTL_EXPIRED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::SUBMIT_UNKNOWN">$error = Globus::GRAM::Error::SUBMIT_UNKNOWN()</dt>
+<dd>
+
+<p>Create a new SUBMIT_UNKNOWN GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_REMOTE_IO_URL">$error = Globus::GRAM::Error::RSL_REMOTE_IO_URL()</dt>
+<dd>
+
+<p>Create a new RSL_REMOTE_IO_URL GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::WRITING_REMOTE_IO_URL">$error = Globus::GRAM::Error::WRITING_REMOTE_IO_URL()</dt>
+<dd>
+
+<p>Create a new WRITING_REMOTE_IO_URL GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::STDIO_SIZE">$error = Globus::GRAM::Error::STDIO_SIZE()</dt>
+<dd>
+
+<p>Create a new STDIO_SIZE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::JM_STOPPED">$error = Globus::GRAM::Error::JM_STOPPED()</dt>
+<dd>
+
+<p>Create a new JM_STOPPED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::USER_PROXY_EXPIRED">$error = Globus::GRAM::Error::USER_PROXY_EXPIRED()</dt>
+<dd>
+
+<p>Create a new USER_PROXY_EXPIRED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::JOB_UNSUBMITTED">$error = Globus::GRAM::Error::JOB_UNSUBMITTED()</dt>
+<dd>
+
+<p>Create a new JOB_UNSUBMITTED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_COMMIT">$error = Globus::GRAM::Error::INVALID_COMMIT()</dt>
+<dd>
+
+<p>Create a new INVALID_COMMIT GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_SCHEDULER_SPECIFIC">$error = Globus::GRAM::Error::RSL_SCHEDULER_SPECIFIC()</dt>
+<dd>
+
+<p>Create a new RSL_SCHEDULER_SPECIFIC GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::STAGE_IN_FAILED">$error = Globus::GRAM::Error::STAGE_IN_FAILED()</dt>
+<dd>
+
+<p>Create a new STAGE_IN_FAILED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_SCRATCH">$error = Globus::GRAM::Error::INVALID_SCRATCH()</dt>
+<dd>
+
+<p>Create a new INVALID_SCRATCH GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_CACHE">$error = Globus::GRAM::Error::RSL_CACHE()</dt>
+<dd>
+
+<p>Create a new RSL_CACHE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_SUBMIT_ATTRIBUTE">$error = Globus::GRAM::Error::INVALID_SUBMIT_ATTRIBUTE()</dt>
+<dd>
+
+<p>Create a new INVALID_SUBMIT_ATTRIBUTE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_STDIO_UPDATE_ATTRIBUTE">$error = Globus::GRAM::Error::INVALID_STDIO_UPDATE_ATTRIBUTE()</dt>
+<dd>
+
+<p>Create a new INVALID_STDIO_UPDATE_ATTRIBUTE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_RESTART_ATTRIBUTE">$error = Globus::GRAM::Error::INVALID_RESTART_ATTRIBUTE()</dt>
+<dd>
+
+<p>Create a new INVALID_RESTART_ATTRIBUTE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_FILE_STAGE_IN">$error = Globus::GRAM::Error::RSL_FILE_STAGE_IN()</dt>
+<dd>
+
+<p>Create a new RSL_FILE_STAGE_IN GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_FILE_STAGE_IN_SHARED">$error = Globus::GRAM::Error::RSL_FILE_STAGE_IN_SHARED()</dt>
+<dd>
+
+<p>Create a new RSL_FILE_STAGE_IN_SHARED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_FILE_STAGE_OUT">$error = Globus::GRAM::Error::RSL_FILE_STAGE_OUT()</dt>
+<dd>
+
+<p>Create a new RSL_FILE_STAGE_OUT GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_GASS_CACHE">$error = Globus::GRAM::Error::RSL_GASS_CACHE()</dt>
+<dd>
+
+<p>Create a new RSL_GASS_CACHE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_FILE_CLEANUP">$error = Globus::GRAM::Error::RSL_FILE_CLEANUP()</dt>
+<dd>
+
+<p>Create a new RSL_FILE_CLEANUP GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_SCRATCH">$error = Globus::GRAM::Error::RSL_SCRATCH()</dt>
+<dd>
+
+<p>Create a new RSL_SCRATCH GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_SCHEDULER_SPECIFIC">$error = Globus::GRAM::Error::INVALID_SCHEDULER_SPECIFIC()</dt>
+<dd>
+
+<p>Create a new INVALID_SCHEDULER_SPECIFIC GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::UNDEFINED_ATTRIBUTE">$error = Globus::GRAM::Error::UNDEFINED_ATTRIBUTE()</dt>
+<dd>
+
+<p>Create a new UNDEFINED_ATTRIBUTE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_CACHE">$error = Globus::GRAM::Error::INVALID_CACHE()</dt>
+<dd>
+
+<p>Create a new INVALID_CACHE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_SAVE_STATE">$error = Globus::GRAM::Error::INVALID_SAVE_STATE()</dt>
+<dd>
+
+<p>Create a new INVALID_SAVE_STATE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::OPENING_VALIDATION_FILE">$error = Globus::GRAM::Error::OPENING_VALIDATION_FILE()</dt>
+<dd>
+
+<p>Create a new OPENING_VALIDATION_FILE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::READING_VALIDATION_FILE">$error = Globus::GRAM::Error::READING_VALIDATION_FILE()</dt>
+<dd>
+
+<p>Create a new READING_VALIDATION_FILE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_PROXY_TIMEOUT">$error = Globus::GRAM::Error::RSL_PROXY_TIMEOUT()</dt>
+<dd>
+
+<p>Create a new RSL_PROXY_TIMEOUT GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_PROXY_TIMEOUT">$error = Globus::GRAM::Error::INVALID_PROXY_TIMEOUT()</dt>
+<dd>
+
+<p>Create a new INVALID_PROXY_TIMEOUT GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::STAGE_OUT_FAILED">$error = Globus::GRAM::Error::STAGE_OUT_FAILED()</dt>
+<dd>
+
+<p>Create a new STAGE_OUT_FAILED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::JOB_CONTACT_NOT_FOUND">$error = Globus::GRAM::Error::JOB_CONTACT_NOT_FOUND()</dt>
+<dd>
+
+<p>Create a new JOB_CONTACT_NOT_FOUND GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::DELEGATION_FAILED">$error = Globus::GRAM::Error::DELEGATION_FAILED()</dt>
+<dd>
+
+<p>Create a new DELEGATION_FAILED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::LOCKING_STATE_LOCK_FILE">$error = Globus::GRAM::Error::LOCKING_STATE_LOCK_FILE()</dt>
+<dd>
+
+<p>Create a new LOCKING_STATE_LOCK_FILE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_ATTR">$error = Globus::GRAM::Error::INVALID_ATTR()</dt>
+<dd>
+
+<p>Create a new INVALID_ATTR GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::NULL_PARAMETER">$error = Globus::GRAM::Error::NULL_PARAMETER()</dt>
+<dd>
+
+<p>Create a new NULL_PARAMETER GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::STILL_STREAMING">$error = Globus::GRAM::Error::STILL_STREAMING()</dt>
+<dd>
+
+<p>Create a new STILL_STREAMING GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::AUTHORIZATION_DENIED">$error = Globus::GRAM::Error::AUTHORIZATION_DENIED()</dt>
+<dd>
+
+<p>Create a new AUTHORIZATION_DENIED GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::AUTHORIZATION_SYSTEM_FAILURE">$error = Globus::GRAM::Error::AUTHORIZATION_SYSTEM_FAILURE()</dt>
+<dd>
+
+<p>Create a new AUTHORIZATION_SYSTEM_FAILURE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::AUTHORIZATION_DENIED_JOB_ID">$error = Globus::GRAM::Error::AUTHORIZATION_DENIED_JOB_ID()</dt>
+<dd>
+
+<p>Create a new AUTHORIZATION_DENIED_JOB_ID GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::AUTHORIZATION_DENIED_EXECUTABLE">$error = Globus::GRAM::Error::AUTHORIZATION_DENIED_EXECUTABLE()</dt>
+<dd>
+
+<p>Create a new AUTHORIZATION_DENIED_EXECUTABLE GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::RSL_USER_NAME">$error = Globus::GRAM::Error::RSL_USER_NAME()</dt>
+<dd>
+
+<p>Create a new RSL_USER_NAME GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::INVALID_USER_NAME">$error = Globus::GRAM::Error::INVALID_USER_NAME()</dt>
+<dd>
+
+<p>Create a new INVALID_USER_NAME GRAM error.</p>
+
+</dd>
+<dt id="error-Globus::GRAM::Error::LAST">$error = Globus::GRAM::Error::LAST()</dt>
+<dd>
+
+<p>Create a new LAST GRAM error.</p>
+
+</dd>
+</dl>
+
+
+</body>
+
+</html>
+
+

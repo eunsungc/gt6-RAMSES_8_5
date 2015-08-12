@@ -1,0 +1,1864 @@
+
+globus_common-stamp_SUBDIR = common/source
+globus_common-all_SUBDIR = common/source
+globus_common-clean_SUBDIR = common/source
+globus_common-install_SUBDIR = common/source
+globus_common-check_SUBDIR = common/source
+globus_common-check: globus_common-stamp
+globus_common-clean_stamp = globus_common-stamp
+globus_common-install_stamp = globus_common-stamp
+globus_common-dist_SUBDIR = common/source
+globus_common-deps = libltdl-stamp
+globus_common: globus_common-all
+globus_common-all: globus_common-stamp
+globus_common-install: globus_common-stamp
+globus_common-stamp: $(globus_common-deps)
+globus_common-dist-tarball = globus_common-15.31.tar.gz
+package-output/$(globus_common-dist-tarball): globus_common-dist
+globus_common-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-common.spec
+globus_common-rpm_SOURCE = package-output/$(globus_common-dist-tarball)
+globus_common-rpm: $(globus_common-rpm_SOURCE) $(globus_common-rpm_SPECFILE)
+globus_common-deb_PACKAGE_NAME = globus-common
+globus_common-deb_SOURCE = package-output/$(globus_common-dist-tarball)
+globus_common-deb_TARBALL = debbuild/globus-common_15.31.orig.tar.gz
+globus_common-deb: $(globus_common-deb_SOURCE)
+globus_common-osx-pkg = osx/packages/globus_common-15.31.pkg
+$(globus_common-osx-pkg): globus_common-stamp
+$(globus_common-osx-pkg)_SUBDIR = common/source
+$(globus_common-osx-pkg)_PACKAGE_NAME = globus_common
+$(globus_common-osx-pkg)_PACKAGE_VERSION = 15.31
+globus_common-osx-pkg: $(globus_common-osx-pkg)
+globus_xio-stamp_SUBDIR = xio/src
+globus_xio-all_SUBDIR = xio/src
+globus_xio-clean_SUBDIR = xio/src
+globus_xio-install_SUBDIR = xio/src
+globus_xio-check_SUBDIR = xio/src
+globus_xio-check: globus_xio-stamp
+globus_xio-clean_stamp = globus_xio-stamp
+globus_xio-install_stamp = globus_xio-stamp
+globus_xio-dist_SUBDIR = xio/src
+globus_xio-deps = globus_common-stamp
+globus_xio: globus_xio-all
+globus_xio-all: globus_xio-stamp
+globus_xio-install: globus_xio-stamp
+globus_xio-stamp: $(globus_xio-deps)
+globus_xio-dist-tarball = globus_xio-5.9.tar.gz
+package-output/$(globus_xio-dist-tarball): globus_xio-dist
+globus_xio-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-xio.spec
+globus_xio-rpm_SOURCE = package-output/$(globus_xio-dist-tarball)
+globus_xio-rpm: $(globus_xio-rpm_SOURCE) $(globus_xio-rpm_SPECFILE)
+globus_xio-deb_PACKAGE_NAME = globus-xio
+globus_xio-deb_SOURCE = package-output/$(globus_xio-dist-tarball)
+globus_xio-deb_TARBALL = debbuild/globus-xio_5.9.orig.tar.gz
+globus_xio-deb: $(globus_xio-deb_SOURCE)
+globus_xio-osx-pkg = osx/packages/globus_xio-5.9.pkg
+$(globus_xio-osx-pkg): globus_xio-stamp
+$(globus_xio-osx-pkg)_SUBDIR = xio/src
+$(globus_xio-osx-pkg)_PACKAGE_NAME = globus_xio
+$(globus_xio-osx-pkg)_PACKAGE_VERSION = 5.9
+globus_xio-osx-pkg: $(globus_xio-osx-pkg)
+globus_gfork-stamp_SUBDIR = gridftp/gfork/source
+globus_gfork-all_SUBDIR = gridftp/gfork/source
+globus_gfork-clean_SUBDIR = gridftp/gfork/source
+globus_gfork-install_SUBDIR = gridftp/gfork/source
+globus_gfork-check_SUBDIR = gridftp/gfork/source
+globus_gfork-check: globus_gfork-stamp
+globus_gfork-clean_stamp = globus_gfork-stamp
+globus_gfork-install_stamp = globus_gfork-stamp
+globus_gfork-dist_SUBDIR = gridftp/gfork/source
+globus_gfork-deps = globus_common-stamp globus_xio-stamp
+globus_gfork: globus_gfork-all
+globus_gfork-all: globus_gfork-stamp
+globus_gfork-install: globus_gfork-stamp
+globus_gfork-stamp: $(globus_gfork-deps)
+globus_gfork-dist-tarball = globus_gfork-4.8.tar.gz
+package-output/$(globus_gfork-dist-tarball): globus_gfork-dist
+globus_gfork-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gfork.spec
+globus_gfork-rpm_SOURCE = package-output/$(globus_gfork-dist-tarball)
+globus_gfork-rpm: $(globus_gfork-rpm_SOURCE) $(globus_gfork-rpm_SPECFILE)
+globus_gfork-deb_PACKAGE_NAME = globus-gfork
+globus_gfork-deb_SOURCE = package-output/$(globus_gfork-dist-tarball)
+globus_gfork-deb_TARBALL = debbuild/globus-gfork_4.8.orig.tar.gz
+globus_gfork-deb: $(globus_gfork-deb_SOURCE)
+globus_gfork-osx-pkg = osx/packages/globus_gfork-4.8.pkg
+$(globus_gfork-osx-pkg): globus_gfork-stamp
+$(globus_gfork-osx-pkg)_SUBDIR = gridftp/gfork/source
+$(globus_gfork-osx-pkg)_PACKAGE_NAME = globus_gfork
+$(globus_gfork-osx-pkg)_PACKAGE_VERSION = 4.8
+globus_gfork-osx-pkg: $(globus_gfork-osx-pkg)
+globus_gsi_openssl_error-stamp_SUBDIR = gsi/openssl_error/source
+globus_gsi_openssl_error-all_SUBDIR = gsi/openssl_error/source
+globus_gsi_openssl_error-clean_SUBDIR = gsi/openssl_error/source
+globus_gsi_openssl_error-install_SUBDIR = gsi/openssl_error/source
+globus_gsi_openssl_error-check_SUBDIR = gsi/openssl_error/source
+globus_gsi_openssl_error-check: globus_gsi_openssl_error-stamp
+globus_gsi_openssl_error-clean_stamp = globus_gsi_openssl_error-stamp
+globus_gsi_openssl_error-install_stamp = globus_gsi_openssl_error-stamp
+globus_gsi_openssl_error-dist_SUBDIR = gsi/openssl_error/source
+globus_gsi_openssl_error-deps = globus_common-stamp
+globus_gsi_openssl_error: globus_gsi_openssl_error-all
+globus_gsi_openssl_error-all: globus_gsi_openssl_error-stamp
+globus_gsi_openssl_error-install: globus_gsi_openssl_error-stamp
+globus_gsi_openssl_error-stamp: $(globus_gsi_openssl_error-deps)
+globus_gsi_openssl_error-dist-tarball = globus_gsi_openssl_error-3.5.tar.gz
+package-output/$(globus_gsi_openssl_error-dist-tarball): globus_gsi_openssl_error-dist
+globus_gsi_openssl_error-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gsi-openssl-error.spec
+globus_gsi_openssl_error-rpm_SOURCE = package-output/$(globus_gsi_openssl_error-dist-tarball)
+globus_gsi_openssl_error-rpm: $(globus_gsi_openssl_error-rpm_SOURCE) $(globus_gsi_openssl_error-rpm_SPECFILE)
+globus_gsi_openssl_error-deb_PACKAGE_NAME = globus-gsi-openssl-error
+globus_gsi_openssl_error-deb_SOURCE = package-output/$(globus_gsi_openssl_error-dist-tarball)
+globus_gsi_openssl_error-deb_TARBALL = debbuild/globus-gsi-openssl-error_3.5.orig.tar.gz
+globus_gsi_openssl_error-deb: $(globus_gsi_openssl_error-deb_SOURCE)
+globus_gsi_openssl_error-osx-pkg = osx/packages/globus_gsi_openssl_error-3.5.pkg
+$(globus_gsi_openssl_error-osx-pkg): globus_gsi_openssl_error-stamp
+$(globus_gsi_openssl_error-osx-pkg)_SUBDIR = gsi/openssl_error/source
+$(globus_gsi_openssl_error-osx-pkg)_PACKAGE_NAME = globus_gsi_openssl_error
+$(globus_gsi_openssl_error-osx-pkg)_PACKAGE_VERSION = 3.5
+globus_gsi_openssl_error-osx-pkg: $(globus_gsi_openssl_error-osx-pkg)
+globus_gsi_proxy_ssl-stamp_SUBDIR = gsi/proxy/proxy_ssl/source
+globus_gsi_proxy_ssl-all_SUBDIR = gsi/proxy/proxy_ssl/source
+globus_gsi_proxy_ssl-clean_SUBDIR = gsi/proxy/proxy_ssl/source
+globus_gsi_proxy_ssl-install_SUBDIR = gsi/proxy/proxy_ssl/source
+globus_gsi_proxy_ssl-check_SUBDIR = gsi/proxy/proxy_ssl/source
+globus_gsi_proxy_ssl-check: globus_gsi_proxy_ssl-stamp
+globus_gsi_proxy_ssl-clean_stamp = globus_gsi_proxy_ssl-stamp
+globus_gsi_proxy_ssl-install_stamp = globus_gsi_proxy_ssl-stamp
+globus_gsi_proxy_ssl-dist_SUBDIR = gsi/proxy/proxy_ssl/source
+globus_gsi_proxy_ssl-deps =
+globus_gsi_proxy_ssl: globus_gsi_proxy_ssl-all
+globus_gsi_proxy_ssl-all: globus_gsi_proxy_ssl-stamp
+globus_gsi_proxy_ssl-install: globus_gsi_proxy_ssl-stamp
+globus_gsi_proxy_ssl-stamp: $(globus_gsi_proxy_ssl-deps)
+globus_gsi_proxy_ssl-dist-tarball = globus_gsi_proxy_ssl-5.7.tar.gz
+package-output/$(globus_gsi_proxy_ssl-dist-tarball): globus_gsi_proxy_ssl-dist
+globus_gsi_proxy_ssl-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gsi-proxy-ssl.spec
+globus_gsi_proxy_ssl-rpm_SOURCE = package-output/$(globus_gsi_proxy_ssl-dist-tarball)
+globus_gsi_proxy_ssl-rpm: $(globus_gsi_proxy_ssl-rpm_SOURCE) $(globus_gsi_proxy_ssl-rpm_SPECFILE)
+globus_gsi_proxy_ssl-deb_PACKAGE_NAME = globus-gsi-proxy-ssl
+globus_gsi_proxy_ssl-deb_SOURCE = package-output/$(globus_gsi_proxy_ssl-dist-tarball)
+globus_gsi_proxy_ssl-deb_TARBALL = debbuild/globus-gsi-proxy-ssl_5.7.orig.tar.gz
+globus_gsi_proxy_ssl-deb: $(globus_gsi_proxy_ssl-deb_SOURCE)
+globus_gsi_proxy_ssl-osx-pkg = osx/packages/globus_gsi_proxy_ssl-5.7.pkg
+$(globus_gsi_proxy_ssl-osx-pkg): globus_gsi_proxy_ssl-stamp
+$(globus_gsi_proxy_ssl-osx-pkg)_SUBDIR = gsi/proxy/proxy_ssl/source
+$(globus_gsi_proxy_ssl-osx-pkg)_PACKAGE_NAME = globus_gsi_proxy_ssl
+$(globus_gsi_proxy_ssl-osx-pkg)_PACKAGE_VERSION = 5.7
+globus_gsi_proxy_ssl-osx-pkg: $(globus_gsi_proxy_ssl-osx-pkg)
+globus_openssl_module-stamp_SUBDIR = gsi/openssl_module/source
+globus_openssl_module-all_SUBDIR = gsi/openssl_module/source
+globus_openssl_module-clean_SUBDIR = gsi/openssl_module/source
+globus_openssl_module-install_SUBDIR = gsi/openssl_module/source
+globus_openssl_module-check_SUBDIR = gsi/openssl_module/source
+globus_openssl_module-check: globus_openssl_module-stamp
+globus_openssl_module-clean_stamp = globus_openssl_module-stamp
+globus_openssl_module-install_stamp = globus_openssl_module-stamp
+globus_openssl_module-dist_SUBDIR = gsi/openssl_module/source
+globus_openssl_module-deps = globus_common-stamp globus_gsi_proxy_ssl-stamp globus_gsi_openssl_error-stamp
+globus_openssl_module: globus_openssl_module-all
+globus_openssl_module-all: globus_openssl_module-stamp
+globus_openssl_module-install: globus_openssl_module-stamp
+globus_openssl_module-stamp: $(globus_openssl_module-deps)
+globus_openssl_module-dist-tarball = globus_openssl_module-4.6.tar.gz
+package-output/$(globus_openssl_module-dist-tarball): globus_openssl_module-dist
+globus_openssl_module-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-openssl-module.spec
+globus_openssl_module-rpm_SOURCE = package-output/$(globus_openssl_module-dist-tarball)
+globus_openssl_module-rpm: $(globus_openssl_module-rpm_SOURCE) $(globus_openssl_module-rpm_SPECFILE)
+globus_openssl_module-deb_PACKAGE_NAME = globus-openssl-module
+globus_openssl_module-deb_SOURCE = package-output/$(globus_openssl_module-dist-tarball)
+globus_openssl_module-deb_TARBALL = debbuild/globus-openssl-module_4.6.orig.tar.gz
+globus_openssl_module-deb: $(globus_openssl_module-deb_SOURCE)
+globus_openssl_module-osx-pkg = osx/packages/globus_openssl_module-4.6.pkg
+$(globus_openssl_module-osx-pkg): globus_openssl_module-stamp
+$(globus_openssl_module-osx-pkg)_SUBDIR = gsi/openssl_module/source
+$(globus_openssl_module-osx-pkg)_PACKAGE_NAME = globus_openssl_module
+$(globus_openssl_module-osx-pkg)_PACKAGE_VERSION = 4.6
+globus_openssl_module-osx-pkg: $(globus_openssl_module-osx-pkg)
+globus_gsi_cert_utils-stamp_SUBDIR = gsi/cert_utils/source
+globus_gsi_cert_utils-all_SUBDIR = gsi/cert_utils/source
+globus_gsi_cert_utils-clean_SUBDIR = gsi/cert_utils/source
+globus_gsi_cert_utils-install_SUBDIR = gsi/cert_utils/source
+globus_gsi_cert_utils-check_SUBDIR = gsi/cert_utils/source
+globus_gsi_cert_utils-check: globus_gsi_cert_utils-stamp
+globus_gsi_cert_utils-clean_stamp = globus_gsi_cert_utils-stamp
+globus_gsi_cert_utils-install_stamp = globus_gsi_cert_utils-stamp
+globus_gsi_cert_utils-dist_SUBDIR = gsi/cert_utils/source
+globus_gsi_cert_utils-deps = globus_common-stamp globus_openssl_module-stamp globus_gsi_openssl_error-stamp globus_gsi_proxy_ssl-stamp
+globus_gsi_cert_utils: globus_gsi_cert_utils-all
+globus_gsi_cert_utils-all: globus_gsi_cert_utils-stamp
+globus_gsi_cert_utils-install: globus_gsi_cert_utils-stamp
+globus_gsi_cert_utils-stamp: $(globus_gsi_cert_utils-deps)
+globus_gsi_cert_utils-dist-tarball = globus_gsi_cert_utils-9.11.tar.gz
+package-output/$(globus_gsi_cert_utils-dist-tarball): globus_gsi_cert_utils-dist
+globus_gsi_cert_utils-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gsi-cert-utils.spec
+globus_gsi_cert_utils-rpm_SOURCE = package-output/$(globus_gsi_cert_utils-dist-tarball)
+globus_gsi_cert_utils-rpm: $(globus_gsi_cert_utils-rpm_SOURCE) $(globus_gsi_cert_utils-rpm_SPECFILE)
+globus_gsi_cert_utils-deb_PACKAGE_NAME = globus-gsi-cert-utils
+globus_gsi_cert_utils-deb_SOURCE = package-output/$(globus_gsi_cert_utils-dist-tarball)
+globus_gsi_cert_utils-deb_TARBALL = debbuild/globus-gsi-cert-utils_9.11.orig.tar.gz
+globus_gsi_cert_utils-deb: $(globus_gsi_cert_utils-deb_SOURCE)
+globus_gsi_cert_utils-osx-pkg = osx/packages/globus_gsi_cert_utils-9.11.pkg
+$(globus_gsi_cert_utils-osx-pkg): globus_gsi_cert_utils-stamp
+$(globus_gsi_cert_utils-osx-pkg)_SUBDIR = gsi/cert_utils/source
+$(globus_gsi_cert_utils-osx-pkg)_PACKAGE_NAME = globus_gsi_cert_utils
+$(globus_gsi_cert_utils-osx-pkg)_PACKAGE_VERSION = 9.11
+globus_gsi_cert_utils-osx-pkg: $(globus_gsi_cert_utils-osx-pkg)
+globus_gsi_sysconfig-stamp_SUBDIR = gsi/sysconfig/source
+globus_gsi_sysconfig-all_SUBDIR = gsi/sysconfig/source
+globus_gsi_sysconfig-clean_SUBDIR = gsi/sysconfig/source
+globus_gsi_sysconfig-install_SUBDIR = gsi/sysconfig/source
+globus_gsi_sysconfig-check_SUBDIR = gsi/sysconfig/source
+globus_gsi_sysconfig-check: globus_gsi_sysconfig-stamp
+globus_gsi_sysconfig-clean_stamp = globus_gsi_sysconfig-stamp
+globus_gsi_sysconfig-install_stamp = globus_gsi_sysconfig-stamp
+globus_gsi_sysconfig-dist_SUBDIR = gsi/sysconfig/source
+globus_gsi_sysconfig-deps = globus_common-stamp globus_openssl_module-stamp globus_gsi_openssl_error-stamp
+globus_gsi_sysconfig: globus_gsi_sysconfig-all
+globus_gsi_sysconfig-all: globus_gsi_sysconfig-stamp
+globus_gsi_sysconfig-install: globus_gsi_sysconfig-stamp
+globus_gsi_sysconfig-stamp: $(globus_gsi_sysconfig-deps)
+globus_gsi_sysconfig-dist-tarball = globus_gsi_sysconfig-6.8.tar.gz
+package-output/$(globus_gsi_sysconfig-dist-tarball): globus_gsi_sysconfig-dist
+globus_gsi_sysconfig-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gsi-sysconfig.spec
+globus_gsi_sysconfig-rpm_SOURCE = package-output/$(globus_gsi_sysconfig-dist-tarball)
+globus_gsi_sysconfig-rpm: $(globus_gsi_sysconfig-rpm_SOURCE) $(globus_gsi_sysconfig-rpm_SPECFILE)
+globus_gsi_sysconfig-deb_PACKAGE_NAME = globus-gsi-sysconfig
+globus_gsi_sysconfig-deb_SOURCE = package-output/$(globus_gsi_sysconfig-dist-tarball)
+globus_gsi_sysconfig-deb_TARBALL = debbuild/globus-gsi-sysconfig_6.8.orig.tar.gz
+globus_gsi_sysconfig-deb: $(globus_gsi_sysconfig-deb_SOURCE)
+globus_gsi_sysconfig-osx-pkg = osx/packages/globus_gsi_sysconfig-6.8.pkg
+$(globus_gsi_sysconfig-osx-pkg): globus_gsi_sysconfig-stamp
+$(globus_gsi_sysconfig-osx-pkg)_SUBDIR = gsi/sysconfig/source
+$(globus_gsi_sysconfig-osx-pkg)_PACKAGE_NAME = globus_gsi_sysconfig
+$(globus_gsi_sysconfig-osx-pkg)_PACKAGE_VERSION = 6.8
+globus_gsi_sysconfig-osx-pkg: $(globus_gsi_sysconfig-osx-pkg)
+globus_callout-stamp_SUBDIR = callout/source
+globus_callout-all_SUBDIR = callout/source
+globus_callout-clean_SUBDIR = callout/source
+globus_callout-install_SUBDIR = callout/source
+globus_callout-check_SUBDIR = callout/source
+globus_callout-check: globus_callout-stamp
+globus_callout-clean_stamp = globus_callout-stamp
+globus_callout-install_stamp = globus_callout-stamp
+globus_callout-dist_SUBDIR = callout/source
+globus_callout-deps = globus_common-stamp
+globus_callout: globus_callout-all
+globus_callout-all: globus_callout-stamp
+globus_callout-install: globus_callout-stamp
+globus_callout-stamp: $(globus_callout-deps)
+globus_callout-dist-tarball = globus_callout-3.13.tar.gz
+package-output/$(globus_callout-dist-tarball): globus_callout-dist
+globus_callout-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-callout.spec
+globus_callout-rpm_SOURCE = package-output/$(globus_callout-dist-tarball)
+globus_callout-rpm: $(globus_callout-rpm_SOURCE) $(globus_callout-rpm_SPECFILE)
+globus_callout-deb_PACKAGE_NAME = globus-callout
+globus_callout-deb_SOURCE = package-output/$(globus_callout-dist-tarball)
+globus_callout-deb_TARBALL = debbuild/globus-callout_3.13.orig.tar.gz
+globus_callout-deb: $(globus_callout-deb_SOURCE)
+globus_callout-osx-pkg = osx/packages/globus_callout-3.13.pkg
+$(globus_callout-osx-pkg): globus_callout-stamp
+$(globus_callout-osx-pkg)_SUBDIR = callout/source
+$(globus_callout-osx-pkg)_PACKAGE_NAME = globus_callout
+$(globus_callout-osx-pkg)_PACKAGE_VERSION = 3.13
+globus_callout-osx-pkg: $(globus_callout-osx-pkg)
+globus_gsi_callback-stamp_SUBDIR = gsi/callback/source
+globus_gsi_callback-all_SUBDIR = gsi/callback/source
+globus_gsi_callback-clean_SUBDIR = gsi/callback/source
+globus_gsi_callback-install_SUBDIR = gsi/callback/source
+globus_gsi_callback-check_SUBDIR = gsi/callback/source
+globus_gsi_callback-check: globus_gsi_callback-stamp
+globus_gsi_callback-clean_stamp = globus_gsi_callback-stamp
+globus_gsi_callback-install_stamp = globus_gsi_callback-stamp
+globus_gsi_callback-dist_SUBDIR = gsi/callback/source
+globus_gsi_callback-deps = globus_common-stamp globus_openssl_module-stamp globus_gsi_openssl_error-stamp globus_gsi_cert_utils-stamp globus_gsi_sysconfig-stamp globus_gsi_proxy_ssl-stamp
+globus_gsi_callback: globus_gsi_callback-all
+globus_gsi_callback-all: globus_gsi_callback-stamp
+globus_gsi_callback-install: globus_gsi_callback-stamp
+globus_gsi_callback-stamp: $(globus_gsi_callback-deps)
+globus_gsi_callback-dist-tarball = globus_gsi_callback-5.8.tar.gz
+package-output/$(globus_gsi_callback-dist-tarball): globus_gsi_callback-dist
+globus_gsi_callback-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gsi-callback.spec
+globus_gsi_callback-rpm_SOURCE = package-output/$(globus_gsi_callback-dist-tarball)
+globus_gsi_callback-rpm: $(globus_gsi_callback-rpm_SOURCE) $(globus_gsi_callback-rpm_SPECFILE)
+globus_gsi_callback-deb_PACKAGE_NAME = globus-gsi-callback
+globus_gsi_callback-deb_SOURCE = package-output/$(globus_gsi_callback-dist-tarball)
+globus_gsi_callback-deb_TARBALL = debbuild/globus-gsi-callback_5.8.orig.tar.gz
+globus_gsi_callback-deb: $(globus_gsi_callback-deb_SOURCE)
+globus_gsi_callback-osx-pkg = osx/packages/globus_gsi_callback-5.8.pkg
+$(globus_gsi_callback-osx-pkg): globus_gsi_callback-stamp
+$(globus_gsi_callback-osx-pkg)_SUBDIR = gsi/callback/source
+$(globus_gsi_callback-osx-pkg)_PACKAGE_NAME = globus_gsi_callback
+$(globus_gsi_callback-osx-pkg)_PACKAGE_VERSION = 5.8
+globus_gsi_callback-osx-pkg: $(globus_gsi_callback-osx-pkg)
+globus_gsi_credential-stamp_SUBDIR = gsi/credential/source
+globus_gsi_credential-all_SUBDIR = gsi/credential/source
+globus_gsi_credential-clean_SUBDIR = gsi/credential/source
+globus_gsi_credential-install_SUBDIR = gsi/credential/source
+globus_gsi_credential-check_SUBDIR = gsi/credential/source
+globus_gsi_credential-check: globus_gsi_credential-stamp
+globus_gsi_credential-clean_stamp = globus_gsi_credential-stamp
+globus_gsi_credential-install_stamp = globus_gsi_credential-stamp
+globus_gsi_credential-dist_SUBDIR = gsi/credential/source
+globus_gsi_credential-deps = globus_common-stamp globus_gsi_proxy_ssl-stamp globus_gsi_openssl_error-stamp globus_gsi_cert_utils-stamp globus_gsi_sysconfig-stamp globus_gsi_callback-stamp
+globus_gsi_credential: globus_gsi_credential-all
+globus_gsi_credential-all: globus_gsi_credential-stamp
+globus_gsi_credential-install: globus_gsi_credential-stamp
+globus_gsi_credential-stamp: $(globus_gsi_credential-deps)
+globus_gsi_credential-dist-tarball = globus_gsi_credential-7.9.tar.gz
+package-output/$(globus_gsi_credential-dist-tarball): globus_gsi_credential-dist
+globus_gsi_credential-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gsi-credential.spec
+globus_gsi_credential-rpm_SOURCE = package-output/$(globus_gsi_credential-dist-tarball)
+globus_gsi_credential-rpm: $(globus_gsi_credential-rpm_SOURCE) $(globus_gsi_credential-rpm_SPECFILE)
+globus_gsi_credential-deb_PACKAGE_NAME = globus-gsi-credential
+globus_gsi_credential-deb_SOURCE = package-output/$(globus_gsi_credential-dist-tarball)
+globus_gsi_credential-deb_TARBALL = debbuild/globus-gsi-credential_7.9.orig.tar.gz
+globus_gsi_credential-deb: $(globus_gsi_credential-deb_SOURCE)
+globus_gsi_credential-osx-pkg = osx/packages/globus_gsi_credential-7.9.pkg
+$(globus_gsi_credential-osx-pkg): globus_gsi_credential-stamp
+$(globus_gsi_credential-osx-pkg)_SUBDIR = gsi/credential/source
+$(globus_gsi_credential-osx-pkg)_PACKAGE_NAME = globus_gsi_credential
+$(globus_gsi_credential-osx-pkg)_PACKAGE_VERSION = 7.9
+globus_gsi_credential-osx-pkg: $(globus_gsi_credential-osx-pkg)
+globus_gsi_proxy_core-stamp_SUBDIR = gsi/proxy/proxy_core/source
+globus_gsi_proxy_core-all_SUBDIR = gsi/proxy/proxy_core/source
+globus_gsi_proxy_core-clean_SUBDIR = gsi/proxy/proxy_core/source
+globus_gsi_proxy_core-install_SUBDIR = gsi/proxy/proxy_core/source
+globus_gsi_proxy_core-check_SUBDIR = gsi/proxy/proxy_core/source
+globus_gsi_proxy_core-check: globus_gsi_proxy_core-stamp
+globus_gsi_proxy_core-clean_stamp = globus_gsi_proxy_core-stamp
+globus_gsi_proxy_core-install_stamp = globus_gsi_proxy_core-stamp
+globus_gsi_proxy_core-dist_SUBDIR = gsi/proxy/proxy_core/source
+globus_gsi_proxy_core-deps = globus_common-stamp globus_openssl_module-stamp globus_gsi_openssl_error-stamp globus_gsi_cert_utils-stamp globus_gsi_sysconfig-stamp globus_gsi_proxy_ssl-stamp globus_gsi_credential-stamp
+globus_gsi_proxy_core: globus_gsi_proxy_core-all
+globus_gsi_proxy_core-all: globus_gsi_proxy_core-stamp
+globus_gsi_proxy_core-install: globus_gsi_proxy_core-stamp
+globus_gsi_proxy_core-stamp: $(globus_gsi_proxy_core-deps)
+globus_gsi_proxy_core-dist-tarball = globus_gsi_proxy_core-7.7.tar.gz
+package-output/$(globus_gsi_proxy_core-dist-tarball): globus_gsi_proxy_core-dist
+globus_gsi_proxy_core-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gsi-proxy-core.spec
+globus_gsi_proxy_core-rpm_SOURCE = package-output/$(globus_gsi_proxy_core-dist-tarball)
+globus_gsi_proxy_core-rpm: $(globus_gsi_proxy_core-rpm_SOURCE) $(globus_gsi_proxy_core-rpm_SPECFILE)
+globus_gsi_proxy_core-deb_PACKAGE_NAME = globus-gsi-proxy-core
+globus_gsi_proxy_core-deb_SOURCE = package-output/$(globus_gsi_proxy_core-dist-tarball)
+globus_gsi_proxy_core-deb_TARBALL = debbuild/globus-gsi-proxy-core_7.7.orig.tar.gz
+globus_gsi_proxy_core-deb: $(globus_gsi_proxy_core-deb_SOURCE)
+globus_gsi_proxy_core-osx-pkg = osx/packages/globus_gsi_proxy_core-7.7.pkg
+$(globus_gsi_proxy_core-osx-pkg): globus_gsi_proxy_core-stamp
+$(globus_gsi_proxy_core-osx-pkg)_SUBDIR = gsi/proxy/proxy_core/source
+$(globus_gsi_proxy_core-osx-pkg)_PACKAGE_NAME = globus_gsi_proxy_core
+$(globus_gsi_proxy_core-osx-pkg)_PACKAGE_VERSION = 7.7
+globus_gsi_proxy_core-osx-pkg: $(globus_gsi_proxy_core-osx-pkg)
+globus_gssapi_gsi-stamp_SUBDIR = gsi/gssapi/source
+globus_gssapi_gsi-all_SUBDIR = gsi/gssapi/source
+globus_gssapi_gsi-clean_SUBDIR = gsi/gssapi/source
+globus_gssapi_gsi-install_SUBDIR = gsi/gssapi/source
+globus_gssapi_gsi-check_SUBDIR = gsi/gssapi/source
+globus_gssapi_gsi-check: globus_gssapi_gsi-stamp
+globus_gssapi_gsi-clean_stamp = globus_gssapi_gsi-stamp
+globus_gssapi_gsi-install_stamp = globus_gssapi_gsi-stamp
+globus_gssapi_gsi-dist_SUBDIR = gsi/gssapi/source
+globus_gssapi_gsi-deps = globus_common-stamp globus_openssl_module-stamp globus_gsi_openssl_error-stamp globus_gsi_cert_utils-stamp globus_gsi_credential-stamp globus_gsi_callback-stamp globus_gsi_proxy_core-stamp globus_gsi_sysconfig-stamp
+globus_gssapi_gsi: globus_gssapi_gsi-all
+globus_gssapi_gsi-all: globus_gssapi_gsi-stamp
+globus_gssapi_gsi-install: globus_gssapi_gsi-stamp
+globus_gssapi_gsi-stamp: $(globus_gssapi_gsi-deps)
+globus_gssapi_gsi-dist-tarball = globus_gssapi_gsi-11.21.tar.gz
+package-output/$(globus_gssapi_gsi-dist-tarball): globus_gssapi_gsi-dist
+globus_gssapi_gsi-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gssapi-gsi.spec
+globus_gssapi_gsi-rpm_SOURCE = package-output/$(globus_gssapi_gsi-dist-tarball)
+globus_gssapi_gsi-rpm: $(globus_gssapi_gsi-rpm_SOURCE) $(globus_gssapi_gsi-rpm_SPECFILE)
+globus_gssapi_gsi-deb_PACKAGE_NAME = globus-gssapi-gsi
+globus_gssapi_gsi-deb_SOURCE = package-output/$(globus_gssapi_gsi-dist-tarball)
+globus_gssapi_gsi-deb_TARBALL = debbuild/globus-gssapi-gsi_11.21.orig.tar.gz
+globus_gssapi_gsi-deb: $(globus_gssapi_gsi-deb_SOURCE)
+globus_gssapi_gsi-osx-pkg = osx/packages/globus_gssapi_gsi-11.21.pkg
+$(globus_gssapi_gsi-osx-pkg): globus_gssapi_gsi-stamp
+$(globus_gssapi_gsi-osx-pkg)_SUBDIR = gsi/gssapi/source
+$(globus_gssapi_gsi-osx-pkg)_PACKAGE_NAME = globus_gssapi_gsi
+$(globus_gssapi_gsi-osx-pkg)_PACKAGE_VERSION = 11.21
+globus_gssapi_gsi-osx-pkg: $(globus_gssapi_gsi-osx-pkg)
+globus_gss_assist-stamp_SUBDIR = gsi/gss_assist/source
+globus_gss_assist-all_SUBDIR = gsi/gss_assist/source
+globus_gss_assist-clean_SUBDIR = gsi/gss_assist/source
+globus_gss_assist-install_SUBDIR = gsi/gss_assist/source
+globus_gss_assist-check_SUBDIR = gsi/gss_assist/source
+globus_gss_assist-check: globus_gss_assist-stamp
+globus_gss_assist-clean_stamp = globus_gss_assist-stamp
+globus_gss_assist-install_stamp = globus_gss_assist-stamp
+globus_gss_assist-dist_SUBDIR = gsi/gss_assist/source
+globus_gss_assist-deps = globus_common-stamp globus_gsi_sysconfig-stamp globus_gsi_cert_utils-stamp globus_gssapi_gsi-stamp globus_callout-stamp globus_gsi_credential-stamp
+globus_gss_assist: globus_gss_assist-all
+globus_gss_assist-all: globus_gss_assist-stamp
+globus_gss_assist-install: globus_gss_assist-stamp
+globus_gss_assist-stamp: $(globus_gss_assist-deps)
+globus_gss_assist-dist-tarball = globus_gss_assist-10.15.tar.gz
+package-output/$(globus_gss_assist-dist-tarball): globus_gss_assist-dist
+globus_gss_assist-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gss-assist.spec
+globus_gss_assist-rpm_SOURCE = package-output/$(globus_gss_assist-dist-tarball)
+globus_gss_assist-rpm: $(globus_gss_assist-rpm_SOURCE) $(globus_gss_assist-rpm_SPECFILE)
+globus_gss_assist-deb_PACKAGE_NAME = globus-gss-assist
+globus_gss_assist-deb_SOURCE = package-output/$(globus_gss_assist-dist-tarball)
+globus_gss_assist-deb_TARBALL = debbuild/globus-gss-assist_10.15.orig.tar.gz
+globus_gss_assist-deb: $(globus_gss_assist-deb_SOURCE)
+globus_gss_assist-osx-pkg = osx/packages/globus_gss_assist-10.15.pkg
+$(globus_gss_assist-osx-pkg): globus_gss_assist-stamp
+$(globus_gss_assist-osx-pkg)_SUBDIR = gsi/gss_assist/source
+$(globus_gss_assist-osx-pkg)_PACKAGE_NAME = globus_gss_assist
+$(globus_gss_assist-osx-pkg)_PACKAGE_VERSION = 10.15
+globus_gss_assist-osx-pkg: $(globus_gss_assist-osx-pkg)
+globus_gssapi_error-stamp_SUBDIR = gsi/gssapi_error/source
+globus_gssapi_error-all_SUBDIR = gsi/gssapi_error/source
+globus_gssapi_error-clean_SUBDIR = gsi/gssapi_error/source
+globus_gssapi_error-install_SUBDIR = gsi/gssapi_error/source
+globus_gssapi_error-check_SUBDIR = gsi/gssapi_error/source
+globus_gssapi_error-check: globus_gssapi_error-stamp
+globus_gssapi_error-clean_stamp = globus_gssapi_error-stamp
+globus_gssapi_error-install_stamp = globus_gssapi_error-stamp
+globus_gssapi_error-dist_SUBDIR = gsi/gssapi_error/source
+globus_gssapi_error-deps = globus_common-stamp globus_gss_assist-stamp globus_gssapi_gsi-stamp
+globus_gssapi_error: globus_gssapi_error-all
+globus_gssapi_error-all: globus_gssapi_error-stamp
+globus_gssapi_error-install: globus_gssapi_error-stamp
+globus_gssapi_error-stamp: $(globus_gssapi_error-deps)
+globus_gssapi_error-dist-tarball = globus_gssapi_error-5.4.tar.gz
+package-output/$(globus_gssapi_error-dist-tarball): globus_gssapi_error-dist
+globus_gssapi_error-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gssapi-error.spec
+globus_gssapi_error-rpm_SOURCE = package-output/$(globus_gssapi_error-dist-tarball)
+globus_gssapi_error-rpm: $(globus_gssapi_error-rpm_SOURCE) $(globus_gssapi_error-rpm_SPECFILE)
+globus_gssapi_error-deb_PACKAGE_NAME = globus-gssapi-error
+globus_gssapi_error-deb_SOURCE = package-output/$(globus_gssapi_error-dist-tarball)
+globus_gssapi_error-deb_TARBALL = debbuild/globus-gssapi-error_5.4.orig.tar.gz
+globus_gssapi_error-deb: $(globus_gssapi_error-deb_SOURCE)
+globus_gssapi_error-osx-pkg = osx/packages/globus_gssapi_error-5.4.pkg
+$(globus_gssapi_error-osx-pkg): globus_gssapi_error-stamp
+$(globus_gssapi_error-osx-pkg)_SUBDIR = gsi/gssapi_error/source
+$(globus_gssapi_error-osx-pkg)_PACKAGE_NAME = globus_gssapi_error
+$(globus_gssapi_error-osx-pkg)_PACKAGE_VERSION = 5.4
+globus_gssapi_error-osx-pkg: $(globus_gssapi_error-osx-pkg)
+globus_xio_gsi_driver-stamp_SUBDIR = xio/drivers/gsi
+globus_xio_gsi_driver-all_SUBDIR = xio/drivers/gsi
+globus_xio_gsi_driver-clean_SUBDIR = xio/drivers/gsi
+globus_xio_gsi_driver-install_SUBDIR = xio/drivers/gsi
+globus_xio_gsi_driver-check_SUBDIR = xio/drivers/gsi
+globus_xio_gsi_driver-check: globus_xio_gsi_driver-stamp
+globus_xio_gsi_driver-clean_stamp = globus_xio_gsi_driver-stamp
+globus_xio_gsi_driver-install_stamp = globus_xio_gsi_driver-stamp
+globus_xio_gsi_driver-dist_SUBDIR = xio/drivers/gsi
+globus_xio_gsi_driver-deps = globus_xio-stamp globus_gss_assist-stamp globus_gssapi_error-stamp globus_gssapi_gsi-stamp globus_common-stamp
+globus_xio_gsi_driver: globus_xio_gsi_driver-all
+globus_xio_gsi_driver-all: globus_xio_gsi_driver-stamp
+globus_xio_gsi_driver-install: globus_xio_gsi_driver-stamp
+globus_xio_gsi_driver-stamp: $(globus_xio_gsi_driver-deps)
+globus_xio_gsi_driver-dist-tarball = globus_xio_gsi_driver-3.8.tar.gz
+package-output/$(globus_xio_gsi_driver-dist-tarball): globus_xio_gsi_driver-dist
+globus_xio_gsi_driver-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-xio-gsi-driver.spec
+globus_xio_gsi_driver-rpm_SOURCE = package-output/$(globus_xio_gsi_driver-dist-tarball)
+globus_xio_gsi_driver-rpm: $(globus_xio_gsi_driver-rpm_SOURCE) $(globus_xio_gsi_driver-rpm_SPECFILE)
+globus_xio_gsi_driver-deb_PACKAGE_NAME = globus-xio-gsi-driver
+globus_xio_gsi_driver-deb_SOURCE = package-output/$(globus_xio_gsi_driver-dist-tarball)
+globus_xio_gsi_driver-deb_TARBALL = debbuild/globus-xio-gsi-driver_3.8.orig.tar.gz
+globus_xio_gsi_driver-deb: $(globus_xio_gsi_driver-deb_SOURCE)
+globus_xio_gsi_driver-osx-pkg = osx/packages/globus_xio_gsi_driver-3.8.pkg
+$(globus_xio_gsi_driver-osx-pkg): globus_xio_gsi_driver-stamp
+$(globus_xio_gsi_driver-osx-pkg)_SUBDIR = xio/drivers/gsi
+$(globus_xio_gsi_driver-osx-pkg)_PACKAGE_NAME = globus_xio_gsi_driver
+$(globus_xio_gsi_driver-osx-pkg)_PACKAGE_VERSION = 3.8
+globus_xio_gsi_driver-osx-pkg: $(globus_xio_gsi_driver-osx-pkg)
+globus_io-stamp_SUBDIR = io/compat
+globus_io-all_SUBDIR = io/compat
+globus_io-clean_SUBDIR = io/compat
+globus_io-install_SUBDIR = io/compat
+globus_io-check_SUBDIR = io/compat
+globus_io-check: globus_io-stamp
+globus_io-clean_stamp = globus_io-stamp
+globus_io-install_stamp = globus_io-stamp
+globus_io-dist_SUBDIR = io/compat
+globus_io-deps = globus_common-stamp globus_xio-stamp globus_gss_assist-stamp globus_gssapi_gsi-stamp globus_xio_gsi_driver-stamp globus_gssapi_error-stamp
+globus_io: globus_io-all
+globus_io-all: globus_io-stamp
+globus_io-install: globus_io-stamp
+globus_io-stamp: $(globus_io-deps)
+globus_io-dist-tarball = globus_io-11.4.tar.gz
+package-output/$(globus_io-dist-tarball): globus_io-dist
+globus_io-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-io.spec
+globus_io-rpm_SOURCE = package-output/$(globus_io-dist-tarball)
+globus_io-rpm: $(globus_io-rpm_SOURCE) $(globus_io-rpm_SPECFILE)
+globus_io-deb_PACKAGE_NAME = globus-io
+globus_io-deb_SOURCE = package-output/$(globus_io-dist-tarball)
+globus_io-deb_TARBALL = debbuild/globus-io_11.4.orig.tar.gz
+globus_io-deb: $(globus_io-deb_SOURCE)
+globus_io-osx-pkg = osx/packages/globus_io-11.4.pkg
+$(globus_io-osx-pkg): globus_io-stamp
+$(globus_io-osx-pkg)_SUBDIR = io/compat
+$(globus_io-osx-pkg)_PACKAGE_NAME = globus_io
+$(globus_io-osx-pkg)_PACKAGE_VERSION = 11.4
+globus_io-osx-pkg: $(globus_io-osx-pkg)
+globus_ftp_control-stamp_SUBDIR = gridftp/control/source
+globus_ftp_control-all_SUBDIR = gridftp/control/source
+globus_ftp_control-clean_SUBDIR = gridftp/control/source
+globus_ftp_control-install_SUBDIR = gridftp/control/source
+globus_ftp_control-check_SUBDIR = gridftp/control/source
+globus_ftp_control-check: globus_ftp_control-stamp
+globus_ftp_control-clean_stamp = globus_ftp_control-stamp
+globus_ftp_control-install_stamp = globus_ftp_control-stamp
+globus_ftp_control-dist_SUBDIR = gridftp/control/source
+globus_ftp_control-deps = globus_common-stamp globus_gss_assist-stamp globus_gssapi_gsi-stamp globus_io-stamp globus_xio-stamp globus_gssapi_error-stamp
+globus_ftp_control: globus_ftp_control-all
+globus_ftp_control-all: globus_ftp_control-stamp
+globus_ftp_control-install: globus_ftp_control-stamp
+globus_ftp_control-stamp: $(globus_ftp_control-deps)
+globus_ftp_control-dist-tarball = globus_ftp_control-6.7.tar.gz
+package-output/$(globus_ftp_control-dist-tarball): globus_ftp_control-dist
+globus_ftp_control-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-ftp-control.spec
+globus_ftp_control-rpm_SOURCE = package-output/$(globus_ftp_control-dist-tarball)
+globus_ftp_control-rpm: $(globus_ftp_control-rpm_SOURCE) $(globus_ftp_control-rpm_SPECFILE)
+globus_ftp_control-deb_PACKAGE_NAME = globus-ftp-control
+globus_ftp_control-deb_SOURCE = package-output/$(globus_ftp_control-dist-tarball)
+globus_ftp_control-deb_TARBALL = debbuild/globus-ftp-control_6.7.orig.tar.gz
+globus_ftp_control-deb: $(globus_ftp_control-deb_SOURCE)
+globus_ftp_control-osx-pkg = osx/packages/globus_ftp_control-6.7.pkg
+$(globus_ftp_control-osx-pkg): globus_ftp_control-stamp
+$(globus_ftp_control-osx-pkg)_SUBDIR = gridftp/control/source
+$(globus_ftp_control-osx-pkg)_PACKAGE_NAME = globus_ftp_control
+$(globus_ftp_control-osx-pkg)_PACKAGE_VERSION = 6.7
+globus_ftp_control-osx-pkg: $(globus_ftp_control-osx-pkg)
+globus_usage-stamp_SUBDIR = usage/c/sender/source
+globus_usage-all_SUBDIR = usage/c/sender/source
+globus_usage-clean_SUBDIR = usage/c/sender/source
+globus_usage-install_SUBDIR = usage/c/sender/source
+globus_usage-check_SUBDIR = usage/c/sender/source
+globus_usage-check: globus_usage-stamp
+globus_usage-clean_stamp = globus_usage-stamp
+globus_usage-install_stamp = globus_usage-stamp
+globus_usage-dist_SUBDIR = usage/c/sender/source
+globus_usage-deps = globus_common-stamp globus_xio-stamp
+globus_usage: globus_usage-all
+globus_usage-all: globus_usage-stamp
+globus_usage-install: globus_usage-stamp
+globus_usage-stamp: $(globus_usage-deps)
+globus_usage-dist-tarball = globus_usage-4.4.tar.gz
+package-output/$(globus_usage-dist-tarball): globus_usage-dist
+globus_usage-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-usage.spec
+globus_usage-rpm_SOURCE = package-output/$(globus_usage-dist-tarball)
+globus_usage-rpm: $(globus_usage-rpm_SOURCE) $(globus_usage-rpm_SPECFILE)
+globus_usage-deb_PACKAGE_NAME = globus-usage
+globus_usage-deb_SOURCE = package-output/$(globus_usage-dist-tarball)
+globus_usage-deb_TARBALL = debbuild/globus-usage_4.4.orig.tar.gz
+globus_usage-deb: $(globus_usage-deb_SOURCE)
+globus_usage-osx-pkg = osx/packages/globus_usage-4.4.pkg
+$(globus_usage-osx-pkg): globus_usage-stamp
+$(globus_usage-osx-pkg)_SUBDIR = usage/c/sender/source
+$(globus_usage-osx-pkg)_PACKAGE_NAME = globus_usage
+$(globus_usage-osx-pkg)_PACKAGE_VERSION = 4.4
+globus_usage-osx-pkg: $(globus_usage-osx-pkg)
+globus_xio_pipe_driver-stamp_SUBDIR = xio/drivers/pipe/source
+globus_xio_pipe_driver-all_SUBDIR = xio/drivers/pipe/source
+globus_xio_pipe_driver-clean_SUBDIR = xio/drivers/pipe/source
+globus_xio_pipe_driver-install_SUBDIR = xio/drivers/pipe/source
+globus_xio_pipe_driver-check_SUBDIR = xio/drivers/pipe/source
+globus_xio_pipe_driver-check: globus_xio_pipe_driver-stamp
+globus_xio_pipe_driver-clean_stamp = globus_xio_pipe_driver-stamp
+globus_xio_pipe_driver-install_stamp = globus_xio_pipe_driver-stamp
+globus_xio_pipe_driver-dist_SUBDIR = xio/drivers/pipe/source
+globus_xio_pipe_driver-deps = globus_xio-stamp globus_common-stamp
+globus_xio_pipe_driver: globus_xio_pipe_driver-all
+globus_xio_pipe_driver-all: globus_xio_pipe_driver-stamp
+globus_xio_pipe_driver-install: globus_xio_pipe_driver-stamp
+globus_xio_pipe_driver-stamp: $(globus_xio_pipe_driver-deps)
+globus_xio_pipe_driver-dist-tarball = globus_xio_pipe_driver-3.7.tar.gz
+package-output/$(globus_xio_pipe_driver-dist-tarball): globus_xio_pipe_driver-dist
+globus_xio_pipe_driver-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-xio-pipe-driver.spec
+globus_xio_pipe_driver-rpm_SOURCE = package-output/$(globus_xio_pipe_driver-dist-tarball)
+globus_xio_pipe_driver-rpm: $(globus_xio_pipe_driver-rpm_SOURCE) $(globus_xio_pipe_driver-rpm_SPECFILE)
+globus_xio_pipe_driver-deb_PACKAGE_NAME = globus-xio-pipe-driver
+globus_xio_pipe_driver-deb_SOURCE = package-output/$(globus_xio_pipe_driver-dist-tarball)
+globus_xio_pipe_driver-deb_TARBALL = debbuild/globus-xio-pipe-driver_3.7.orig.tar.gz
+globus_xio_pipe_driver-deb: $(globus_xio_pipe_driver-deb_SOURCE)
+globus_xio_pipe_driver-osx-pkg = osx/packages/globus_xio_pipe_driver-3.7.pkg
+$(globus_xio_pipe_driver-osx-pkg): globus_xio_pipe_driver-stamp
+$(globus_xio_pipe_driver-osx-pkg)_SUBDIR = xio/drivers/pipe/source
+$(globus_xio_pipe_driver-osx-pkg)_PACKAGE_NAME = globus_xio_pipe_driver
+$(globus_xio_pipe_driver-osx-pkg)_PACKAGE_VERSION = 3.7
+globus_xio_pipe_driver-osx-pkg: $(globus_xio_pipe_driver-osx-pkg)
+globus_gridftp_server_control-stamp_SUBDIR = gridftp/server-lib/src
+globus_gridftp_server_control-all_SUBDIR = gridftp/server-lib/src
+globus_gridftp_server_control-clean_SUBDIR = gridftp/server-lib/src
+globus_gridftp_server_control-install_SUBDIR = gridftp/server-lib/src
+globus_gridftp_server_control-check_SUBDIR = gridftp/server-lib/src
+globus_gridftp_server_control-check: globus_gridftp_server_control-stamp
+globus_gridftp_server_control-clean_stamp = globus_gridftp_server_control-stamp
+globus_gridftp_server_control-install_stamp = globus_gridftp_server_control-stamp
+globus_gridftp_server_control-dist_SUBDIR = gridftp/server-lib/src
+globus_gridftp_server_control-deps = globus_common-stamp globus_xio-stamp globus_xio_gsi_driver-stamp globus_xio_pipe_driver-stamp globus_gss_assist-stamp globus_gssapi_gsi-stamp globus_gsi_openssl_error-stamp globus_gssapi_error-stamp
+globus_gridftp_server_control: globus_gridftp_server_control-all
+globus_gridftp_server_control-all: globus_gridftp_server_control-stamp
+globus_gridftp_server_control-install: globus_gridftp_server_control-stamp
+globus_gridftp_server_control-stamp: $(globus_gridftp_server_control-deps)
+globus_gridftp_server_control-dist-tarball = globus_gridftp_server_control-3.7.tar.gz
+package-output/$(globus_gridftp_server_control-dist-tarball): globus_gridftp_server_control-dist
+globus_gridftp_server_control-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gridftp-server-control.spec
+globus_gridftp_server_control-rpm_SOURCE = package-output/$(globus_gridftp_server_control-dist-tarball)
+globus_gridftp_server_control-rpm: $(globus_gridftp_server_control-rpm_SOURCE) $(globus_gridftp_server_control-rpm_SPECFILE)
+globus_gridftp_server_control-deb_PACKAGE_NAME = globus-gridftp-server-control
+globus_gridftp_server_control-deb_SOURCE = package-output/$(globus_gridftp_server_control-dist-tarball)
+globus_gridftp_server_control-deb_TARBALL = debbuild/globus-gridftp-server-control_3.7.orig.tar.gz
+globus_gridftp_server_control-deb: $(globus_gridftp_server_control-deb_SOURCE)
+globus_gridftp_server_control-osx-pkg = osx/packages/globus_gridftp_server_control-3.7.pkg
+$(globus_gridftp_server_control-osx-pkg): globus_gridftp_server_control-stamp
+$(globus_gridftp_server_control-osx-pkg)_SUBDIR = gridftp/server-lib/src
+$(globus_gridftp_server_control-osx-pkg)_PACKAGE_NAME = globus_gridftp_server_control
+$(globus_gridftp_server_control-osx-pkg)_PACKAGE_VERSION = 3.7
+globus_gridftp_server_control-osx-pkg: $(globus_gridftp_server_control-osx-pkg)
+globus_authz_callout_error-stamp_SUBDIR = gsi/authz/error
+globus_authz_callout_error-all_SUBDIR = gsi/authz/error
+globus_authz_callout_error-clean_SUBDIR = gsi/authz/error
+globus_authz_callout_error-install_SUBDIR = gsi/authz/error
+globus_authz_callout_error-check_SUBDIR = gsi/authz/error
+globus_authz_callout_error-check: globus_authz_callout_error-stamp
+globus_authz_callout_error-clean_stamp = globus_authz_callout_error-stamp
+globus_authz_callout_error-install_stamp = globus_authz_callout_error-stamp
+globus_authz_callout_error-dist_SUBDIR = gsi/authz/error
+globus_authz_callout_error-deps = globus_common-stamp
+globus_authz_callout_error: globus_authz_callout_error-all
+globus_authz_callout_error-all: globus_authz_callout_error-stamp
+globus_authz_callout_error-install: globus_authz_callout_error-stamp
+globus_authz_callout_error-stamp: $(globus_authz_callout_error-deps)
+globus_authz_callout_error-dist-tarball = globus_authz_callout_error-3.5.tar.gz
+package-output/$(globus_authz_callout_error-dist-tarball): globus_authz_callout_error-dist
+globus_authz_callout_error-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-authz-callout-error.spec
+globus_authz_callout_error-rpm_SOURCE = package-output/$(globus_authz_callout_error-dist-tarball)
+globus_authz_callout_error-rpm: $(globus_authz_callout_error-rpm_SOURCE) $(globus_authz_callout_error-rpm_SPECFILE)
+globus_authz_callout_error-deb_PACKAGE_NAME = globus-authz-callout-error
+globus_authz_callout_error-deb_SOURCE = package-output/$(globus_authz_callout_error-dist-tarball)
+globus_authz_callout_error-deb_TARBALL = debbuild/globus-authz-callout-error_3.5.orig.tar.gz
+globus_authz_callout_error-deb: $(globus_authz_callout_error-deb_SOURCE)
+globus_authz_callout_error-osx-pkg = osx/packages/globus_authz_callout_error-3.5.pkg
+$(globus_authz_callout_error-osx-pkg): globus_authz_callout_error-stamp
+$(globus_authz_callout_error-osx-pkg)_SUBDIR = gsi/authz/error
+$(globus_authz_callout_error-osx-pkg)_PACKAGE_NAME = globus_authz_callout_error
+$(globus_authz_callout_error-osx-pkg)_PACKAGE_VERSION = 3.5
+globus_authz_callout_error-osx-pkg: $(globus_authz_callout_error-osx-pkg)
+globus_authz-stamp_SUBDIR = gsi/authz/source
+globus_authz-all_SUBDIR = gsi/authz/source
+globus_authz-clean_SUBDIR = gsi/authz/source
+globus_authz-install_SUBDIR = gsi/authz/source
+globus_authz-check_SUBDIR = gsi/authz/source
+globus_authz-check: globus_authz-stamp
+globus_authz-clean_stamp = globus_authz-stamp
+globus_authz-install_stamp = globus_authz-stamp
+globus_authz-dist_SUBDIR = gsi/authz/source
+globus_authz-deps = globus_common-stamp globus_callout-stamp globus_gssapi_gsi-stamp globus_authz_callout_error-stamp
+globus_authz: globus_authz-all
+globus_authz-all: globus_authz-stamp
+globus_authz-install: globus_authz-stamp
+globus_authz-stamp: $(globus_authz-deps)
+globus_authz-dist-tarball = globus_authz-3.10.tar.gz
+package-output/$(globus_authz-dist-tarball): globus_authz-dist
+globus_authz-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-authz.spec
+globus_authz-rpm_SOURCE = package-output/$(globus_authz-dist-tarball)
+globus_authz-rpm: $(globus_authz-rpm_SOURCE) $(globus_authz-rpm_SPECFILE)
+globus_authz-deb_PACKAGE_NAME = globus-authz
+globus_authz-deb_SOURCE = package-output/$(globus_authz-dist-tarball)
+globus_authz-deb_TARBALL = debbuild/globus-authz_3.10.orig.tar.gz
+globus_authz-deb: $(globus_authz-deb_SOURCE)
+globus_authz-osx-pkg = osx/packages/globus_authz-3.10.pkg
+$(globus_authz-osx-pkg): globus_authz-stamp
+$(globus_authz-osx-pkg)_SUBDIR = gsi/authz/source
+$(globus_authz-osx-pkg)_PACKAGE_NAME = globus_authz
+$(globus_authz-osx-pkg)_PACKAGE_VERSION = 3.10
+globus_authz-osx-pkg: $(globus_authz-osx-pkg)
+globus_xio_rate_driver-stamp_SUBDIR = xio/drivers/rate/source
+globus_xio_rate_driver-all_SUBDIR = xio/drivers/rate/source
+globus_xio_rate_driver-clean_SUBDIR = xio/drivers/rate/source
+globus_xio_rate_driver-install_SUBDIR = xio/drivers/rate/source
+globus_xio_rate_driver-check_SUBDIR = xio/drivers/rate/source
+globus_xio_rate_driver-check: globus_xio_rate_driver-stamp
+globus_xio_rate_driver-clean_stamp = globus_xio_rate_driver-stamp
+globus_xio_rate_driver-install_stamp = globus_xio_rate_driver-stamp
+globus_xio_rate_driver-dist_SUBDIR = xio/drivers/rate/source
+globus_xio_rate_driver-deps = globus_xio-stamp
+globus_xio_rate_driver: globus_xio_rate_driver-all
+globus_xio_rate_driver-all: globus_xio_rate_driver-stamp
+globus_xio_rate_driver-install: globus_xio_rate_driver-stamp
+globus_xio_rate_driver-stamp: $(globus_xio_rate_driver-deps)
+globus_xio_rate_driver-dist-tarball = globus_xio_rate_driver-1.7.tar.gz
+package-output/$(globus_xio_rate_driver-dist-tarball): globus_xio_rate_driver-dist
+globus_xio_rate_driver-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-xio-rate-driver.spec
+globus_xio_rate_driver-rpm_SOURCE = package-output/$(globus_xio_rate_driver-dist-tarball)
+globus_xio_rate_driver-rpm: $(globus_xio_rate_driver-rpm_SOURCE) $(globus_xio_rate_driver-rpm_SPECFILE)
+globus_xio_rate_driver-deb_PACKAGE_NAME = globus-xio-rate-driver
+globus_xio_rate_driver-deb_SOURCE = package-output/$(globus_xio_rate_driver-dist-tarball)
+globus_xio_rate_driver-deb_TARBALL = debbuild/globus-xio-rate-driver_1.7.orig.tar.gz
+globus_xio_rate_driver-deb: $(globus_xio_rate_driver-deb_SOURCE)
+globus_xio_rate_driver-osx-pkg = osx/packages/globus_xio_rate_driver-1.7.pkg
+$(globus_xio_rate_driver-osx-pkg): globus_xio_rate_driver-stamp
+$(globus_xio_rate_driver-osx-pkg)_SUBDIR = xio/drivers/rate/source
+$(globus_xio_rate_driver-osx-pkg)_PACKAGE_NAME = globus_xio_rate_driver
+$(globus_xio_rate_driver-osx-pkg)_PACKAGE_VERSION = 1.7
+globus_xio_rate_driver-osx-pkg: $(globus_xio_rate_driver-osx-pkg)
+globus_xio_popen_driver-stamp_SUBDIR = xio/drivers/popen/source
+globus_xio_popen_driver-all_SUBDIR = xio/drivers/popen/source
+globus_xio_popen_driver-clean_SUBDIR = xio/drivers/popen/source
+globus_xio_popen_driver-install_SUBDIR = xio/drivers/popen/source
+globus_xio_popen_driver-check_SUBDIR = xio/drivers/popen/source
+globus_xio_popen_driver-check: globus_xio_popen_driver-stamp
+globus_xio_popen_driver-clean_stamp = globus_xio_popen_driver-stamp
+globus_xio_popen_driver-install_stamp = globus_xio_popen_driver-stamp
+globus_xio_popen_driver-dist_SUBDIR = xio/drivers/popen/source
+globus_xio_popen_driver-deps = globus_common-stamp globus_xio-stamp
+globus_xio_popen_driver: globus_xio_popen_driver-all
+globus_xio_popen_driver-all: globus_xio_popen_driver-stamp
+globus_xio_popen_driver-install: globus_xio_popen_driver-stamp
+globus_xio_popen_driver-stamp: $(globus_xio_popen_driver-deps)
+globus_xio_popen_driver-dist-tarball = globus_xio_popen_driver-3.5.tar.gz
+package-output/$(globus_xio_popen_driver-dist-tarball): globus_xio_popen_driver-dist
+globus_xio_popen_driver-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-xio-popen-driver.spec
+globus_xio_popen_driver-rpm_SOURCE = package-output/$(globus_xio_popen_driver-dist-tarball)
+globus_xio_popen_driver-rpm: $(globus_xio_popen_driver-rpm_SOURCE) $(globus_xio_popen_driver-rpm_SPECFILE)
+globus_xio_popen_driver-deb_PACKAGE_NAME = globus-xio-popen-driver
+globus_xio_popen_driver-deb_SOURCE = package-output/$(globus_xio_popen_driver-dist-tarball)
+globus_xio_popen_driver-deb_TARBALL = debbuild/globus-xio-popen-driver_3.5.orig.tar.gz
+globus_xio_popen_driver-deb: $(globus_xio_popen_driver-deb_SOURCE)
+globus_xio_popen_driver-osx-pkg = osx/packages/globus_xio_popen_driver-3.5.pkg
+$(globus_xio_popen_driver-osx-pkg): globus_xio_popen_driver-stamp
+$(globus_xio_popen_driver-osx-pkg)_SUBDIR = xio/drivers/popen/source
+$(globus_xio_popen_driver-osx-pkg)_PACKAGE_NAME = globus_xio_popen_driver
+$(globus_xio_popen_driver-osx-pkg)_PACKAGE_VERSION = 3.5
+globus_xio_popen_driver-osx-pkg: $(globus_xio_popen_driver-osx-pkg)
+globus_xio_udt_driver-stamp_SUBDIR = xio/drivers/udt/source
+globus_xio_udt_driver-all_SUBDIR = xio/drivers/udt/source
+globus_xio_udt_driver-clean_SUBDIR = xio/drivers/udt/source
+globus_xio_udt_driver-install_SUBDIR = xio/drivers/udt/source
+globus_xio_udt_driver-check_SUBDIR = xio/drivers/udt/source
+globus_xio_udt_driver-check: globus_xio_udt_driver-stamp
+globus_xio_udt_driver-clean_stamp = globus_xio_udt_driver-stamp
+globus_xio_udt_driver-install_stamp = globus_xio_udt_driver-stamp
+globus_xio_udt_driver-dist_SUBDIR = xio/drivers/udt/source
+globus_xio_udt_driver-deps = globus_common-stamp globus_xio-stamp
+globus_xio_udt_driver: globus_xio_udt_driver-all
+globus_xio_udt_driver-all: globus_xio_udt_driver-stamp
+globus_xio_udt_driver-install: globus_xio_udt_driver-stamp
+globus_xio_udt_driver-stamp: $(globus_xio_udt_driver-deps)
+globus_xio_udt_driver-dist-tarball = globus_xio_udt_driver-1.18.tar.gz
+package-output/$(globus_xio_udt_driver-dist-tarball): globus_xio_udt_driver-dist
+globus_xio_udt_driver-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-xio-udt-driver.spec
+globus_xio_udt_driver-rpm_SOURCE = package-output/$(globus_xio_udt_driver-dist-tarball)
+globus_xio_udt_driver-rpm: $(globus_xio_udt_driver-rpm_SOURCE) $(globus_xio_udt_driver-rpm_SPECFILE)
+globus_xio_udt_driver-deb_PACKAGE_NAME = globus-xio-udt-driver
+globus_xio_udt_driver-deb_SOURCE = package-output/$(globus_xio_udt_driver-dist-tarball)
+globus_xio_udt_driver-deb_TARBALL = debbuild/globus-xio-udt-driver_1.18.orig.tar.gz
+globus_xio_udt_driver-deb: $(globus_xio_udt_driver-deb_SOURCE)
+globus_xio_udt_driver-osx-pkg = osx/packages/globus_xio_udt_driver-1.18.pkg
+$(globus_xio_udt_driver-osx-pkg): globus_xio_udt_driver-stamp
+$(globus_xio_udt_driver-osx-pkg)_SUBDIR = xio/drivers/udt/source
+$(globus_xio_udt_driver-osx-pkg)_PACKAGE_NAME = globus_xio_udt_driver
+$(globus_xio_udt_driver-osx-pkg)_PACKAGE_VERSION = 1.18
+globus_xio_udt_driver-osx-pkg: $(globus_xio_udt_driver-osx-pkg)
+globus_net_manager-stamp_SUBDIR = gridftp/net_manager
+globus_net_manager-all_SUBDIR = gridftp/net_manager
+globus_net_manager-clean_SUBDIR = gridftp/net_manager
+globus_net_manager-install_SUBDIR = gridftp/net_manager
+globus_net_manager-check_SUBDIR = gridftp/net_manager
+globus_net_manager-check: globus_net_manager-stamp
+globus_net_manager-clean_stamp = globus_net_manager-stamp
+globus_net_manager-install_stamp = globus_net_manager-stamp
+globus_net_manager-dist_SUBDIR = gridftp/net_manager
+globus_net_manager-deps = globus_common-stamp globus_xio-stamp
+globus_net_manager: globus_net_manager-all
+globus_net_manager-all: globus_net_manager-stamp
+globus_net_manager-install: globus_net_manager-stamp
+globus_net_manager-stamp: $(globus_net_manager-deps)
+globus_net_manager-dist-tarball = globus_net_manager-0.12.tar.gz
+package-output/$(globus_net_manager-dist-tarball): globus_net_manager-dist
+globus_net_manager-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-net-manager.spec
+globus_net_manager-rpm_SOURCE = package-output/$(globus_net_manager-dist-tarball)
+globus_net_manager-rpm: $(globus_net_manager-rpm_SOURCE) $(globus_net_manager-rpm_SPECFILE)
+globus_net_manager-deb_PACKAGE_NAME = globus-net-manager
+globus_net_manager-deb_SOURCE = package-output/$(globus_net_manager-dist-tarball)
+globus_net_manager-deb_TARBALL = debbuild/globus-net-manager_0.12.orig.tar.gz
+globus_net_manager-deb: $(globus_net_manager-deb_SOURCE)
+globus_net_manager-osx-pkg = osx/packages/globus_net_manager-0.12.pkg
+$(globus_net_manager-osx-pkg): globus_net_manager-stamp
+$(globus_net_manager-osx-pkg)_SUBDIR = gridftp/net_manager
+$(globus_net_manager-osx-pkg)_PACKAGE_NAME = globus_net_manager
+$(globus_net_manager-osx-pkg)_PACKAGE_VERSION = 0.12
+globus_net_manager-osx-pkg: $(globus_net_manager-osx-pkg)
+globus_gridftp_server-stamp_SUBDIR = gridftp/server/src
+globus_gridftp_server-all_SUBDIR = gridftp/server/src
+globus_gridftp_server-clean_SUBDIR = gridftp/server/src
+globus_gridftp_server-install_SUBDIR = gridftp/server/src
+globus_gridftp_server-check_SUBDIR = gridftp/server/src
+globus_gridftp_server-check: globus_gridftp_server-stamp
+globus_gridftp_server-clean_stamp = globus_gridftp_server-stamp
+globus_gridftp_server-install_stamp = globus_gridftp_server-stamp
+globus_gridftp_server-dist_SUBDIR = gridftp/server/src
+globus_gridftp_server-deps = globus_common-stamp globus_xio-stamp globus_xio_gsi_driver-stamp globus_gfork-stamp globus_gridftp_server_control-stamp globus_ftp_control-stamp globus_authz-stamp globus_usage-stamp globus_gss_assist-stamp globus_gsi_credential-stamp
+globus_gridftp_server: globus_gridftp_server-all
+globus_gridftp_server-all: globus_gridftp_server-stamp
+globus_gridftp_server-install: globus_gridftp_server-stamp
+globus_gridftp_server-stamp: $(globus_gridftp_server-deps)
+globus_gridftp_server-dist-tarball = globus_gridftp_server-8.5.tar.gz
+package-output/$(globus_gridftp_server-dist-tarball): globus_gridftp_server-dist
+globus_gridftp_server-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gridftp-server.spec
+globus_gridftp_server-rpm_SOURCE = package-output/$(globus_gridftp_server-dist-tarball)
+globus_gridftp_server-rpm: $(globus_gridftp_server-rpm_SOURCE) $(globus_gridftp_server-rpm_SPECFILE)
+globus_gridftp_server-deb_PACKAGE_NAME = globus-gridftp-server
+globus_gridftp_server-deb_SOURCE = package-output/$(globus_gridftp_server-dist-tarball)
+globus_gridftp_server-deb_TARBALL = debbuild/globus-gridftp-server_8.5.orig.tar.gz
+globus_gridftp_server-deb: $(globus_gridftp_server-deb_SOURCE)
+globus_gridftp_server-osx-pkg = osx/packages/globus_gridftp_server-8.5.pkg
+$(globus_gridftp_server-osx-pkg): globus_gridftp_server-stamp
+$(globus_gridftp_server-osx-pkg)_SUBDIR = gridftp/server/src
+$(globus_gridftp_server-osx-pkg)_PACKAGE_NAME = globus_gridftp_server
+$(globus_gridftp_server-osx-pkg)_PACKAGE_VERSION = 8.5
+globus_gridftp_server-osx-pkg: $(globus_gridftp_server-osx-pkg)
+globus_gram_protocol-stamp_SUBDIR = gram/protocol/source
+globus_gram_protocol-all_SUBDIR = gram/protocol/source
+globus_gram_protocol-clean_SUBDIR = gram/protocol/source
+globus_gram_protocol-install_SUBDIR = gram/protocol/source
+globus_gram_protocol-check_SUBDIR = gram/protocol/source
+globus_gram_protocol-check: globus_gram_protocol-stamp
+globus_gram_protocol-clean_stamp = globus_gram_protocol-stamp
+globus_gram_protocol-install_stamp = globus_gram_protocol-stamp
+globus_gram_protocol-dist_SUBDIR = gram/protocol/source
+globus_gram_protocol-deps = globus_common-stamp globus_io-stamp globus_gssapi_gsi-stamp globus_gss_assist-stamp
+globus_gram_protocol: globus_gram_protocol-all
+globus_gram_protocol-all: globus_gram_protocol-stamp
+globus_gram_protocol-install: globus_gram_protocol-stamp
+globus_gram_protocol-stamp: $(globus_gram_protocol-deps)
+globus_gram_protocol-dist-tarball = globus_gram_protocol-12.12.tar.gz
+package-output/$(globus_gram_protocol-dist-tarball): globus_gram_protocol-dist
+globus_gram_protocol-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gram-protocol.spec
+globus_gram_protocol-rpm_SOURCE = package-output/$(globus_gram_protocol-dist-tarball)
+globus_gram_protocol-rpm: $(globus_gram_protocol-rpm_SOURCE) $(globus_gram_protocol-rpm_SPECFILE)
+globus_gram_protocol-deb_PACKAGE_NAME = globus-gram-protocol
+globus_gram_protocol-deb_SOURCE = package-output/$(globus_gram_protocol-dist-tarball)
+globus_gram_protocol-deb_TARBALL = debbuild/globus-gram-protocol_12.12.orig.tar.gz
+globus_gram_protocol-deb: $(globus_gram_protocol-deb_SOURCE)
+globus_gram_protocol-osx-pkg = osx/packages/globus_gram_protocol-12.12.pkg
+$(globus_gram_protocol-osx-pkg): globus_gram_protocol-stamp
+$(globus_gram_protocol-osx-pkg)_SUBDIR = gram/protocol/source
+$(globus_gram_protocol-osx-pkg)_PACKAGE_NAME = globus_gram_protocol
+$(globus_gram_protocol-osx-pkg)_PACKAGE_VERSION = 12.12
+globus_gram_protocol-osx-pkg: $(globus_gram_protocol-osx-pkg)
+globus_scheduler_event_generator-stamp_SUBDIR = gram/jobmanager/scheduler_event_generator/source
+globus_scheduler_event_generator-all_SUBDIR = gram/jobmanager/scheduler_event_generator/source
+globus_scheduler_event_generator-clean_SUBDIR = gram/jobmanager/scheduler_event_generator/source
+globus_scheduler_event_generator-install_SUBDIR = gram/jobmanager/scheduler_event_generator/source
+globus_scheduler_event_generator-check_SUBDIR = gram/jobmanager/scheduler_event_generator/source
+globus_scheduler_event_generator-check: globus_scheduler_event_generator-stamp
+globus_scheduler_event_generator-clean_stamp = globus_scheduler_event_generator-stamp
+globus_scheduler_event_generator-install_stamp = globus_scheduler_event_generator-stamp
+globus_scheduler_event_generator-dist_SUBDIR = gram/jobmanager/scheduler_event_generator/source
+globus_scheduler_event_generator-deps = globus_common-stamp globus_xio-stamp globus_gram_protocol-stamp globus_xio_gsi_driver-stamp
+globus_scheduler_event_generator: globus_scheduler_event_generator-all
+globus_scheduler_event_generator-all: globus_scheduler_event_generator-stamp
+globus_scheduler_event_generator-install: globus_scheduler_event_generator-stamp
+globus_scheduler_event_generator-stamp: $(globus_scheduler_event_generator-deps)
+globus_scheduler_event_generator-dist-tarball = globus_scheduler_event_generator-5.11.tar.gz
+package-output/$(globus_scheduler_event_generator-dist-tarball): globus_scheduler_event_generator-dist
+globus_scheduler_event_generator-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-scheduler-event-generator.spec
+globus_scheduler_event_generator-rpm_SOURCE = package-output/$(globus_scheduler_event_generator-dist-tarball)
+globus_scheduler_event_generator-rpm: $(globus_scheduler_event_generator-rpm_SOURCE) $(globus_scheduler_event_generator-rpm_SPECFILE)
+globus_scheduler_event_generator-deb_PACKAGE_NAME = globus-scheduler-event-generator
+globus_scheduler_event_generator-deb_SOURCE = package-output/$(globus_scheduler_event_generator-dist-tarball)
+globus_scheduler_event_generator-deb_TARBALL = debbuild/globus-scheduler-event-generator_5.11.orig.tar.gz
+globus_scheduler_event_generator-deb: $(globus_scheduler_event_generator-deb_SOURCE)
+globus_scheduler_event_generator-osx-pkg = osx/packages/globus_scheduler_event_generator-5.11.pkg
+$(globus_scheduler_event_generator-osx-pkg): globus_scheduler_event_generator-stamp
+$(globus_scheduler_event_generator-osx-pkg)_SUBDIR = gram/jobmanager/scheduler_event_generator/source
+$(globus_scheduler_event_generator-osx-pkg)_PACKAGE_NAME = globus_scheduler_event_generator
+$(globus_scheduler_event_generator-osx-pkg)_PACKAGE_VERSION = 5.11
+globus_scheduler_event_generator-osx-pkg: $(globus_scheduler_event_generator-osx-pkg)
+globus_gram_job_manager_lsf-stamp_SUBDIR = gram/jobmanager/lrms/lsf/source
+globus_gram_job_manager_lsf-all_SUBDIR = gram/jobmanager/lrms/lsf/source
+globus_gram_job_manager_lsf-clean_SUBDIR = gram/jobmanager/lrms/lsf/source
+globus_gram_job_manager_lsf-install_SUBDIR = gram/jobmanager/lrms/lsf/source
+globus_gram_job_manager_lsf-check_SUBDIR = gram/jobmanager/lrms/lsf/source
+globus_gram_job_manager_lsf-check: globus_gram_job_manager_lsf-stamp
+globus_gram_job_manager_lsf-clean_stamp = globus_gram_job_manager_lsf-stamp
+globus_gram_job_manager_lsf-install_stamp = globus_gram_job_manager_lsf-stamp
+globus_gram_job_manager_lsf-dist_SUBDIR = gram/jobmanager/lrms/lsf/source
+globus_gram_job_manager_lsf-deps = globus_common-stamp globus_xio-stamp globus_scheduler_event_generator-stamp globus_gram_protocol-stamp
+globus_gram_job_manager_lsf: globus_gram_job_manager_lsf-all
+globus_gram_job_manager_lsf-all: globus_gram_job_manager_lsf-stamp
+globus_gram_job_manager_lsf-install: globus_gram_job_manager_lsf-stamp
+globus_gram_job_manager_lsf-stamp: $(globus_gram_job_manager_lsf-deps)
+globus_gram_job_manager_lsf-dist-tarball = globus_gram_job_manager_lsf-2.6.tar.gz
+package-output/$(globus_gram_job_manager_lsf-dist-tarball): globus_gram_job_manager_lsf-dist
+globus_gram_job_manager_lsf-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gram-job-manager-lsf.spec
+globus_gram_job_manager_lsf-rpm_SOURCE = package-output/$(globus_gram_job_manager_lsf-dist-tarball)
+globus_gram_job_manager_lsf-rpm: $(globus_gram_job_manager_lsf-rpm_SOURCE) $(globus_gram_job_manager_lsf-rpm_SPECFILE)
+globus_gram_job_manager_lsf-deb_PACKAGE_NAME = globus-gram-job-manager-lsf
+globus_gram_job_manager_lsf-deb_SOURCE = package-output/$(globus_gram_job_manager_lsf-dist-tarball)
+globus_gram_job_manager_lsf-deb_TARBALL = debbuild/globus-gram-job-manager-lsf_2.6.orig.tar.gz
+globus_gram_job_manager_lsf-deb: $(globus_gram_job_manager_lsf-deb_SOURCE)
+globus_gram_job_manager_lsf-osx-pkg = osx/packages/globus_gram_job_manager_lsf-2.6.pkg
+$(globus_gram_job_manager_lsf-osx-pkg): globus_gram_job_manager_lsf-stamp
+$(globus_gram_job_manager_lsf-osx-pkg)_SUBDIR = gram/jobmanager/lrms/lsf/source
+$(globus_gram_job_manager_lsf-osx-pkg)_PACKAGE_NAME = globus_gram_job_manager_lsf
+$(globus_gram_job_manager_lsf-osx-pkg)_PACKAGE_VERSION = 2.6
+globus_gram_job_manager_lsf-osx-pkg: $(globus_gram_job_manager_lsf-osx-pkg)
+globus_gass_transfer-stamp_SUBDIR = gass/transfer/source
+globus_gass_transfer-all_SUBDIR = gass/transfer/source
+globus_gass_transfer-clean_SUBDIR = gass/transfer/source
+globus_gass_transfer-install_SUBDIR = gass/transfer/source
+globus_gass_transfer-check_SUBDIR = gass/transfer/source
+globus_gass_transfer-check: globus_gass_transfer-stamp
+globus_gass_transfer-clean_stamp = globus_gass_transfer-stamp
+globus_gass_transfer-install_stamp = globus_gass_transfer-stamp
+globus_gass_transfer-dist_SUBDIR = gass/transfer/source
+globus_gass_transfer-deps = globus_common-stamp globus_gssapi_gsi-stamp globus_gss_assist-stamp globus_io-stamp
+globus_gass_transfer: globus_gass_transfer-all
+globus_gass_transfer-all: globus_gass_transfer-stamp
+globus_gass_transfer-install: globus_gass_transfer-stamp
+globus_gass_transfer-stamp: $(globus_gass_transfer-deps)
+globus_gass_transfer-dist-tarball = globus_gass_transfer-8.8.tar.gz
+package-output/$(globus_gass_transfer-dist-tarball): globus_gass_transfer-dist
+globus_gass_transfer-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gass-transfer.spec
+globus_gass_transfer-rpm_SOURCE = package-output/$(globus_gass_transfer-dist-tarball)
+globus_gass_transfer-rpm: $(globus_gass_transfer-rpm_SOURCE) $(globus_gass_transfer-rpm_SPECFILE)
+globus_gass_transfer-deb_PACKAGE_NAME = globus-gass-transfer
+globus_gass_transfer-deb_SOURCE = package-output/$(globus_gass_transfer-dist-tarball)
+globus_gass_transfer-deb_TARBALL = debbuild/globus-gass-transfer_8.8.orig.tar.gz
+globus_gass_transfer-deb: $(globus_gass_transfer-deb_SOURCE)
+globus_gass_transfer-osx-pkg = osx/packages/globus_gass_transfer-8.8.pkg
+$(globus_gass_transfer-osx-pkg): globus_gass_transfer-stamp
+$(globus_gass_transfer-osx-pkg)_SUBDIR = gass/transfer/source
+$(globus_gass_transfer-osx-pkg)_PACKAGE_NAME = globus_gass_transfer
+$(globus_gass_transfer-osx-pkg)_PACKAGE_VERSION = 8.8
+globus_gass_transfer-osx-pkg: $(globus_gass_transfer-osx-pkg)
+globus_ftp_client-stamp_SUBDIR = gridftp/client/source
+globus_ftp_client-all_SUBDIR = gridftp/client/source
+globus_ftp_client-clean_SUBDIR = gridftp/client/source
+globus_ftp_client-install_SUBDIR = gridftp/client/source
+globus_ftp_client-check_SUBDIR = gridftp/client/source
+globus_ftp_client-check: globus_ftp_client-stamp
+globus_ftp_client-clean_stamp = globus_ftp_client-stamp
+globus_ftp_client-install_stamp = globus_ftp_client-stamp
+globus_ftp_client-dist_SUBDIR = gridftp/client/source
+globus_ftp_client-deps = globus_common-stamp globus_ftp_control-stamp globus_gsi_callback-stamp globus_gsi_credential-stamp globus_gsi_sysconfig-stamp globus_gssapi_gsi-stamp globus_xio-stamp globus_xio_popen_driver-stamp
+globus_ftp_client: globus_ftp_client-all
+globus_ftp_client-all: globus_ftp_client-stamp
+globus_ftp_client-install: globus_ftp_client-stamp
+globus_ftp_client-stamp: $(globus_ftp_client-deps)
+globus_ftp_client-dist-tarball = globus_ftp_client-8.24.tar.gz
+package-output/$(globus_ftp_client-dist-tarball): globus_ftp_client-dist
+globus_ftp_client-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-ftp-client.spec
+globus_ftp_client-rpm_SOURCE = package-output/$(globus_ftp_client-dist-tarball)
+globus_ftp_client-rpm: $(globus_ftp_client-rpm_SOURCE) $(globus_ftp_client-rpm_SPECFILE)
+globus_ftp_client-deb_PACKAGE_NAME = globus-ftp-client
+globus_ftp_client-deb_SOURCE = package-output/$(globus_ftp_client-dist-tarball)
+globus_ftp_client-deb_TARBALL = debbuild/globus-ftp-client_8.24.orig.tar.gz
+globus_ftp_client-deb: $(globus_ftp_client-deb_SOURCE)
+globus_ftp_client-osx-pkg = osx/packages/globus_ftp_client-8.24.pkg
+$(globus_ftp_client-osx-pkg): globus_ftp_client-stamp
+$(globus_ftp_client-osx-pkg)_SUBDIR = gridftp/client/source
+$(globus_ftp_client-osx-pkg)_PACKAGE_NAME = globus_ftp_client
+$(globus_ftp_client-osx-pkg)_PACKAGE_VERSION = 8.24
+globus_ftp_client-osx-pkg: $(globus_ftp_client-osx-pkg)
+globus_gass_copy-stamp_SUBDIR = gass/copy/source
+globus_gass_copy-all_SUBDIR = gass/copy/source
+globus_gass_copy-clean_SUBDIR = gass/copy/source
+globus_gass_copy-install_SUBDIR = gass/copy/source
+globus_gass_copy-check_SUBDIR = gass/copy/source
+globus_gass_copy-check: globus_gass_copy-stamp
+globus_gass_copy-clean_stamp = globus_gass_copy-stamp
+globus_gass_copy-install_stamp = globus_gass_copy-stamp
+globus_gass_copy-dist_SUBDIR = gass/copy/source
+globus_gass_copy-deps = globus_common-stamp globus_ftp_client-stamp globus_ftp_control-stamp globus_gsi_sysconfig-stamp globus_gass_transfer-stamp globus_io-stamp globus_gssapi_gsi-stamp globus_gssapi_error-stamp
+globus_gass_copy: globus_gass_copy-all
+globus_gass_copy-all: globus_gass_copy-stamp
+globus_gass_copy-install: globus_gass_copy-stamp
+globus_gass_copy-stamp: $(globus_gass_copy-deps)
+globus_gass_copy-dist-tarball = globus_gass_copy-9.17.tar.gz
+package-output/$(globus_gass_copy-dist-tarball): globus_gass_copy-dist
+globus_gass_copy-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gass-copy.spec
+globus_gass_copy-rpm_SOURCE = package-output/$(globus_gass_copy-dist-tarball)
+globus_gass_copy-rpm: $(globus_gass_copy-rpm_SOURCE) $(globus_gass_copy-rpm_SPECFILE)
+globus_gass_copy-deb_PACKAGE_NAME = globus-gass-copy
+globus_gass_copy-deb_SOURCE = package-output/$(globus_gass_copy-dist-tarball)
+globus_gass_copy-deb_TARBALL = debbuild/globus-gass-copy_9.17.orig.tar.gz
+globus_gass_copy-deb: $(globus_gass_copy-deb_SOURCE)
+globus_gass_copy-osx-pkg = osx/packages/globus_gass_copy-9.17.pkg
+$(globus_gass_copy-osx-pkg): globus_gass_copy-stamp
+$(globus_gass_copy-osx-pkg)_SUBDIR = gass/copy/source
+$(globus_gass_copy-osx-pkg)_PACKAGE_NAME = globus_gass_copy
+$(globus_gass_copy-osx-pkg)_PACKAGE_VERSION = 9.17
+globus_gass_copy-osx-pkg: $(globus_gass_copy-osx-pkg)
+globus_gass_cache-stamp_SUBDIR = gass/cache/source
+globus_gass_cache-all_SUBDIR = gass/cache/source
+globus_gass_cache-clean_SUBDIR = gass/cache/source
+globus_gass_cache-install_SUBDIR = gass/cache/source
+globus_gass_cache-check_SUBDIR = gass/cache/source
+globus_gass_cache-check: globus_gass_cache-stamp
+globus_gass_cache-clean_stamp = globus_gass_cache-stamp
+globus_gass_cache-install_stamp = globus_gass_cache-stamp
+globus_gass_cache-dist_SUBDIR = gass/cache/source
+globus_gass_cache-deps = globus_common-stamp
+globus_gass_cache: globus_gass_cache-all
+globus_gass_cache-all: globus_gass_cache-stamp
+globus_gass_cache-install: globus_gass_cache-stamp
+globus_gass_cache-stamp: $(globus_gass_cache-deps)
+globus_gass_cache-dist-tarball = globus_gass_cache-9.7.tar.gz
+package-output/$(globus_gass_cache-dist-tarball): globus_gass_cache-dist
+globus_gass_cache-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gass-cache.spec
+globus_gass_cache-rpm_SOURCE = package-output/$(globus_gass_cache-dist-tarball)
+globus_gass_cache-rpm: $(globus_gass_cache-rpm_SOURCE) $(globus_gass_cache-rpm_SPECFILE)
+globus_gass_cache-deb_PACKAGE_NAME = globus-gass-cache
+globus_gass_cache-deb_SOURCE = package-output/$(globus_gass_cache-dist-tarball)
+globus_gass_cache-deb_TARBALL = debbuild/globus-gass-cache_9.7.orig.tar.gz
+globus_gass_cache-deb: $(globus_gass_cache-deb_SOURCE)
+globus_gass_cache-osx-pkg = osx/packages/globus_gass_cache-9.7.pkg
+$(globus_gass_cache-osx-pkg): globus_gass_cache-stamp
+$(globus_gass_cache-osx-pkg)_SUBDIR = gass/cache/source
+$(globus_gass_cache-osx-pkg)_PACKAGE_NAME = globus_gass_cache
+$(globus_gass_cache-osx-pkg)_PACKAGE_VERSION = 9.7
+globus_gass_cache-osx-pkg: $(globus_gass_cache-osx-pkg)
+globus_rsl-stamp_SUBDIR = gram/rsl/source
+globus_rsl-all_SUBDIR = gram/rsl/source
+globus_rsl-clean_SUBDIR = gram/rsl/source
+globus_rsl-install_SUBDIR = gram/rsl/source
+globus_rsl-check_SUBDIR = gram/rsl/source
+globus_rsl-check: globus_rsl-stamp
+globus_rsl-clean_stamp = globus_rsl-stamp
+globus_rsl-install_stamp = globus_rsl-stamp
+globus_rsl-dist_SUBDIR = gram/rsl/source
+globus_rsl-deps = globus_common-stamp
+globus_rsl: globus_rsl-all
+globus_rsl-all: globus_rsl-stamp
+globus_rsl-install: globus_rsl-stamp
+globus_rsl-stamp: $(globus_rsl-deps)
+globus_rsl-dist-tarball = globus_rsl-10.10.tar.gz
+package-output/$(globus_rsl-dist-tarball): globus_rsl-dist
+globus_rsl-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-rsl.spec
+globus_rsl-rpm_SOURCE = package-output/$(globus_rsl-dist-tarball)
+globus_rsl-rpm: $(globus_rsl-rpm_SOURCE) $(globus_rsl-rpm_SPECFILE)
+globus_rsl-deb_PACKAGE_NAME = globus-rsl
+globus_rsl-deb_SOURCE = package-output/$(globus_rsl-dist-tarball)
+globus_rsl-deb_TARBALL = debbuild/globus-rsl_10.10.orig.tar.gz
+globus_rsl-deb: $(globus_rsl-deb_SOURCE)
+globus_rsl-osx-pkg = osx/packages/globus_rsl-10.10.pkg
+$(globus_rsl-osx-pkg): globus_rsl-stamp
+$(globus_rsl-osx-pkg)_SUBDIR = gram/rsl/source
+$(globus_rsl-osx-pkg)_PACKAGE_NAME = globus_rsl
+$(globus_rsl-osx-pkg)_PACKAGE_VERSION = 10.10
+globus_rsl-osx-pkg: $(globus_rsl-osx-pkg)
+globus_gram_job_manager_callout_error-stamp_SUBDIR = gram/jobmanager/callout_error
+globus_gram_job_manager_callout_error-all_SUBDIR = gram/jobmanager/callout_error
+globus_gram_job_manager_callout_error-clean_SUBDIR = gram/jobmanager/callout_error
+globus_gram_job_manager_callout_error-install_SUBDIR = gram/jobmanager/callout_error
+globus_gram_job_manager_callout_error-check_SUBDIR = gram/jobmanager/callout_error
+globus_gram_job_manager_callout_error-check: globus_gram_job_manager_callout_error-stamp
+globus_gram_job_manager_callout_error-clean_stamp = globus_gram_job_manager_callout_error-stamp
+globus_gram_job_manager_callout_error-install_stamp = globus_gram_job_manager_callout_error-stamp
+globus_gram_job_manager_callout_error-dist_SUBDIR = gram/jobmanager/callout_error
+globus_gram_job_manager_callout_error-deps = globus_common-stamp
+globus_gram_job_manager_callout_error: globus_gram_job_manager_callout_error-all
+globus_gram_job_manager_callout_error-all: globus_gram_job_manager_callout_error-stamp
+globus_gram_job_manager_callout_error-install: globus_gram_job_manager_callout_error-stamp
+globus_gram_job_manager_callout_error-stamp: $(globus_gram_job_manager_callout_error-deps)
+globus_gram_job_manager_callout_error-dist-tarball = globus_gram_job_manager_callout_error-3.5.tar.gz
+package-output/$(globus_gram_job_manager_callout_error-dist-tarball): globus_gram_job_manager_callout_error-dist
+globus_gram_job_manager_callout_error-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gram-job-manager-callout-error.spec
+globus_gram_job_manager_callout_error-rpm_SOURCE = package-output/$(globus_gram_job_manager_callout_error-dist-tarball)
+globus_gram_job_manager_callout_error-rpm: $(globus_gram_job_manager_callout_error-rpm_SOURCE) $(globus_gram_job_manager_callout_error-rpm_SPECFILE)
+globus_gram_job_manager_callout_error-deb_PACKAGE_NAME = globus-gram-job-manager-callout-error
+globus_gram_job_manager_callout_error-deb_SOURCE = package-output/$(globus_gram_job_manager_callout_error-dist-tarball)
+globus_gram_job_manager_callout_error-deb_TARBALL = debbuild/globus-gram-job-manager-callout-error_3.5.orig.tar.gz
+globus_gram_job_manager_callout_error-deb: $(globus_gram_job_manager_callout_error-deb_SOURCE)
+globus_gram_job_manager_callout_error-osx-pkg = osx/packages/globus_gram_job_manager_callout_error-3.5.pkg
+$(globus_gram_job_manager_callout_error-osx-pkg): globus_gram_job_manager_callout_error-stamp
+$(globus_gram_job_manager_callout_error-osx-pkg)_SUBDIR = gram/jobmanager/callout_error
+$(globus_gram_job_manager_callout_error-osx-pkg)_PACKAGE_NAME = globus_gram_job_manager_callout_error
+$(globus_gram_job_manager_callout_error-osx-pkg)_PACKAGE_VERSION = 3.5
+globus_gram_job_manager_callout_error-osx-pkg: $(globus_gram_job_manager_callout_error-osx-pkg)
+globus_xio_gridftp_multicast-stamp_SUBDIR = gridftp/server/multi/source
+globus_xio_gridftp_multicast-all_SUBDIR = gridftp/server/multi/source
+globus_xio_gridftp_multicast-clean_SUBDIR = gridftp/server/multi/source
+globus_xio_gridftp_multicast-install_SUBDIR = gridftp/server/multi/source
+globus_xio_gridftp_multicast-check_SUBDIR = gridftp/server/multi/source
+globus_xio_gridftp_multicast-check: globus_xio_gridftp_multicast-stamp
+globus_xio_gridftp_multicast-clean_stamp = globus_xio_gridftp_multicast-stamp
+globus_xio_gridftp_multicast-install_stamp = globus_xio_gridftp_multicast-stamp
+globus_xio_gridftp_multicast-dist_SUBDIR = gridftp/server/multi/source
+globus_xio_gridftp_multicast-deps = globus_xio-stamp globus_ftp_client-stamp globus_xio_gsi_driver-stamp
+globus_xio_gridftp_multicast: globus_xio_gridftp_multicast-all
+globus_xio_gridftp_multicast-all: globus_xio_gridftp_multicast-stamp
+globus_xio_gridftp_multicast-install: globus_xio_gridftp_multicast-stamp
+globus_xio_gridftp_multicast-stamp: $(globus_xio_gridftp_multicast-deps)
+globus_xio_gridftp_multicast-dist-tarball = globus_xio_gridftp_multicast-1.6.tar.gz
+package-output/$(globus_xio_gridftp_multicast-dist-tarball): globus_xio_gridftp_multicast-dist
+globus_xio_gridftp_multicast-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-xio-gridftp-multicast.spec
+globus_xio_gridftp_multicast-rpm_SOURCE = package-output/$(globus_xio_gridftp_multicast-dist-tarball)
+globus_xio_gridftp_multicast-rpm: $(globus_xio_gridftp_multicast-rpm_SOURCE) $(globus_xio_gridftp_multicast-rpm_SPECFILE)
+globus_xio_gridftp_multicast-deb_PACKAGE_NAME = globus-xio-gridftp-multicast
+globus_xio_gridftp_multicast-deb_SOURCE = package-output/$(globus_xio_gridftp_multicast-dist-tarball)
+globus_xio_gridftp_multicast-deb_TARBALL = debbuild/globus-xio-gridftp-multicast_1.6.orig.tar.gz
+globus_xio_gridftp_multicast-deb: $(globus_xio_gridftp_multicast-deb_SOURCE)
+globus_xio_gridftp_multicast-osx-pkg = osx/packages/globus_xio_gridftp_multicast-1.6.pkg
+$(globus_xio_gridftp_multicast-osx-pkg): globus_xio_gridftp_multicast-stamp
+$(globus_xio_gridftp_multicast-osx-pkg)_SUBDIR = gridftp/server/multi/source
+$(globus_xio_gridftp_multicast-osx-pkg)_PACKAGE_NAME = globus_xio_gridftp_multicast
+$(globus_xio_gridftp_multicast-osx-pkg)_PACKAGE_VERSION = 1.6
+globus_xio_gridftp_multicast-osx-pkg: $(globus_xio_gridftp_multicast-osx-pkg)
+globus_simple_ca-stamp_SUBDIR = gsi/simple_ca/source
+globus_simple_ca-all_SUBDIR = gsi/simple_ca/source
+globus_simple_ca-clean_SUBDIR = gsi/simple_ca/source
+globus_simple_ca-install_SUBDIR = gsi/simple_ca/source
+globus_simple_ca-check_SUBDIR = gsi/simple_ca/source
+globus_simple_ca-check: globus_simple_ca-stamp
+globus_simple_ca-clean_stamp = globus_simple_ca-stamp
+globus_simple_ca-install_stamp = globus_simple_ca-stamp
+globus_simple_ca-dist_SUBDIR = gsi/simple_ca/source
+globus_simple_ca-deps =
+globus_simple_ca: globus_simple_ca-all
+globus_simple_ca-all: globus_simple_ca-stamp
+globus_simple_ca-install: globus_simple_ca-stamp
+globus_simple_ca-stamp: $(globus_simple_ca-deps)
+globus_simple_ca-dist-tarball = globus_simple_ca-4.22.tar.gz
+package-output/$(globus_simple_ca-dist-tarball): globus_simple_ca-dist
+globus_simple_ca-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-simple-ca.spec
+globus_simple_ca-rpm_SOURCE = package-output/$(globus_simple_ca-dist-tarball)
+globus_simple_ca-rpm: $(globus_simple_ca-rpm_SOURCE) $(globus_simple_ca-rpm_SPECFILE)
+globus_simple_ca-deb_PACKAGE_NAME = globus-simple-ca
+globus_simple_ca-deb_SOURCE = package-output/$(globus_simple_ca-dist-tarball)
+globus_simple_ca-deb_TARBALL = debbuild/globus-simple-ca_4.22.orig.tar.gz
+globus_simple_ca-deb: $(globus_simple_ca-deb_SOURCE)
+globus_simple_ca-osx-pkg = osx/packages/globus_simple_ca-4.22.pkg
+$(globus_simple_ca-osx-pkg): globus_simple_ca-stamp
+$(globus_simple_ca-osx-pkg)_SUBDIR = gsi/simple_ca/source
+$(globus_simple_ca-osx-pkg)_PACKAGE_NAME = globus_simple_ca
+$(globus_simple_ca-osx-pkg)_PACKAGE_VERSION = 4.22
+globus_simple_ca-osx-pkg: $(globus_simple_ca-osx-pkg)
+globus_gram_job_manager_sge-stamp_SUBDIR = gram/jobmanager/lrms/sge/source
+globus_gram_job_manager_sge-all_SUBDIR = gram/jobmanager/lrms/sge/source
+globus_gram_job_manager_sge-clean_SUBDIR = gram/jobmanager/lrms/sge/source
+globus_gram_job_manager_sge-install_SUBDIR = gram/jobmanager/lrms/sge/source
+globus_gram_job_manager_sge-check_SUBDIR = gram/jobmanager/lrms/sge/source
+globus_gram_job_manager_sge-check: globus_gram_job_manager_sge-stamp
+globus_gram_job_manager_sge-clean_stamp = globus_gram_job_manager_sge-stamp
+globus_gram_job_manager_sge-install_stamp = globus_gram_job_manager_sge-stamp
+globus_gram_job_manager_sge-dist_SUBDIR = gram/jobmanager/lrms/sge/source
+globus_gram_job_manager_sge-deps = globus_common-stamp globus_xio-stamp globus_scheduler_event_generator-stamp globus_gram_protocol-stamp
+globus_gram_job_manager_sge: globus_gram_job_manager_sge-all
+globus_gram_job_manager_sge-all: globus_gram_job_manager_sge-stamp
+globus_gram_job_manager_sge-install: globus_gram_job_manager_sge-stamp
+globus_gram_job_manager_sge-stamp: $(globus_gram_job_manager_sge-deps)
+globus_gram_job_manager_sge-dist-tarball = globus_gram_job_manager_sge-2.5.tar.gz
+package-output/$(globus_gram_job_manager_sge-dist-tarball): globus_gram_job_manager_sge-dist
+globus_gram_job_manager_sge-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gram-job-manager-sge.spec
+globus_gram_job_manager_sge-rpm_SOURCE = package-output/$(globus_gram_job_manager_sge-dist-tarball)
+globus_gram_job_manager_sge-rpm: $(globus_gram_job_manager_sge-rpm_SOURCE) $(globus_gram_job_manager_sge-rpm_SPECFILE)
+globus_gram_job_manager_sge-deb_PACKAGE_NAME = globus-gram-job-manager-sge
+globus_gram_job_manager_sge-deb_SOURCE = package-output/$(globus_gram_job_manager_sge-dist-tarball)
+globus_gram_job_manager_sge-deb_TARBALL = debbuild/globus-gram-job-manager-sge_2.5.orig.tar.gz
+globus_gram_job_manager_sge-deb: $(globus_gram_job_manager_sge-deb_SOURCE)
+globus_gram_job_manager_sge-osx-pkg = osx/packages/globus_gram_job_manager_sge-2.5.pkg
+$(globus_gram_job_manager_sge-osx-pkg): globus_gram_job_manager_sge-stamp
+$(globus_gram_job_manager_sge-osx-pkg)_SUBDIR = gram/jobmanager/lrms/sge/source
+$(globus_gram_job_manager_sge-osx-pkg)_PACKAGE_NAME = globus_gram_job_manager_sge
+$(globus_gram_job_manager_sge-osx-pkg)_PACKAGE_VERSION = 2.5
+globus_gram_job_manager_sge-osx-pkg: $(globus_gram_job_manager_sge-osx-pkg)
+globus_gram_job_manager_scripts-stamp_SUBDIR = gram/jobmanager/scripts
+globus_gram_job_manager_scripts-all_SUBDIR = gram/jobmanager/scripts
+globus_gram_job_manager_scripts-clean_SUBDIR = gram/jobmanager/scripts
+globus_gram_job_manager_scripts-install_SUBDIR = gram/jobmanager/scripts
+globus_gram_job_manager_scripts-check_SUBDIR = gram/jobmanager/scripts
+globus_gram_job_manager_scripts-check: globus_gram_job_manager_scripts-stamp
+globus_gram_job_manager_scripts-clean_stamp = globus_gram_job_manager_scripts-stamp
+globus_gram_job_manager_scripts-install_stamp = globus_gram_job_manager_scripts-stamp
+globus_gram_job_manager_scripts-dist_SUBDIR = gram/jobmanager/scripts
+globus_gram_job_manager_scripts-deps =
+globus_gram_job_manager_scripts: globus_gram_job_manager_scripts-all
+globus_gram_job_manager_scripts-all: globus_gram_job_manager_scripts-stamp
+globus_gram_job_manager_scripts-install: globus_gram_job_manager_scripts-stamp
+globus_gram_job_manager_scripts-stamp: $(globus_gram_job_manager_scripts-deps)
+globus_gram_job_manager_scripts-dist-tarball = globus_gram_job_manager_scripts-6.7.tar.gz
+package-output/$(globus_gram_job_manager_scripts-dist-tarball): globus_gram_job_manager_scripts-dist
+globus_gram_job_manager_scripts-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gram-job-manager-scripts.spec
+globus_gram_job_manager_scripts-rpm_SOURCE = package-output/$(globus_gram_job_manager_scripts-dist-tarball)
+globus_gram_job_manager_scripts-rpm: $(globus_gram_job_manager_scripts-rpm_SOURCE) $(globus_gram_job_manager_scripts-rpm_SPECFILE)
+globus_gram_job_manager_scripts-deb_PACKAGE_NAME = globus-gram-job-manager-scripts
+globus_gram_job_manager_scripts-deb_SOURCE = package-output/$(globus_gram_job_manager_scripts-dist-tarball)
+globus_gram_job_manager_scripts-deb_TARBALL = debbuild/globus-gram-job-manager-scripts_6.7.orig.tar.gz
+globus_gram_job_manager_scripts-deb: $(globus_gram_job_manager_scripts-deb_SOURCE)
+globus_gram_job_manager_scripts-osx-pkg = osx/packages/globus_gram_job_manager_scripts-6.7.pkg
+$(globus_gram_job_manager_scripts-osx-pkg): globus_gram_job_manager_scripts-stamp
+$(globus_gram_job_manager_scripts-osx-pkg)_SUBDIR = gram/jobmanager/scripts
+$(globus_gram_job_manager_scripts-osx-pkg)_PACKAGE_NAME = globus_gram_job_manager_scripts
+$(globus_gram_job_manager_scripts-osx-pkg)_PACKAGE_VERSION = 6.7
+globus_gram_job_manager_scripts-osx-pkg: $(globus_gram_job_manager_scripts-osx-pkg)
+globus_gram_job_manager_slurm-stamp_SUBDIR = gram/jobmanager/lrms/slurm/source
+globus_gram_job_manager_slurm-all_SUBDIR = gram/jobmanager/lrms/slurm/source
+globus_gram_job_manager_slurm-clean_SUBDIR = gram/jobmanager/lrms/slurm/source
+globus_gram_job_manager_slurm-install_SUBDIR = gram/jobmanager/lrms/slurm/source
+globus_gram_job_manager_slurm-check_SUBDIR = gram/jobmanager/lrms/slurm/source
+globus_gram_job_manager_slurm-check: globus_gram_job_manager_slurm-stamp
+globus_gram_job_manager_slurm-clean_stamp = globus_gram_job_manager_slurm-stamp
+globus_gram_job_manager_slurm-install_stamp = globus_gram_job_manager_slurm-stamp
+globus_gram_job_manager_slurm-dist_SUBDIR = gram/jobmanager/lrms/slurm/source
+globus_gram_job_manager_slurm-deps =
+globus_gram_job_manager_slurm: globus_gram_job_manager_slurm-all
+globus_gram_job_manager_slurm-all: globus_gram_job_manager_slurm-stamp
+globus_gram_job_manager_slurm-install: globus_gram_job_manager_slurm-stamp
+globus_gram_job_manager_slurm-stamp: $(globus_gram_job_manager_slurm-deps)
+globus_gram_job_manager_slurm-dist-tarball = globus_gram_job_manager_slurm-2.7.tar.gz
+package-output/$(globus_gram_job_manager_slurm-dist-tarball): globus_gram_job_manager_slurm-dist
+globus_gram_job_manager_slurm-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gram-job-manager-slurm.spec
+globus_gram_job_manager_slurm-rpm_SOURCE = package-output/$(globus_gram_job_manager_slurm-dist-tarball)
+globus_gram_job_manager_slurm-rpm: $(globus_gram_job_manager_slurm-rpm_SOURCE) $(globus_gram_job_manager_slurm-rpm_SPECFILE)
+globus_gram_job_manager_slurm-deb_PACKAGE_NAME = globus-gram-job-manager-slurm
+globus_gram_job_manager_slurm-deb_SOURCE = package-output/$(globus_gram_job_manager_slurm-dist-tarball)
+globus_gram_job_manager_slurm-deb_TARBALL = debbuild/globus-gram-job-manager-slurm_2.7.orig.tar.gz
+globus_gram_job_manager_slurm-deb: $(globus_gram_job_manager_slurm-deb_SOURCE)
+globus_gram_job_manager_slurm-osx-pkg = osx/packages/globus_gram_job_manager_slurm-2.7.pkg
+$(globus_gram_job_manager_slurm-osx-pkg): globus_gram_job_manager_slurm-stamp
+$(globus_gram_job_manager_slurm-osx-pkg)_SUBDIR = gram/jobmanager/lrms/slurm/source
+$(globus_gram_job_manager_slurm-osx-pkg)_PACKAGE_NAME = globus_gram_job_manager_slurm
+$(globus_gram_job_manager_slurm-osx-pkg)_PACKAGE_VERSION = 2.7
+globus_gram_job_manager_slurm-osx-pkg: $(globus_gram_job_manager_slurm-osx-pkg)
+globus_gridmap_callout_error-stamp_SUBDIR = gsi/gridmap_callout/error
+globus_gridmap_callout_error-all_SUBDIR = gsi/gridmap_callout/error
+globus_gridmap_callout_error-clean_SUBDIR = gsi/gridmap_callout/error
+globus_gridmap_callout_error-install_SUBDIR = gsi/gridmap_callout/error
+globus_gridmap_callout_error-check_SUBDIR = gsi/gridmap_callout/error
+globus_gridmap_callout_error-check: globus_gridmap_callout_error-stamp
+globus_gridmap_callout_error-clean_stamp = globus_gridmap_callout_error-stamp
+globus_gridmap_callout_error-install_stamp = globus_gridmap_callout_error-stamp
+globus_gridmap_callout_error-dist_SUBDIR = gsi/gridmap_callout/error
+globus_gridmap_callout_error-deps = globus_common-stamp globus_gssapi_error-stamp
+globus_gridmap_callout_error: globus_gridmap_callout_error-all
+globus_gridmap_callout_error-all: globus_gridmap_callout_error-stamp
+globus_gridmap_callout_error-install: globus_gridmap_callout_error-stamp
+globus_gridmap_callout_error-stamp: $(globus_gridmap_callout_error-deps)
+globus_gridmap_callout_error-dist-tarball = globus_gridmap_callout_error-2.4.tar.gz
+package-output/$(globus_gridmap_callout_error-dist-tarball): globus_gridmap_callout_error-dist
+globus_gridmap_callout_error-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gridmap-callout-error.spec
+globus_gridmap_callout_error-rpm_SOURCE = package-output/$(globus_gridmap_callout_error-dist-tarball)
+globus_gridmap_callout_error-rpm: $(globus_gridmap_callout_error-rpm_SOURCE) $(globus_gridmap_callout_error-rpm_SPECFILE)
+globus_gridmap_callout_error-deb_PACKAGE_NAME = globus-gridmap-callout-error
+globus_gridmap_callout_error-deb_SOURCE = package-output/$(globus_gridmap_callout_error-dist-tarball)
+globus_gridmap_callout_error-deb_TARBALL = debbuild/globus-gridmap-callout-error_2.4.orig.tar.gz
+globus_gridmap_callout_error-deb: $(globus_gridmap_callout_error-deb_SOURCE)
+globus_gridmap_callout_error-osx-pkg = osx/packages/globus_gridmap_callout_error-2.4.pkg
+$(globus_gridmap_callout_error-osx-pkg): globus_gridmap_callout_error-stamp
+$(globus_gridmap_callout_error-osx-pkg)_SUBDIR = gsi/gridmap_callout/error
+$(globus_gridmap_callout_error-osx-pkg)_PACKAGE_NAME = globus_gridmap_callout_error
+$(globus_gridmap_callout_error-osx-pkg)_PACKAGE_VERSION = 2.4
+globus_gridmap_callout_error-osx-pkg: $(globus_gridmap_callout_error-osx-pkg)
+globus_gridmap_callout-stamp_SUBDIR = gsi/gridmap_callout/source
+globus_gridmap_callout-all_SUBDIR = gsi/gridmap_callout/source
+globus_gridmap_callout-clean_SUBDIR = gsi/gridmap_callout/source
+globus_gridmap_callout-install_SUBDIR = gsi/gridmap_callout/source
+globus_gridmap_callout-check_SUBDIR = gsi/gridmap_callout/source
+globus_gridmap_callout-check: globus_gridmap_callout-stamp
+globus_gridmap_callout-clean_stamp = globus_gridmap_callout-stamp
+globus_gridmap_callout-install_stamp = globus_gridmap_callout-stamp
+globus_gridmap_callout-dist_SUBDIR = gsi/gridmap_callout/source
+globus_gridmap_callout-deps = globus_common-stamp globus_gssapi_gsi-stamp globus_gss_assist-stamp globus_gridmap_callout_error-stamp globus_gsi_credential-stamp
+globus_gridmap_callout: globus_gridmap_callout-all
+globus_gridmap_callout-all: globus_gridmap_callout-stamp
+globus_gridmap_callout-install: globus_gridmap_callout-stamp
+globus_gridmap_callout-stamp: $(globus_gridmap_callout-deps)
+globus_gridmap_callout-dist-tarball = globus_gridmap_callout-1.0.tar.gz
+package-output/$(globus_gridmap_callout-dist-tarball): globus_gridmap_callout-dist
+globus_gridmap_callout-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gridmap-callout.spec
+globus_gridmap_callout-rpm_SOURCE = package-output/$(globus_gridmap_callout-dist-tarball)
+globus_gridmap_callout-rpm: $(globus_gridmap_callout-rpm_SOURCE) $(globus_gridmap_callout-rpm_SPECFILE)
+globus_gridmap_callout-deb_PACKAGE_NAME = globus-gridmap-callout
+globus_gridmap_callout-deb_SOURCE = package-output/$(globus_gridmap_callout-dist-tarball)
+globus_gridmap_callout-deb_TARBALL = debbuild/globus-gridmap-callout_1.0.orig.tar.gz
+globus_gridmap_callout-deb: $(globus_gridmap_callout-deb_SOURCE)
+globus_gridmap_callout-osx-pkg = osx/packages/globus_gridmap_callout-1.0.pkg
+$(globus_gridmap_callout-osx-pkg): globus_gridmap_callout-stamp
+$(globus_gridmap_callout-osx-pkg)_SUBDIR = gsi/gridmap_callout/source
+$(globus_gridmap_callout-osx-pkg)_PACKAGE_NAME = globus_gridmap_callout
+$(globus_gridmap_callout-osx-pkg)_PACKAGE_VERSION = 1.0
+globus_gridmap_callout-osx-pkg: $(globus_gridmap_callout-osx-pkg)
+globus_gass_server_ez-stamp_SUBDIR = gass/server_ez/source
+globus_gass_server_ez-all_SUBDIR = gass/server_ez/source
+globus_gass_server_ez-clean_SUBDIR = gass/server_ez/source
+globus_gass_server_ez-install_SUBDIR = gass/server_ez/source
+globus_gass_server_ez-check_SUBDIR = gass/server_ez/source
+globus_gass_server_ez-check: globus_gass_server_ez-stamp
+globus_gass_server_ez-clean_stamp = globus_gass_server_ez-stamp
+globus_gass_server_ez-install_stamp = globus_gass_server_ez-stamp
+globus_gass_server_ez-dist_SUBDIR = gass/server_ez/source
+globus_gass_server_ez-deps = globus_common-stamp globus_gass_transfer-stamp globus_gssapi_gsi-stamp globus_gss_assist-stamp
+globus_gass_server_ez: globus_gass_server_ez-all
+globus_gass_server_ez-all: globus_gass_server_ez-stamp
+globus_gass_server_ez-install: globus_gass_server_ez-stamp
+globus_gass_server_ez-stamp: $(globus_gass_server_ez-deps)
+globus_gass_server_ez-dist-tarball = globus_gass_server_ez-5.7.tar.gz
+package-output/$(globus_gass_server_ez-dist-tarball): globus_gass_server_ez-dist
+globus_gass_server_ez-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gass-server-ez.spec
+globus_gass_server_ez-rpm_SOURCE = package-output/$(globus_gass_server_ez-dist-tarball)
+globus_gass_server_ez-rpm: $(globus_gass_server_ez-rpm_SOURCE) $(globus_gass_server_ez-rpm_SPECFILE)
+globus_gass_server_ez-deb_PACKAGE_NAME = globus-gass-server-ez
+globus_gass_server_ez-deb_SOURCE = package-output/$(globus_gass_server_ez-dist-tarball)
+globus_gass_server_ez-deb_TARBALL = debbuild/globus-gass-server-ez_5.7.orig.tar.gz
+globus_gass_server_ez-deb: $(globus_gass_server_ez-deb_SOURCE)
+globus_gass_server_ez-osx-pkg = osx/packages/globus_gass_server_ez-5.7.pkg
+$(globus_gass_server_ez-osx-pkg): globus_gass_server_ez-stamp
+$(globus_gass_server_ez-osx-pkg)_SUBDIR = gass/server_ez/source
+$(globus_gass_server_ez-osx-pkg)_PACKAGE_NAME = globus_gass_server_ez
+$(globus_gass_server_ez-osx-pkg)_PACKAGE_VERSION = 5.7
+globus_gass_server_ez-osx-pkg: $(globus_gass_server_ez-osx-pkg)
+globus_xio_gridftp_driver-stamp_SUBDIR = gridftp/gridftp_driver/source
+globus_xio_gridftp_driver-all_SUBDIR = gridftp/gridftp_driver/source
+globus_xio_gridftp_driver-clean_SUBDIR = gridftp/gridftp_driver/source
+globus_xio_gridftp_driver-install_SUBDIR = gridftp/gridftp_driver/source
+globus_xio_gridftp_driver-check_SUBDIR = gridftp/gridftp_driver/source
+globus_xio_gridftp_driver-check: globus_xio_gridftp_driver-stamp
+globus_xio_gridftp_driver-clean_stamp = globus_xio_gridftp_driver-stamp
+globus_xio_gridftp_driver-install_stamp = globus_xio_gridftp_driver-stamp
+globus_xio_gridftp_driver-dist_SUBDIR = gridftp/gridftp_driver/source
+globus_xio_gridftp_driver-deps = globus_common-stamp globus_xio-stamp globus_ftp_client-stamp globus_xio_gsi_driver-stamp
+globus_xio_gridftp_driver: globus_xio_gridftp_driver-all
+globus_xio_gridftp_driver-all: globus_xio_gridftp_driver-stamp
+globus_xio_gridftp_driver-install: globus_xio_gridftp_driver-stamp
+globus_xio_gridftp_driver-stamp: $(globus_xio_gridftp_driver-deps)
+globus_xio_gridftp_driver-dist-tarball = globus_xio_gridftp_driver-2.12.tar.gz
+package-output/$(globus_xio_gridftp_driver-dist-tarball): globus_xio_gridftp_driver-dist
+globus_xio_gridftp_driver-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-xio-gridftp-driver.spec
+globus_xio_gridftp_driver-rpm_SOURCE = package-output/$(globus_xio_gridftp_driver-dist-tarball)
+globus_xio_gridftp_driver-rpm: $(globus_xio_gridftp_driver-rpm_SOURCE) $(globus_xio_gridftp_driver-rpm_SPECFILE)
+globus_xio_gridftp_driver-deb_PACKAGE_NAME = globus-xio-gridftp-driver
+globus_xio_gridftp_driver-deb_SOURCE = package-output/$(globus_xio_gridftp_driver-dist-tarball)
+globus_xio_gridftp_driver-deb_TARBALL = debbuild/globus-xio-gridftp-driver_2.12.orig.tar.gz
+globus_xio_gridftp_driver-deb: $(globus_xio_gridftp_driver-deb_SOURCE)
+globus_xio_gridftp_driver-osx-pkg = osx/packages/globus_xio_gridftp_driver-2.12.pkg
+$(globus_xio_gridftp_driver-osx-pkg): globus_xio_gridftp_driver-stamp
+$(globus_xio_gridftp_driver-osx-pkg)_SUBDIR = gridftp/gridftp_driver/source
+$(globus_xio_gridftp_driver-osx-pkg)_PACKAGE_NAME = globus_xio_gridftp_driver
+$(globus_xio_gridftp_driver-osx-pkg)_PACKAGE_VERSION = 2.12
+globus_xio_gridftp_driver-osx-pkg: $(globus_xio_gridftp_driver-osx-pkg)
+globus_gram_job_manager_fork-stamp_SUBDIR = gram/jobmanager/lrms/fork/source
+globus_gram_job_manager_fork-all_SUBDIR = gram/jobmanager/lrms/fork/source
+globus_gram_job_manager_fork-clean_SUBDIR = gram/jobmanager/lrms/fork/source
+globus_gram_job_manager_fork-install_SUBDIR = gram/jobmanager/lrms/fork/source
+globus_gram_job_manager_fork-check_SUBDIR = gram/jobmanager/lrms/fork/source
+globus_gram_job_manager_fork-check: globus_gram_job_manager_fork-stamp
+globus_gram_job_manager_fork-clean_stamp = globus_gram_job_manager_fork-stamp
+globus_gram_job_manager_fork-install_stamp = globus_gram_job_manager_fork-stamp
+globus_gram_job_manager_fork-dist_SUBDIR = gram/jobmanager/lrms/fork/source
+globus_gram_job_manager_fork-deps = globus_common-stamp globus_xio-stamp globus_scheduler_event_generator-stamp globus_gram_protocol-stamp
+globus_gram_job_manager_fork: globus_gram_job_manager_fork-all
+globus_gram_job_manager_fork-all: globus_gram_job_manager_fork-stamp
+globus_gram_job_manager_fork-install: globus_gram_job_manager_fork-stamp
+globus_gram_job_manager_fork-stamp: $(globus_gram_job_manager_fork-deps)
+globus_gram_job_manager_fork-dist-tarball = globus_gram_job_manager_fork-2.4.tar.gz
+package-output/$(globus_gram_job_manager_fork-dist-tarball): globus_gram_job_manager_fork-dist
+globus_gram_job_manager_fork-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gram-job-manager-fork.spec
+globus_gram_job_manager_fork-rpm_SOURCE = package-output/$(globus_gram_job_manager_fork-dist-tarball)
+globus_gram_job_manager_fork-rpm: $(globus_gram_job_manager_fork-rpm_SOURCE) $(globus_gram_job_manager_fork-rpm_SPECFILE)
+globus_gram_job_manager_fork-deb_PACKAGE_NAME = globus-gram-job-manager-fork
+globus_gram_job_manager_fork-deb_SOURCE = package-output/$(globus_gram_job_manager_fork-dist-tarball)
+globus_gram_job_manager_fork-deb_TARBALL = debbuild/globus-gram-job-manager-fork_2.4.orig.tar.gz
+globus_gram_job_manager_fork-deb: $(globus_gram_job_manager_fork-deb_SOURCE)
+globus_gram_job_manager_fork-osx-pkg = osx/packages/globus_gram_job_manager_fork-2.4.pkg
+$(globus_gram_job_manager_fork-osx-pkg): globus_gram_job_manager_fork-stamp
+$(globus_gram_job_manager_fork-osx-pkg)_SUBDIR = gram/jobmanager/lrms/fork/source
+$(globus_gram_job_manager_fork-osx-pkg)_PACKAGE_NAME = globus_gram_job_manager_fork
+$(globus_gram_job_manager_fork-osx-pkg)_PACKAGE_VERSION = 2.4
+globus_gram_job_manager_fork-osx-pkg: $(globus_gram_job_manager_fork-osx-pkg)
+globus_gridmap_verify_myproxy_callout-stamp_SUBDIR = gsi/gridmap_verify_myproxy_callout
+globus_gridmap_verify_myproxy_callout-all_SUBDIR = gsi/gridmap_verify_myproxy_callout
+globus_gridmap_verify_myproxy_callout-clean_SUBDIR = gsi/gridmap_verify_myproxy_callout
+globus_gridmap_verify_myproxy_callout-install_SUBDIR = gsi/gridmap_verify_myproxy_callout
+globus_gridmap_verify_myproxy_callout-check_SUBDIR = gsi/gridmap_verify_myproxy_callout
+globus_gridmap_verify_myproxy_callout-check: globus_gridmap_verify_myproxy_callout-stamp
+globus_gridmap_verify_myproxy_callout-clean_stamp = globus_gridmap_verify_myproxy_callout-stamp
+globus_gridmap_verify_myproxy_callout-install_stamp = globus_gridmap_verify_myproxy_callout-stamp
+globus_gridmap_verify_myproxy_callout-dist_SUBDIR = gsi/gridmap_verify_myproxy_callout
+globus_gridmap_verify_myproxy_callout-deps = globus_gsi_sysconfig-stamp globus_gssapi_gsi-stamp globus_gss_assist-stamp globus_gridmap_callout_error-stamp globus_gsi_credential-stamp
+globus_gridmap_verify_myproxy_callout: globus_gridmap_verify_myproxy_callout-all
+globus_gridmap_verify_myproxy_callout-all: globus_gridmap_verify_myproxy_callout-stamp
+globus_gridmap_verify_myproxy_callout-install: globus_gridmap_verify_myproxy_callout-stamp
+globus_gridmap_verify_myproxy_callout-stamp: $(globus_gridmap_verify_myproxy_callout-deps)
+globus_gridmap_verify_myproxy_callout-dist-tarball = globus_gridmap_verify_myproxy_callout-2.7.tar.gz
+package-output/$(globus_gridmap_verify_myproxy_callout-dist-tarball): globus_gridmap_verify_myproxy_callout-dist
+globus_gridmap_verify_myproxy_callout-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gridmap-verify-myproxy-callout.spec
+globus_gridmap_verify_myproxy_callout-rpm_SOURCE = package-output/$(globus_gridmap_verify_myproxy_callout-dist-tarball)
+globus_gridmap_verify_myproxy_callout-rpm: $(globus_gridmap_verify_myproxy_callout-rpm_SOURCE) $(globus_gridmap_verify_myproxy_callout-rpm_SPECFILE)
+globus_gridmap_verify_myproxy_callout-deb_PACKAGE_NAME = globus-gridmap-verify-myproxy-callout
+globus_gridmap_verify_myproxy_callout-deb_SOURCE = package-output/$(globus_gridmap_verify_myproxy_callout-dist-tarball)
+globus_gridmap_verify_myproxy_callout-deb_TARBALL = debbuild/globus-gridmap-verify-myproxy-callout_2.7.orig.tar.gz
+globus_gridmap_verify_myproxy_callout-deb: $(globus_gridmap_verify_myproxy_callout-deb_SOURCE)
+globus_gridmap_verify_myproxy_callout-osx-pkg = osx/packages/globus_gridmap_verify_myproxy_callout-2.7.pkg
+$(globus_gridmap_verify_myproxy_callout-osx-pkg): globus_gridmap_verify_myproxy_callout-stamp
+$(globus_gridmap_verify_myproxy_callout-osx-pkg)_SUBDIR = gsi/gridmap_verify_myproxy_callout
+$(globus_gridmap_verify_myproxy_callout-osx-pkg)_PACKAGE_NAME = globus_gridmap_verify_myproxy_callout
+$(globus_gridmap_verify_myproxy_callout-osx-pkg)_PACKAGE_VERSION = 2.7
+globus_gridmap_verify_myproxy_callout-osx-pkg: $(globus_gridmap_verify_myproxy_callout-osx-pkg)
+globus_gridmap_eppn_callout-stamp_SUBDIR = gsi/gridmap_eppn_callout
+globus_gridmap_eppn_callout-all_SUBDIR = gsi/gridmap_eppn_callout
+globus_gridmap_eppn_callout-clean_SUBDIR = gsi/gridmap_eppn_callout
+globus_gridmap_eppn_callout-install_SUBDIR = gsi/gridmap_eppn_callout
+globus_gridmap_eppn_callout-check_SUBDIR = gsi/gridmap_eppn_callout
+globus_gridmap_eppn_callout-check: globus_gridmap_eppn_callout-stamp
+globus_gridmap_eppn_callout-clean_stamp = globus_gridmap_eppn_callout-stamp
+globus_gridmap_eppn_callout-install_stamp = globus_gridmap_eppn_callout-stamp
+globus_gridmap_eppn_callout-dist_SUBDIR = gsi/gridmap_eppn_callout
+globus_gridmap_eppn_callout-deps = globus_gsi_sysconfig-stamp globus_gssapi_gsi-stamp globus_gss_assist-stamp globus_gridmap_callout_error-stamp globus_gsi_credential-stamp
+globus_gridmap_eppn_callout: globus_gridmap_eppn_callout-all
+globus_gridmap_eppn_callout-all: globus_gridmap_eppn_callout-stamp
+globus_gridmap_eppn_callout-install: globus_gridmap_eppn_callout-stamp
+globus_gridmap_eppn_callout-stamp: $(globus_gridmap_eppn_callout-deps)
+globus_gridmap_eppn_callout-dist-tarball = globus_gridmap_eppn_callout-1.8.tar.gz
+package-output/$(globus_gridmap_eppn_callout-dist-tarball): globus_gridmap_eppn_callout-dist
+globus_gridmap_eppn_callout-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gridmap-eppn-callout.spec
+globus_gridmap_eppn_callout-rpm_SOURCE = package-output/$(globus_gridmap_eppn_callout-dist-tarball)
+globus_gridmap_eppn_callout-rpm: $(globus_gridmap_eppn_callout-rpm_SOURCE) $(globus_gridmap_eppn_callout-rpm_SPECFILE)
+globus_gridmap_eppn_callout-deb_PACKAGE_NAME = globus-gridmap-eppn-callout
+globus_gridmap_eppn_callout-deb_SOURCE = package-output/$(globus_gridmap_eppn_callout-dist-tarball)
+globus_gridmap_eppn_callout-deb_TARBALL = debbuild/globus-gridmap-eppn-callout_1.8.orig.tar.gz
+globus_gridmap_eppn_callout-deb: $(globus_gridmap_eppn_callout-deb_SOURCE)
+globus_gridmap_eppn_callout-osx-pkg = osx/packages/globus_gridmap_eppn_callout-1.8.pkg
+$(globus_gridmap_eppn_callout-osx-pkg): globus_gridmap_eppn_callout-stamp
+$(globus_gridmap_eppn_callout-osx-pkg)_SUBDIR = gsi/gridmap_eppn_callout
+$(globus_gridmap_eppn_callout-osx-pkg)_PACKAGE_NAME = globus_gridmap_eppn_callout
+$(globus_gridmap_eppn_callout-osx-pkg)_PACKAGE_VERSION = 1.8
+globus_gridmap_eppn_callout-osx-pkg: $(globus_gridmap_eppn_callout-osx-pkg)
+globus_gram_job_manager_condor-stamp_SUBDIR = gram/jobmanager/lrms/condor/source
+globus_gram_job_manager_condor-all_SUBDIR = gram/jobmanager/lrms/condor/source
+globus_gram_job_manager_condor-clean_SUBDIR = gram/jobmanager/lrms/condor/source
+globus_gram_job_manager_condor-install_SUBDIR = gram/jobmanager/lrms/condor/source
+globus_gram_job_manager_condor-check_SUBDIR = gram/jobmanager/lrms/condor/source
+globus_gram_job_manager_condor-check: globus_gram_job_manager_condor-stamp
+globus_gram_job_manager_condor-clean_stamp = globus_gram_job_manager_condor-stamp
+globus_gram_job_manager_condor-install_stamp = globus_gram_job_manager_condor-stamp
+globus_gram_job_manager_condor-dist_SUBDIR = gram/jobmanager/lrms/condor/source
+globus_gram_job_manager_condor-deps =
+globus_gram_job_manager_condor: globus_gram_job_manager_condor-all
+globus_gram_job_manager_condor-all: globus_gram_job_manager_condor-stamp
+globus_gram_job_manager_condor-install: globus_gram_job_manager_condor-stamp
+globus_gram_job_manager_condor-stamp: $(globus_gram_job_manager_condor-deps)
+globus_gram_job_manager_condor-dist-tarball = globus_gram_job_manager_condor-2.5.tar.gz
+package-output/$(globus_gram_job_manager_condor-dist-tarball): globus_gram_job_manager_condor-dist
+globus_gram_job_manager_condor-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gram-job-manager-condor.spec
+globus_gram_job_manager_condor-rpm_SOURCE = package-output/$(globus_gram_job_manager_condor-dist-tarball)
+globus_gram_job_manager_condor-rpm: $(globus_gram_job_manager_condor-rpm_SOURCE) $(globus_gram_job_manager_condor-rpm_SPECFILE)
+globus_gram_job_manager_condor-deb_PACKAGE_NAME = globus-gram-job-manager-condor
+globus_gram_job_manager_condor-deb_SOURCE = package-output/$(globus_gram_job_manager_condor-dist-tarball)
+globus_gram_job_manager_condor-deb_TARBALL = debbuild/globus-gram-job-manager-condor_2.5.orig.tar.gz
+globus_gram_job_manager_condor-deb: $(globus_gram_job_manager_condor-deb_SOURCE)
+globus_gram_job_manager_condor-osx-pkg = osx/packages/globus_gram_job_manager_condor-2.5.pkg
+$(globus_gram_job_manager_condor-osx-pkg): globus_gram_job_manager_condor-stamp
+$(globus_gram_job_manager_condor-osx-pkg)_SUBDIR = gram/jobmanager/lrms/condor/source
+$(globus_gram_job_manager_condor-osx-pkg)_PACKAGE_NAME = globus_gram_job_manager_condor
+$(globus_gram_job_manager_condor-osx-pkg)_PACKAGE_VERSION = 2.5
+globus_gram_job_manager_condor-osx-pkg: $(globus_gram_job_manager_condor-osx-pkg)
+globus_proxy_utils-stamp_SUBDIR = gsi/proxy/proxy_utils/source
+globus_proxy_utils-all_SUBDIR = gsi/proxy/proxy_utils/source
+globus_proxy_utils-clean_SUBDIR = gsi/proxy/proxy_utils/source
+globus_proxy_utils-install_SUBDIR = gsi/proxy/proxy_utils/source
+globus_proxy_utils-check_SUBDIR = gsi/proxy/proxy_utils/source
+globus_proxy_utils-check: globus_proxy_utils-stamp
+globus_proxy_utils-clean_stamp = globus_proxy_utils-stamp
+globus_proxy_utils-install_stamp = globus_proxy_utils-stamp
+globus_proxy_utils-dist_SUBDIR = gsi/proxy/proxy_utils/source
+globus_proxy_utils-deps = globus_common-stamp globus_openssl_module-stamp globus_gsi_openssl_error-stamp globus_gsi_cert_utils-stamp globus_gsi_sysconfig-stamp globus_gsi_proxy_ssl-stamp globus_gsi_credential-stamp globus_gsi_callback-stamp globus_gsi_proxy_core-stamp globus_gss_assist-stamp
+globus_proxy_utils: globus_proxy_utils-all
+globus_proxy_utils-all: globus_proxy_utils-stamp
+globus_proxy_utils-install: globus_proxy_utils-stamp
+globus_proxy_utils-stamp: $(globus_proxy_utils-deps)
+globus_proxy_utils-dist-tarball = globus_proxy_utils-6.13.tar.gz
+package-output/$(globus_proxy_utils-dist-tarball): globus_proxy_utils-dist
+globus_proxy_utils-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-proxy-utils.spec
+globus_proxy_utils-rpm_SOURCE = package-output/$(globus_proxy_utils-dist-tarball)
+globus_proxy_utils-rpm: $(globus_proxy_utils-rpm_SOURCE) $(globus_proxy_utils-rpm_SPECFILE)
+globus_proxy_utils-deb_PACKAGE_NAME = globus-proxy-utils
+globus_proxy_utils-deb_SOURCE = package-output/$(globus_proxy_utils-dist-tarball)
+globus_proxy_utils-deb_TARBALL = debbuild/globus-proxy-utils_6.13.orig.tar.gz
+globus_proxy_utils-deb: $(globus_proxy_utils-deb_SOURCE)
+globus_proxy_utils-osx-pkg = osx/packages/globus_proxy_utils-6.13.pkg
+$(globus_proxy_utils-osx-pkg): globus_proxy_utils-stamp
+$(globus_proxy_utils-osx-pkg)_SUBDIR = gsi/proxy/proxy_utils/source
+$(globus_proxy_utils-osx-pkg)_PACKAGE_NAME = globus_proxy_utils
+$(globus_proxy_utils-osx-pkg)_PACKAGE_VERSION = 6.13
+globus_proxy_utils-osx-pkg: $(globus_proxy_utils-osx-pkg)
+globus_gram_client-stamp_SUBDIR = gram/client/source
+globus_gram_client-all_SUBDIR = gram/client/source
+globus_gram_client-clean_SUBDIR = gram/client/source
+globus_gram_client-install_SUBDIR = gram/client/source
+globus_gram_client-check_SUBDIR = gram/client/source
+globus_gram_client-check: globus_gram_client-stamp
+globus_gram_client-clean_stamp = globus_gram_client-stamp
+globus_gram_client-install_stamp = globus_gram_client-stamp
+globus_gram_client-dist_SUBDIR = gram/client/source
+globus_gram_client-deps = globus_common-stamp globus_gram_protocol-stamp globus_io-stamp globus_rsl-stamp globus_gss_assist-stamp
+globus_gram_client: globus_gram_client-all
+globus_gram_client-all: globus_gram_client-stamp
+globus_gram_client-install: globus_gram_client-stamp
+globus_gram_client-stamp: $(globus_gram_client-deps)
+globus_gram_client-dist-tarball = globus_gram_client-13.12.tar.gz
+package-output/$(globus_gram_client-dist-tarball): globus_gram_client-dist
+globus_gram_client-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gram-client.spec
+globus_gram_client-rpm_SOURCE = package-output/$(globus_gram_client-dist-tarball)
+globus_gram_client-rpm: $(globus_gram_client-rpm_SOURCE) $(globus_gram_client-rpm_SPECFILE)
+globus_gram_client-deb_PACKAGE_NAME = globus-gram-client
+globus_gram_client-deb_SOURCE = package-output/$(globus_gram_client-dist-tarball)
+globus_gram_client-deb_TARBALL = debbuild/globus-gram-client_13.12.orig.tar.gz
+globus_gram_client-deb: $(globus_gram_client-deb_SOURCE)
+globus_gram_client-osx-pkg = osx/packages/globus_gram_client-13.12.pkg
+$(globus_gram_client-osx-pkg): globus_gram_client-stamp
+$(globus_gram_client-osx-pkg)_SUBDIR = gram/client/source
+$(globus_gram_client-osx-pkg)_PACKAGE_NAME = globus_gram_client
+$(globus_gram_client-osx-pkg)_PACKAGE_VERSION = 13.12
+globus_gram_client-osx-pkg: $(globus_gram_client-osx-pkg)
+globus_xioperf-stamp_SUBDIR = xio/xioperf/source
+globus_xioperf-all_SUBDIR = xio/xioperf/source
+globus_xioperf-clean_SUBDIR = xio/xioperf/source
+globus_xioperf-install_SUBDIR = xio/xioperf/source
+globus_xioperf-check_SUBDIR = xio/xioperf/source
+globus_xioperf-check: globus_xioperf-stamp
+globus_xioperf-clean_stamp = globus_xioperf-stamp
+globus_xioperf-install_stamp = globus_xioperf-stamp
+globus_xioperf-dist_SUBDIR = xio/xioperf/source
+globus_xioperf-deps = globus_common-stamp globus_xio-stamp
+globus_xioperf: globus_xioperf-all
+globus_xioperf-all: globus_xioperf-stamp
+globus_xioperf-install: globus_xioperf-stamp
+globus_xioperf-stamp: $(globus_xioperf-deps)
+globus_xioperf-dist-tarball = globus_xioperf-4.4.tar.gz
+package-output/$(globus_xioperf-dist-tarball): globus_xioperf-dist
+globus_xioperf-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-xioperf.spec
+globus_xioperf-rpm_SOURCE = package-output/$(globus_xioperf-dist-tarball)
+globus_xioperf-rpm: $(globus_xioperf-rpm_SOURCE) $(globus_xioperf-rpm_SPECFILE)
+globus_xioperf-deb_PACKAGE_NAME = globus-xioperf
+globus_xioperf-deb_SOURCE = package-output/$(globus_xioperf-dist-tarball)
+globus_xioperf-deb_TARBALL = debbuild/globus-xioperf_4.4.orig.tar.gz
+globus_xioperf-deb: $(globus_xioperf-deb_SOURCE)
+globus_xioperf-osx-pkg = osx/packages/globus_xioperf-4.4.pkg
+$(globus_xioperf-osx-pkg): globus_xioperf-stamp
+$(globus_xioperf-osx-pkg)_SUBDIR = xio/xioperf/source
+$(globus_xioperf-osx-pkg)_PACKAGE_NAME = globus_xioperf
+$(globus_xioperf-osx-pkg)_PACKAGE_VERSION = 4.4
+globus_xioperf-osx-pkg: $(globus_xioperf-osx-pkg)
+globus_gatekeeper-stamp_SUBDIR = gram/gatekeeper/source
+globus_gatekeeper-all_SUBDIR = gram/gatekeeper/source
+globus_gatekeeper-clean_SUBDIR = gram/gatekeeper/source
+globus_gatekeeper-install_SUBDIR = gram/gatekeeper/source
+globus_gatekeeper-check_SUBDIR = gram/gatekeeper/source
+globus_gatekeeper-check: globus_gatekeeper-stamp
+globus_gatekeeper-clean_stamp = globus_gatekeeper-stamp
+globus_gatekeeper-install_stamp = globus_gatekeeper-stamp
+globus_gatekeeper-dist_SUBDIR = gram/gatekeeper/source
+globus_gatekeeper-deps = globus_common-stamp globus_gss_assist-stamp globus_gssapi_gsi-stamp
+globus_gatekeeper: globus_gatekeeper-all
+globus_gatekeeper-all: globus_gatekeeper-stamp
+globus_gatekeeper-install: globus_gatekeeper-stamp
+globus_gatekeeper-stamp: $(globus_gatekeeper-deps)
+globus_gatekeeper-dist-tarball = globus_gatekeeper-10.10.tar.gz
+package-output/$(globus_gatekeeper-dist-tarball): globus_gatekeeper-dist
+globus_gatekeeper-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gatekeeper.spec
+globus_gatekeeper-rpm_SOURCE = package-output/$(globus_gatekeeper-dist-tarball)
+globus_gatekeeper-rpm: $(globus_gatekeeper-rpm_SOURCE) $(globus_gatekeeper-rpm_SPECFILE)
+globus_gatekeeper-deb_PACKAGE_NAME = globus-gatekeeper
+globus_gatekeeper-deb_SOURCE = package-output/$(globus_gatekeeper-dist-tarball)
+globus_gatekeeper-deb_TARBALL = debbuild/globus-gatekeeper_10.10.orig.tar.gz
+globus_gatekeeper-deb: $(globus_gatekeeper-deb_SOURCE)
+globus_gatekeeper-osx-pkg = osx/packages/globus_gatekeeper-10.10.pkg
+$(globus_gatekeeper-osx-pkg): globus_gatekeeper-stamp
+$(globus_gatekeeper-osx-pkg)_SUBDIR = gram/gatekeeper/source
+$(globus_gatekeeper-osx-pkg)_PACKAGE_NAME = globus_gatekeeper
+$(globus_gatekeeper-osx-pkg)_PACKAGE_VERSION = 10.10
+globus_gatekeeper-osx-pkg: $(globus_gatekeeper-osx-pkg)
+globus_gass_cache_program-stamp_SUBDIR = gass/cache_program/source
+globus_gass_cache_program-all_SUBDIR = gass/cache_program/source
+globus_gass_cache_program-clean_SUBDIR = gass/cache_program/source
+globus_gass_cache_program-install_SUBDIR = gass/cache_program/source
+globus_gass_cache_program-check_SUBDIR = gass/cache_program/source
+globus_gass_cache_program-check: globus_gass_cache_program-stamp
+globus_gass_cache_program-clean_stamp = globus_gass_cache_program-stamp
+globus_gass_cache_program-install_stamp = globus_gass_cache_program-stamp
+globus_gass_cache_program-dist_SUBDIR = gass/cache_program/source
+globus_gass_cache_program-deps = globus_common-stamp globus_gass_cache-stamp globus_gass_copy-stamp globus_gass_transfer-stamp globus_gass_server_ez-stamp globus_gram_client-stamp
+globus_gass_cache_program: globus_gass_cache_program-all
+globus_gass_cache_program-all: globus_gass_cache_program-stamp
+globus_gass_cache_program-install: globus_gass_cache_program-stamp
+globus_gass_cache_program-stamp: $(globus_gass_cache_program-deps)
+globus_gass_cache_program-dist-tarball = globus_gass_cache_program-6.5.tar.gz
+package-output/$(globus_gass_cache_program-dist-tarball): globus_gass_cache_program-dist
+globus_gass_cache_program-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gass-cache-program.spec
+globus_gass_cache_program-rpm_SOURCE = package-output/$(globus_gass_cache_program-dist-tarball)
+globus_gass_cache_program-rpm: $(globus_gass_cache_program-rpm_SOURCE) $(globus_gass_cache_program-rpm_SPECFILE)
+globus_gass_cache_program-deb_PACKAGE_NAME = globus-gass-cache-program
+globus_gass_cache_program-deb_SOURCE = package-output/$(globus_gass_cache_program-dist-tarball)
+globus_gass_cache_program-deb_TARBALL = debbuild/globus-gass-cache-program_6.5.orig.tar.gz
+globus_gass_cache_program-deb: $(globus_gass_cache_program-deb_SOURCE)
+globus_gass_cache_program-osx-pkg = osx/packages/globus_gass_cache_program-6.5.pkg
+$(globus_gass_cache_program-osx-pkg): globus_gass_cache_program-stamp
+$(globus_gass_cache_program-osx-pkg)_SUBDIR = gass/cache_program/source
+$(globus_gass_cache_program-osx-pkg)_PACKAGE_NAME = globus_gass_cache_program
+$(globus_gass_cache_program-osx-pkg)_PACKAGE_VERSION = 6.5
+globus_gass_cache_program-osx-pkg: $(globus_gass_cache_program-osx-pkg)
+globus_gram_job_manager_pbs-stamp_SUBDIR = gram/jobmanager/lrms/pbs/source
+globus_gram_job_manager_pbs-all_SUBDIR = gram/jobmanager/lrms/pbs/source
+globus_gram_job_manager_pbs-clean_SUBDIR = gram/jobmanager/lrms/pbs/source
+globus_gram_job_manager_pbs-install_SUBDIR = gram/jobmanager/lrms/pbs/source
+globus_gram_job_manager_pbs-check_SUBDIR = gram/jobmanager/lrms/pbs/source
+globus_gram_job_manager_pbs-check: globus_gram_job_manager_pbs-stamp
+globus_gram_job_manager_pbs-clean_stamp = globus_gram_job_manager_pbs-stamp
+globus_gram_job_manager_pbs-install_stamp = globus_gram_job_manager_pbs-stamp
+globus_gram_job_manager_pbs-dist_SUBDIR = gram/jobmanager/lrms/pbs/source
+globus_gram_job_manager_pbs-deps = globus_common-stamp globus_scheduler_event_generator-stamp
+globus_gram_job_manager_pbs: globus_gram_job_manager_pbs-all
+globus_gram_job_manager_pbs-all: globus_gram_job_manager_pbs-stamp
+globus_gram_job_manager_pbs-install: globus_gram_job_manager_pbs-stamp
+globus_gram_job_manager_pbs-stamp: $(globus_gram_job_manager_pbs-deps)
+globus_gram_job_manager_pbs-dist-tarball = globus_gram_job_manager_pbs-2.4.tar.gz
+package-output/$(globus_gram_job_manager_pbs-dist-tarball): globus_gram_job_manager_pbs-dist
+globus_gram_job_manager_pbs-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gram-job-manager-pbs.spec
+globus_gram_job_manager_pbs-rpm_SOURCE = package-output/$(globus_gram_job_manager_pbs-dist-tarball)
+globus_gram_job_manager_pbs-rpm: $(globus_gram_job_manager_pbs-rpm_SOURCE) $(globus_gram_job_manager_pbs-rpm_SPECFILE)
+globus_gram_job_manager_pbs-deb_PACKAGE_NAME = globus-gram-job-manager-pbs
+globus_gram_job_manager_pbs-deb_SOURCE = package-output/$(globus_gram_job_manager_pbs-dist-tarball)
+globus_gram_job_manager_pbs-deb_TARBALL = debbuild/globus-gram-job-manager-pbs_2.4.orig.tar.gz
+globus_gram_job_manager_pbs-deb: $(globus_gram_job_manager_pbs-deb_SOURCE)
+globus_gram_job_manager_pbs-osx-pkg = osx/packages/globus_gram_job_manager_pbs-2.4.pkg
+$(globus_gram_job_manager_pbs-osx-pkg): globus_gram_job_manager_pbs-stamp
+$(globus_gram_job_manager_pbs-osx-pkg)_SUBDIR = gram/jobmanager/lrms/pbs/source
+$(globus_gram_job_manager_pbs-osx-pkg)_PACKAGE_NAME = globus_gram_job_manager_pbs
+$(globus_gram_job_manager_pbs-osx-pkg)_PACKAGE_VERSION = 2.4
+globus_gram_job_manager_pbs-osx-pkg: $(globus_gram_job_manager_pbs-osx-pkg)
+globus_gram_audit-stamp_SUBDIR = gram/jobmanager/auditing/source
+globus_gram_audit-all_SUBDIR = gram/jobmanager/auditing/source
+globus_gram_audit-clean_SUBDIR = gram/jobmanager/auditing/source
+globus_gram_audit-install_SUBDIR = gram/jobmanager/auditing/source
+globus_gram_audit-check_SUBDIR = gram/jobmanager/auditing/source
+globus_gram_audit-check: globus_gram_audit-stamp
+globus_gram_audit-clean_stamp = globus_gram_audit-stamp
+globus_gram_audit-install_stamp = globus_gram_audit-stamp
+globus_gram_audit-dist_SUBDIR = gram/jobmanager/auditing/source
+globus_gram_audit-deps =
+globus_gram_audit: globus_gram_audit-all
+globus_gram_audit-all: globus_gram_audit-stamp
+globus_gram_audit-install: globus_gram_audit-stamp
+globus_gram_audit-stamp: $(globus_gram_audit-deps)
+globus_gram_audit-dist-tarball = globus_gram_audit-4.4.tar.gz
+package-output/$(globus_gram_audit-dist-tarball): globus_gram_audit-dist
+globus_gram_audit-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gram-audit.spec
+globus_gram_audit-rpm_SOURCE = package-output/$(globus_gram_audit-dist-tarball)
+globus_gram_audit-rpm: $(globus_gram_audit-rpm_SOURCE) $(globus_gram_audit-rpm_SPECFILE)
+globus_gram_audit-deb_PACKAGE_NAME = globus-gram-audit
+globus_gram_audit-deb_SOURCE = package-output/$(globus_gram_audit-dist-tarball)
+globus_gram_audit-deb_TARBALL = debbuild/globus-gram-audit_4.4.orig.tar.gz
+globus_gram_audit-deb: $(globus_gram_audit-deb_SOURCE)
+globus_gram_audit-osx-pkg = osx/packages/globus_gram_audit-4.4.pkg
+$(globus_gram_audit-osx-pkg): globus_gram_audit-stamp
+$(globus_gram_audit-osx-pkg)_SUBDIR = gram/jobmanager/auditing/source
+$(globus_gram_audit-osx-pkg)_PACKAGE_NAME = globus_gram_audit
+$(globus_gram_audit-osx-pkg)_PACKAGE_VERSION = 4.4
+globus_gram_audit-osx-pkg: $(globus_gram_audit-osx-pkg)
+myproxy-stamp_SUBDIR = myproxy/source
+myproxy-all_SUBDIR = myproxy/source
+myproxy-clean_SUBDIR = myproxy/source
+myproxy-install_SUBDIR = myproxy/source
+myproxy-check_SUBDIR = myproxy/source
+myproxy-check: myproxy-stamp
+myproxy-clean_stamp = myproxy-stamp
+myproxy-install_stamp = myproxy-stamp
+myproxy-dist_SUBDIR = myproxy/source
+myproxy-deps = globus_common-stamp globus_gss_assist-stamp globus_gssapi_gsi-stamp globus_proxy_utils-stamp globus_usage-stamp
+myproxy: myproxy-all
+myproxy-all: myproxy-stamp
+myproxy-install: myproxy-stamp
+myproxy-stamp: $(myproxy-deps)
+myproxy-dist-tarball = myproxy-6.1.15.tar.gz
+package-output/$(myproxy-dist-tarball): myproxy-dist
+myproxy-rpm_SPECFILE = $(srcdir)/packaging/fedora/myproxy.spec
+myproxy-rpm_SOURCE = package-output/$(myproxy-dist-tarball)
+myproxy-rpm: $(myproxy-rpm_SOURCE) $(myproxy-rpm_SPECFILE)
+myproxy-deb_PACKAGE_NAME = myproxy
+myproxy-deb_SOURCE = package-output/$(myproxy-dist-tarball)
+myproxy-deb_TARBALL = debbuild/myproxy_6.1.15.orig.tar.gz
+myproxy-deb: $(myproxy-deb_SOURCE)
+myproxy-osx-pkg = osx/packages/myproxy-6.1.15.pkg
+$(myproxy-osx-pkg): myproxy-stamp
+$(myproxy-osx-pkg)_SUBDIR = myproxy/source
+$(myproxy-osx-pkg)_PACKAGE_NAME = myproxy
+$(myproxy-osx-pkg)_PACKAGE_VERSION = 6.1.15
+myproxy-osx-pkg: $(myproxy-osx-pkg)
+gsi_openssh-stamp_SUBDIR = gsi_openssh/source
+gsi_openssh-all_SUBDIR = gsi_openssh/source
+gsi_openssh-clean_SUBDIR = gsi_openssh/source
+gsi_openssh-install_SUBDIR = gsi_openssh/source
+gsi_openssh-check_SUBDIR = gsi_openssh/source
+gsi_openssh-check: gsi_openssh-stamp
+gsi_openssh-clean_stamp = gsi_openssh-stamp
+gsi_openssh-install_stamp = gsi_openssh-stamp
+gsi_openssh-dist_SUBDIR = gsi_openssh/source
+gsi_openssh-deps = globus_gss_assist-stamp globus_usage-stamp
+gsi_openssh: gsi_openssh-all
+gsi_openssh-all: gsi_openssh-stamp
+gsi_openssh-install: gsi_openssh-stamp
+gsi_openssh-stamp: $(gsi_openssh-deps)
+gsi_openssh-dist-tarball = gsi_openssh-5.7.tar.gz
+package-output/$(gsi_openssh-dist-tarball): gsi_openssh-dist
+gsi_openssh-rpm_SPECFILE = $(srcdir)/packaging/fedora/gsi-openssh.spec
+gsi_openssh-rpm_SOURCE = package-output/$(gsi_openssh-dist-tarball)
+gsi_openssh-rpm: $(gsi_openssh-rpm_SOURCE) $(gsi_openssh-rpm_SPECFILE)
+gsi_openssh-deb_PACKAGE_NAME = gsi-openssh
+gsi_openssh-deb_SOURCE = package-output/$(gsi_openssh-dist-tarball)
+gsi_openssh-deb_TARBALL = debbuild/gsi-openssh_5.7.orig.tar.gz
+gsi_openssh-deb: $(gsi_openssh-deb_SOURCE)
+gsi_openssh-osx-pkg = osx/packages/gsi_openssh-5.7.pkg
+$(gsi_openssh-osx-pkg): gsi_openssh-stamp
+$(gsi_openssh-osx-pkg)_SUBDIR = gsi_openssh/source
+$(gsi_openssh-osx-pkg)_PACKAGE_NAME = gsi_openssh
+$(gsi_openssh-osx-pkg)_PACKAGE_VERSION = 5.7
+gsi_openssh-osx-pkg: $(gsi_openssh-osx-pkg)
+globus_gram_client_tools-stamp_SUBDIR = gram/client_tools/source
+globus_gram_client_tools-all_SUBDIR = gram/client_tools/source
+globus_gram_client_tools-clean_SUBDIR = gram/client_tools/source
+globus_gram_client_tools-install_SUBDIR = gram/client_tools/source
+globus_gram_client_tools-check_SUBDIR = gram/client_tools/source
+globus_gram_client_tools-check: globus_gram_client_tools-stamp
+globus_gram_client_tools-clean_stamp = globus_gram_client_tools-stamp
+globus_gram_client_tools-install_stamp = globus_gram_client_tools-stamp
+globus_gram_client_tools-dist_SUBDIR = gram/client_tools/source
+globus_gram_client_tools-deps = globus_common-stamp globus_gram_client-stamp globus_gram_protocol-stamp globus_gass_transfer-stamp globus_gass_server_ez-stamp globus_rsl-stamp globus_gss_assist-stamp
+globus_gram_client_tools: globus_gram_client_tools-all
+globus_gram_client_tools-all: globus_gram_client_tools-stamp
+globus_gram_client_tools-install: globus_gram_client_tools-stamp
+globus_gram_client_tools-stamp: $(globus_gram_client_tools-deps)
+globus_gram_client_tools-dist-tarball = globus_gram_client_tools-11.7.tar.gz
+package-output/$(globus_gram_client_tools-dist-tarball): globus_gram_client_tools-dist
+globus_gram_client_tools-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gram-client-tools.spec
+globus_gram_client_tools-rpm_SOURCE = package-output/$(globus_gram_client_tools-dist-tarball)
+globus_gram_client_tools-rpm: $(globus_gram_client_tools-rpm_SOURCE) $(globus_gram_client_tools-rpm_SPECFILE)
+globus_gram_client_tools-deb_PACKAGE_NAME = globus-gram-client-tools
+globus_gram_client_tools-deb_SOURCE = package-output/$(globus_gram_client_tools-dist-tarball)
+globus_gram_client_tools-deb_TARBALL = debbuild/globus-gram-client-tools_11.7.orig.tar.gz
+globus_gram_client_tools-deb: $(globus_gram_client_tools-deb_SOURCE)
+globus_gram_client_tools-osx-pkg = osx/packages/globus_gram_client_tools-11.7.pkg
+$(globus_gram_client_tools-osx-pkg): globus_gram_client_tools-stamp
+$(globus_gram_client_tools-osx-pkg)_SUBDIR = gram/client_tools/source
+$(globus_gram_client_tools-osx-pkg)_PACKAGE_NAME = globus_gram_client_tools
+$(globus_gram_client_tools-osx-pkg)_PACKAGE_VERSION = 11.7
+globus_gram_client_tools-osx-pkg: $(globus_gram_client_tools-osx-pkg)
+globus_gram_job_manager-stamp_SUBDIR = gram/jobmanager/source
+globus_gram_job_manager-all_SUBDIR = gram/jobmanager/source
+globus_gram_job_manager-clean_SUBDIR = gram/jobmanager/source
+globus_gram_job_manager-install_SUBDIR = gram/jobmanager/source
+globus_gram_job_manager-check_SUBDIR = gram/jobmanager/source
+globus_gram_job_manager-check: globus_gram_job_manager-stamp
+globus_gram_job_manager-clean_stamp = globus_gram_job_manager-stamp
+globus_gram_job_manager-install_stamp = globus_gram_job_manager-stamp
+globus_gram_job_manager-dist_SUBDIR = gram/jobmanager/source
+globus_gram_job_manager-deps = globus_common-stamp globus_gsi_credential-stamp globus_gass_cache-stamp globus_gass_transfer-stamp globus_gram_protocol-stamp globus_gssapi_gsi-stamp globus_gss_assist-stamp globus_gsi_sysconfig-stamp globus_callout-stamp globus_xio-stamp globus_xio_popen_driver-stamp globus_rsl-stamp globus_gram_job_manager_callout_error-stamp globus_scheduler_event_generator-stamp globus_usage-stamp globus_gram_client_tools-stamp
+globus_gram_job_manager: globus_gram_job_manager-all
+globus_gram_job_manager-all: globus_gram_job_manager-stamp
+globus_gram_job_manager-install: globus_gram_job_manager-stamp
+globus_gram_job_manager-stamp: $(globus_gram_job_manager-deps)
+globus_gram_job_manager-dist-tarball = globus_gram_job_manager-14.27.tar.gz
+package-output/$(globus_gram_job_manager-dist-tarball): globus_gram_job_manager-dist
+globus_gram_job_manager-rpm_SPECFILE = $(srcdir)/packaging/fedora/globus-gram-job-manager.spec
+globus_gram_job_manager-rpm_SOURCE = package-output/$(globus_gram_job_manager-dist-tarball)
+globus_gram_job_manager-rpm: $(globus_gram_job_manager-rpm_SOURCE) $(globus_gram_job_manager-rpm_SPECFILE)
+globus_gram_job_manager-deb_PACKAGE_NAME = globus-gram-job-manager
+globus_gram_job_manager-deb_SOURCE = package-output/$(globus_gram_job_manager-dist-tarball)
+globus_gram_job_manager-deb_TARBALL = debbuild/globus-gram-job-manager_14.27.orig.tar.gz
+globus_gram_job_manager-deb: $(globus_gram_job_manager-deb_SOURCE)
+globus_gram_job_manager-osx-pkg = osx/packages/globus_gram_job_manager-14.27.pkg
+$(globus_gram_job_manager-osx-pkg): globus_gram_job_manager-stamp
+$(globus_gram_job_manager-osx-pkg)_SUBDIR = gram/jobmanager/source
+$(globus_gram_job_manager-osx-pkg)_PACKAGE_NAME = globus_gram_job_manager
+$(globus_gram_job_manager-osx-pkg)_PACKAGE_VERSION = 14.27
+globus_gram_job_manager-osx-pkg: $(globus_gram_job_manager-osx-pkg)
+gridftp_hdfs-stamp_SUBDIR = gridftp/hdfs
+gridftp_hdfs-all_SUBDIR = gridftp/hdfs
+gridftp_hdfs-clean_SUBDIR = gridftp/hdfs
+gridftp_hdfs-install_SUBDIR = gridftp/hdfs
+gridftp_hdfs-check_SUBDIR = gridftp/hdfs
+gridftp_hdfs-check: gridftp_hdfs-stamp
+gridftp_hdfs-clean_stamp = gridftp_hdfs-stamp
+gridftp_hdfs-install_stamp = gridftp_hdfs-stamp
+gridftp_hdfs-dist_SUBDIR = gridftp/hdfs
+gridftp_hdfs-deps = globus_gridftp_server-stamp
+gridftp_hdfs: gridftp_hdfs-all
+gridftp_hdfs-all: gridftp_hdfs-stamp
+gridftp_hdfs-install: gridftp_hdfs-stamp
+gridftp_hdfs-stamp: $(gridftp_hdfs-deps)
+gridftp_hdfs-dist-tarball = gridftp_hdfs-1.2.tar.gz
+package-output/$(gridftp_hdfs-dist-tarball): gridftp_hdfs-dist
+gridftp_hdfs-rpm_SPECFILE = $(srcdir)/packaging/fedora/gridftp-hdfs.spec
+gridftp_hdfs-rpm_SOURCE = package-output/$(gridftp_hdfs-dist-tarball)
+gridftp_hdfs-rpm: $(gridftp_hdfs-rpm_SOURCE) $(gridftp_hdfs-rpm_SPECFILE)
+gridftp_hdfs-deb_PACKAGE_NAME = gridftp-hdfs
+gridftp_hdfs-deb_SOURCE = package-output/$(gridftp_hdfs-dist-tarball)
+gridftp_hdfs-deb_TARBALL = debbuild/gridftp-hdfs_1.2.orig.tar.gz
+gridftp_hdfs-deb: $(gridftp_hdfs-deb_SOURCE)
+gridftp_hdfs-osx-pkg = osx/packages/gridftp_hdfs-1.2.pkg
+$(gridftp_hdfs-osx-pkg): gridftp_hdfs-stamp
+$(gridftp_hdfs-osx-pkg)_SUBDIR = gridftp/hdfs
+$(gridftp_hdfs-osx-pkg)_PACKAGE_NAME = gridftp_hdfs
+$(gridftp_hdfs-osx-pkg)_PACKAGE_VERSION = 1.2
+gridftp_hdfs-osx-pkg: $(gridftp_hdfs-osx-pkg)
+
+ltdl-2.4.2.pkg_SUBDIR = libltdl
+ltdl-2.4.2.pkg_PACKAGE_NAME = libltdl
+ltdl-2.4.2.pkg_PACKAGE_VERSION = 2.4.2
+
+ccommonlibs-deps =  globus_common-stamp globus_xio-stamp globus_callout-stamp globus_xio_gsi_driver-stamp globus_io-stamp globus_usage-stamp globus_xio_pipe_driver-stamp globus_xio_rate_driver-stamp globus_xio_popen_driver-stamp globus_gass_transfer-stamp globus_xioperf-stamp
+ccommonlibs: $(ccommonlibs-deps)
+ccommonlibs-xio-drivers = globus_xio_gsi_driver-stamp globus_xio_pipe_driver-stamp globus_xio_rate_driver-stamp globus_xio_popen_driver-stamp
+
+gridftp-deps =  globus_gfork-stamp globus_ftp_control-stamp globus_gridftp_server_control-stamp globus_net_manager-stamp globus_gridftp_server-stamp globus_ftp_client-stamp globus_gass_copy-stamp globus_xio_gridftp_multicast-stamp globus_xio_gridftp_driver-stamp
+gridftp: $(gridftp-deps)
+gridftp-xio-drivers = globus_xio_gridftp_driver-stamp
+
+gsi-deps =  globus_gsi_openssl_error-stamp globus_gsi_proxy_ssl-stamp globus_openssl_module-stamp globus_gsi_cert_utils-stamp globus_gsi_sysconfig-stamp globus_gsi_callback-stamp globus_gsi_credential-stamp globus_gsi_proxy_core-stamp globus_gssapi_gsi-stamp globus_gss_assist-stamp globus_gssapi_error-stamp globus_authz_callout_error-stamp globus_authz-stamp globus_simple_ca-stamp globus_gridmap_callout_error-stamp globus_gridmap_callout-stamp globus_gridmap_verify_myproxy_callout-stamp globus_gridmap_eppn_callout-stamp globus_proxy_utils-stamp
+gsi: $(gsi-deps)
+gsi-xio-drivers =
+
+udt-deps =  globus_xio_udt_driver-stamp
+udt: $(udt-deps)
+udt-xio-drivers = globus_xio_udt_driver-stamp
+
+gram5-deps =  globus_gram_protocol-stamp globus_gass_cache-stamp globus_rsl-stamp globus_gass_server_ez-stamp globus_gram_client-stamp globus_gass_cache_program-stamp globus_gram_client_tools-stamp
+gram5: $(gram5-deps)
+gram5-xio-drivers =
+
+gram5-server-deps =  globus_scheduler_event_generator-stamp globus_gram_job_manager_callout_error-stamp globus_gram_job_manager_scripts-stamp globus_gram_job_manager_fork-stamp globus_gatekeeper-stamp globus_gram_job_manager-stamp
+gram5-server: $(gram5-server-deps)
+gram5-server-xio-drivers =
+
+gram5-lsf-deps =  globus_gram_job_manager_lsf-stamp
+gram5-lsf: $(gram5-lsf-deps)
+gram5-lsf-xio-drivers =
+
+gram5-sge-deps =  globus_gram_job_manager_sge-stamp
+gram5-sge: $(gram5-sge-deps)
+gram5-sge-xio-drivers =
+
+gram5-slurm-deps =  globus_gram_job_manager_slurm-stamp
+gram5-slurm: $(gram5-slurm-deps)
+gram5-slurm-xio-drivers =
+
+gram5-condor-deps =  globus_gram_job_manager_condor-stamp
+gram5-condor: $(gram5-condor-deps)
+gram5-condor-xio-drivers =
+
+gram5-pbs-deps =  globus_gram_job_manager_pbs-stamp
+gram5-pbs: $(gram5-pbs-deps)
+gram5-pbs-xio-drivers =
+
+gram5-auditing-deps =  globus_gram_audit-stamp
+gram5-auditing: $(gram5-auditing-deps)
+gram5-auditing-xio-drivers =
+
+myproxy-deps =  myproxy-stamp
+myproxy: $(myproxy-deps)
+myproxy-xio-drivers =
+
+gsi-openssh-deps =  gsi_openssh-stamp
+gsi-openssh: $(gsi-openssh-deps)
+gsi-openssh-xio-drivers =
+
+gridftp-hdfs-deps =  gridftp_hdfs-stamp
+gridftp-hdfs: $(gridftp-hdfs-deps)
+gridftp-hdfs-xio-drivers =
+

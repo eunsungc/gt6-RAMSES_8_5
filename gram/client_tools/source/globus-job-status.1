@@ -1,0 +1,123 @@
+'\" t
+.\"     Title: globus-job-status
+.\"    Author: [see the "AUTHOR" section]
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/25/2014
+.\"    Manual: Globus Toolkit Manual
+.\"    Source: University of Chicago
+.\"  Language: English
+.\"
+.TH "GLOBUS\-JOB\-STATUS" "1" "09/25/2014" "University of Chicago" "Globus Toolkit Manual"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+globus-job-status \- Check the status of a GRAM5 job
+.SH "SYNOPSIS"
+.sp
+\fBglobus\-job\-status\fR \fIJOBID\fR
+.sp
+\fBglobus\-job\-status\fR \-help | \-usage | \-version | \-versions
+.SH "DESCRIPTION"
+.sp
+The \fBglobus\-job\-status\fR program checks the status of a GRAM job by sending a status request to the job manager contact for that job specified by the \fIJOBID\fR parameter\&. If successful, it will print the job status to standard output\&. The states supported by \fBglobus\-job\-status\fR are:
+.PP
+\fBPENDING\fR
+.RS 4
+The job has been submitted to the LRM but has not yet begun execution\&.
+.RE
+.PP
+\fBACTIVE\fR
+.RS 4
+The job has begun execution\&.
+.RE
+.PP
+\fBFAILED\fR
+.RS 4
+The job has failed\&.
+.RE
+.PP
+\fBSUSPENDED\fR
+.RS 4
+The job is currently suspended by the LRM\&.
+.RE
+.PP
+\fBDONE\fR
+.RS 4
+The job has completed\&.
+.RE
+.PP
+\fBUNSUBMITTED\fR
+.RS 4
+The job has been accepted by GRAM, but not yet submitted to the LRM\&.
+.RE
+.PP
+\fBSTAGE_IN\fR
+.RS 4
+The job has been accepted by GRAM and is currently staging files prior to being submitted to the LRM\&.
+.RE
+.PP
+\fBSTAGE_OUT\fR
+.RS 4
+The job has completed execution and is currently staging files from the service node to other http, GASS, or GridFTP servers\&.
+.RE
+.SH "OPTIONS"
+.sp
+The full set of options to \fBglobus\-job\-status\fR are:
+.PP
+\fB\-help, \-usage\fR
+.RS 4
+Display a help message to standard error and exit\&.
+.RE
+.PP
+\fB\-version\fR
+.RS 4
+Display the software version of the
+\fBglobus\-job\-status\fR
+program to standard output\&.
+.RE
+.PP
+\fB\-versions\fR
+.RS 4
+Display the software version of the
+\fBglobus\-job\-status\fR
+program including DiRT information to standard output\&.
+.RE
+.SH "ENVIRONMENT"
+.sp
+If the following variables affect the execution of \fBglobus\-job\-status\fR\&.
+.PP
+\fBX509_USER_PROXY\fR
+.RS 4
+Path to proxy credential\&.
+.RE
+.PP
+\fBX509_CERT_DIR\fR
+.RS 4
+Path to trusted certificate directory\&.
+.RE
+.SH "BUGS"
+.sp
+The \fBglobus\-job\-status\fR program can not distinguish between the case of the job manager terminating for any reason and the job being in the DONE state\&.
+.SH "SEE ALSO"
+.sp
+globusrun(1)
+.SH "AUTHOR"
+.sp
+Copyright \(co 1999\-2014 University of Chicago

@@ -1,0 +1,144 @@
+'\" t
+.\"     Title: grid-ca-sign
+.\"    Author: [see the "AUTHOR" section]
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/25/2014
+.\"    Manual: Globus Toolkit Manual
+.\"    Source: University of Chicago
+.\"  Language: English
+.\"
+.TH "GRID\-CA\-SIGN" "1" "09/25/2014" "University of Chicago" "Globus Toolkit Manual"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+grid-ca-sign \- Sign a certificate with a SimpleCA for use on a grid
+.SH "SYNOPSIS"
+.sp
+\fBgrid\-ca\-sign\fR \-in \fIREQUEST\fR \-out \fICERTIFICATE\fR [OPTIONS]
+.sp
+\fBgrid\-ca\-sign\fR [ \-help | \-h | \-usage | \-version | \-versions ]
+.SH "DESCRIPTION"
+.sp
+The \fBgrid\-ca\-sign\fR program signs a certificate based on a request file with a CA certificate created by \fBgrid\-ca\-create\fR\&. The new certificate is written to a file\&. If the CA has already signed a certificate with the same subject name as contained in the certificate request, it will refuse to sign the new request unless the \fI\-force\fR option is provided on the command\-line\&.
+.sp
+If run as a privileged user, \fBgrid\-ca\-sign\fR uses the CA certificate and sign the certificate\&. For a non\-privileged user, \fBgrid\-ca\-sign\fR uses the CA certificate and configuration located in $HOME/\&.globus/simpleCA\&. The \fBgrid\-ca\-sign\fR program an use a different CA configuration and certificate by using the \fI\-dir\fR option\&.
+.SH "OPTIONS"
+.sp
+The full set of command\-line options to \fBgrid\-ca\-sign\fR follows\&. In addition to these, unknown options will be passed to the \fBopenssl\fR command when creating the self\-signed certificate\&.
+.PP
+\fB\-help, \-h, \-usage\fR
+.RS 4
+Display the command\-line options to
+\fBgrid\-ca\-sign\fR
+and exit\&.
+.RE
+.PP
+\fB\-version, \-versions\fR
+.RS 4
+Display the version number of the
+\fBgrid\-ca\-sign\fR
+command\&. The second form includes details about the package containing
+\fBgrid\-ca\-sign\fR\&.
+.RE
+.PP
+\fB\-in \fR\fB\fIREQUEST\fR\fR
+.RS 4
+Sign the request contained in the
+\fIREQUEST\fR
+file\&.
+.RE
+.PP
+\fB\-out \fR\fB\fICERTIFICATE\fR\fR
+.RS 4
+Write the signed request to the
+\fICERTIFICATE\fR
+file\&.
+.RE
+.PP
+\fB\-force\fR
+.RS 4
+Revoke any previously issued certificate with the same subject name as in the certificate request and issue a new certificate\&. Otherwise,
+\fBgrid\-ca\-sign\fR
+will refuse to sign the request\&.
+.RE
+.PP
+\fB\-dir \fR\fB\fIDIRECTORY\fR\fR
+.RS 4
+Sign the certificate using the Simple CA certificate and configuration located in
+\fIDIRECTORY\fR
+instead of the default\&.
+.RE
+.PP
+\fB\-openssl\-help\fR
+.RS 4
+Print the command\-line options available for the
+\fBopenssl ca\fR
+command\&.
+.RE
+.SH "EXAMPLES"
+.sp
+Sign a certificate request using the simple CA in $HOME/SimpleCA\*(Aq
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+% *grid\-ca\-sign* \e
+    \-in usercert_request\&.pem \e
+    \-out usercert\&.pem \e
+    \-dir $HOME/SimpleCA
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+To sign the request please enter the password for the CA key:
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+The new signed certificate is at: /home/juser/\&.globus/simpleCA/newcerts/01\&.pem
+.fi
+.if n \{\
+.RE
+.\}
+.SH "ENVIRONMENT"
+.sp
+The following environment variables affect the execution of \fBgrid\-ca\-sign\fR:
+.PP
+GLOBUS_LOCATION
+.RS 4
+Non\-standard installation path of the Globus Toolkit\&.
+.RE
+.SH "SEE ALSO"
+.sp
+grid\-cert\-request(1), grid\-ca\-create(1), grid\-default\-ca(1), grid\-ca\-package(1)
+.SH "AUTHOR"
+.sp
+Copyright \(co 1999\-2014 University of Chicago

@@ -1,0 +1,10 @@
+@LOGDIR@/globus-gatekeeper.log {
+    daily
+    compress
+    missingok
+    notifempty
+    nocreate
+    rotate 4
+    sharedscripts
+    copytruncate
+}

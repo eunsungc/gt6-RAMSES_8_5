@@ -1,0 +1,391 @@
+'\" t
+.\"     Title: grid-cert-request
+.\"    Author: [see the "AUTHOR" section]
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/24/2014
+.\"    Manual: Globus Toolkit
+.\"    Source: University of Chicago
+.\"  Language: English
+.\"
+.TH "GRID\-CERT\-REQUEST" "1" "09/24/2014" "University of Chicago" "Globus Toolkit"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+grid-cert-request \- Generate a X\&.509 certificate request and corresponding private key
+.SH "SYNOPSIS"
+.sp
+\fBgrid\-cert\-request\fR \-help | \-h | \-? | \-usage | \-version\-versions
+.sp
+\fBgrid\-cert\-request\fR [OPTIONS]
+.SH "DESCRIPTION"
+.sp
+The \fBgrid\-cert\-request\fR program generates an X\&.509 Certificate Request and corresponding private key for the specified name, host, or service\&. It is intended to be used with a CA implemented using the \fBglobus_simple_ca\fR package\&.
+.sp
+The default behavior of \fBgrid\-cert\-request\fR is to generate a certificate request and private key for the user running the command\&. The subject name is derived from the gecos information in the local system\(cqs password database, unless the \fI\-commonname\fR, \fI\-cn\fR, or \fI\-host\fR command\-line options are used\&.
+.sp
+By default, \fBgrid\-cert\-request\fR writes user certificate requests and keys to the $HOME/\&.globus directory, and host and service certificate requests and keys to /etc/grid\-security\&. This can be overridden by using the \fI\-dir\fR command\-line option\&.
+.SH "OPTIONS"
+.sp
+The full set of command\-line options to \fBgrid\-cert\-request\fR are:
+.PP
+\fB\-help, \-h, \-?, \-usage\fR
+.RS 4
+Display the command\-line options to
+\fBgrid\-cert\-request\fR
+and exit\&.
+.RE
+.PP
+\fB\-version, \-versions\fR
+.RS 4
+Display the version number of the
+\fBgrid\-cert\-request\fR
+command\&. The second form includes more details\&.
+.RE
+.PP
+\fB\-cn \fR\fB\fINAME\fR\fR\fB, \-commonname \fR\fB\fINAME\fR\fR
+.RS 4
+Create a certificate request with the common name component of the subject set to
+\fINAME\fR\&. This is used to create user identity certificates\&.
+.RE
+.PP
+\fB\-dir \fR\fB\fIDIRECTORY\fR\fR
+.RS 4
+Write the certificate request and key to files in the directory specified by
+\fIDIRECTORY\fR\&.
+.RE
+.PP
+\fB\-prefix \fR\fB\fIPREFIX\fR\fR
+.RS 4
+Use the string
+\fIPREFIX\fR
+as the base name of the certificate, certificate_request, and key files instead of the default\&. For a user certificate request, this would mean creating files
+$HOME/\&.globus/\*(AqPREFIX\(cqcert_request\&.pem,
+$HOME/\&.globus/\*(AqPREFIX\(cqcert\&.pem, and
+$HOME/\&.globus/\*(AqPREFIX\(cqkey\&.pem\&.
+.RE
+.PP
+\fB\-ca \fR\fB\fICA\-HASH\fR\fR
+.RS 4
+Use the certificate request configuration for the CA with the name hash
+\fICA\-HASH\fR
+instead of the default CA chosen by running
+\fBgrid\-default\-ca\fR\&.
+.RE
+.PP
+\fB\-verbose\fR
+.RS 4
+Keep the output from the OpenSSL certificate request command visible after it completes, instead of clearing the screen\&.
+.RE
+.PP
+\fB\-interactive, \-int\fR
+.RS 4
+Prompt for each component of the subject name of the request, instead of generating the common name from other command\-line options\&. Note that CAs may not sign certificates for subject names that don\(cqt match their signing policies\&.
+.RE
+.PP
+\fB\-force\fR
+.RS 4
+Overwrite any existing certificate request and private key with a new one\&.
+.RE
+.PP
+\fB\-nopw, \-nodes, \-nopassphrase\fR
+.RS 4
+Create an unencrypted private key for the certificate instead of prompting for a passphrase\&. This is the default behavior for host or service certificates, but not recommended for user certificates\&.
+.RE
+.PP
+\fB\-host \fR\fB\fIFQDN\fR\fR
+.RS 4
+Create a certificate request for use on a particular host\&. This option also causes the private key associated with the certificate request to be unencrypted\&. The
+\fIFQDN\fR
+argument to this option should be the fully qualified domain name of the host that will use this certificate\&. The subject name of the certificate will be derived from the
+\fIFQDN\fR
+and the service option if specified by the
+\fI\-service\fR
+command\-line option\&. If the host for the certificate has multiple names, then use either the
+\fI\-dns\fR
+or
+\fI\-ip\fR
+command\-line options to add alternate names or addresses to the certificates\&.
+.RE
+.PP
+\fB\-service \fR\fB\fISERVICE\fR\fR
+.RS 4
+Create a certificate request for a particular service on a host\&. The subject name of the certificate will be derived from the
+\fIFQDN\fR
+passed as the argument to the
+\fI\-host\fR
+command\-line option and the
+\fISERVICE\fR
+string\&.
+.RE
+.PP
+\fB\-dns \fR\fB\fIFQDN,\&...\fR\fR
+.RS 4
+Create a certificate request containing a
+subjectAltName
+extension containing one or more host names\&. This is used when a certificate may be used by multiple virtual servers or if a host has different names when contacted within or outside a private network\&. Multiple DNS names can be included in the extension by separating then with a comma\&.
+.RE
+.PP
+\fB\-ip \fR\fB\fIIP\-ADDRESS,\&...\fR\fR
+.RS 4
+Create a certificate request containing a
+subjectAltName
+extension containing the IP addresses named by the
+\fIIP\-ADDRESS\fR
+strings\&. This is used when a certificate may be used by services listening on multiple networks\&. Multiple IP addresses can be included in the extension by separating then with a comma\&.
+.RE
+.SH "EXAMPLES"
+.sp
+Create a user certificate request: % \fBgrid\-cert\-request\fR A certificate request and private key is being created\&. You will be asked to enter a PEM pass phrase\&. This pass phrase is akin to your account password, and is used to protect your key file\&. If you forget your pass phrase, you will need to obtain a new certificate\&. A private key and a certificate request has been generated with the subject:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+/O=org/OU=example/OU=grid/CN=Joe User
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+If the CN=Joe User is not appropriate, rerun this
+script with the \-force \-cn "Common Name" options\&.
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+Your private key is stored in /home/juser/\&.globus/userkey\&.pem
+Your request is stored in /home/juser/\&.globus/usercert_request\&.pem
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+Please e\-mail the request to the Example CA ca@grid\&.example\&.org
+You may use a command similar to the following:
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+cat /home/juser/\&.globus/usercert_request\&.pem | mail ca@grid\&.example\&.org
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+Only use the above if this machine can send AND receive e\-mail\&. if not, please
+mail using some other method\&.
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+    Your certificate will be mailed to you within two working days\&.
+If you receive no response, contact Example CA at ca@grid\&.example\&.org
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+Create a host certificate for a host with two names\&.
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+% *grid\-cert\-request \-host grid\&.example\&.org \-dns grid\&.example\&.org,grid\-internal\&.example\&.org*
+A private host key and a certificate request has been generated
+with the subject:
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+/O=org/OU=example/OU=grid/CN=host/grid\&.example\&.org
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+The private key is stored in /etc/grid\-security/hostkey\&.pem
+The request is stored in /etc/grid\-security/hostcert_request\&.pem
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+Please e\-mail the request to the Example CA ca@grid\&.example\&.org
+You may use a command similar to the following:
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+cat /etc/grid\-security/hostcert_request\&.pem | mail ca@grid\&.example\&.org
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+Only use the above if this machine can send AND receive e\-mail\&. if not, please
+mail using some other method\&.
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+Your certificate will be mailed to you within two working days\&.
+If you receive no response, contact Example CA at
+ca@grid\&.example\&.org
+.fi
+.if n \{\
+.RE
+.\}
+.SH "ENVIRONMENT"
+.sp
+The following environment variables affect the execution of \fBgrid\-cert\-request\fR:
+.PP
+\fBX509_CERT_DIR\fR
+.RS 4
+Path to the directory containing SSL configuration files for generating certificate requests\&.
+.RE
+.PP
+\fBGRID_SECURITY_DIR\fR
+.RS 4
+Path to the directory containing SSL configuration files for generating certificate requests\&. This value is used if
+X509_CERT_DIR
+is not set\&.
+.RE
+.PP
+\fBGLOBUS_LOCATION\fR
+.RS 4
+Path to the directory containing the Globus Toolkit\&. This is searched if neither the
+X509_CERT_DIR
+nor the
+GRID_SECURITY_DIR
+environment variables are set\&.
+.RE
+.SH "FILES"
+.PP
+\fB$HOME/\&.globus/usercert_request\&.pem\fR
+.RS 4
+Default path to write a user certificate request\&.
+.RE
+.PP
+\fB$HOME/\&.globus/usercert\&.pem\fR
+.RS 4
+Default path to write a user certificate\&.
+.RE
+.PP
+\fB$HOME/\&.globus/userkey\&.pem\fR
+.RS 4
+Default path to write a user private key\&.
+.RE
+.PP
+\fB/etc/grid\-security/hostcert_request\&.pem\fR
+.RS 4
+Default path to write a host certificate request\&.
+.RE
+.PP
+\fB/etc/grid\-security/hostcert\&.pem\fR
+.RS 4
+Default path to write a host certificate\&.
+.RE
+.PP
+\fB/etc/grid\-security/hostkey\&.pem\fR
+.RS 4
+Default path to write a host private key\&.
+.RE
+.PP
+\fB\fITRUSTED\-CERT\-DIR\fR\fR\fB/globus\-user\-ssl\&.conf, \fR\fB\fITRUSTED\-CERT\-DIR\fR\fR\fB/globus\-user\-ssl\&.conf\&.\fR\fB\fICA\-HASH\fR\fR
+.RS 4
+SSL configuration file for requesting a user certificate\&. The first form is the default location, the second form is used when the
+\fI\-ca\fR
+command\-line option is specified\&.
+.RE
+.PP
+\fB\fITRUSTED\-CERT\-DIR\fR\fR\fB/globus\-host\-ssl\&.conf, \fR\fB\fITRUSTED\-CERT\-DIR\fR\fR\fB/globus\-host\-ssl\&.conf\&.\fR\fB\fICA\-HASH\fR\fR
+.RS 4
+SSL configuration file for requesting a host or service certificate\&. The first form is the default location, the second form is used when the
+\fI\-ca\fR
+command\-line option is specified\&.
+.RE
+.SH "AUTHOR"
+.sp
+Copyright \(co 1999\-2014 University of Chicago

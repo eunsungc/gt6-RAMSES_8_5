@@ -1,0 +1,10 @@
+#! /bin/sh
+
+prefix="${GLOBUS_LOCATION-@prefix@}"
+exec_prefix="@exec_prefix@"
+
+if [ -x @sbindir@/globus-gram-audit ] ; then
+@sbindir@/globus-gram-audit --quiet
+fi
+
+exit 0

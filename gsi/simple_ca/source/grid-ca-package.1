@@ -1,0 +1,132 @@
+'\" t
+.\"     Title: grid-ca-package
+.\"    Author: [see the "AUTHOR" section]
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/25/2014
+.\"    Manual: Globus Toolkit Manual
+.\"    Source: University of Chicago
+.\"  Language: English
+.\"
+.TH "GRID\-CA\-PACKAGE" "1" "09/25/2014" "University of Chicago" "Globus Toolkit Manual"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+grid-ca-package \- Prepare a CA certificate, configuration, and policy for distribution
+.SH "SYNOPSIS"
+.sp
+\fBgrid\-ca\-sign\fR [\-ca \fIHASH\fR] [\-g] [\-b] [\-r] [\-d]
+.sp
+\fBgrid\-ca\-sign\fR [ \-help| \-h| \-usage| \-version| \-versions ]
+.SH "DESCRIPTION"
+.sp
+The \fBgrid\-ca\-sign\fR utility creates a tarball containing an RPM spec file and the files needed to use a CA with grid tools\&. It optionally will also create a GPT package for distributing a CA\&.
+.sp
+By default, the \fBgrid\-ca\-sign\fR utility displays a list of installed grid CA and prompts for which CA to package\&. It then creates a tarball containing the CA certificate, signing policy, CA configuration files, and an spec script to generate a binary RPM package containing the CA\&. If the CA hash is known prior to running \fBgrid\-ca\-sign\fR, it may provided as an argument to the \fI\-ca\fR parameter to avoid prompting\&.
+.sp
+In addition to generating a spec script and tarball, \fBgrid\-ca\-sign\fR creates a GPT package if either the \fI\-g\fR or \fI\-b\fR options are used on the command\-line\&. These packages may be used to distribute a CA and configuration to systems which do not support RPM packages\&.
+.sp
+The \fBgrid\-ca\-sign\fR utility writes the package tarballs to the current working directory\&.
+.SH "OPTIONS"
+.sp
+The full set of command\-line options to \fBgrid\-ca\-sign\fR follows:
+.PP
+\fB\-help, \-h, \-usage\fR
+.RS 4
+Display the command\-line options to
+\fBgrid\-ca\-sign\fR
+and exit\&.
+.RE
+.PP
+\fB\-version, \-versions\fR
+.RS 4
+Display the version number of the
+\fBgrid\-ca\-sign\fR
+command\&. The second form includes more details\&.
+.RE
+.PP
+\fB\-ca \fR\fB\fICA\fR\fR
+.RS 4
+Use the CA whose name matches the hash string
+\fICA\fR\&. When invoked with this option,
+\fBgrid\-ca\-sign\fR
+runs non\-interactively\&.
+.RE
+.PP
+\fB\-g\fR
+.RS 4
+Create a GPT binary package in addition to the RPM script tarball\&. This package may be installed on other systems using the
+\fBgpt\-install\fR
+program\&.
+.RE
+.PP
+\fB\-b\fR
+.RS 4
+Create a GPT binary package with GPT metadata located in the path expected by GPT 3\&.2 (used in Globus 2\&.0\&.0\-5\&.0\&.x) instead of overrides the
+\fI\-g\fR
+command\-line option\&.
+.RE
+.PP
+\fB\-r\fR
+.RS 4
+Create a binary RPM package for the CA\&. This option currently only works on RPM\-based distributions\&.
+.RE
+.PP
+\fB\-d\fR
+.RS 4
+Create a binary Debian package for the CA\&. This option currently only works on Debian\-based distributions\&.
+.RE
+.SH "EXAMPLES"
+.sp
+Package a Simple CA with hash 0146c503\&.
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+% grid\-ca\-sign \-ca 0146c503
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+Creating RPM source tarball\&.\&.\&. done
+globus_simple_ca_0146c503\&.tar\&.gz
+.fi
+.if n \{\
+.RE
+.\}
+.SH "ENVIRONMENT"
+.sp
+The following environment variables affect the execution of \fBgrid\-ca\-sign\fR:
+.PP
+GLOBUS_LOCATION
+.RS 4
+Non\-standard installation path of the Globus Toolkit\&.
+.RE
+.SH "SEE ALSO"
+.sp
+grid\-cert\-request(1), grid\-ca\-sign(1), grid\-default\-ca(1), grid\-ca\-create(1)
+.SH "AUTHOR"
+.sp
+Copyright \(co 1999\-2014 University of Chicago

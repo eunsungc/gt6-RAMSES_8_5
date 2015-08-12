@@ -1,0 +1,246 @@
+'\" t
+.\"     Title: grid-proxy-init
+.\"    Author: [see the "AUTHOR" section]
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 09/25/2014
+.\"    Manual: Globus Toolkit
+.\"    Source: University of Chicago
+.\"  Language: English
+.\"
+.TH "GRID\-PROXY\-INIT" "1" "09/25/2014" "University of Chicago" "Globus Toolkit"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+grid-proxy-init \- Generate a new proxy certificate
+.SH "SYNOPSIS"
+.sp
+\fBgrid\-proxy\-init\fR \-help | \-usage | \-version
+.sp
+\fBgrid\-proxy\-init\fR [OPTIONS]
+.SH "DESCRIPTION"
+.sp
+The \fBgrid\-proxy\-init\fR program generates X\&.509 proxy certificates derived from the currently available certificate files\&. By default, this command generates a <ulink url="http://www\&.ietf\&.org/rfc/rfc3820\&.txt">RFC 3820</ulink> Proxy Certificate with a 1024 bit key, valid for 12 hours, in a file named /tmp/x509up_u\(cqUID\*(Aq\&. Command\-line options and environment variables can modify the format, strength, lifetime, and location of the generated proxy certificate\&.
+.sp
+X\&.509 proxy certificates are short\-lived certificates, signed usually by a user\(cqs identity certificate or another proxy certificate\&. The key associated with a proxy certificate is unencrypted, so applications can authenticate using a proxy identity without providing a pass phrase\&.
+.sp
+Proxy certificates provide a convenient alternative to constantly entering passwords, but are also less secure than the user\(cqs normal security credential\&. Therefore, they should always be user\-readable only (this is enforced by the GSI libraries), and should be deleted after they are no longer needed\&.
+.sp
+This version of \fBgrid\-proxy\-init\fR supports three different proxy formats: the old proxy format used in early releases of the Globus Toolkit up to version 2\&.4\&.x, an IETF draft version of X\&.509 Proxy Certificate profile used in Globus Toolkit 3\&.0\&.x and 3\&.2\&.x, and the RFC 3820 profile used in Globus Toolkit Version 4\&.0\&.x and 4\&.2\&.x\&. By default, this version of \fBgrid\-proxy\-init\fR creates an RFC 3820 compliant proxy\&. To create a proxy compatible with older versions of the Globus Toolkit, use the \fI\-old\fR or \fI\-draft\fR command\-line options\&.
+.SH "OPTIONS"
+.sp
+The full set of command\-line options to \fBgrid\-proxy\-init\fR are:
+.PP
+\fB\-help, \-usage\fR
+.RS 4
+Display the command\-line options to
+\fBgrid\-proxy\-init\fR\&.
+.RE
+.PP
+\fB\-version\fR
+.RS 4
+Display the version number of the
+\fBgrid\-proxy\-init\fR
+command\&.
+.RE
+.PP
+\fB\-debug\fR
+.RS 4
+Display information about the path to the certificate and key used to generate the proxy certificate, the path to the trusted certificate directory, and verbose error messages\&.
+.RE
+.PP
+\fB\-q\fR
+.RS 4
+Suppress all output from
+\fBgrid\-proxy\-init\fR
+except for pass phrase prompts\&.
+.RE
+.PP
+\fB\-verify\fR
+.RS 4
+Perform certificate chain validity checks on the generated proxy\&.
+.RE
+.PP
+\fB\-valid \fR\fB\fIHOURS:MINUTES\fR\fR\fB, \-hours \fR\fB\fIHOURS\fR\fR
+.RS 4
+Create a certificate that is valid for
+\fIHOURS\fR
+hours and
+\fIMINUTES\fR
+minutes\&. If not specified, the default of twelve hours is used\&.
+.RE
+.PP
+\fB\-cert \fR\fB\fICERTFILE\fR\fR\fB, \-key \fR\fB\fIKEYFILE\fR\fR
+.RS 4
+Create a proxy certificate signed by the certificate located in
+\fICERTFILE\fR
+using the key located in
+\fIKEYFILE\fR\&. If not specified the default certificate and key will be used\&. This overrides the values of environment variables described below\&.
+.RE
+.PP
+\fB\-certdir \fR\fB\fICERTDIR\fR\fR
+.RS 4
+Search
+\fICERTDIR\fR
+for trusted certificates if verifying the proxy certificate\&. If not specified, the default trusted certificate search path is used\&. This overrides the value of the
+X509_CERT_DIR
+environment variable\&.
+.RE
+.PP
+\fB\-out \fR\fB\fIPROXYPATH\fR\fR
+.RS 4
+Write the generated proxy certificate file to
+\fIPROXYPATH\fR
+instead of the default path of
+/tmp/x509up_u\(cqUID\*(Aq\&.
+.RE
+.PP
+\fB\-bits \fR\fB\fIBITS\fR\fR
+.RS 4
+When creating the proxy certificate, use a
+\fIBITS\fR
+bit key instead of the default 1024\-bit keys\&.
+.RE
+.PP
+\fB\-policy \fR\fB\fIPOLICYFILE\fR\fR
+.RS 4
+Add the certificate policy data described in
+\fIPOLICYFILE\fR
+as the ProxyCertInfo X\&.509 extension to the generated proxy certificate\&.
+.RE
+.PP
+\fB\-pl \fR\fB\fIPOLICY\-OID\fR\fR\fB, \-policy\-language \fR\fB\fIPOLICY\-OID\fR\fR
+.RS 4
+Set the policy language identifier of the policy data specified by the
+\fI\-policy\fR
+command\-line option to the OID specified by the
+\fIPOLICY\-OID\fR
+string\&.
+.RE
+.PP
+\fB\-path\-length \fR\fB\fIMAXIMUM\fR\fR
+.RS 4
+Set the maximum length of the chain of proxies that can be created by the generated proxy to
+\fIMAXIMUM\fR\&. If not set, the default of an unlimited proxy chain length is used\&.
+.RE
+.PP
+\fB\-pwstdin\fR
+.RS 4
+Read the private key\(cqs pass phrase from standard input instead of reading input from the controlling tty\&. This is useful when scripting
+\fBgrid\-proxy\-init\fR\&.
+.RE
+.PP
+\fB\-limited\fR
+.RS 4
+Create a limited proxy\&. Limited proxies are generally refused by process\-creating services, but may be used to authorize with other services\&.
+.RE
+.PP
+\fB\-independent\fR
+.RS 4
+Create an independent proxy\&. An independent proxy is not treated as an impersonation proxy but as a separate identity for authorization purposes\&.
+.RE
+.PP
+\fB\-draft\fR
+.RS 4
+Create a IETF draft proxy instead of the default RFC 3280\-compliant proxy\&. This type of proxy uses a non\-standard proxy policy identifier\&. This might be useful for authenticating with older versions of the Globus Toolkit\&.
+.RE
+.PP
+\fB\-old\fR
+.RS 4
+Create a legacy proxy instead of the default RFC 3280\-compliant proxy\&. This type of proxy uses a non\-standard method of indicating that the certificate is a proxy and whether it is limited\&. This might be useful for authenticating with older versions of the Globus Toolkit\&.
+.RE
+.PP
+\fB\-rfc\fR
+.RS 4
+Create an RFC 3820\-compliant proxy certificate\&. This is the default for this version of
+\fBgrid\-proxy\-init\fR\&.
+.RE
+.SH "EXAMPLES"
+.sp
+To create a proxy with the default lifetime and format, run the \fBgrid\-proxy\-init\fR program with no arguments\&. For example:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+% grid\-proxy\-init
+Your identity: /DC=org/DC=example/CN=Joe User
+Enter GRID pass phrase for this identity: XXXXXXX
+Creating proxy \&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&. Done
+Your proxy is valid until: Thu Mar 18 03:48:05 2010
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+To create a stronger proxy that lasts for only 8 hours, use the \fI\-hours\fR and \fI\-bits\fR command\-line options to \fBgrid\-proxy\-init\fR\&. For example:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+% grid\-proxy\-init \-hours 8 \-bits 4096
+Your identity: /DC=org/DC=example/CN=Joe User
+Enter GRID pass phrase for this identity: XXXXXXX
+Creating proxy \&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&. Done
+Your proxy is valid until: Thu Mar 17 23:48:05 2010
+.fi
+.if n \{\
+.RE
+.\}
+.SH "ENVIRONMENT"
+.sp
+The following environment variables affect the execution of \fBgrid\-proxy\-init\fR:
+.PP
+\fBX509_USER_CERT\fR
+.RS 4
+Path to the certificate to use as issuer of the new proxy\&.
+.RE
+.PP
+\fBX509_USER_KEY\fR
+.RS 4
+Path to the key to use to sign the new proxy\&.
+.RE
+.PP
+\fBX509_CERT_DIR\fR
+.RS 4
+Path to the directory containing trusted certificates and signing policies\&.
+.RE
+.SH "FILES"
+.sp
+The following files affect the execution of \fBgrid\-proxy\-init\fR:
+.PP
+\fB$HOME/\&.globus/usercert\&.pem\fR
+.RS 4
+Default path to the certificate to use as issuer of the new proxy\&.
+.RE
+.PP
+\fB$HOME/\&.globus/userkey\&.pem\fR
+.RS 4
+Default path to the key to use to sign the new proxy\&.
+.RE
+.SH "COMPATIBILITY"
+.sp
+For more information about proxy certificate types and their compatibility in GT, see \m[blue]\fBhttp://dev\&.globus\&.org/wiki/Security/ProxyCertTypes\fR\m[]
+.SH "SEE ALSO"
+.sp
+grid\-proxy\-destroy(1), grid\-proxy\-info(1)
+.SH "AUTHOR"
+.sp
+Copyright \(co 1999\-2014 University of Chicago

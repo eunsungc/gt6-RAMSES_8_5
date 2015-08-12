@@ -1,0 +1,13 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+abs_top_srcdir=@abs_top_srcdir@
+abs_top_builddir=@abs_top_builddir@
+
+Name: globus-gass-cache
+Description: Globus Toolkit - Globus Gass Cache
+Version: @VERSION@
+Requires.private: @PACKAGE_DEPS@
+Libs: ${abs_top_builddir}/libglobus_gass_cache.la
+Cflags: -I${abs_top_srcdir}

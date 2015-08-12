@@ -1,0 +1,11 @@
+@LOGDIR@/gram_*.log {
+    daily
+    dateext
+    compress
+    missingok
+    notifempty
+    nocreate
+    rotate 4
+    sharedscripts
+    copytruncate
+}

@@ -1,0 +1,9 @@
+static
+globus_version_t local_version = 
+{
+    @MAJOR_VERSION@,
+    @MINOR_VERSION@,
+    @DIRT_TIMESTAMP@,
+    @DIRT_BRANCH_ID@
+};
+

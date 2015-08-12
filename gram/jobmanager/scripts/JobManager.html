@@ -1,0 +1,277 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body style="background-color: white">
+
+
+
+<h1 id="NAME">NAME</h1>
+
+<p>Globus::GRAM::JobManager - Base class for all Job Manager scripts</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code> $manager = new Globus::GRAM::JobManager($job_description);
+
+ $manager-&gt;log(&quot;Starting new operation&quot;);
+ $manager-&gt;nfssync($fileobj,$createflag);
+ $manager-&gt;respond($hashref);
+ $hashref = $manager-&gt;submit();
+ $hashref = $manager-&gt;poll();
+ $hashref = $manager-&gt;cancel();
+ $hashref = $manager-&gt;signal();
+ $hashref = $manager-&gt;make_scratchdir();
+ $hashref = $manager-&gt;remove_scratchdir();
+ $hashref = $manager-&gt;rewrite_urls();
+ $hashref = $manager-&gt;stage_in();
+ $hashref = $manager-&gt;stage_out();
+ $hashref = $manager-&gt;cache_cleanup();
+ $hashref = $manager-&gt;remote_io_file_create();
+ $hashref = $manager-&gt;proxy_relocate();
+ $hashref = $manager-&gt;proxy_update();
+ $scalar  = $manager-&gt;pipe_out_cmd(@arglist);
+ ($stderr, $rc) = $manager-&gt;pipe_err_cmd(@arglist);
+ $status  = $manager-&gt;fork_and_exec_cmd(@arglist);
+ $manager-&gt;append_path($hash, $variable, $path);
+ $scalar = $manager-&gt;setup_softenv();</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p>The Globus::GRAM::JobManager module implements the base behavior for a Job Manager script interface. Scheduler-specific job manager scripts must inherit from this module in order to be used by the job manager.</p>
+
+<h2 id="Methods">Methods</h2>
+
+<dl>
+
+<dt id="manager-Globus::GRAM::JobManager-new-JobDescription">$manager = Globus::GRAM::JobManager-&gt;new($JobDescription)</dt>
+<dd>
+
+<p>Each Globus::GRAM::JobManager object is created by calling the constructor with a single argument, a Globus::GRAM::JobDescription object containing the information about the job request which the script will be modifying. Modules which subclass Globus::GRAM::JobManager MUST call the super-class&#39;s constructor, as in this code fragment:</p>
+
+<pre><code>     my $proto = shift;
+     my $class = ref($proto) || $proto;
+     my $self = $class-&gt;SUPER::new(@_);
+
+     bless $self, $class;</code></pre>
+
+</dd>
+<dt id="manager-log-string">$manager-&gt;log($string)</dt>
+<dd>
+
+<p>Log a message to the job manager log file. The message is preceded by a timestamp.</p>
+
+</dd>
+<dt id="manager-nfssync-object-create">$manager-&gt;nfssync($object,$create)</dt>
+<dd>
+
+<p>Send an NFS update by touching the file (or directory) in question. If the $create is true, a file will be created. If it is false, the $object will not be created.</p>
+
+</dd>
+<dt id="manager-respond-message">$manager-&gt;respond($message)</dt>
+<dd>
+
+<p>Send a response to the job manager program. The response may either be a hash reference consisting of a hash of (variable, value) pairs, which will be returned to the job manager, or an already formatted string. This only needs to be directly called by a job manager implementation when the script wants to send a partial response while processing one of the scheduler interface methods (for example, to indicate that a file has been staged).</p>
+
+<p>The valid keys for a response are defined in the RESPONSES section.</p>
+
+</dd>
+<dt id="manager-submit">$manager-&gt;submit()</dt>
+<dd>
+
+<p>Submit a job request to the scheduler. The default implementation returns with the Globus::GRAM::Error::UNIMPLEMENTED error. Scheduler specific subclasses should reimplement this method to submit the job to the scheduler.</p>
+
+<p>A scheduler which implements this method should return a hash reference containing a scheduler-specific job identifier as the value of the hash&#39;s JOB_ID key, and optionally, the a GRAM job state as the value of the hash&#39;s JOB_STATE key if the job submission was successful; otherwise a Globus::GRAM::Error value should be returned. The job state values are defined in the Globus::GRAM::JobState module. The job parameters (as found in the job rsl) are defined in Globus::GRAM::Jobdescription object in $self-&gt;{JobDescription}.</p>
+
+<p>For example:</p>
+
+<pre><code>    return {JOB_STATE =&gt; Globus::GRAM::JobState::PENDING,
+            JOB_ID =&gt; $job_id};</code></pre>
+
+</dd>
+<dt id="manager-poll">$manager-&gt;poll()</dt>
+<dd>
+
+<p>Poll a job&#39;s status. The default implementation returns with the Globus::GRAM::Error::UNIMPLEMENTED error. Scheduler specific subclasses should reimplement this method to poll the scheduler.</p>
+
+<p>A scheduler which implements this method should return a hash reference containing the JOB_STATE value. The job&#39;s ID can be accessed by calling the $self-&gt;{JobDescription}-&gt;jobid() method.</p>
+
+</dd>
+<dt id="manager-cancel">$manager-&gt;cancel()</dt>
+<dd>
+
+<p>Cancel a job. The default implementation returns with the Globus::GRAM::Error::UNIMPLEMENTED error. Scheduler specific subclasses should reimplement this method to remove the job from the scheduler.</p>
+
+<p>A scheduler which implements this method should return a hash reference containing the JOB_STATE value. The job&#39;s ID can be accessed by calling the $self-&gt;{JobDescription}-&gt;jobid() method.</p>
+
+</dd>
+<dt id="manager-signal">$manager-&gt;signal()</dt>
+<dd>
+
+<p>Signal a job. The default implementation returns with the Globus::GRAM::Error::UNIMPLEMENTED error. Scheduler specific subclasses should reimplement this method to remove the job from the scheduler. The JobManager module can determine the job&#39;s ID, the signal number, and the (optional) signal arguments from the Job Description by calling it&#39;s job_id(), signal(), and and signal_arg() methods, respectively.</p>
+
+<p>Depending on the signal, it may be appropriate for the JobManager object to return a hash reference containing a JOB_STATE update.</p>
+
+</dd>
+<dt id="manager-make_scratchdir">$manager-&gt;make_scratchdir()</dt>
+<dd>
+
+<p>Create a scratch directory for a job. The scratch directory location is based on the JobDescription&#39;s scratch_dir_base() and scratch_dir() methods.</p>
+
+<p>If the scratch_dir() value is a relative path, then a directory will be created as a subdirectory of scratch_dir_base()/scratch_dir(), otherwise, it will be created as a subdirectory of scratch_dir(). This method will return a hash reference containing mapping SCRATCH_DIR to the absolute path of newly created scratch directory if successful.</p>
+
+</dd>
+<dt id="manager-make_scratchdir1">$manager-&gt;make_scratchdir()</dt>
+<dd>
+
+<p>Delete a job&#39;s scratch directory. All files and subdirectories of the JobDescription&#39;s scratch_directory() will be deleted.</p>
+
+</dd>
+<dt id="manager-make_scratchdir2">$manager-&gt;make_scratchdir()</dt>
+<dd>
+
+<p>Delete some job-related files. All files listed in the JobDescription&#39;s file_cleanup() array will be deleted.</p>
+
+</dd>
+<dt id="manager-rewrite_urls">$manager-&gt;rewrite_urls()</dt>
+<dd>
+
+<p>Looks up URLs listed in the JobDescription&#39;s stdin() and executable(), and replaces them with paths to locally cached copies.</p>
+
+</dd>
+<dt id="manager-stage_in">$manager-&gt;stage_in()</dt>
+<dd>
+
+<p>Stage input files need for the job from remote storage. The files to be staged are defined by the array of [URL, path] pairs in the job description&#39;s file_stage_in() and file_stage_in_shared() methods. The Globus::GRAM::JobManager module provides an implementation of this functionality using the globus-url-copy and globus-gass-cache programs. Files which are staged in are not automatically removed when the job terminates.</p>
+
+<p>This function returns intermediate responses using the Globus::GRAM::JobManager::response() method to let the job manager know when each individual file has been staged.</p>
+
+</dd>
+<dt id="manager-stage_out">$manager-&gt;stage_out()</dt>
+<dd>
+
+<p>Stage output files generated by this job to remote storage. The files to be staged are defined by the array of [URL, destination] pairs in the job description&#39;s file_stage_out() method. The Globus::GRAM::JobManager module provides an implementation of this functionality using the globus-url-copy program. Files which are staged out are not removed by this method.</p>
+
+</dd>
+<dt id="manager-cache_cleanup">$manager-&gt;cache_cleanup()</dt>
+<dd>
+
+<p>Clean up cache references in the GASS which match this job&#39;s cache tag .</p>
+
+</dd>
+<dt id="manager-remote_io_file_create">$manager-&gt;remote_io_file_create()</dt>
+<dd>
+
+<p>Create the remote I/O file in the job dir which will contain the remote_io_url RSL attribute&#39;s value.</p>
+
+</dd>
+<dt id="manager-proxy_relocate">$manager-&gt;proxy_relocate()</dt>
+<dd>
+
+<p>Relocate the delegated proxy for job execution. Job Managers need to override the default if they intend to relocate the proxy into some common file system other than the cache. The job manager program does not depend on the new location of the proxy. Job Manager modules must not remove the default proxy.</p>
+
+</dd>
+<dt id="hashref-manager-proxy_update">$hashref = $manager-&gt;proxy_update();</dt>
+<dd>
+
+</dd>
+<dt id="manager-append_path-ref-var-path">$manager-&gt;append_path($ref, $var, $path)</dt>
+<dd>
+
+<p>Append $path to the value of $ref-&gt;{$var}, dealing with the case where $ref-&gt;{$var} is not yet defined.</p>
+
+</dd>
+<dt id="manager-pipe_out_cmd-arg">$manager-&gt;pipe_out_cmd(@arg)</dt>
+<dd>
+
+<p>Create a new process to run the first argument application with the remaining arguments (which may be empty). No shell metacharacter will be evaluated, avoiding a shell invocation. Stderr is redirected to /dev/null and stdout is being captured by the parent process, which is also the result returned. In list mode, all lines are returned, in scalar mode, only the first line is being returned. The line termination character is already cut off. Use this function as more efficient backticks, if you do not need shell metacharacter evaluation.</p>
+
+<p>Caution: This function deviates in two manners from regular backticks. Firstly, it chomps the line terminator from the output. Secondly, it returns only the first line in scalar context instead of a multiline concatinated string. As with regular backticks, the result may be undefined in scalar context, if no result exists.</p>
+
+<p>A child error code with an exit code of 127 indicates that the application could not be run. The scalar result returned by this function is usually undef&#39;ed in this case.</p>
+
+</dd>
+<dt id="stder-rc-manager-pipe_err_cmd-arg">($stder, $rc) = $manager-&gt;pipe_err_cmd(@arg)</dt>
+<dd>
+
+<p>Create a new process to run the first argument application with the remaining arguments (which may be empty). No shell metacharacter will be evaluated, avoiding a shell invocation.</p>
+
+<p>This method returns a list of two items, the standard error of the program, and the exit code of the program. If the error code is 127, then the application could not be run. Standard output is discarded.</p>
+
+</dd>
+<dt id="manager-fork_and_exec_cmd-arg">$manager-&gt;fork_and_exec_cmd(@arg)</dt>
+<dd>
+
+<p>Fork off a child to run the first argument in the list. Remaining arguments will be passed, but shell interpolation is avoided. Signals SIGINT and SIGQUIT are ignored in the child process. Stdout is appended to /dev/null, and stderr is dup2 from stdout. The parent waits for the child to finish, and returns the value for the CHILD_ERROR variable as result. Use this function as more efficient system() call, if you can do not need shell metacharacter evaluation.</p>
+
+<p>Note that the inability to execute the program will result in a status code of 127.</p>
+
+</dd>
+<dt id="manager-job_dir">$manager-&gt;job_dir()</dt>
+<dd>
+
+<p>Return the temporary directory to store job-related files, which have no need for file caching.</p>
+
+</dd>
+<dt id="manager-setup_softenv">$manager-&gt;setup_softenv()</dt>
+<dd>
+
+<p>Either add a line to the specified command script file handle to load the user&#39;s default SoftEnv configuration, or create a custom SoftEnv script and add commands to the specified command script file handle to load it.</p>
+
+</dd>
+</dl>
+
+<h1 id="RESPONSES">RESPONSES</h1>
+
+<p>When returning from a job interface method, or when sending an intermediate response via the <i>response</i>() method, the following hash keys are valid:</p>
+
+<ul>
+
+<li><p>JOB_STATE</p>
+
+<p>An integer job state value. These are enumerated in the Globus::GRAM::JobState module.</p>
+
+</li>
+<li><p>ERROR</p>
+
+<p>An integer error code. These are enumerated in the Globus::GRAM::Error module.</p>
+
+</li>
+<li><p>JOB_ID</p>
+
+<p>A string containing a job identifier, which can be used to poll, cancel, or signal a job in progress. This response should only be returned by the <i>submit</i> method.</p>
+
+</li>
+<li><p>SCRATCH_DIR</p>
+
+<p>A string containing the path to a newly-created scratch directory. This response should only be returned by the <i>make_scratchdir</i> method.</p>
+
+</li>
+<li><p>STAGED_IN</p>
+
+<p>A string containing the (URL, path) pair for a file which has now been staged in. This response should only be returned by the <i>stage_in</i> method.</p>
+
+</li>
+<li><p>STAGED_IN_SHARED</p>
+
+<p>A string containing the (URL, path) pair for a file which has now been staged in and symlinked from the cache. This response should only be returned by the <i>stage_in_shared</i> method.</p>
+
+</li>
+<li><p>STAGED_OUT</p>
+
+<p>A string containing the (path, URL) pair for a file which has now been staged out by the script. This response should only be returned by the <i>stage_out</i> method.</p>
+
+</li>
+</ul>
+
+
+</body>
+
+</html>
+
+

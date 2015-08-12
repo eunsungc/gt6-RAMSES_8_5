@@ -1,0 +1,139 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body style="background-color: white">
+
+
+
+<h1 id="NAME">NAME</h1>
+
+<p>Globus::GRAM::JobDescription - GRAM Job Description Globus::GRAM::DefaultHandlingJobDescription - GRAM Job Description with relative path handling</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code>    use Globus::GRAM::JobDescription;
+
+    $hash = { executable =&gt; [ &#39;/bin/echo&#39; ], arguments =&gt; [ &#39;hello&#39; ] };
+    $description = new Globus::GRAM::JobDescription($filename);
+    $description = new Globus::GRAM::JobDescription($hash);
+    $executable = $description-&gt;executable();
+    $description-&gt;add($new_attribute, $new_value);
+    $description-&gt;save();
+    $description-&gt;save($filename);
+    $description-&gt;print_recursive($file_handle);</code></pre>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p>This object contains the parameters of a job request in a simple object wrapper. The object may be queried to determine the value of any RSL parameter, may be updated with new parameters, and may be saved in the filesystem for later use.</p>
+
+<h2 id="Methods">Methods</h2>
+
+<dl>
+
+<dt id="new-Globus::GRAM::JobDescription-filename">new Globus::GRAM::JobDescription(<i>$filename</i>)</dt>
+<dd>
+
+<p>A JobDescription is constructed from a file consisting of a Perl hash of parameter =&gt; array mappings. Every value in the Job Description is stored internally as an array, even single literals, similar to the way an RSL tree is parsed in C. An example of such a file is</p>
+
+<pre><code>    $description =
+    {
+        executable  =&gt; [ &#39;/bin/echo&#39; ], 
+        arguments   =&gt; [ &#39;hello&#39;, &#39;world&#39; ],
+        environment =&gt; [
+                           [
+                               &#39;GLOBUS_GRAM_JOB_CONTACT&#39;,
+                               &#39;https://globus.org:1234/2345/4332&#39;
+                           ]
+                       ]
+    };</code></pre>
+
+<p>which corresponds to the rsl fragment</p>
+
+<pre><code>    &amp;(executable  = /bin/echo)
+     (arguments   = hello world)
+     (environment =
+         (GLOBUS_GRAM_JOB_CONTACT &#39;https://globus.org:1234/2345/4332&#39;)
+     )</code></pre>
+
+<p>When the library_path RSL attribute is specified, this object modifies the environment RSL attribute value to append its value to any system specific variables.</p>
+
+</dd>
+<dt id="description-add-name-value">$description-&gt;<i>add</i>(&#39;name&#39;, <i>$value</i>);</dt>
+<dd>
+
+<p>Add a parameter to a job description. The parameter will be normalized internally so that the access methods described below will work with this new parameter. As an example,</p>
+
+<pre><code>    $description-&gt;add(&#39;new_attribute&#39;, $new_value)</code></pre>
+
+<p>will create a new attribute in the JobDescription, which can be accessed by calling the <i>$description-</i>new_attribute&gt;() method.</p>
+
+</dd>
+<dt id="value-description-get-name"><i>$value</i> $description-&gt;<i>get</i>(&#39;name&#39;);</dt>
+<dd>
+
+<p>Get a parameter from a job description. As an example,</p>
+
+<pre><code>    $description-&gt;get(&#39;attribute&#39;)</code></pre>
+
+<p>will return the appropriate attribute in the JobDescription by name.</p>
+
+</dd>
+<dt id="description-save-filename">$description-&gt;<i>save</i>([$filename])</dt>
+<dd>
+
+<p>Save the JobDescription, including any added parameters, to the file named by $filename if present, or replacing the file used in constructing the object.</p>
+
+</dd>
+<dt id="description-print_recursive-file_handle">$description-&gt;<i>print_recursive</i>($file_handle)</dt>
+<dd>
+
+<p>Write the value of the job description object to the file handle specified in the argument list.</p>
+
+</dd>
+<dt id="description-parameter">$description-&gt;<i>parameter</i>()</dt>
+<dd>
+
+<p>For any parameter defined in the JobDescription can be accessed by calling the method named by the parameter. The method names are automatically created when the JobDescription is created, and may be invoked with arbitrary SillyCaps or underscores. That is, the parameter gram_myjob may be accessed by the GramMyJob, grammyjob, or gram_my_job method names (and others).</p>
+
+<p>If the attributes does not in this object, then undef will be returned.</p>
+
+<p>In a list context, this returns the list of values associated with an attribute.</p>
+
+<p>In a scalar context, if the attribute&#39;s value consist of a single literal, then that literal will be returned, otherwise undef will be returned.</p>
+
+<p>For example, from a JobDescription called $d constructed from a description file containing</p>
+
+<pre><code>    {
+        executable =&gt; [ &#39;/bin/echo&#39; ],
+        arguments  =&gt; [ &#39;hello&#39;, &#39;world&#39; ]
+    }</code></pre>
+
+<p>The following will hold:</p>
+
+<pre><code>    $executable = $d-&gt;executable()    # &#39;/bin/echo&#39;
+    $arguments = $d-&gt;arguments()      # undef
+    @executable = $d-&gt;executable()    # (&#39;/bin/echo&#39;)
+    @arguments = $d-&gt;arguments()      # (&#39;hello&#39;, &#39;world&#39;)
+    $not_present = $d-&gt;not_present()  # undef
+    @not_present = $d-&gt;not_present()  # ()</code></pre>
+
+<p>To test for existence of a value:</p>
+
+<pre><code>    @not_present = $d-&gt;not_present()
+    print &quot;Not defined\n&quot; if(!defined($not_present[0]));</code></pre>
+
+</dd>
+</dl>
+
+
+</body>
+
+</html>
+
+

@@ -1,0 +1,160 @@
+#! /usr/bin/perl
+
+# 
+# Copyright 1999-2006 University of Chicago
+# 
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# 
+# http://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# 
+
+use strict;
+use Pod::Usage;
+use Getopt::Long;
+use Cwd;
+
+#
+# do GPT version checking
+#
+
+my($flavor, $static, $link, @pkgs, $help, $verbose);
+
+GetOptions(
+            'flavor=s' => \$flavor,
+            'static' => \$static,
+            'link=s' => \$link, # deprecated feature
+            'pkg=s' => \@pkgs,
+            'help|?' => \$help,
+          ) or pod2usage(1);
+
+if ( defined($link) && !defined($static) )
+{
+    if ($link eq "static")
+    {
+        $static = 1;
+    }
+}
+
+my($args);
+
+if ( defined($help) )
+{
+    usage(0);
+}
+
+if ( !defined($flavor) )
+{
+    usage(1);
+}
+
+if ( @ARGV && ($ARGV[0] ne "") )
+{
+    push(@pkgs, @ARGV);
+}
+@pkgs = buildMultiArg(@pkgs);
+
+if ( grep(/^ANY$/, @pkgs) )
+{
+    @pkgs = ("ANY");
+}
+
+if ( !@pkgs || (scalar(@pkgs) == 0) )
+{
+    @pkgs = ("ANY");
+}
+
+main($args);
+
+exit;
+
+#
+# subroutines
+#
+
+### main( $args )
+#
+# driver function
+#
+
+sub main
+{
+    my @ms;
+    my @pcs;
+    for my $pkg (@pkgs) {
+        my $pc = $pkg;
+        $pc =~ s/_/-/g;
+        push(@pcs, $pc);
+        my $m = $pkg;
+        $m =~ tr/[a-z]-/[A-Z]_/;
+        chomp(my $v= `pkg-config --modversion $pc`);
+        push(@ms, $m);
+        print "$m = $v\n";
+    }
+    my $cmd = "pkg-config --cflags-only-other " . join(" ", @pcs);
+    print "GLOBUS_CFLAGS = " . `$cmd`;
+    $cmd = "pkg-config --cflags-only-I " . join(" ", @pcs);
+    chomp(my $globus_includes = `$cmd`);
+
+    print "GLOBUS_INCLUDES = $globus_includes\n";
+
+    $cmd = "pkg-config --libs-only-L --libs-only-other " . join(" ", @pcs);
+    print "GLOBUS_LDFLAGS = ". `$cmd`;
+    $cmd = "pkg-config --libs-only-l --static "  .join(" ", @pcs);
+    print "GLOBUS_PKG_LIBS = ". `$cmd`;
+    print "GLOBUS_CC = \${CC}\n";
+    print "GLOBUS_CPP = \${CPP}\n";
+    print "GLOBUS_FLAVOR_NAME = $flavor\n";
+    print "GLOBUS_CPPFLAGS = $globus_includes\n";
+    print "GLOBUS_CXX = \${CXX}\n";
+    print "GLOBUS_CXXCPP = \${CXX} -E\n";
+    print "GLOBUS_CXXFLAGS = \${CXXFLAGS} -E\n";
+    print <<EOF;
+GLOBUS_F77 = \${FC}
+GLOBUS_F77FLAGS = \${FCFLAGS}
+GLOBUS_F90 = \${FC}
+GLOBUS_F90FLAGS = \${FCFLAGS}
+GLOBUS_AR = \${AR}
+GLOBUS_ARFLAGS = \${ARFLAGS}
+GLOBUS_RANLIB = \${RANLIB}
+GLOBUS_NM = \${NM}
+GLOBUS_OBJEXT = @OBJEXT@
+GLOBUS_EXEEXT = @EXEEXT@
+GLOBUS_OBJECT_MODE = 
+GLOBUS_CROSS = no
+GLOBUS_cross_compiling = @cross_compiling@
+GLOBUS_THREADS = none
+GLOBUS_DEBUG = yes
+GLOBUS_SH_PERL = @PERL@
+GLOBUS_SH = @SH@
+GLOBUS_LD = \${CC}
+EOF
+}
+
+### buildMultiArg( @exclude )
+#
+# given a multiargument list, format it
+#
+
+sub buildMultiArg
+{
+    my (@in_arr) = @_;
+    my (@out_arr);
+
+    @out_arr = split(/,/, join(',', @in_arr));
+
+    return @out_arr;
+}
+
+sub usage
+{
+    print "Usage: $0 -pkg PACKAGE -flavor FLAVOR [-static]\n";
+    exit($_[0]);
+}

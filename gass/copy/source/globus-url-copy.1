@@ -1,0 +1,442 @@
+'\" t
+.\"     Title: globus-url-copy
+.\"    Author: [see the "AUTHOR" section]
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 04/08/2015
+.\"    Manual: Globus Toolkit Manual
+.\"    Source: University of Chicago
+.\"  Language: English
+.\"
+.TH "GLOBUS\-URL\-COPY" "1" "04/08/2015" "University of Chicago" "Globus Toolkit Manual"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+globus-url-copy \- globus\-url\-copy
+.SH "SYNOPSIS"
+.sp
+\fBglobus\-url\-copy\fR [options] SOURCE\-URL DESTINATION\-URL
+.SH "DESCRIPTION"
+.sp
+The \fBglobus\-url\-copy\fR program is a command line tool for multi\-protocol data movement\&. It supports gsiftp:// (GridFTP), ftp://, http://, https://, sshftp:// and \m[blue]\fBfile:///\fR\m[] protocol specifiers in the URL\&.
+.SH "OPTIONS"
+.PP
+\fB\-help, \-usage\fR
+.RS 4
+Print help\&.
+.RE
+.PP
+\fB\-versions\fR
+.RS 4
+Print the versions of all modules that this program uses
+.RE
+.PP
+\fB\-c, \-continue\-on\-error\fR
+.RS 4
+Do not die after any errors\&. By default, program will exit after most errors\&.
+.RE
+.PP
+\fB\-a, \-ascii\fR
+.RS 4
+Convert the file to/from ASCII format to/from local file format
+.RE
+.PP
+\fB\-b, \-binary\fR
+.RS 4
+Do not apply any conversion to the files\&.
+\fBdefault\fR
+.RE
+.PP
+\fB\-f FILENAME\fR
+.RS 4
+Read a list of URL pairs from filename\&. Each line should contain sourceURL destURL\&. Enclose URLs with spaces in double qoutes (")\&. Blank lines and lines beginning with # will be ignored\&.
+.RE
+.PP
+\fB\-cd, \-create\-dest\fR
+.RS 4
+Create destination directory if needed\&.
+.RE
+.PP
+\fB\-r\fR
+.RS 4
+Copy files in subdirectories
+.RE
+.PP
+\fB\-fast\fR
+.RS 4
+Recommended when using GridFTP servers\&. Use MODE E for all data transfers, including reusing data channels between list and transfer operations\&.
+.RE
+.PP
+\fB\-t SECONDS\fR
+.RS 4
+Run the transfer for this number of seconds and then end\&. Useful for performance testing or forced restart loops\&.
+.RE
+.PP
+\fB\-q, \-quiet\fR
+.RS 4
+Suppress all output for successful operation\&.
+.RE
+.PP
+\fB\-v, \-verbose\fR
+.RS 4
+Display URLs being transferred
+.RE
+.PP
+\fB\-vb, \-verbose\-perf\fR
+.RS 4
+During the transfer, display the number of bytes transferred and the transfer rate per second\&. Show URLs being transferred
+.RE
+.PP
+\fB\-dbg, \-debugftp\fR
+.RS 4
+Debug ftp connections\&. Prints control channel communication to stderr
+.RE
+.PP
+\fB\-rst, \-restart\fR
+.RS 4
+Restart failed ftp operations\&.
+.RE
+.PP
+\fB\-rst\-retries RETRIES\fR
+.RS 4
+The maximum number of times to retry the operation before giving up on the transfer\&. Use 0 for infinite\&. Default is 5\&.
+.RE
+.PP
+\fB\-rst\-interval SECONDS\fR
+.RS 4
+The interval in seconds to wait after a failure before retrying the transfer\&. Use 0 for an exponential backoff\&. Default is 0\&.
+.RE
+.PP
+\fB\-rst\-timeout SECONDS\fR
+.RS 4
+Maximum time after a failure to keep retrying\&. Use 0 for no timeout\&. Default is 0\&.
+.RE
+.PP
+\fB\-stall\-timeout SECONDS, \-st SECONDS\fR
+.RS 4
+How long before cancelling/restarting a transfer with no data movement\&. Set to 0 to disable\&. Default is 600 seconds\&.
+.RE
+.PP
+\fB\-df FILENAME, \-dumpfile FILENAME\fR
+.RS 4
+Path to a file where untransferred URLs will be saved for later restarting\&. Resulting file is the same format as the \-f input file\&. If file exists, it will be read and all other URL input will be ignored\&.
+.RE
+.PP
+\fB\-do FILENAME, \-dump\-only FILENAME\fR
+.RS 4
+Perform no write operations on the destination\&. Instead, all files that would be transferred are enumerated and dumped to the specified file\&. Resulting file is the same format as the \-f input file\&. Note: if you intend to use this file as input for a future transfer, the \-create\-dest option will be required if any destination directories do not already exist\&.
+.RE
+.PP
+\fB\-rp, \-relative\-paths\fR
+.RS 4
+The path portion of ftp URLs will be interpreted as relative to the user\(cqs starting directory on the server\&. By default, all paths are root\-relative\&. When this flag is set, the path portion of the ftp URL must start with %2F if it designates a root\-relative path\&.
+.RE
+.PP
+\fB\-s SUBJECT, \-subject SUBJECT\fR
+.RS 4
+Use this subject to match with both the source and dest servers\&.
+.RE
+.PP
+\fB\-ss SUBJECT, \-source\-subject SUBJECT\fR
+.RS 4
+Use this subject to match with the source server
+.RE
+.PP
+\fB\-ds SUBJECT, \-dest\-subject SUBJECT\fR
+.RS 4
+Use this subject to match with the destination server\&.
+.RE
+.PP
+\fB\-tcp\-bs SIZE, \-tcp\-buffer\-size SIZE\fR
+.RS 4
+Specify the size (in bytes) of the buffer to be used by the underlying ftp data channels\&.
+.RE
+.PP
+\fB\-bs block SIZE, \-block\-size block SIZE\fR
+.RS 4
+Specify the size (in bytes) of the buffer to be used by the underlying transfer methods\&.
+.RE
+.PP
+\fB\-p PARALLELISM, \-parallel PARALLELISM\fR
+.RS 4
+Specify the number of parallel data connections should be used\&.
+.RE
+.PP
+\fB\-notpt, \-no\-third\-party\-transfers\fR
+.RS 4
+Turn third\-party transfers off (on by default)\&.
+.RE
+.PP
+\fB\-nodcau, \-no\-data\-channel\-authentication\fR
+.RS 4
+Turn off data channel authentication for ftp transfers\&.
+.RE
+.PP
+\fB\-dcsafe, \-data\-channel\-safe\fR
+.RS 4
+Set data channel protection mode to SAFE
+.RE
+.PP
+\fB\-dcpriv, \-data\-channel\-private\fR
+.RS 4
+Set data channel protection mode to PRIVATE
+.RE
+.PP
+\fB\-off, \-partial\-offset\fR
+.RS 4
+Offset for partial ftp file transfers, defaults to 0\&.
+.RE
+.PP
+\fB\-len, \-partial\-length\fR
+.RS 4
+Length for partial ftp file transfers, used only for the source url, defaults the full file\&.
+.RE
+.PP
+\fB\-list URL\fR
+.RS 4
+List the files located at URL\&.
+.RE
+.PP
+\fB\-stripe\fR
+.RS 4
+Enable striped transfers on supported servers\&.
+.RE
+.PP
+\fB\-striped\-block\-size, \-sbs\fR
+.RS 4
+Set layout mode and block size for striped transfers\&. If not set, server defaults will be used\&. If set to 0, Partitioned mode will be used\&. If set to > 0, Blocked mode will be used, with this as the block size\&.
+.RE
+.PP
+\fB\-ipv6\fR
+.RS 4
+Use ipv6 when available (EXPERIMENTAL)
+.RE
+.PP
+\fB\-udt\fR
+.RS 4
+Use UDT, a reliable udp based transport protocol, for data transfers
+.RE
+.PP
+\fB\-g2, \-gridftp2\fR
+.RS 4
+Use GridFTP v2 protocol enhancements when possible\&.
+.RE
+.PP
+\fB\-dp, \-delayed\-pasv\fR
+.RS 4
+Enable delayed passive\&.
+.RE
+.PP
+\fB\-mn NAME, \-module\-name NAME\fR
+.RS 4
+Set the back\-end storage module to use for both the source and destination in a GridFTP transfer\&.
+.RE
+.PP
+\fB\-mp PARAMETERS, \-module\-parameters PARAMETERS\fR
+.RS 4
+Set the back\-end storage module arguments to use for both the source and destination in a GridFTP transfer\&.
+.RE
+.PP
+\fB\-smn NAME, \-src\-module\-name NAME\fR
+.RS 4
+Set the back\-end storage module to use for the source in a GridFTP transfer\&.
+.RE
+.PP
+\fB\-smp PARAMETERS, \-src\-module\-parameters PARAMETERS\fR
+.RS 4
+Set the back\-end storage module arguments to use for the source in a GridFTP transfer\&.
+.RE
+.PP
+\fB\-dmn NAME, \-dst\-module\-name NAME\fR
+.RS 4
+Set the back\-end storage module to use for the destination in a GridFTP transfer\&.
+.RE
+.PP
+\fB\-dmp PARAMETERS, \-dst\-module\-parameters PARAMETERS\fR
+.RS 4
+Set the back\-end storage module arguments to use for the destination in a GridFTP transfer\&.
+.RE
+.PP
+\fB\-aa FILE, \-authz\-assert FILE\fR
+.RS 4
+Use the assertions in FILE to authorize the access with both source and destination servers\&.
+.RE
+.PP
+\fB\-saa FILE, \-src\-authz\-assert FILE\fR
+.RS 4
+Use the assertions in this file to authorize the access with source server\&.
+.RE
+.PP
+\fB\-daa FILE, \-dst\-authz\-assert FILE\fR
+.RS 4
+Use the assertions in this file to authorize the access with dest server\&.
+.RE
+.PP
+\fB\-cache\-aa, \-cache\-authz\-assert\fR
+.RS 4
+Cache the authz assertion for subsequent transfers\&.
+.RE
+.PP
+\fB\-cache\-saa, \-cache\-src\-authz\-assert\fR
+.RS 4
+Cache the src authz assertion for subsequent transfers\&.
+.RE
+.PP
+\fB\-cache\-daa, \-cache\-dst\-authz\-assert\fR
+.RS 4
+Cache the dst authz assertion for subsequent transfers\&.
+.RE
+.PP
+\fB\-pipeline, \-pp\fR
+.RS 4
+Enable pipelining support for multi\-file ftp transfers\&. Currently third\-party transfers benefit from this\&.
+\fBEXPERIMENTAL\fR
+.RE
+.PP
+\fB\-concurrency, \-cc\fR
+.RS 4
+Number of concurrent ftp connections to use for multiple transfers\&.
+.RE
+.PP
+\fB\-nl\-bottleneck, \-nlb\fR
+.RS 4
+Use NetLogger to estimate speeds of disk and network read/write system calls, and attempt to determine the bottleneck component\&.
+.RE
+.PP
+\fB\-sp COMMANDS, \-src\-pipe COMMANDS\fR
+.RS 4
+Set the source end of a remote transfer to use piped in input with the given command line\&. Do not use with \-fsstack\&.
+.RE
+.PP
+\fB\-DP COMMANDS, \-dst\-pipe COMMANDS\fR
+.RS 4
+Set the destination end of a remote transfer to write data to then standard input of the program run via the given command line\&. Do not use with \-fsstack\&.
+.RE
+.PP
+\fB\-pipe COMMANDS\fR
+.RS 4
+Sets both \-src\-pipe and \-dst\-pipe to the same thing\&.
+.RE
+.PP
+\fB\-dcstack STACK, \-data\-channel\-stack STACK\fR
+.RS 4
+Set the XIO driver stack for the network on both the source and the destination\&. Both must be GridFTP servers\&. The stack should contain all network drivers to use, in the order specified from bottom to top (e\&.g\&. \-dcstack tcp,gsi)\&. If the gsi driver is not included in the stack and data channel authentication is enabled, it will be inserted above the transport driver in the stack\&.
+.RE
+.PP
+\fB\-fsstack STACK, \-file\-system\-stack STACK\fR
+.RS 4
+Set the XIO driver stack for the disk on both the source and the destination\&. Both must be GridFTP servers\&. The stack should contain all file system drivers to use, in the order specified from bottom to top\&.
+.RE
+.PP
+\fB\-src\-dcstack STACK, \-source\-data\-channel\-stack STACK\fR
+.RS 4
+Set the XIO driver stack for the network on the source GridFTP server\&. See \-dcstack above for description of the STACK string\&.
+.RE
+.PP
+\fB\-src\-fsstack STACK, \-source\-file\-system\-stack STACK\fR
+.RS 4
+Set the XIO driver stack for the disk on the source GridFTP server\&. See \-fsstack above for description of the STACK string\&.
+.RE
+.PP
+\fB\-dst\-dcstack STACK, \-dest\-data\-channel\-stack STACK\fR
+.RS 4
+Set the XIO driver stack for the network on the destination GridFTP server\&. See \-dcstack above for description of the STACK string\&.
+.RE
+.PP
+\fB\-dst\-fsstack STACK, \-dest\-file\-system\-stack STACK\fR
+.RS 4
+Set the XIO driver stack for the disk on the destination GridFTP server\&. See \-fsstack above for description of the STACK string\&.
+.RE
+.PP
+\fB\-cred PATH\fR
+.RS 4
+Set the credentials to use for both ftp connections\&.
+.RE
+.PP
+\fB\-src\-cred CRED\-FILE, \-sc CRED\-FILE\fR
+.RS 4
+Set the credentials to use for source ftp connections\&.
+.RE
+.PP
+\fB\-dst\-cred CRED\-FILE, \-dc CRED\-FILE\fR
+.RS 4
+Set the credentials to use for destination ftp connections\&.
+.RE
+.PP
+\fB\-af FILENAME, \-alias\-file FILENAME\fR
+.RS 4
+File with mapping of logical host aliases to lists of physical hosts\&. When used with multiple concurrent connections, each connection uses the next host in the list\&. Each line should either be an alias, noted with the @ symbol, or a hostname[:port]\&. Currently, only the aliases @source and @destination are valid, and they are used for every source or destination URL\&.
+.RE
+.PP
+\fB\-sync\fR
+.RS 4
+Only transfer files where the destination does not exist or differs from the source\&. \-sync\-level controls how to determine if files differ\&.
+.RE
+.PP
+\fB\-sync\-level number\fR
+.RS 4
+Criteria for determining if files differ when performing a sync transfer\&. The default sync level is 2\&. The available levels are:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Level 0 will only transfer if the destination does not exist\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Level 1 will transfer if the size of the destination does not match the size of the source\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Level 2 will transfer if the time stamp of the destination is older than the time stamp of the source\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Level 3 will perform a checksum of the source and destination and transfer if the checksums do not match\&.
+.RE
+.RE
+.SH "AUTHOR"
+.sp
+Copyright \(co 1999\-2014 University of Chicago

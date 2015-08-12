@@ -1,0 +1,208 @@
+#!/bin/sh
+
+# 
+# Copyright 1999-2006 University of Chicago
+# 
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# 
+# http://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# 
+
+#
+# Change the pass phrase on a user's private key
+#
+
+prefix="${GLOBUS_LOCATION-@prefix@}"
+exec_prefix="@exec_prefix@"
+bindir="@bindir@"
+sbindir="@sbindir@"
+sysconfdir="@sysconfdir@"
+
+PATH="${bindir}:${sbindir}:${PATH}"
+
+PROGRAM_NAME=`echo $0 | sed -e 's|.*/||g'`
+PROGRAM_VERSION="@VERSION@"
+VERSION="@VERSION@"
+PACKAGE="@PACKAGE@"
+
+DIRT_TIMESTAMP="@DIRT_TIMESTAMP@"
+DIRT_BRANCH_ID="@DIRT_BRANCH_ID@"
+
+short_usage="$PROGRAM_NAME [-help] [-version] [-file private_key_file]"
+
+long_usage () {
+    cat >&2 <<EOF
+
+${short_usage}
+
+   Changes the passphrase that protects the private key. Note that
+   this command will work even if the original key is not password
+   protected. If the -file argument is not given, the default location
+   of the file containing the private key is assumed:
+
+     -- The location pointed to by X509_USER_KEY
+     -- If X509_USER_KEY not set, $HOME/.globus/userkey.pem
+
+   Options
+      -help, -usage    Displays usage
+      -version         Displays version
+      -file location   Change passphrase on key stored in the file at
+                       the non-standard location 'location'.
+
+EOF
+}
+
+if ! openssl version > /dev/null 2> /dev/null; then
+    echo "Unable to locate openssl binary in $bindir or PATH" 1>&2
+    exit 1
+fi
+
+# See http://www-unix.globus.org/toolkit/docs/4.0/admin/docbook/ch05.html#prewsaa-env-credentials
+find_default_key()
+{
+    if [ -n "$X509_USER_KEY" ]; then
+        echo "$X509_USER_KEY"
+    elif [ -r "${HOME}/.globus/userkey.pem" ]; then
+        echo "${HOME}/.globus/userkey.pem"
+    elif [ -r "${HOME}/.globus/usercred.p12" ]; then
+        echo "${HOME}/.globus/usercred.p12"
+    else
+        echo ""
+    fi
+}
+
+key_format()
+{
+    testfile="$1"
+    _format=''
+
+    if test "$testfile" = ""; then
+        :
+    elif echo "$testfile" | grep '\.p12$' > /dev/null 2>&1 ; then
+        _format=pkcs12
+    elif echo "$testfile" | grep '\.pem$' > /dev/null 2>&1 ; then
+        _format=x509
+    elif grep -- '-----BEGIN' "$testfile" > /dev/null 2>&1 ; then
+        _format="x509"
+    else
+        :
+    fi
+
+    echo $_format
+}
+
+private_key=""
+
+globus_args_short_usage()
+{
+    cat 1>&2 <<EOF
+
+Syntax : ${short_usage}
+
+Use -help to display full usage.
+
+EOF
+}
+
+globus_args_option_error()
+{
+    cat 1>&2 <<EOF
+
+ERROR: option $1 : $2
+EOF
+    globus_args_short_usage
+    exit 1
+}
+
+globus_args_unrecognized_option()
+{
+    globus_args_option_error $1 "unrecognized option"
+    exit 1
+}
+
+if [ -n "$1" ]; then
+    case "$1" in
+        -help | -h | --help | -usage | --usage)
+            long_usage
+            exit 0
+            ;;
+        -version|--version)
+            if [ "X${PROGRAM_NAME}" != "X" -a \
+                  "X${PROGRAM_VERSION}" != "X" ]; then
+                echo "${PROGRAM_NAME}: ${PROGRAM_VERSION}"
+            elif [ "X${PACKAGE}" != "X" -a \
+                   "X${VERSION}" != "X" ]; then
+                echo "${PACKAGE}: ${VERSION}"
+            else
+                echo "No version information available."
+            fi
+            exit 0
+            ;;
+        -versions|--versions)
+            __AT=@
+            if [ -n "${PACKAGE}" -a -n "${VERSION}" -a \
+                 -n "${DIRT_TIMESTAMP}" -a -n "${DIRT_BRANCH_ID}" -a \
+                 "X${DIRT_TIMESTAMP}" != "X${__AT}DIRT_TIMESTAMP${__AT}" -a \
+                 "X${DIRT_BRANCH_ID}" != "X${__AT}DIRT_BRANCH_ID${__AT}" ];
+            then
+                echo "${PACKAGE}: ${VERSION} (${DIRT_TIMESTAMP}-${DIRT_BRANCH_ID})"
+            else
+                echo "No DiRT information available."
+            fi
+            exit 0;
+            ;;
+
+	-file | --file)
+	    private_key="$2"
+	    ;;
+	--)
+	    echo "" > /dev/null
+	    ;;
+	*)
+	    globus_args_unrecognized_option "$1"
+	    ;;
+    esac
+fi
+
+if [ "$private_key" = "" ]; then
+    private_key=`find_default_key`
+fi
+
+if [ "$private_key" = "" ]; then
+    echo "Unable to determine private key location. Use -file KEYFILE option"
+    exit 1
+fi
+
+keyform="`key_format \"$private_key\"`"
+
+if [ "$keyform" = "" ]; then
+    echo "Unable to determine format of private key \"$private_key\"."
+    exit 1
+fi
+
+umask 077
+if [ "$keyform" = pkcs12 ]; then
+    rm -f ${private_key}.new
+    openssl pkcs12 -in "${private_key}" -nodes | \
+        openssl pkcs12 -export -out ${private_key}.new
+else
+    rm -f ${private_key}.new
+    openssl rsa -des3 -in ${private_key} -out ${private_key}.new
+fi
+
+if [ $? -eq 0 ]; then
+    rm -f ${private_key}.old
+    cp -p ${private_key} ${private_key}.old
+    mv -f ${private_key}.new ${private_key}
+else
+    echo "Failed to change passphrase" >&2
+    exit 1
+fi
