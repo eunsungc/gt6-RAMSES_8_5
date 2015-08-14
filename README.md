@@ -7,19 +7,19 @@ version 1439213997
    e.g., 1.14.1 --> 1.14
 3) modify Makefile: For some reasons, make tries to update aclocal.m4. So comment out several lines as follows.
 -----------------------------
-#$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
-#   @for dep in $?; do \
-#     case '$(am__configure_deps)' in \
-#       *$$dep*) \
-#         echo ' cd $(srcdir) && $(AUTOMAKE) --foreign'; \
-#         $(am__cd) $(srcdir) && $(AUTOMAKE) --foreign \
-#       && exit 0; \
-#         exit 1;; \
-#     esac; \
-#   done; \
-#   echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign Makefile'; \
-#   $(am__cd) $(top_srcdir) && \
-#     $(AUTOMAKE) --foreign Makefile
+\#$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
+\#   @for dep in $?; do \
+\#     case '$(am__configure_deps)' in \
+\#       *$$dep*) \
+\#         echo ' cd $(srcdir) && $(AUTOMAKE) --foreign'; \
+\#         $(am__cd) $(srcdir) && $(AUTOMAKE) --foreign \
+\#       && exit 0; \
+\#         exit 1;; \
+\#     esac; \
+\#   done; \
+\#   echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign Makefile'; \
+\#   $(am__cd) $(top_srcdir) && \
+\#     $(AUTOMAKE) --foreign Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
     @case '$?' in \
@@ -34,10 +34,10 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 $(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
     $(SHELL) ./config.status --recheck
 
-#$(top_srcdir)/configure:  $(am__configure_deps)
-#   $(am__cd) $(srcdir) && $(AUTOCONF)
-#$(ACLOCAL_M4):  $(am__aclocal_m4_deps)
-#   $(am__cd) $(srcdir) && $(ACLOCAL) $(ACLOCAL_AMFLAGS)
-#$(am__aclocal_m4_deps):
+\#$(top_srcdir)/configure:  $(am__configure_deps)
+\#   $(am__cd) $(srcdir) && $(AUTOCONF)
+\#$(ACLOCAL_M4):  $(am__aclocal_m4_deps)
+\#   $(am__cd) $(srcdir) && $(ACLOCAL) $(ACLOCAL_AMFLAGS)
+\#$(am__aclocal_m4_deps):
 ---------------------------
 4) make; make install
