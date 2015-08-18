@@ -14,11 +14,29 @@ libglobus_ftp_control_la_LDFLAGS = \
         -version-info $(MAJOR_VERSION):$(MINOR_VERSION):$(AGE_VERSION) \
         -no-undefined
 libglobus_ftp_control_la_SOURCES = \
+	jansson_dump.c \	
+	jansson_error.c \
+	jansson_hashtable_seed.c \
+	jansson_hashtable.c \
+	jansson_load.c \
+	jansson_memory.c \
+	jansson_pack_unpack.c \
+	jansson_strbuffer.c \
+	jansson_strconv.c \
+	jansson_utf.c \
+	jansson_value.c \
 	globus_ftp_control.c \
 	globus_ftp_control_client.c \
 	globus_ftp_control_data.c \
 	globus_ftp_control_layout.c \
 	globus_ftp_control_server.c \
+	jansson_config.h \
+	jansson_hashtable.h \
+	jansson_lookup3.h \
+	jansson_private.h \
+	jansson_strbuffer.h \
+	jansson_utf.h \
+	jansson.h \
 	globus_ftp_control.h \
 	globus_i_ftp_control.h
 
