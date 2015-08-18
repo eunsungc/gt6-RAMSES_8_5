@@ -20,7 +20,8 @@
 #include "extensions.h"
 #include <unistd.h>
 #include <openssl/des.h>
-
+// esjung: UUID
+#include <uuid/uuid.h>
 #ifndef TARGET_ARCH_WIN32
 #include <pwd.h>
 #include <grp.h>
@@ -10075,14 +10076,36 @@ response_exit:
             "Finished transferring \"%s\".\n",
                 ((globus_gfs_transfer_info_t *) op->info_struct)->pathname);
 
+
+
+#if 1 // esjung
+         // esjung: uuid
+         if (op->session_handle->taskid == NULL) 
+         {     
+             uuid_t out;
+             uuid_generate_time_safe(out);
+             op->session_handle->taskid =
+             globus_common_create_string("%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
+             out[0], out[1], out[2], out[3], out[4], out[5], out[6], out[7], out[8], out[9], out[10], out[11], out[12], out[13], out[14], out[15]);
+        }
+
+        if(!op->data_handle->http_handle && op->data_handle->is_mine)
+        {
+            if (globus_ftp_control_data_get_retransmit_count(
+                &op->data_handle->data_channel,
+                &retransmit_str,
+                "Transfer-End", op->session_handle->taskid) != GLOBUS_SUCCESS)
+                retransmit_str = globus_common_create_string("%s", "get_transmit_count() failed.");
+        }
+#else // original codes
         if(!op->data_handle->http_handle && op->data_handle->is_mine)
         {
             globus_ftp_control_data_get_retransmit_count(
                 &op->data_handle->data_channel,
                 &retransmit_str);
         }
-
-        msg = globus_i_gfs_log_create_transfer_event_msg(
+#endif
+	  msg = globus_i_gfs_log_create_transfer_event_msg(
             op->node_count,
             op->data_handle->info.nstreams,
             op->remote_ip ? op->remote_ip : "0.0.0.0",
@@ -10833,6 +10856,7 @@ globus_l_gfs_data_read_cb(
     GlobusGFSDebugExit();
 }
 
+// esjung; for periodic logging
 static
 void
 globus_l_gfs_data_trev_kickout(
@@ -10862,6 +10886,117 @@ globus_l_gfs_data_trev_kickout(
     event_reply->id = bounce_info->op->id;
     event_reply->node_ndx = bounce_info->op->node_ndx;
     globus_mutex_lock(&bounce_info->op->session_handle->mutex);
+
+#if 1 // esjung
+    {
+        char *msg;
+        char *retransmit_str=NULL;
+        char *type, *logtype;
+        globus_gfs_transfer_info_t *    info;
+
+        info = (globus_gfs_transfer_info_t *) bounce_info->op->info_struct;
+
+        if(bounce_info->op->writing)
+        {
+            if(info->list_type)
+            {
+                if(strncmp(info->list_type, "LIST:", 5) == 0)
+                {
+                    type = "LIST";
+                }
+                else if(strncmp(info->list_type, "NLST:", 5) == 0)
+                {
+                    type = "NLST";
+                }
+                else
+                {
+                    type = "MLSD";
+                }
+            }
+            else if(info->module_name || info->partial_offset != 0 ||
+                info->partial_length != -1)
+            {
+                type = "ERET";
+            }
+            else
+            {
+                type = "RETR";
+            }
+        }
+        else
+        {
+            if(info->module_name || info->partial_offset != 0 ||
+                 !info->truncate)
+            {
+                type = "ESTO";
+            }
+            else
+            {
+                type = "STOR";
+            }
+        }
+
+        switch(bounce_info->event_type)
+        {
+        case GLOBUS_GFS_EVENT_BYTES_RECVD:
+	    logtype = globus_common_create_string("%s", "Perf-Marker");
+	    break;
+	case GLOBUS_GFS_EVENT_RANGES_RECVD:
+	    logtype = globus_common_create_string("%s", "Range-Marker");
+	    break;
+        default:
+	    logtype = globus_common_create_string("%s", "Type-Error");
+	    break;
+        }
+         // esjung: uuid
+        if (bounce_info->op->session_handle->taskid == NULL)
+        {
+            uuid_t out;
+            uuid_generate_time_safe(out);
+            bounce_info->op->session_handle->taskid =
+            globus_common_create_string("%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
+            out[0], out[1], out[2], out[3], out[4], out[5], out[6], out[7], out[8], out[9], out[10], out[11], out[12], out[13], out[14], out[15]);
+        }
+
+	if (globus_ftp_control_data_get_retransmit_count(
+                &bounce_info->op->data_handle->data_channel,
+                &retransmit_str,
+                logtype,
+                bounce_info->op->session_handle->taskid) != GLOBUS_SUCCESS)
+                retransmit_str = globus_common_create_string("%s", "get_transmit_count() failed.");
+        globus_free(logtype);
+
+        msg = globus_i_gfs_log_create_transfer_event_msg(
+            bounce_info->op->node_count,
+            bounce_info->op->data_handle->info.nstreams,
+            bounce_info->op->remote_ip ? bounce_info->op->remote_ip : "0.0.0.0",
+            bounce_info->op->data_handle->info.blocksize,
+            bounce_info->op->data_handle->info.tcp_bufsize,
+            bounce_info->op->pathname,
+            bounce_info->op->bytes_transferred,
+            type,
+            bounce_info->op->session_handle->username,
+            retransmit_str);
+
+        globus_gfs_log_message(
+            GLOBUS_GFS_LOG_TRANSFER,
+            "%s",
+            msg);
+        /*
+        globus_gfs_log_event(
+            GLOBUS_GFS_LOG_INFO,
+            GLOBUS_GFS_LOG_EVENT_MESSAGE,
+            "transfer",
+            0,
+            "%s",
+            msg);
+        */
+
+        globus_free(msg);
+        if (retransmit_str != NULL) globus_free(retransmit_str);
+    }
+#endif
+
     {
         switch(bounce_info->op->state)
         {
