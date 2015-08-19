@@ -3839,9 +3839,9 @@ globus_ftp_control_data_get_retransmit_count(
         }
 // esjung
 //#define JSON_STYLE_LOG
+        FILE *fp;
 #ifdef JSON_STYLE_LOG
         // variables for popen()
-        FILE *fp;
         int status;
 #define GLOBUS_LINE_MAX 1024
         char *tok;
