@@ -1774,10 +1774,20 @@ globus_ftp_control_data_get_socket_buf(
     int *                               rcvbuf,
     int *                               sndbuf);
 
+// esjung
+#if 1
+globus_result_t
+globus_ftp_control_data_get_retransmit_count(
+    globus_ftp_control_handle_t *       handle,
+    char **                             retransmit_count,
+    char *type,
+    char *transferID);
+#else
 globus_result_t
 globus_ftp_control_data_get_retransmit_count(
     globus_ftp_control_handle_t *       handle,
     char **                             retransmit_count);
+#endif
 
 #ifdef __cplusplus
 }

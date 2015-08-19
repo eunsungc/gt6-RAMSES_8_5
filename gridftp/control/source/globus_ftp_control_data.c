@@ -31,6 +31,13 @@
 #include <sys/uio.h>
 #endif
 
+
+// esjung; for getrusage()
+#include <sys/resource.h>
+// esjung; for json
+#include "jansson.h"
+#include <stdlib.h>
+
 /*
  *  logging messages
  */
@@ -3675,11 +3682,90 @@ globus_ftp_control_data_get_socket_buf(
 }
 
 
+// esjung; from iperf3 project.
+
+/* Helper routine for building cJSON objects in a printf-like manner.
+**
+** Sample call:
+**   j = iperf_json_printf("foo: %b  bar: %d  bletch: %f  eep: %s", b, i, f, s);
+**
+** The four formatting characters and the types they expect are:
+**   %b  boolean           int
+**   %d  integer           int64_t
+**   %f  floating point    double
+**   %s  string            char *
+** If the values you're passing in are not these exact types, you must
+** cast them, there is no automatic type coercion/widening here.
+**
+** The colons mark the end of field names, and blanks are ignored.
+**
+** This routine is not particularly robust, but it's not part of the API,
+** it's just for internal iperf3 use.
+*/
+/*
+cJSON*
+iperf_json_printf(const char *format, ...)
+{
+    cJSON* o;
+    va_list argp;
+    const char *cp;
+    char name[100];
+    char* np;
+    cJSON* j;
+
+    o = cJSON_CreateObject();
+    if (o == NULL)
+        return NULL;
+    va_start(argp, format);
+    np = name;
+    for (cp = format; *cp != '\0'; ++cp) {
+	switch (*cp) {
+	    case ' ':
+	    break;
+	    case ':':
+	    *np = '\0';
+	    break;
+	    case '%':
+	    ++cp;
+	    switch (*cp) {
+		case 'b':
+		j = cJSON_CreateBool(va_arg(argp, int));
+		break;
+		case 'd':
+		j = cJSON_CreateInt(va_arg(argp, int64_t));
+		break;
+		case 'f':
+		j = cJSON_CreateFloat(va_arg(argp, double));
+		break;
+		case 's':
+		j = cJSON_CreateString(va_arg(argp, char *));
+		break;
+		default:
+		return NULL;
+	    }
+	    if (j == NULL)
+		return NULL;
+	    cJSON_AddItemToObject(o, name, j);
+	    np = name;
+	    break;
+	    default:
+	    *np++ = *cp;
+	    break;
+	}
+    }
+    va_end(argp);
+    return o;
+}
+*/
+
+// esjung; this function returns a log string for the handle.
 
 globus_result_t
 globus_ftp_control_data_get_retransmit_count(
     globus_ftp_control_handle_t *               handle,
-    char **                                     retransmit_count)
+    char **                                     retransmit_count,
+    char *                                      type,
+    char *                                      transferID)
 {
     globus_object_t *                           err;
     globus_result_t                             res = GLOBUS_SUCCESS;
@@ -3692,12 +3778,17 @@ globus_ftp_control_data_get_retransmit_count(
     int                                         ctr;
     int                                         count;
     char *                                      count_str = NULL;
+    char *                                      tcpinfo_str = NULL;
+    char *                                      mpstat_str = NULL;
+    char *                                      getrusage_str = NULL;
+    char *                                      iostat_str = NULL;
     static char *                               myname=
                           "globus_ftp_control_data_get_retransmit_count";
 
     /*
      *  error checking
      */
+
     if(handle == GLOBUS_NULL)
     {
         err = globus_io_error_construct_null_parameter(
@@ -3708,6 +3799,7 @@ globus_ftp_control_data_get_retransmit_count(
                   myname);
         return globus_error_put(err);
     }
+
     if(retransmit_count == GLOBUS_NULL)
     {
         err = globus_io_error_construct_null_parameter(
@@ -3745,19 +3837,179 @@ globus_ftp_control_data_get_retransmit_count(
             globus_mutex_unlock(&dc_handle->mutex);
             return res;
         }
+// esjung
+//#define JSON_STYLE_LOG
+#ifdef JSON_STYLE_LOG
+        // variables for popen()
+        FILE *fp;
+        int status;
+#define GLOBUS_LINE_MAX 1024
+        char *tok;
+        char line[GLOBUS_LINE_MAX];
+        // variables for getrusage()
+        int who = RUSAGE_SELF;
+        struct rusage usage;
+        // variables for JSON
+        cJSON *root_json, *streams_json, *stream_json;
+        cJSON *tcpinfo_json, *getrusage_json;
+        cJSON *mpstat_json, *mpstat_cpu_json;
+        cJSON *iostat_json, *iostat_dev_json;
+        char *json_out, buf[1024];
+        struct timeval now;
+                                                                                
+        gettimeofday(&now, NULL);
+        sprintf(buf, "%ld.%01ld", now.tv_sec, now.tv_usec / 100000);
+
+        root_json = cJSON_CreateObject();
+        streams_json = cJSON_CreateArray();
+        cJSON_AddStringToObject(root_json, "type", type);
+        cJSON_AddStringToObject(root_json, "timestamp", buf);
+        if (transferID == NULL)
+            cJSON_AddIntToObject(root_json, "transferID", getpid());
+        else
+            cJSON_AddStringToObject(root_json, "transferID", transferID);	
+#endif    
+
+        // mpstat -P ALL; 'mpstat -P ALL | tail -n +4'
+        fp = popen("mpstat -P ALL | tail -n +4", "r");
+        if (fp == NULL) {
+#ifdef JSON_STYLE_LOG
+            cJSON_AddItemToObject(root_json, "mpstat", mpstat_json=cJSON_CreateObject());  
+#else
+            mpstat_str = globus_common_create_string("\n[mpstat]\n ERROR");
+#endif
+        } else {
+#ifdef JSON_STYLE_LOG
+            cJSON_AddItemToObject(root_json, "mpstat", mpstat_json=cJSON_CreateArray());  
+            while (fgets(line, GLOBUS_LINE_MAX, fp) != NULL) {
+                cJSON_AddItemToArray(mpstat_json, mpstat_cpu_json=cJSON_CreateObject());
+                tok = strtok(line, " "); tok = strtok(NULL, " "); // skip time stamp
+                if (tok == NULL) break;
+                tok = strtok(NULL, " "); cJSON_AddStringToObject(mpstat_cpu_json, "CPU", tok);
+                tok = strtok(NULL, " "); cJSON_AddFloatToObject(mpstat_cpu_json, "\%usr", strtof(tok, NULL));
+                tok = strtok(NULL, " "); cJSON_AddFloatToObject(mpstat_cpu_json, "\%nice", strtof(tok, NULL));
+                tok = strtok(NULL, " "); cJSON_AddFloatToObject(mpstat_cpu_json, "\%sys", strtof(tok, NULL));
+                tok = strtok(NULL, " "); cJSON_AddFloatToObject(mpstat_cpu_json, "\%iowait", strtof(tok, NULL));
+                tok = strtok(NULL, " "); cJSON_AddFloatToObject(mpstat_cpu_json, "\%irq", strtof(tok, NULL));
+                tok = strtok(NULL, " "); cJSON_AddFloatToObject(mpstat_cpu_json, "\%soft", strtof(tok, NULL));
+                tok = strtok(NULL, " "); cJSON_AddFloatToObject(mpstat_cpu_json, "\%steal", strtof(tok, NULL));
+                tok = strtok(NULL, " "); cJSON_AddFloatToObject(mpstat_cpu_json, "\%guest", strtof(tok, NULL));
+                tok = strtok(NULL, " "); cJSON_AddFloatToObject(mpstat_cpu_json, "\%idle", strtof(tok, NULL));
+            }
+#else
+            mpstat_str = globus_common_create_string("\n[mpstat]\n"); 
+            while (fgets(line, GLOBUS_LINE_MAX, fp) != NULL) {
+                tmp_str = mpstat_str; 
+                mpstat_str = globus_common_create_string("%s%s", mpstat_str, line); 
+                globus_free(tmp_str); 
+            }
+#endif
+        }
+
+        status = pclose(fp);
+        if (status == -1) {
+#ifdef JSON_STYLE_LOG
+#else
+            mpstat_str = globus_common_create_string("\n[mpstat]\n ERROR");
+#endif
+        } else {
+            /* Use macros described under wait() to inspect `status' in order
+               to determine success/failure of command executed by popen() */
+        }
+
+        // iostat
+        fp = popen("iostat -d | tail -n +4", "r");
+        if (fp == NULL) {
+#ifdef JSON_STYLE_LOG
+            cJSON_AddItemToObject(root_json, "iostat", iostat_json=cJSON_CreateObject());  
+#else
+            iostat_str = globus_common_create_string("\n[iostat]\n ERROR");
+#endif
+        } else {
+#ifdef JSON_STYLE_LOG
+            cJSON_AddItemToObject(root_json, "iostat", iostat_json=cJSON_CreateArray());  
+            while (fgets(line, GLOBUS_LINE_MAX, fp) != NULL) {
+                if (strlen(line) <= 1) break; // last line is blank.
+                cJSON_AddItemToArray(iostat_json, iostat_dev_json=cJSON_CreateObject());
+                tok = strtok(line, " "); if (tok == NULL) break; cJSON_AddStringToObject(iostat_dev_json, "Dev", tok);
+                tok = strtok(NULL, " "); cJSON_AddFloatToObject(iostat_dev_json, "tps", strtof(tok, NULL));
+                tok = strtok(NULL, " "); cJSON_AddFloatToObject(iostat_dev_json, "Blk_read/s", strtof(tok, NULL));
+                tok = strtok(NULL, " "); cJSON_AddFloatToObject(iostat_dev_json, "Blk_wrtn/s", strtof(tok, NULL));
+                tok = strtok(NULL, " "); cJSON_AddFloatToObject(iostat_dev_json, "Blk_read", strtof(tok, NULL));
+                tok = strtok(NULL, " "); cJSON_AddFloatToObject(iostat_dev_json, "Blk_wrtn", strtof(tok, NULL));
+            }
+#else
+            iostat_str = globus_common_create_string("\n[iostat]\n"); 
+            while (fgets(line, GLOBUS_LINE_MAX, fp) != NULL) {
+                tmp_str = iostat_str; 
+                iostat_str = globus_common_create_string("%s%s", iostat_str, line); 
+                globus_free(tmp_str); 
+            }
+#endif
+        }
+
+        status = pclose(fp);
+        if (status == -1) {
+#ifdef JSON_STYLE_LOG
+#else
+            iostat_str = globus_common_create_string("\n[iostat]\n ERROR");
+#endif
+        } else {
+            /* Use macros described under wait() to inspect `status' in order
+               to determine success/failure of command executed by popen() */
+        }
+
+        // getrusage()
+        status = getrusage(who, &usage);
+#ifdef JSON_STYLE_LOG
+        cJSON_AddItemToObject(root_json, "getrusage", getrusage_json=cJSON_CreateObject());  
+        sprintf(buf, "%ld.%ld", usage.ru_utime.tv_sec, usage.ru_utime.tv_usec);
+        cJSON_AddStringToObject(getrusage_json, "ru_utime", buf);
+        sprintf(buf, "%ld.%ld", usage.ru_stime.tv_sec, usage.ru_stime.tv_usec);
+        cJSON_AddStringToObject(getrusage_json, "ru_stime", buf);
+        cJSON_AddIntToObject(getrusage_json, "ru_maxrss", usage.ru_maxrss);
+        cJSON_AddIntToObject(getrusage_json, "ru_ixrss", usage.ru_ixrss);
+        cJSON_AddIntToObject(getrusage_json, "ru_idrss", usage.ru_idrss);
+        cJSON_AddIntToObject(getrusage_json, "ru_isrss", usage.ru_isrss);
+        cJSON_AddIntToObject(getrusage_json, "ru_minflt", usage.ru_minflt);
+        cJSON_AddIntToObject(getrusage_json, "ru_majflt", usage.ru_majflt);
+        cJSON_AddIntToObject(getrusage_json, "ru_nswap", usage.ru_nswap);
+        cJSON_AddIntToObject(getrusage_json, "ru_inblock", usage.ru_inblock);
+        cJSON_AddIntToObject(getrusage_json, "ru_oublock", usage.ru_oublock);
+        cJSON_AddIntToObject(getrusage_json, "ru_msgsnd", usage.ru_msgsnd);
+        cJSON_AddIntToObject(getrusage_json, "ru_msgrcv", usage.ru_msgrcv);
+        cJSON_AddIntToObject(getrusage_json, "ru_nsignals", usage.ru_nsignals);
+        cJSON_AddIntToObject(getrusage_json, "ru_nvcsw", usage.ru_nvcsw);
+        cJSON_AddIntToObject(getrusage_json, "ru_nivcsw", usage.ru_nivcsw);
+#else
+        getrusage_str = globus_common_create_string("\n[getrusage]\n ru_utime: %ld.%lds, ru_stime: %ld.%lds, ru_maxrss: %ld, ru_ixrss: %ld, ru_idrss: %ld, ru_isrss: %ld, ru_minflt: %ld, ru_majflt: %ld, ru_nswap: %ld, ru_inblock: %ld, ru_oublock: %ld, ru_msgsnd: %ld, ru_msgrcv: %ld, ru_nsignals: %ld, ru_nvcsw: %ld, ru_nivcsw: %ld",
+            usage.ru_utime.tv_sec, usage.ru_utime.tv_usec, usage.ru_stime.tv_sec, usage.ru_stime.tv_usec,
+            usage.ru_maxrss, usage.ru_ixrss, usage.ru_idrss, usage.ru_isrss,
+            usage.ru_minflt, usage.ru_majflt, usage.ru_nswap, usage.ru_inblock,
+            usage.ru_oublock, usage.ru_msgsnd, usage.ru_msgrcv, usage.ru_nsignals,
+            usage.ru_nvcsw, usage.ru_nivcsw);
+#endif
+
+
+#ifdef JSON_STYLE_LOG
+        cJSON_AddItemToObject(root_json, "streams", streams_json);
+#endif
 
         tcp_driver = globus_io_compat_get_tcp_driver();
         
         for(ctr = 0; ctr < transfer_handle->stripe_count; ctr++)
         {
+            int stream_ctr=0; // esjung; to track stream count.
             stripe = &transfer_handle->stripes[ctr];
             for(list = stripe->all_conn_list;
                 !globus_list_empty(list);
-                list = globus_list_rest(list))
+                list = globus_list_rest(list), stream_ctr++)
             {
                 globus_xio_handle_t         xio_handle;
                 globus_xio_system_socket_t  socket;
+                socklen_t                   len;
                 char *                      tmp_str;
+                char *                      stream_str=NULL;
 
                 data_conn = (globus_ftp_data_connection_t *)
                                  globus_list_first(list);
@@ -3784,22 +4036,80 @@ globus_ftp_control_data_get_retransmit_count(
                 count = -1;
 #if defined(TARGET_ARCH_LINUX) && defined(TCP_MD5SIG)
                 {
+                    // TCP info
                     struct tcp_info             tcpinfo;
                     socklen_t                   len;
     
                     len = sizeof(tcpinfo);
                     res = globus_xio_system_socket_getsockopt(
                         socket, IPPROTO_TCP, TCP_INFO, (void *) &tcpinfo, &len);
+
                     if(res != GLOBUS_SUCCESS)
                     {
+#if 1 // esjung
+                        count_str = globus_common_create_string("%s", "ERROR");
+                        *retransmit_count = count_str;
+#endif
                         globus_mutex_unlock(&dc_handle->mutex);
                         return res;
                     }
-    
+
                     count = tcpinfo.tcpi_total_retrans;
-                }
+#if 1 // esjung
+
+#ifdef JSON_STYLE_LOG
+                    cJSON_AddItemToArray(streams_json, stream_json=cJSON_CreateObject());  
+                    cJSON_AddIntToObject(stream_json, "stripe", ctr);  
+                    cJSON_AddIntToObject(stream_json, "stream", stream_ctr);  
+                    cJSON_AddItemToObject(stream_json, "TCPinfo", tcpinfo_json=cJSON_CreateObject());  
+                    cJSON_AddIntToObject(tcpinfo_json, "rcv_ssthresh", tcpinfo.tcpi_rcv_ssthresh);
+                    cJSON_AddIntToObject(tcpinfo_json, "rtt", tcpinfo.tcpi_rtt);
+                    cJSON_AddIntToObject(tcpinfo_json, "rttvar", tcpinfo.tcpi_rttvar);
+                    cJSON_AddIntToObject(tcpinfo_json, "snd_ssthresh", tcpinfo.tcpi_snd_ssthresh);
+                    cJSON_AddIntToObject(tcpinfo_json, "snd_cwnd", tcpinfo.tcpi_snd_cwnd);
+                    cJSON_AddIntToObject(tcpinfo_json, "advmss", tcpinfo.tcpi_advmss);
+                    cJSON_AddIntToObject(tcpinfo_json, "reordering", tcpinfo.tcpi_reordering);
+                    cJSON_AddIntToObject(tcpinfo_json, "rcv_rtt", tcpinfo.tcpi_rcv_rtt);
+                    cJSON_AddIntToObject(tcpinfo_json, "rcv_space", tcpinfo.tcpi_rcv_space);
+                    cJSON_AddIntToObject(tcpinfo_json, "total_retrans", tcpinfo.tcpi_total_retrans);
+#else
+                    // TCP info
+                    tcpinfo_str = globus_common_create_string("\n[TCPinfo]\n pmtu: %d, rcv_ssthresh: %d, rtt: %d, rttvar: %d, snd_ssthresh: %d, snd_cwnd: %d, advmss: %d, reordering: %d, rcv_rtt: %d, rcv_space: %d, total_retrans: %d", 
+                    		tcpinfo.tcpi_pmtu,
+                    		tcpinfo.tcpi_rcv_ssthresh, tcpinfo.tcpi_rtt, tcpinfo.tcpi_rttvar,
+                    		tcpinfo.tcpi_snd_ssthresh, tcpinfo.tcpi_snd_cwnd,
+                    		tcpinfo.tcpi_advmss, tcpinfo.tcpi_reordering,
+                    		tcpinfo.tcpi_rcv_rtt, tcpinfo.tcpi_rcv_space,
+                    		tcpinfo.tcpi_total_retrans);
 #endif
 
+
+#ifdef JSON_STYLE_LOG
+                    
+#else
+                    // aggregate all strings
+                    stream_str = globus_common_create_string("\n---- Stripe: %d, Stream: %d ----%s%s%s%s", ctr, stream_ctr, tcpinfo_str, mpstat_str, getrusage_str, iostat_str);
+
+                    globus_free(tcpinfo_str);
+                    globus_free(mpstat_str);
+                    globus_free(getrusage_str);
+                    globus_free(iostat_str);
+#endif // JSON_STYLE_LOG
+#endif
+                }
+
+#endif // #if defined()
+
+#if 1  // esjung; deal with multiple data stripe/streams 
+                /*
+		if (stream_str) {
+                    tmp_str = count_str; 
+                    count_str = globus_common_create_string("%s%s", count_str, stream_str);
+                    globus_free(tmp_str);
+                    globus_free(stream_str);
+                }
+                */
+#else
                 if(count_str)
                 {
                     tmp_str = globus_common_create_string("%s,%d", count_str, count);
@@ -3810,9 +4120,17 @@ globus_ftp_control_data_get_retransmit_count(
                 {
                     count_str = globus_common_create_string("%d", count);
                 }
-            }
-        }
+
+#endif
+            } // end of for (stream)
+        } // end of for(stripe)
+#ifdef JSON_STYLE_LOG
+	json_out = cJSON_Print(root_json);
+        *retransmit_count = globus_common_create_string("\n%s\n", json_out);
+        cJSON_Delete(root_json); globus_free(json_out);
+#else
         *retransmit_count = count_str;
+#endif
     }
     globus_mutex_unlock(&dc_handle->mutex);
 
