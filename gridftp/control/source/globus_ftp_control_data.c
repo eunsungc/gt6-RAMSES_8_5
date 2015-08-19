@@ -3777,11 +3777,13 @@ globus_ftp_control_data_get_retransmit_count(
     globus_xio_driver_t                         tcp_driver;
     int                                         ctr;
     int                                         count;
+    // esjung
     char *                                      count_str = NULL;
     char *                                      tcpinfo_str = NULL;
     char *                                      mpstat_str = NULL;
     char *                                      getrusage_str = NULL;
     char *                                      iostat_str = NULL;
+    char *                                      tmp_str = NULL;
     static char *                               myname=
                           "globus_ftp_control_data_get_retransmit_count";
 
@@ -3840,7 +3842,6 @@ globus_ftp_control_data_get_retransmit_count(
 // esjung
 //#define JSON_STYLE_LOG
         FILE *fp;
-#ifdef JSON_STYLE_LOG
         // variables for popen()
         int status;
 #define GLOBUS_LINE_MAX 1024
@@ -3849,6 +3850,7 @@ globus_ftp_control_data_get_retransmit_count(
         // variables for getrusage()
         int who = RUSAGE_SELF;
         struct rusage usage;
+#ifdef JSON_STYLE_LOG
         // variables for JSON
         cJSON *root_json, *streams_json, *stream_json;
         cJSON *tcpinfo_json, *getrusage_json;
