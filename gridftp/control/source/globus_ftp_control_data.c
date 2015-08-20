@@ -4080,17 +4080,17 @@ globus_ftp_control_data_get_retransmit_count(
                     json_array_append_new(streams_json, stream_json=json_object()); //cJSON_AddItemToArray(streams_json, stream_json=cJSON_CreateObject());
                     json_object_set_new(stream_json, "stripe", json_integer(ctr)); //cJSON_AddIntToObject(stream_json, "stripe", ctr);
                     json_object_set_new(stream_json, "stream", json_integer(stream_ctr)); //cJSON_AddIntToObject(stream_json, "stream", stream_ctr);
-                    json_object_set_new(stream_json, "stripe", json_integer(ctr)); //cJSON_AddItemToObject(stream_json, "TCPinfo", tcpinfo_json=cJSON_CreateObject());
-                    json_object_set_new(stream_json, "stripe", json_integer(ctr)); //cJSON_AddIntToObject(tcpinfo_json, "rcv_ssthresh", tcpinfo.tcpi_rcv_ssthresh);
-                    json_object_set_new(stream_json, "stripe", json_integer(ctr)); //cJSON_AddIntToObject(tcpinfo_json, "rtt", tcpinfo.tcpi_rtt);
-                    json_object_set_new(stream_json, "stripe", json_integer(ctr)); //cJSON_AddIntToObject(tcpinfo_json, "rttvar", tcpinfo.tcpi_rttvar);
-                    json_object_set_new(stream_json, "stripe", json_integer(ctr)); //cJSON_AddIntToObject(tcpinfo_json, "snd_ssthresh", tcpinfo.tcpi_snd_ssthresh);
-                    json_object_set_new(stream_json, "stripe", json_integer(ctr)); //cJSON_AddIntToObject(tcpinfo_json, "snd_cwnd", tcpinfo.tcpi_snd_cwnd);
-                    json_object_set_new(stream_json, "stripe", json_integer(ctr)); //cJSON_AddIntToObject(tcpinfo_json, "advmss", tcpinfo.tcpi_advmss);
-                    json_object_set_new(stream_json, "stripe", json_integer(ctr)); //cJSON_AddIntToObject(tcpinfo_json, "reordering", tcpinfo.tcpi_reordering);
-                    json_object_set_new(stream_json, "stripe", json_integer(ctr)); //cJSON_AddIntToObject(tcpinfo_json, "rcv_rtt", tcpinfo.tcpi_rcv_rtt);
-                    json_object_set_new(stream_json, "stripe", json_integer(ctr)); //cJSON_AddIntToObject(tcpinfo_json, "rcv_space", tcpinfo.tcpi_rcv_space);
-                    json_object_set_new(stream_json, "stripe", json_integer(ctr)); //cJSON_AddIntToObject(tcpinfo_json, "total_retrans", tcpinfo.tcpi_total_retrans);
+                    json_object_set_new(stream_json, "TCPinfo", tcpinfo_json=json_object()); //cJSON_AddItemToObject(stream_json, "TCPinfo", tcpinfo_json=cJSON_CreateObject());
+                    json_object_set_new(tcpinfo_json, "rcv_ssthresh", json_integer(tcpinfo.tcpi_rcv_ssthresh)); //cJSON_AddIntToObject(tcpinfo_json, "rcv_ssthresh", tcpinfo.tcpi_rcv_ssthresh);
+                    json_object_set_new(tcpinfo_json, "rtt", json_integer(tcpinfo.tcpi_rtt)); //cJSON_AddIntToObject(tcpinfo_json, "rtt", tcpinfo.tcpi_rtt);
+                    json_object_set_new(tcpinfo_json, "rttvar", json_integer(tcpinfo.tcpi_rttvar)); //cJSON_AddIntToObject(tcpinfo_json, "rttvar", tcpinfo.tcpi_rttvar);
+                    json_object_set_new(tcpinfo_json, "snd_ssthresh", json_integer(tcpinfo.tcpi_snd_ssthresh)); //cJSON_AddIntToObject(tcpinfo_json, "snd_ssthresh", tcpinfo.tcpi_snd_ssthresh);
+                    json_object_set_new(tcpinfo_json, "snd_cwnd", json_integer(tcpinfo.tcpi_snd_cwnd)); //cJSON_AddIntToObject(tcpinfo_json, "snd_cwnd", tcpinfo.tcpi_snd_cwnd);
+                    json_object_set_new(tcpinfo_json, "advmss", json_integer(tcpinfo.tcpi_advmss)); //cJSON_AddIntToObject(tcpinfo_json, "advmss", tcpinfo.tcpi_advmss);
+                    json_object_set_new(tcpinfo_json, "reordering", json_integer(tcpinfo.tcpi_reordering)); //cJSON_AddIntToObject(tcpinfo_json, "reordering", tcpinfo.tcpi_reordering);
+                    json_object_set_new(tcpinfo_json, "rcv_rtt", json_integer(tcpinfo.tcpi_rcv_rtt)); //cJSON_AddIntToObject(tcpinfo_json, "rcv_rtt", tcpinfo.tcpi_rcv_rtt);
+                    json_object_set_new(tcpinfo_json, "rcv_space", json_integer(tcpinfo.tcpi_rcv_space)); //cJSON_AddIntToObject(tcpinfo_json, "rcv_space", tcpinfo.tcpi_rcv_space);
+                    json_object_set_new(tcpinfo_json, "total_retrans", json_integer(tcpinfo.tcpi_total_retrans)); //cJSON_AddIntToObject(tcpinfo_json, "total_retrans", tcpinfo.tcpi_total_retrans);
 #else
                     // TCP info
                     tcpinfo_str = globus_common_create_string("\n[TCPinfo]\n pmtu: %d, rcv_ssthresh: %d, rtt: %d, rttvar: %d, snd_ssthresh: %d, snd_cwnd: %d, advmss: %d, reordering: %d, rcv_rtt: %d, rcv_space: %d, total_retrans: %d", 
