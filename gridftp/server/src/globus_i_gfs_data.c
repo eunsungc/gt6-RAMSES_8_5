@@ -9792,7 +9792,8 @@ globus_l_gfs_data_get_nl_msg(
     return msg_out;
 }
 
-
+// esjung
+// callback function when the data transfer is done.
 static
 void
 globus_l_gfs_data_end_transfer_kickout(
