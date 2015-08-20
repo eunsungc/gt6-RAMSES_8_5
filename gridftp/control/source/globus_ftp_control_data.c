@@ -3682,82 +3682,6 @@ globus_ftp_control_data_get_socket_buf(
 }
 
 
-// esjung; from iperf3 project.
-
-/* Helper routine for building cJSON objects in a printf-like manner.
-**
-** Sample call:
-**   j = iperf_json_printf("foo: %b  bar: %d  bletch: %f  eep: %s", b, i, f, s);
-**
-** The four formatting characters and the types they expect are:
-**   %b  boolean           int
-**   %d  integer           int64_t
-**   %f  floating point    double
-**   %s  string            char *
-** If the values you're passing in are not these exact types, you must
-** cast them, there is no automatic type coercion/widening here.
-**
-** The colons mark the end of field names, and blanks are ignored.
-**
-** This routine is not particularly robust, but it's not part of the API,
-** it's just for internal iperf3 use.
-*/
-/*
-cJSON*
-iperf_json_printf(const char *format, ...)
-{
-    cJSON* o;
-    va_list argp;
-    const char *cp;
-    char name[100];
-    char* np;
-    cJSON* j;
-
-    o = cJSON_CreateObject();
-    if (o == NULL)
-        return NULL;
-    va_start(argp, format);
-    np = name;
-    for (cp = format; *cp != '\0'; ++cp) {
-	switch (*cp) {
-	    case ' ':
-	    break;
-	    case ':':
-	    *np = '\0';
-	    break;
-	    case '%':
-	    ++cp;
-	    switch (*cp) {
-		case 'b':
-		j = cJSON_CreateBool(va_arg(argp, int));
-		break;
-		case 'd':
-		j = cJSON_CreateInt(va_arg(argp, int64_t));
-		break;
-		case 'f':
-		j = cJSON_CreateFloat(va_arg(argp, double));
-		break;
-		case 's':
-		j = cJSON_CreateString(va_arg(argp, char *));
-		break;
-		default:
-		return NULL;
-	    }
-	    if (j == NULL)
-		return NULL;
-	    cJSON_AddItemToObject(o, name, j);
-	    np = name;
-	    break;
-	    default:
-	    *np++ = *cp;
-	    break;
-	}
-    }
-    va_end(argp);
-    return o;
-}
-*/
-
 // esjung; this function returns a log string for the handle.
 
 globus_result_t
@@ -4121,7 +4045,7 @@ globus_ftp_control_data_get_retransmit_count(
 
 #if 1  // esjung; deal with multiple data stripe/streams 
                 /*
-		if (stream_str) {
+                if (stream_str) {
                     tmp_str = count_str; 
                     count_str = globus_common_create_string("%s%s", count_str, stream_str);
                     globus_free(tmp_str);
