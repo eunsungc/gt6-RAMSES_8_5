@@ -1779,12 +1779,11 @@ globus_ftp_control_data_get_socket_buf(
 typedef struct globus_ramses_log_s {
     char *		event_type; // Range-Marker, Perf-Marker, Transfer-End
     char *		transferID;
-    double		start_timestamp;
-    double		current_timestamp;
+    char *		start_timestamp;
     char *		user;
     char *		file;
-    long		tcp_buffer;
-    long		globus_block_size;
+    long		tcp_bufsize;
+    long		globus_blocksize;
     long		nbytes;
     char *		dest;
     char *		cmd_type;

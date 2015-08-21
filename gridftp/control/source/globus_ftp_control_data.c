@@ -3788,11 +3788,20 @@ globus_ftp_control_data_get_retransmit_count(
         root_json = json_object();
         streams_json = json_array(); //cJSON_CreateArray();
         json_object_set_new(root_json, "event_type", json_string(ramses_log.event_type)); //cJSON_AddStringToObject(root_json, "type", type);
-        json_object_set_new(root_json, "timestamp", json_string(buf)); //cJSON_AddStringToObject(root_json, "timestamp", buf);
+        json_object_set_new(root_json, "start_timestamp", json_string(ramses_log.start_timestamp));
+        json_object_set_new(root_json, "end_timestamp", json_string(buf)); //cJSON_AddStringToObject(root_json, "timestamp", buf);
         if (ramses_log.transferID == NULL)
             json_object_set_new(root_json, "transferID", json_integer(getpid())); //cJSON_AddIntToObject(root_json, "transferID", getpid());
         else
             json_object_set_new(root_json, "transferID", json_string(ramses_log.transferID)); //cJSON_AddStringToObject(root_json, "transferID", transferID);
+        json_object_set_new(root_json, "user", json_string(ramses_log.user));
+        json_object_set_new(root_json, "file", json_string(ramses_log.file));
+        json_object_set_new(root_json, "tcp_bufsize", json_integer(ramses_log.tcp_bufsize));
+        json_object_set_new(root_json, "globus_blocksize", json_integer(ramses_log.globus_blocksize));
+        json_object_set_new(root_json, "nbytes", json_integer(ramses_log.nbytes));
+        json_object_set_new(root_json, "dest", json_string(ramses_log.dest));
+        json_object_set_new(root_json, "cmd_type", json_string(ramses_log.cmd_type));
+        json_object_set_new(root_json, "ret_code", json_integer(ramses_log.ret_code));
 #endif    
 
         // mpstat -P ALL; 'mpstat -P ALL | tail -n +4'

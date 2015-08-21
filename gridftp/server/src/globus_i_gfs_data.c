@@ -10092,17 +10092,30 @@ response_exit:
 
         if(!op->data_handle->http_handle && op->data_handle->is_mine)
         {
-            globus_ramses_log_t ramses_log;
-			
-	      ramses_log.event_type = globus_common_create_string("%s", "Transfer-End");
-	      ramses_log.transferID = op->session_handle->taskid;
-            if (globus_ftp_control_data_get_retransmit_count(
+            globus_ramses_log_t	ramses_log;
+  
+				
+            ramses_log.event_type = globus_common_create_string("%s", "Transfer-End");
+            ramses_log.transferID = op->session_handle->taskid;
+            ramses_log.start_timestamp = globus_common_create_string("%ld.%01ld", op->start_timeval.tv_sec, op->start_timeval.tv_usec / 100000); // op->start_timeval
+            ramses_log.user = op->session_handle->username;
+            ramses_log.file = info->pathname;
+            ramses_log.tcp_bufsize  = op->data_handle->info.tcp_bufsize;
+            ramses_log.globus_blocksize = op->data_handle->info.blocksize;
+            ramses_log.nbytes = op->bytes_transferred;
+            ramses_log.dest = op->remote_ip ? op->remote_ip : "0.0.0.0";
+            ramses_log.cmd_type = type;
+            ramses_log.ret_code = 226; // if succeeds.
+
+             if (globus_ftp_control_data_get_retransmit_count(
                 &op->data_handle->data_channel,
                 &retransmit_str, ramses_log) != GLOBUS_SUCCESS)
                 retransmit_str = globus_common_create_string("%s", "get_transmit_count() failed.");
 
 		// clean up ramses_log
-	      globus_free(ramses_log.event_type);
+             globus_free(ramses_log.event_type);
+             globus_free(ramses_log.start_timestamp);
+
         }
 #else // original codes
         if(!op->data_handle->http_handle && op->data_handle->is_mine)
@@ -10967,7 +10980,16 @@ globus_l_gfs_data_trev_kickout(
         }
 
         // fill in ramses_log
-        ramses_log.transferID = bounce_info->op->session_handle->taskid;
+        ramses_log.transferID =  bounce_info->op->session_handle->taskid;
+        ramses_log.start_timestamp = globus_common_create_string("%ld.%01ld",  bounce_info->op->start_timeval.tv_sec,  bounce_info->op->start_timeval.tv_usec / 100000); // op->start_timeval
+        ramses_log.user = bounce_info->op->session_handle->username;
+        ramses_log.file = bounce_info->op->pathname;
+        ramses_log.tcp_bufsize  = bounce_info->op->data_handle->info.tcp_bufsize;
+        ramses_log.globus_blocksize = bounce_info->op->data_handle->info.blocksize;
+        ramses_log.nbytes = bounce_info->op->bytes_transferred;
+        ramses_log.dest = bounce_info->op->remote_ip ? bounce_info->op->remote_ip : "0.0.0.0";
+        ramses_log.cmd_type = type;
+        ramses_log.ret_code = 0; // nothing to set
 
 	  if (globus_ftp_control_data_get_retransmit_count(
                 &bounce_info->op->data_handle->data_channel,
@@ -10976,6 +10998,7 @@ globus_l_gfs_data_trev_kickout(
 
 	  // cleanup ramses_log
         globus_free(ramses_log.event_type);
+	  globus_free(ramses_log.start_timestamp);
 
         msg = globus_i_gfs_log_create_transfer_event_msg(
             bounce_info->op->node_count,
