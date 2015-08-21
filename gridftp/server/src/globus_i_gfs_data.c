@@ -10092,11 +10092,17 @@ response_exit:
 
         if(!op->data_handle->http_handle && op->data_handle->is_mine)
         {
+            globus_ramses_log_t ramses_log;
+			
+	      ramses_log.event_type = globus_common_create_string("%s", "Transfer-End");
+	      ramses_log.transferID = op->session_handle->taskid;
             if (globus_ftp_control_data_get_retransmit_count(
                 &op->data_handle->data_channel,
-                &retransmit_str,
-                "Transfer-End", op->session_handle->taskid) != GLOBUS_SUCCESS)
+                &retransmit_str, ramses_log) != GLOBUS_SUCCESS)
                 retransmit_str = globus_common_create_string("%s", "get_transmit_count() failed.");
+
+		// clean up ramses_log
+	      globus_free(ramses_log.event_type);
         }
 #else // original codes
         if(!op->data_handle->http_handle && op->data_handle->is_mine)
@@ -10894,6 +10900,7 @@ globus_l_gfs_data_trev_kickout(
         char *retransmit_str=NULL;
         char *type, *logtype;
         globus_gfs_transfer_info_t *    info;
+        globus_ramses_log_t ramses_log;
 
         info = (globus_gfs_transfer_info_t *) bounce_info->op->info_struct;
 
@@ -10940,13 +10947,13 @@ globus_l_gfs_data_trev_kickout(
         switch(bounce_info->event_type)
         {
         case GLOBUS_GFS_EVENT_BYTES_RECVD:
-	    logtype = globus_common_create_string("%s", "Perf-Marker");
+	    ramses_log.event_type = globus_common_create_string("%s", "Perf-Marker");
 	    break;
 	case GLOBUS_GFS_EVENT_RANGES_RECVD:
-	    logtype = globus_common_create_string("%s", "Range-Marker");
+	    ramses_log.event_type = globus_common_create_string("%s", "Range-Marker");
 	    break;
         default:
-	    logtype = globus_common_create_string("%s", "Type-Error");
+	    ramses_log.event_type = globus_common_create_string("%s", "Type-Error");
 	    break;
         }
          // esjung: uuid
@@ -10959,13 +10966,16 @@ globus_l_gfs_data_trev_kickout(
             out[0], out[1], out[2], out[3], out[4], out[5], out[6], out[7], out[8], out[9], out[10], out[11], out[12], out[13], out[14], out[15]);
         }
 
-	if (globus_ftp_control_data_get_retransmit_count(
+        // fill in ramses_log
+        ramses_log.transferID = bounce_info->op->session_handle->taskid;
+
+	  if (globus_ftp_control_data_get_retransmit_count(
                 &bounce_info->op->data_handle->data_channel,
-                &retransmit_str,
-                logtype,
-                bounce_info->op->session_handle->taskid) != GLOBUS_SUCCESS)
+                &retransmit_str, ramses_log) != GLOBUS_SUCCESS)
                 retransmit_str = globus_common_create_string("%s", "get_transmit_count() failed.");
-        globus_free(logtype);
+
+	  // cleanup ramses_log
+        globus_free(ramses_log.event_type);
 
         msg = globus_i_gfs_log_create_transfer_event_msg(
             bounce_info->op->node_count,

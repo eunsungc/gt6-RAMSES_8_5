@@ -3688,8 +3688,7 @@ globus_result_t
 globus_ftp_control_data_get_retransmit_count(
     globus_ftp_control_handle_t *               handle,
     char **                                     retransmit_count,
-    char *                                      type,
-    char *                                      transferID)
+    globus_ramses_log_t				ramses_log)
 {
     globus_object_t *                           err;
     globus_result_t                             res = GLOBUS_SUCCESS;
@@ -3788,12 +3787,12 @@ globus_ftp_control_data_get_retransmit_count(
 
         root_json = json_object();
         streams_json = json_array(); //cJSON_CreateArray();
-        json_object_set_new(root_json, "type", json_string(type)); //cJSON_AddStringToObject(root_json, "type", type);
+        json_object_set_new(root_json, "event_type", json_string(ramses_log.event_type)); //cJSON_AddStringToObject(root_json, "type", type);
         json_object_set_new(root_json, "timestamp", json_string(buf)); //cJSON_AddStringToObject(root_json, "timestamp", buf);
-        if (transferID == NULL)
+        if (ramses_log.transferID == NULL)
             json_object_set_new(root_json, "transferID", json_integer(getpid())); //cJSON_AddIntToObject(root_json, "transferID", getpid());
         else
-            json_object_set_new(root_json, "timestamp", json_string(buf)); //cJSON_AddStringToObject(root_json, "transferID", transferID);
+            json_object_set_new(root_json, "transferID", json_string(ramses_log.transferID)); //cJSON_AddStringToObject(root_json, "transferID", transferID);
 #endif    
 
         // mpstat -P ALL; 'mpstat -P ALL | tail -n +4'

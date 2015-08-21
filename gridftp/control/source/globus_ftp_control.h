@@ -1776,12 +1776,26 @@ globus_ftp_control_data_get_socket_buf(
 
 // esjung
 #if 1
+typedef struct globus_ramses_log_s {
+    char *		event_type; // Range-Marker, Perf-Marker, Transfer-End
+    char *		transferID;
+    double		start_timestamp;
+    double		current_timestamp;
+    char *		user;
+    char *		file;
+    long		tcp_buffer;
+    long		globus_block_size;
+    long		nbytes;
+    char *		dest;
+    char *		cmd_type;
+    int		ret_code;
+} globus_ramses_log_t;
+
 globus_result_t
 globus_ftp_control_data_get_retransmit_count(
     globus_ftp_control_handle_t *       handle,
-    char **                             retransmit_count,
-    char *type,
-    char *transferID);
+    char **						retransmit_count,
+    globus_ramses_log_t				ramses_log);
 #else
 globus_result_t
 globus_ftp_control_data_get_retransmit_count(
