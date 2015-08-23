@@ -3895,7 +3895,7 @@ globus_ftp_control_data_get_retransmit_count(
             fp = popen(buf, "r");
             if (fgets(line, GLOBUS_LINE_MAX, fp) == NULL){ status = -1; pclose(fp); fp = NULL; break; }
             if ((status=pclose(fp)) != 0) break;
-            if (strlen(line) > 1 ){ b_iostat = 1; break; }
+            if (strlen(line) > 2 ){ b_iostat = 1; break; }
 
             sprintf(buf, "%s%s%s", "nfsiostat 1 2 | grep ", devname, " | tail -n 2 | awk '$1 ~ /\\//' | awk '{print $1}'"); // run nfsiostat twice to measure throughput
 #ifdef _RAMSES_DEBUG_
@@ -3904,7 +3904,7 @@ globus_ftp_control_data_get_retransmit_count(
             fp = popen(buf, "r");
             if (fgets(line, GLOBUS_LINE_MAX, fp) == NULL){ status = -1; pclose(fp); fp = NULL; break; }
             if ((status=pclose(fp)) != 0) break;
-            if (strlen(line) > 0 ){ b_nfsiostat = 1; break; }
+            if (strlen(line) > 2 ){ b_nfsiostat = 1; break; }
 			
             if (b_iostat == 0 && b_nfsiostat == 0){ status = -1; break; }
 			
