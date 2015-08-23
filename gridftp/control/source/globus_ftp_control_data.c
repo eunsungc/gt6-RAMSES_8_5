@@ -3874,7 +3874,7 @@ globus_ftp_control_data_get_retransmit_count(
         do {
 #define _RAMSES_DEBUG_
             // 1. Find the device
-            sprintf(buf, "%s%s%s", "df ", ramses_log.file, " | tail -n 2 | head 1 | awk '{print $1}'");
+            sprintf(buf, "%s%s%s", "df ", ramses_log.file, " | tail -n 2 | head -n 1 | awk '{print $1}'");
 #ifdef _RAMSES_DEBUG_
             printf("buf = %s\n", buf);
 #endif
