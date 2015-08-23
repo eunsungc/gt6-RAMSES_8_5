@@ -3908,6 +3908,9 @@ globus_ftp_control_data_get_retransmit_count(
             if ((status=pclose(fp)) != 0) break;
             if (strlen(line) > 2 ){ b_nfsiostat = 1; break; }
 			
+#ifdef _RAMSES_DEBUG_
+                printf("line = %s\n", line);
+#endif
             if (b_iostat == 0 && b_nfsiostat == 0){ status = -1; break; }
 			
         } while (0);
@@ -3925,9 +3928,6 @@ globus_ftp_control_data_get_retransmit_count(
             if (b_iostat > 0) {
                 //if (strlen(line) <= 1) break; // last line is blank.
                 //cJSON_AddItemToArray(iostat_json, iostat_dev_json=cJSON_CreateObject());
-#ifdef _RAMSES_DEBUG_
-                printf("line = %s\n", line);
-#endif
                 tok = strtok(line, " "); //if (tok == NULL) break;
                 json_object_set_new(iostat_json, "Dev", json_string(tok)); //cJSON_AddStringToObject(iostat_dev_json, "Dev", tok);
                 tok = strtok(NULL, " ");
@@ -3947,7 +3947,6 @@ globus_ftp_control_data_get_retransmit_count(
                 json_object_set_new(iostat_json, "Blk_read/s", json_real(strtof(tok, NULL))); //cJSON_AddFloatToObject(iostat_dev_json, "Blk_read/s", strtof(tok, NULL));
                 tok = strtok(NULL, " ");
                 json_object_set_new(iostat_json, "Blk_wrtn/s", json_real(strtof(tok, NULL))); //cJSON_AddFloatToObject(iostat_dev_json, "Blk_wrtn/s", strtof(tok, NULL));
-                tok = strtok(NULL, " ");
             }
 #else
             iostat_str = globus_common_create_string("\n[iostat]\n"); 
