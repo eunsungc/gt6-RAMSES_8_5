@@ -3906,11 +3906,11 @@ globus_ftp_control_data_get_retransmit_count(
             memset(line, 0, GLOBUS_LINE_MAX);
             if (fgets(line, GLOBUS_LINE_MAX, fp) == NULL){ status = -1; pclose(fp); fp = NULL; break; }
             if ((status=pclose(fp)) != 0) break;
+#ifdef _RAMSES_DEBUG_
+            printf("line = %s\n", line);
+#endif
             if (strlen(line) > 2 ){ b_nfsiostat = 1; break; }
 			
-#ifdef _RAMSES_DEBUG_
-                printf("line = %s\n", line);
-#endif
             if (b_iostat == 0 && b_nfsiostat == 0){ status = -1; break; }
 			
         } while (0);
