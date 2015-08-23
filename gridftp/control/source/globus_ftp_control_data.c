@@ -3898,7 +3898,7 @@ globus_ftp_control_data_get_retransmit_count(
             if ((status=pclose(fp)) != 0){ fp = NULL; break; }
             if (strlen(line) > 2 ){ b_iostat = 1; break; }
 
-            sprintf(buf, "%s%s%s", "nfsiostat 1 2 | grep ", devname, " | tail -n 2 | awk '$1 ~ /\\//' | awk '{print $1}'"); // run nfsiostat twice to measure throughput
+            sprintf(buf, "%s%s%s", "nfsiostat 1 2 | grep ", devname, " | awk '$1 ~ /\\//' | tail -n 1"); // run nfsiostat twice to measure throughput
 #ifdef _RAMSES_DEBUG_
             printf("buf = %s\n", buf);
 #endif
