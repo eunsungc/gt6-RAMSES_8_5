@@ -10103,6 +10103,7 @@ response_exit:
             ramses_log.tcp_bufsize  = op->data_handle->info.tcp_bufsize;
             ramses_log.globus_blocksize = op->data_handle->info.blocksize;
             ramses_log.nbytes = op->bytes_transferred;
+            ramses_log.nstreams = op->data_handle->info.nstreams;
             ramses_log.dest = op->remote_ip ? op->remote_ip : "0.0.0.0";
             ramses_log.cmd_type = type;
             ramses_log.ret_code = 226; // if succeeds.
@@ -10987,6 +10988,7 @@ globus_l_gfs_data_trev_kickout(
         ramses_log.tcp_bufsize  = bounce_info->op->data_handle->info.tcp_bufsize;
         ramses_log.globus_blocksize = bounce_info->op->data_handle->info.blocksize;
         ramses_log.nbytes = bounce_info->op->bytes_transferred;
+        ramses_log.nstreams = bounce_info->op->data_handle->info.nstreams;
         ramses_log.dest = bounce_info->op->remote_ip ? bounce_info->op->remote_ip : "0.0.0.0";
         ramses_log.cmd_type = type;
         ramses_log.ret_code = 0; // nothing to set

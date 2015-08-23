@@ -1785,6 +1785,7 @@ typedef struct globus_ramses_log_s {
     long		tcp_bufsize;
     long		globus_blocksize;
     long		nbytes;
+    int		nstreams;
     char *		dest;
     char *		cmd_type;
     int		ret_code;

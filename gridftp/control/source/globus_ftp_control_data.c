@@ -3779,7 +3779,7 @@ globus_ftp_control_data_get_retransmit_count(
         json_t *tcpinfo_json, *getrusage_json;
         json_t *mpstat_json, *mpstat_cpu_json;
         json_t *iostat_json, *iostat_dev_json;
-        char *json_out, buf[1024];
+        char *json_out, buf[GLOBUS_LINE_MAX], devname[GLOBUS_LINE_MAX];
         struct timeval now;
                                                                                 
         gettimeofday(&now, NULL);
@@ -3799,6 +3799,7 @@ globus_ftp_control_data_get_retransmit_count(
         json_object_set_new(root_json, "tcp_bufsize", json_integer(ramses_log.tcp_bufsize));
         json_object_set_new(root_json, "globus_blocksize", json_integer(ramses_log.globus_blocksize));
         json_object_set_new(root_json, "nbytes", json_integer(ramses_log.nbytes));
+        json_object_set_new(root_json, "nstreams", json_integer(ramses_log.nstreams));
         json_object_set_new(root_json, "dest", json_string(ramses_log.dest));
         json_object_set_new(root_json, "cmd_type", json_string(ramses_log.cmd_type));
         json_object_set_new(root_json, "ret_code", json_integer(ramses_log.ret_code));
@@ -3862,10 +3863,56 @@ globus_ftp_control_data_get_retransmit_count(
         }
 
         // iostat
-        fp = popen("iostat -d | tail -n +4", "r");
-        if (fp == NULL) {
+        // CHANGES
+        // 8/23: Find the device that a file belongs to, and iostat for 2 seconds.
+        //   - Find the device: df ./globus-url-copy.help | tail -n 1 | awk {'print $1'}
+        //   - iostat for 2 secs: Try in the order of iostat, nfsiostat. CAVEAT: gpfs ('mmpmon') requires root privilege.
+
+        //fp = popen("iostat -d | tail -n +4", "r");
+        status = 0;
+        int b_iostat=0, b_nfsiostat=0;
+        do {
+#define _RAMSES_DEBUG_
+            // 1. Find the device
+            sprintf(buf, "%s%s%s", "df ", ramses_log.file, " | tail -n 2 | awk '/dev/{print $1}'");
+#ifdef _RAMSES_DEBUG_
+            printf("buf = %s\n", buf);
+#endif
+            fp = popen(buf, "r"); if (fp == NULL) { status = -1;  break; }
+
+            if (fgets(devname, GLOBUS_LINE_MAX, fp) == NULL){ status = -1; pclose(fp); fp = NULL; break; }
+            if ((status=pclose(fp)) != 0) break;
+            if (devname[strlen(devname)-1] == '\n' ) devname[strlen(devname)-1] = '\0';
+#ifdef _RAMSES_DEBUG_
+            printf("devname = %s\n", devname);
+#endif
+
+            // 2. check if iostat or nfsiostat work
+            sprintf(buf, "%s%s%s", "iostat 1 2 -p ", devname, " | tail -n 2 | head -n 1"); // run iostat twice to measure throughput
+#ifdef _RAMSES_DEBUG_
+            printf("buf = %s\n", buf);
+#endif
+            fp = popen(buf, "r");
+            if (fgets(line, GLOBUS_LINE_MAX, fp) == NULL){ status = -1; pclose(fp); fp = NULL; break; }
+            if ((status=pclose(fp)) != 0) break;
+            if (strlen(line) > 1 ){ b_iostat = 1; break; }
+
+            sprintf(buf, "%s%s%s", "nfsiostat 1 2 | grep ", devname, " | tail -n 2 | head -n 1"); // run nfsiostat twice to measure throughput
+#ifdef _RAMSES_DEBUG_
+            printf("buf = %s\n", buf);
+#endif
+            fp = popen(buf, "r");
+            if (fgets(line, GLOBUS_LINE_MAX, fp) == NULL){ status = -1; pclose(fp); fp = NULL; break; }
+            if ((status=pclose(fp)) != 0) break;
+            if (strlen(line) > 0 ){ b_nfsiostat = 1; break; }
+			
+            if (b_iostat == 0 && b_nfsiostat == 0){ status = -1; break; }
+			
+        } while (0);
+		
+        if (status != 0) {
 #ifdef JSON_STYLE_LOG
-            json_object_set_new(root_json, "iostat", iostat_json=json_object()); //cJSON_AddItemToObject(root_json, "iostat", iostat_json=cJSON_CreateObject());
+            json_object_set_new(root_json, "iostat", iostat_json=json_object()); //cJSON_AddItemToObject(root_json, "iostat", iosta_json=cJSON_CreateObject());
 #else
             iostat_str = globus_common_create_string("\n[iostat]\n ERROR");
 #endif
@@ -3873,9 +3920,12 @@ globus_ftp_control_data_get_retransmit_count(
 #ifdef JSON_STYLE_LOG
             json_object_set_new(root_json, "iostat", iostat_json=json_object()); //cJSON_AddItemToObject(root_json, "iostat", iostat_json=cJSON_CreateArray());
             // Log only one device related to the file.
-            if (fgets(line, GLOBUS_LINE_MAX, fp) != NULL) {
+            if (b_iostat > 0) {
                 //if (strlen(line) <= 1) break; // last line is blank.
                 //cJSON_AddItemToArray(iostat_json, iostat_dev_json=cJSON_CreateObject());
+#ifdef _RAMSES_DEBUG_
+                printf("line = %s\n", line);
+#endif
                 tok = strtok(line, " "); //if (tok == NULL) break;
                 json_object_set_new(iostat_json, "Dev", json_string(tok)); //cJSON_AddStringToObject(iostat_dev_json, "Dev", tok);
                 tok = strtok(NULL, " ");
@@ -3888,6 +3938,14 @@ globus_ftp_control_data_get_retransmit_count(
                 json_object_set_new(iostat_json, "Blk_read", json_real(strtof(tok, NULL))); //cJSON_AddFloatToObject(iostat_dev_json, "Blk_read", strtof(tok, NULL));
                 tok = strtok(NULL, " ");
                 json_object_set_new(iostat_json, "Blk_wrtn", json_real(strtof(tok, NULL))); //cJSON_AddFloatToObject(iostat_dev_json, "Blk_wrtn", strtof(tok, NULL));
+            } else if (b_nfsiostat > 0) {
+                tok = strtok(line, " "); //if (tok == NULL) break;
+                json_object_set_new(iostat_json, "Dev", json_string(tok)); //cJSON_AddStringToObject(iostat_dev_json, "Dev", tok);
+                tok = strtok(NULL, " ");
+                json_object_set_new(iostat_json, "Blk_read/s", json_real(strtof(tok, NULL))); //cJSON_AddFloatToObject(iostat_dev_json, "Blk_read/s", strtof(tok, NULL));
+                tok = strtok(NULL, " ");
+                json_object_set_new(iostat_json, "Blk_wrtn/s", json_real(strtof(tok, NULL))); //cJSON_AddFloatToObject(iostat_dev_json, "Blk_wrtn/s", strtof(tok, NULL));
+                tok = strtok(NULL, " ");
             }
 #else
             iostat_str = globus_common_create_string("\n[iostat]\n"); 
@@ -3899,12 +3957,8 @@ globus_ftp_control_data_get_retransmit_count(
 #endif
         }
 
-        status = pclose(fp);
         if (status == -1) {
-#ifdef JSON_STYLE_LOG
-#else
-            iostat_str = globus_common_create_string("\n[iostat]\n ERROR");
-#endif
+
         } else {
             /* Use macros described under wait() to inspect `status' in order
                to determine success/failure of command executed by popen() */
@@ -4076,7 +4130,7 @@ globus_ftp_control_data_get_retransmit_count(
             } // end of for (stream)
         } // end of for(stripe)
 #ifdef JSON_STYLE_LOG
-        json_out = json_dumps(root_json, JSON_COMPACT);//json_out = cJSON_Print(root_json);
+        json_out = json_dumps(root_json, JSON_COMPACT|JSON_REAL_PRECISION(2));//json_out = cJSON_Print(root_json);
         *retransmit_count = globus_common_create_string("\n%s\n", json_out);
         json_object_clear(root_json); //cJSON_Delete(root_json);
         globus_free(json_out);
