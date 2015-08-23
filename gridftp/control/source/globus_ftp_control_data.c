@@ -3893,8 +3893,8 @@ globus_ftp_control_data_get_retransmit_count(
             printf("buf = %s\n", buf);
 #endif
             fp = popen(buf, "r");
-            if (fgets(line, GLOBUS_LINE_MAX, fp) == NULL){ status = -1; pclose(fp); fp = NULL; break; }
-            if ((status=pclose(fp)) != 0) break;
+            if (fgets(line, GLOBUS_LINE_MAX, fp) == NULL){ status = -1; }
+            if ((status=pclose(fp)) != 0){ fp = NULL; break; }
             if (strlen(line) > 2 ){ b_iostat = 1; break; }
 
             sprintf(buf, "%s%s%s", "nfsiostat 1 2 | grep ", devname, " | tail -n 2 | awk '$1 ~ /\\//' | awk '{print $1}'"); // run nfsiostat twice to measure throughput
