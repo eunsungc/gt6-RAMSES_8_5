@@ -3893,6 +3893,7 @@ globus_ftp_control_data_get_retransmit_count(
             printf("buf = %s\n", buf);
 #endif
             fp = popen(buf, "r");
+            memset(line, 0, GLOBUS_LINE_MAX);
             if (fgets(line, GLOBUS_LINE_MAX, fp) == NULL){ status = -1; }
             if ((status=pclose(fp)) != 0){ fp = NULL; break; }
             if (strlen(line) > 2 ){ b_iostat = 1; break; }
@@ -3902,6 +3903,7 @@ globus_ftp_control_data_get_retransmit_count(
             printf("buf = %s\n", buf);
 #endif
             fp = popen(buf, "r");
+            memset(line, 0, GLOBUS_LINE_MAX);
             if (fgets(line, GLOBUS_LINE_MAX, fp) == NULL){ status = -1; pclose(fp); fp = NULL; break; }
             if ((status=pclose(fp)) != 0) break;
             if (strlen(line) > 2 ){ b_nfsiostat = 1; break; }
