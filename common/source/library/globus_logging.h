@@ -58,11 +58,16 @@ typedef void
     char *                              buffer,
     globus_size_t *                     buf_len);
 
+// esjung
+// add more function pointers for JSON
 typedef struct globus_logging_module_s
 {
     globus_logging_open_func_t          open_func;
+    globus_logging_open_func_t          json_open_func;	
     globus_logging_write_func_t         write_func;
+    globus_logging_write_func_t         json_write_func;
     globus_logging_close_func_t         close_func;
+    globus_logging_close_func_t         json_close_func;
     globus_logging_header_func_t        header_func;
 } globus_logging_module_t;
 
