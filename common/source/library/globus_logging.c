@@ -22,7 +22,7 @@
 #include <syslog.h>
 #endif
 
-#define GLOBUS_L_LOGGING_MAX_MESSAGE  2048
+#define GLOBUS_L_LOGGING_MAX_MESSAGE  4096 // esjung: 2048->4096
 
 #ifdef __GNUC__
 #define GlobusLoggingName(func) static const char * _globus_logging_name __attribute__((__unused__)) = #func
@@ -140,6 +140,7 @@ globus_logging_update_pid(void)
 /*
  *  external functions
  */
+ // esjung
 globus_result_t
 globus_logging_init(
     globus_logging_handle_t *           out_handle,
@@ -405,6 +406,20 @@ globus_logging_stdio_write_func(
     fwrite(buf, length, 1, fptr);
 }
 
+// esjung
+void
+globus_logging_stdio_json_write_func(
+    globus_byte_t *                     buf,
+    globus_size_t                       length,
+    void *                              user_arg)
+{
+    FILE *                              fptr;
+
+    fptr = (FILE *) user_arg;
+
+    fwrite(buf, length, 1, fptr);
+}
+
 void
 globus_logging_stdio_header_func(
     char *                              buf,
@@ -492,10 +507,15 @@ globus_logging_syslog_write_func(
 }
 #endif
 
+// esjung
+// extension for JSON logging
 globus_logging_module_t                 globus_logging_stdio_module =
 {
     NULL,
+    NULL,
     globus_logging_stdio_write_func,
+    globus_logging_stdio_json_write_func,
+    NULL,
     NULL,
     globus_logging_stdio_header_func
 };
@@ -503,7 +523,10 @@ globus_logging_module_t                 globus_logging_stdio_module =
 globus_logging_module_t                 globus_logging_stdio_ng_module =
 {
     NULL,
+    NULL,
     globus_logging_stdio_write_func,
+    NULL,
+    NULL,
     NULL,
     globus_logging_ng_header_func
 };
@@ -512,10 +535,16 @@ globus_logging_module_t                 globus_logging_syslog_module =
 {
 #ifdef HAVE_SYSLOG_H
     globus_logging_syslog_open_func,
+    NULL,
     globus_logging_syslog_write_func,
+    NULL,
     globus_logging_syslog_close_func,
+    NULL,
     NULL
 #else
+    NULL,
+    NULL,
+    NULL,
     NULL,
     NULL,
     NULL,
@@ -527,10 +556,16 @@ globus_logging_module_t                 globus_logging_syslog_ng_module =
 {
 #ifdef HAVE_SYSLOG_H
     globus_logging_syslog_open_func,
+    NULL,
     globus_logging_syslog_write_func,
+    NULL,
     globus_logging_syslog_close_func,
+    NULL,
     globus_logging_ng_header_func
 #else
+    NULL,
+    NULL,
+    NULL,
     NULL,
     NULL,
     NULL,
