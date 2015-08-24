@@ -63,11 +63,8 @@ typedef void
 typedef struct globus_logging_module_s
 {
     globus_logging_open_func_t          open_func;
-    globus_logging_open_func_t          json_open_func;	
     globus_logging_write_func_t         write_func;
-    globus_logging_write_func_t         json_write_func;
     globus_logging_close_func_t         close_func;
-    globus_logging_close_func_t         json_close_func;
     globus_logging_header_func_t        header_func;
 } globus_logging_module_t;
 
@@ -109,7 +106,8 @@ extern globus_logging_module_t          globus_logging_stdio_module;
 extern globus_logging_module_t          globus_logging_syslog_module;
 extern globus_logging_module_t          globus_logging_stdio_ng_module;
 extern globus_logging_module_t          globus_logging_syslog_ng_module;
-
+// esjung
+extern globus_logging_module_t          globus_logging_json_module;
 #ifdef __cplusplus
 }
 #endif

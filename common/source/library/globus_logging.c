@@ -514,13 +514,19 @@ globus_logging_syslog_write_func(
 
 // esjung
 // extension for JSON logging
+
+globus_logging_module_t                 globus_logging_json_module =
+{
+    NULL,
+    globus_logging_stdio_json_write_func,
+    NULL,
+    globus_logging_stdio_header_func
+};
+
 globus_logging_module_t                 globus_logging_stdio_module =
 {
     NULL,
-    NULL,
-    globus_logging_stdio_write_func,
-    globus_logging_stdio_json_write_func,
-    NULL,
+    globus_logging_stdio_write_func,,
     NULL,
     globus_logging_stdio_header_func
 };
@@ -528,10 +534,7 @@ globus_logging_module_t                 globus_logging_stdio_module =
 globus_logging_module_t                 globus_logging_stdio_ng_module =
 {
     NULL,
-    NULL,
     globus_logging_stdio_write_func,
-    globus_logging_stdio_json_write_func,
-    NULL,
     NULL,
     globus_logging_ng_header_func
 };
@@ -539,17 +542,11 @@ globus_logging_module_t                 globus_logging_stdio_ng_module =
 globus_logging_module_t                 globus_logging_syslog_module =
 {
 #ifdef HAVE_SYSLOG_H
-    globus_logging_syslog_open_func,
-    NULL,
+    globus_logging_syslog_open_func,,
     globus_logging_syslog_write_func,
-    NULL,
     globus_logging_syslog_close_func,
-    NULL,
     NULL
 #else
-    NULL,
-    NULL,
-    NULL,
     NULL,
     NULL,
     NULL,
@@ -561,16 +558,10 @@ globus_logging_module_t                 globus_logging_syslog_ng_module =
 {
 #ifdef HAVE_SYSLOG_H
     globus_logging_syslog_open_func,
-    NULL,
     globus_logging_syslog_write_func,
-    NULL,
     globus_logging_syslog_close_func,
-    NULL,
     globus_logging_ng_header_func
 #else
-    NULL,
-    NULL,
-    NULL,
     NULL,
     NULL,
     NULL,
