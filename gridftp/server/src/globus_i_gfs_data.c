@@ -10136,7 +10136,7 @@ response_exit:
             op->bytes_transferred,
             type,
             op->session_handle->username,
-            retransmit_str);
+            NULL);
 
         globus_gfs_log_event(
             GLOBUS_GFS_LOG_INFO,
@@ -10145,7 +10145,10 @@ response_exit:
             0,
             "%s",
             msg);
-
+        // esjung
+        globus_gfs_json_log_event(
+            GLOBUS_GFS_LOG_INFO,
+            retransmit_str);
         globus_free(msg);
     }
     else
@@ -10260,6 +10263,9 @@ response_exit:
                 "/",
                 type,
                 op->session_handle->username,
+                NULL);
+
+            globus_i_gfs_json_log_transfer(
                 retransmit_str);
         }
         if(!globus_l_gfs_data_is_remote_node &&

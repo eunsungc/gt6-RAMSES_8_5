@@ -4132,7 +4132,7 @@ globus_ftp_control_data_get_retransmit_count(
         } // end of for(stripe)
 #ifdef JSON_STYLE_LOG
         json_out = json_dumps(root_json, JSON_COMPACT|JSON_REAL_PRECISION(2));//json_out = cJSON_Print(root_json);
-        *retransmit_count = globus_common_create_string("\n%s\n", json_out);
+        *retransmit_count = globus_common_create_string("%s\n", json_out);
         json_object_clear(root_json); //cJSON_Delete(root_json);
         globus_free(json_out);
 #else

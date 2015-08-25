@@ -888,7 +888,6 @@ globus_i_gfs_log_tr(
     GlobusGFSDebugExit();
 }
 
-
 void
 globus_gfs_log_event(
     globus_gfs_log_type_t               type,
@@ -975,6 +974,23 @@ globus_gfs_log_event(
         {
             globus_free(message);
         }
+    }
+
+    GlobusGFSDebugExit();
+}
+
+// esjung
+void
+globus_gfs_json_log_event(
+    globus_gfs_log_type_t               type,
+    const char *                        format)
+{
+    GlobusGFSName(globus_gfs_json_log_event);
+    GlobusGFSDebugEnter();
+
+    if(globus_l_gfs_json_log_handle != NULL && globus_l_gfs_log_events)
+    {
+        globus_logging_write(globus_l_gfs_json_log_handle, type, format);
     }
 
     GlobusGFSDebugExit();
@@ -1150,6 +1166,38 @@ err:
     GlobusGFSDebugExitWithError();
 }
 
+// esjung
+void
+globus_i_gfs_json_log_transfer(
+    char *                              msg)
+{
+    GlobusGFSName(globus_i_gfs_json_log_transfer);
+    GlobusGFSDebugEnter();
+
+    if(globus_l_gfs_transfer_json_log_file == NULL && 
+        !(globus_l_gfs_log_mask & GLOBUS_GFS_LOG_TRANSFER))
+    {
+        goto err;
+    }
+
+    if(globus_l_gfs_transfer_json_log_file != NULL)
+    {
+        fwrite(msg, 1, strlen(msg), globus_l_gfs_transfer_json_log_file);
+    }
+    /*
+    if(globus_l_gfs_json_log_mask & GLOBUS_GFS_LOG_TRANSFER)
+    {
+        globus_gfs_log_message(
+            GLOBUS_GFS_LOG_TRANSFER, "Transfer stats: %s", out_buf);
+    }
+    */
+
+    GlobusGFSDebugExit();
+    return;
+
+err:
+    GlobusGFSDebugExitWithError();
+}
 
 void
 globus_i_gfs_log_usage_stats(
