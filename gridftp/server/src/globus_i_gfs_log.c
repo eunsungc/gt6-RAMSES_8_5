@@ -1204,19 +1204,19 @@ globus_i_gfs_json_log_transfer(
         goto err2;
     }
 
-    sprintf(out_buf, "%s\n", msg);
+    sprintf(out_buf, "%s", msg);
 	
     if(globus_l_gfs_transfer_json_log_file != NULL)
     {
         fwrite(out_buf, 1, strlen(out_buf), globus_l_gfs_transfer_json_log_file);
     }
-    /*
+    
     if(globus_l_gfs_json_log_mask & GLOBUS_GFS_LOG_TRANSFER)
     {
         globus_gfs_log_message(
-            GLOBUS_GFS_LOG_TRANSFER, "Transfer stats: %s", out_buf);
+            GLOBUS_GFS_LOG_TRANSFER, "%s", out_buf);
     }
-    */
+    
 
     GlobusGFSDebugExit();
     return;
