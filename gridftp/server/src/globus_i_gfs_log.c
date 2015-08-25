@@ -23,10 +23,10 @@
  * if this fails, just print to stderr.
  */
 
-
-static globus_logging_handle_t          globus_l_gfs_log_handle = NULL;
-static globus_list_t *                  globus_l_gfs_log_usage_handle_list = NULL;
 // esjung; add JSON log file
+static globus_logging_handle_t          globus_l_gfs_log_handle = NULL;
+static globus_logging_handle_t          globus_l_gfs_json_log_handle = NULL;
+static globus_list_t *                  globus_l_gfs_log_usage_handle_list = NULL;
 static FILE *                           globus_l_gfs_log_file = NULL;
 static FILE *                           globus_l_gfs_json_log_file = NULL;
 static FILE *                           globus_l_gfs_transfer_log_file = NULL;
@@ -261,10 +261,11 @@ globus_i_gfs_log_open()
     char *                              module;
     char *                              module_str;
     globus_logging_module_t *           log_mod;
+    globus_logging_module_t *           json_log_mod;
     void *                              log_arg = NULL;
+    void *                              json_log_arg = NULL; // esjung
     char *                              logfilename = NULL;
-    // esjung
-    char *	                              json_logfilename[1024];
+    char *	                              json_logfilename[1024]; // esjung
     char *                              log_filemode = NULL;
     char *                              logunique = NULL;
     char *                              log_level = NULL;
@@ -389,6 +390,8 @@ globus_i_gfs_log_open()
     if(module == NULL || strcmp(module, "stdio") == 0)
     {
         log_mod = &globus_logging_stdio_module;
+        // esjung
+        json_log_mod = &globus_logging_json_module;
     }
     else if(strcmp(module, "syslog") == 0)
     {
@@ -417,6 +420,8 @@ globus_i_gfs_log_open()
         globus_libc_fprintf(stderr,
             "Invalid logging module specified, using stdio.\n");
         log_mod = &globus_logging_stdio_module;
+        // esjung
+        json_log_mod = &globus_logging_json_module;
     }
 
     if(log_mod == &globus_logging_stdio_module ||
@@ -435,7 +440,7 @@ globus_i_gfs_log_open()
                 sprintf("%sgridftp.%d.log.json", logunique, getpid());
             }
         } else {
-            // esjung
+            // esjung 
             sprintf(json_logfilename, "%s%s", logfilename, ".json");
         }
 
@@ -535,6 +540,8 @@ globus_i_gfs_log_open()
         }
 
         log_arg = globus_l_gfs_log_file;
+        // esjung
+        json_log_arg = globus_l_gfs_json_log_file;
 
         if(logunique != NULL)
         {
@@ -556,6 +563,14 @@ globus_i_gfs_log_open()
             log_mask,
             log_mod,
             log_arg);
+        // copied from the above.
+        globus_logging_init(
+            &globus_l_gfs_json_log_handle,
+            &flush_interval,
+            buffer,
+            log_mask,
+            json_log_mod,
+            json_log_arg);
     }
 
     if((logfilename = globus_i_gfs_config_string("log_transfer")) != NULL)
@@ -603,6 +618,48 @@ globus_i_gfs_log_open()
         globus_gfs_config_set_ptr("log_transfer", "");
     }
 
+    // esjung: copied from the above.
+    if(logfilename != NULL)
+    {
+        mode_t                  oldmask;
+        oldmask = umask(022);
+
+        sprintf(json_logfilename, "%s.json", logfilename);
+        globus_l_gfs_transfer_json_log_file = fopen(json_logfilename, "a");
+        umask(oldmask);
+        if(globus_l_gfs_transfer_json_log_file == NULL)
+        {
+            if(!globus_i_gfs_config_bool("inetd"))
+            {
+                globus_libc_fprintf(stderr,
+                    "Unable to open %s for transfer logging.\n", json_logfilename);
+            }
+        }
+        else
+        {
+            setvbuf(globus_l_gfs_transfer_json_log_file, NULL, _IOLBF, 0);
+            if((log_filemode = 
+                globus_i_gfs_config_string("log_filemode")) != NULL)
+            {
+                int                     mode = 0;
+
+                rc = -1;
+                mode = strtoul(log_filemode, NULL, 8);
+                if(mode > 0 || 
+                    (log_filemode[0] == '0' && log_filemode[1] == '\0'))
+                {
+                    rc = chmod(json_logfilename, mode);
+                }
+                
+                if(rc != 0)
+                {
+                    globus_libc_fprintf(globus_l_gfs_transfer_json_log_file,
+                        "WARNING: Not setting log file permissions. "
+                        "Invalid log_filemode: %s\n", log_filemode);
+                }
+            }
+        }
+    }
     if(!globus_i_gfs_config_bool("disable_usage_stats"))
     {
         result = globus_l_gfs_log_usage_stats_init();
@@ -617,6 +674,8 @@ globus_i_gfs_log_open()
     GlobusGFSDebugExit();
 }
 
+// esjung
+// close json related files and handles.
 void
 globus_i_gfs_log_close(void)
 {
@@ -629,17 +688,35 @@ globus_i_gfs_log_close(void)
         globus_logging_flush(globus_l_gfs_log_handle);
         globus_logging_destroy(globus_l_gfs_log_handle);
     }
+    // esjung
+    if(globus_l_gfs_json_log_handle != NULL)
+    {
+        globus_logging_flush(globus_l_gfs_json_log_handle);
+        globus_logging_destroy(globus_l_gfs_json_log_handle);
+    }
     if(globus_l_gfs_log_file != stderr && globus_l_gfs_log_file != NULL)
     {
         fclose(globus_l_gfs_log_file);
         globus_l_gfs_log_file = NULL;
+    }
+    // esjung
+    if(globus_l_gfs_json_log_file != stderr && globus_l_gfs_json_log_file != NULL)
+    {
+        fclose(globus_l_gfs_json_log_file);
+        globus_l_gfs_json_log_file = NULL;
     }
     if(globus_l_gfs_transfer_log_file != NULL)
     {
         fclose(globus_l_gfs_transfer_log_file);
         globus_l_gfs_transfer_log_file = NULL;
     }
-    
+    // esjung
+    if(globus_l_gfs_transfer_json_log_file != NULL)
+    {
+        fclose(globus_l_gfs_transfer_json_log_file);
+        globus_l_gfs_transfer_json_log_file = NULL;
+    }
+
     list = globus_l_gfs_log_usage_handle_list;
     
     while(!globus_list_empty(list))

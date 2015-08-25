@@ -141,7 +141,7 @@ globus_logging_update_pid(void)
  *  external functions
  */
  // esjung
- // Modified for json logging.
+ // ?
 globus_result_t
 globus_logging_init(
     globus_logging_handle_t *           out_handle,
@@ -190,13 +190,9 @@ globus_logging_init(
 
     globus_l_logging_pid = getpid();
 
-    // esjung
     handle->module.open_func = module->open_func;
-    handle->module.json_open_func = module->json_open_func;
     handle->module.write_func = module->write_func;
-    handle->module.json_write_func = module->json_write_func;
     handle->module.close_func = module->close_func;
-    handle->module.json_close_func = module->json_close_func;
     handle->module.header_func = module->header_func;
 
     globus_mutex_init(&handle->mutex, NULL);
@@ -526,7 +522,7 @@ globus_logging_module_t                 globus_logging_json_module =
 globus_logging_module_t                 globus_logging_stdio_module =
 {
     NULL,
-    globus_logging_stdio_write_func,,
+    globus_logging_stdio_write_func,
     NULL,
     globus_logging_stdio_header_func
 };
@@ -542,7 +538,7 @@ globus_logging_module_t                 globus_logging_stdio_ng_module =
 globus_logging_module_t                 globus_logging_syslog_module =
 {
 #ifdef HAVE_SYSLOG_H
-    globus_logging_syslog_open_func,,
+    globus_logging_syslog_open_func,
     globus_logging_syslog_write_func,
     globus_logging_syslog_close_func,
     NULL
