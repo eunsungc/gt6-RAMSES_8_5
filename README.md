@@ -60,7 +60,7 @@ stamp-h1: $(srcdir)/ltdlconfig.h.in $(top_builddir)/config.status
   6. make; make install
 
 # Log files
-* Additional json files are generated corresponding to the existing log files. For example, if the gridftp.conf looks like as follows, `gridftp-ramses.log.json` and `gridftp-transfer-ramses.log.json` will be created.
+* Additional json files are generated corresponding to the existing log file names. For example, if the gridftp.conf looks like as follows, `gridftp-ramses.log.json` and `gridftp-transfer-ramses.log.json` will be created.
 
 ```
 log_single /home/esjung/gridftp-ramses.log
@@ -69,13 +69,14 @@ log_transfer /home/esjung/gridftp-transfer-ramses.log
 ```
 
 # CHANGES
-* Multiline JSON object -> single line JSON object.
+* Multiline JSON object -> single line JSON object; use jansson C json library.
 * mpstat information has only average CPU stats; reduced log size.
 * iostat information tries to capture the device the file belongs to; reduced log size.
   * First, identify the device; currently, support for nfs devices, but no support for gpfs file system devices.
   * Second, try `iostat/nfsiostat 1 2` to compute throughput.
 * Add more fields such as starttime, endtime, etc.
 * Separate files for json logging.
+* Integrated with the latest version of globus toolkit which resolved udt issues.
 
 # Troubleshooting
 * If log messages are broken, try `globus-gridftp-server -log-module stdio:buffer=32768:interval=0`
