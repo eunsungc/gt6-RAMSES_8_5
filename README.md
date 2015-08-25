@@ -2,9 +2,9 @@
 version 1439213997
 
 # Install procedure
-* git clone https://github.com/eunsungc/gt6-RAMSES_8_5
-* cd gt6-RAMSES_8_5
-* ./build.sh: The scrip will do the following. At step 3, we have to modify Makefile manually.
+0. `git clone https://github.com/eunsungc/gt6-RAMSES_8_5`
+0. `cd gt6-RAMSES_8_5`
+0. ./build.sh: The scrip will do the following. At step 3, we have to modify Makefile manually.
 ** 1) ./configure
 ** 2) modify aclocal.m4: replace the version of automake as appropriate.
 **   e.g., 1.14.1 --> 1.14
