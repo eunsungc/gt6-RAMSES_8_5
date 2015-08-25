@@ -76,3 +76,6 @@ log_transfer /home/esjung/gridftp-transfer-ramses.log
   * Second, try `iostat/nfsiostat 1 2` to compute throughput.
 * Add more fields such as starttime, endtime, etc.
 * Separate files for json logging.
+
+# Troubleshooting
+* If log messages are broken, try `globus-gridftp-server -log-module stdio:buffer=32768:interval=0`
