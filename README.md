@@ -1,13 +1,15 @@
 # gt6-RAMSES_8_5
+---------------
 version 1439213997
 
 # Install procedure
+-------------------
 0. `git clone https://github.com/eunsungc/gt6-RAMSES_8_5`
 0. `cd gt6-RAMSES_8_5`
 0. `./build.sh`: The scrip will do the following. At step 3, we have to modify Makefile manually.
-* 1) ./configure
-* 2) modify aclocal.m4: replace the version of automake as appropriate.  e.g., 1.14.1 --> 1.14
-* 3) modify Makefile: For some reasons, make tries to update aclocal.m4. So comment out several lines as follows.
+  1. ./configure
+  2. modify aclocal.m4: replace the version of automake as appropriate.  e.g., 1.14.1 --> 1.14
+  3. modify Makefile: For some reasons, make tries to update aclocal.m4. So comment out several lines as follows.
 ```
 #$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 #   @for dep in $?; do \
@@ -55,7 +57,10 @@ stamp-h1: $(srcdir)/ltdlconfig.h.in $(top_builddir)/config.status
 #       touch $@
 
 ```
-* 4) find . -type f -name aclocal.m4 -exec touch {} \;
-* 5) find . -type f -name Makefile.in -exec touch {} \;
-* 6) make; make install
-0.
+  4. find . -type f -name aclocal.m4 -exec touch {} \;
+  5. find . -type f -name Makefile.in -exec touch {} \;
+  6. make; make install
+
+# Log files
+----------
+
