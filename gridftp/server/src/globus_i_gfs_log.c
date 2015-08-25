@@ -284,6 +284,9 @@ globus_i_gfs_log_open()
     GlobusTimeReltimeSet(flush_interval, 5, 0);
     buffer = 65536;
 
+    // esjung
+    memset(json_logfilename, 0, 1024);
+
     /* parse user supplied log level string */
     log_level = globus_libc_strdup(globus_i_gfs_config_string("log_level"));
     if(log_level != NULL)
@@ -487,7 +490,7 @@ globus_i_gfs_log_open()
         }
 
         // esjung; copied logfilename case.
-        if(json_logfilename != NULL)
+        if(strlen(json_logfilename) != 0)
         {
             mode_t                  oldmask;
             oldmask = umask(022);
