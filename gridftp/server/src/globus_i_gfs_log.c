@@ -1213,8 +1213,7 @@ globus_i_gfs_json_log_transfer(
     
     if(globus_l_gfs_json_log_mask & GLOBUS_GFS_LOG_TRANSFER)
     {
-        globus_gfs_log_message(
-            GLOBUS_GFS_LOG_TRANSFER, "%s", out_buf);
+        fwrite(out_buf, 1, strlen(out_buf), globus_l_gfs_json_log_file);
     }
     
 
