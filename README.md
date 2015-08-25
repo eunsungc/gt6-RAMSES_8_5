@@ -4,9 +4,9 @@ version 1439213997
 
 # Install procedure
 -------------------
-0. `git clone https://github.com/eunsungc/gt6-RAMSES_8_5`
-0. `cd gt6-RAMSES_8_5`
-0. `./build.sh`: The scrip will do the following. At step 3, we have to modify Makefile manually.
+1. `git clone https://github.com/eunsungc/gt6-RAMSES_8_5`
+2. `cd gt6-RAMSES_8_5`
+3. `./build.sh`: The scrip will do the following. At step 3, we have to modify Makefile manually.
   1. ./configure
   2. modify aclocal.m4: replace the version of automake as appropriate.  e.g., 1.14.1 --> 1.14
   3. modify Makefile: For some reasons, make tries to update aclocal.m4. So comment out several lines as follows.
@@ -63,4 +63,10 @@ stamp-h1: $(srcdir)/ltdlconfig.h.in $(top_builddir)/config.status
 
 # Log files
 ----------
+* Additional json files are generated corresponding to the existing log files. For example, if the gridftp.conf looks like as follows, `gridftp-ramses.log.json` and `gridftp-transfer-ramses.log.json` will be created.
 
+```
+log_single /home/esjung/gridftp-ramses.log
+
+log_transfer /home/esjung/gridftp-transfer-ramses.log
+```
