@@ -53,7 +53,6 @@ stamp-h1: $(srcdir)/ltdlconfig.h.in $(top_builddir)/config.status
 #       ($(am__cd) $(top_srcdir) && $(AUTOHEADER))
 #       rm -f stamp-h1
 #       touch $@
-
 ```
   4. find . -type f -name aclocal.m4 -exec touch {} \;
   5. find . -type f -name Makefile.in -exec touch {} \;
