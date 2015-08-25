@@ -10264,7 +10264,7 @@ response_exit:
                 type,
                 op->session_handle->username,
                 NULL);
-
+            // esjung
             globus_i_gfs_json_log_transfer(
                 retransmit_str);
         }
@@ -11018,12 +11018,16 @@ globus_l_gfs_data_trev_kickout(
             bounce_info->op->bytes_transferred,
             type,
             bounce_info->op->session_handle->username,
-            retransmit_str);
+            NULL);
 
         globus_gfs_log_message(
             GLOBUS_GFS_LOG_TRANSFER,
             "%s",
             msg);
+        // esjung
+        globus_gfs_json_log_message(
+            GLOBUS_GFS_LOG_TRANSFER,
+            retransmit_str);
         /*
         globus_gfs_log_event(
             GLOBUS_GFS_LOG_INFO,

@@ -265,7 +265,7 @@ globus_i_gfs_log_open()
     void *                              log_arg = NULL;
     void *                              json_log_arg = NULL; // esjung
     char *                              logfilename = NULL;
-    char *	                              json_logfilename[1024]; // esjung
+    char	                              json_logfilename[1024]; // esjung
     char *                              log_filemode = NULL;
     char *                              logunique = NULL;
     char *                              log_level = NULL;
@@ -437,7 +437,7 @@ globus_i_gfs_log_open()
                 logfilename = globus_common_create_string(
                     "%sgridftp.%d.log", logunique, getpid());
                 // esjung
-                sprintf("%sgridftp.%d.log.json", logunique, getpid());
+                sprintf(json_logfilename, "%sgridftp.%d.log.json", logunique, getpid());
             }
         } else {
             // esjung 
@@ -767,6 +767,28 @@ globus_gfs_log_message(
     if(type == GLOBUS_GFS_LOG_ERR && globus_l_gfs_log_handle)
     {
         globus_logging_flush(globus_l_gfs_log_handle);
+    }
+        
+    GlobusGFSDebugExit();
+}
+
+// esjung
+void
+globus_gfs_json_log_message(
+    globus_gfs_log_type_t               type,
+    const char *                        msg)
+{
+    GlobusGFSName(globus_gfs_json_log_message);
+    GlobusGFSDebugEnter();
+
+    if(globus_l_gfs_json_log_handle != NULL && !globus_l_gfs_log_events)
+    {
+        fwrite(msg, 1, strlen(msg), globus_l_gfs_json_log_file);
+    }
+    
+    if(type == GLOBUS_GFS_LOG_ERR && globus_l_gfs_json_log_handle)
+    {
+        globus_logging_flush(globus_l_gfs_json_log_handle);
     }
         
     GlobusGFSDebugExit();
@@ -1171,18 +1193,22 @@ void
 globus_i_gfs_json_log_transfer(
     char *                              msg)
 {
+    char                                out_buf[4096];
+	
     GlobusGFSName(globus_i_gfs_json_log_transfer);
     GlobusGFSDebugEnter();
 
     if(globus_l_gfs_transfer_json_log_file == NULL && 
         !(globus_l_gfs_log_mask & GLOBUS_GFS_LOG_TRANSFER))
     {
-        goto err;
+        goto err2;
     }
 
+    sprintf(out_buf, "%s\n", msg);
+	
     if(globus_l_gfs_transfer_json_log_file != NULL)
     {
-        fwrite(msg, 1, strlen(msg), globus_l_gfs_transfer_json_log_file);
+        fwrite(out_buf, 1, strlen(out_buf), globus_l_gfs_transfer_json_log_file);
     }
     /*
     if(globus_l_gfs_json_log_mask & GLOBUS_GFS_LOG_TRANSFER)
@@ -1195,7 +1221,7 @@ globus_i_gfs_json_log_transfer(
     GlobusGFSDebugExit();
     return;
 
-err:
+err2:
     GlobusGFSDebugExitWithError();
 }
 
@@ -1257,7 +1283,7 @@ globus_i_gfs_log_usage_stats(
 
         if(!usage_ent || usage_ent->handle == NULL)
         {
-            goto err;
+            goto err3;
         }
         
         if(save_taglist == NULL || 
@@ -1277,7 +1303,7 @@ globus_i_gfs_log_usage_stats(
                     tmp_tm_time = gmtime(&start_time_time);
                     if(tmp_tm_time == NULL)
                     {
-                        goto err;
+                        goto err3;
                     }
                     start_tm_time = *tmp_tm_time;
                     sprintf(start_b, "%04d%02d%02d%02d%02d%02d.%06d",
@@ -1297,7 +1323,7 @@ globus_i_gfs_log_usage_stats(
                     tmp_tm_time = gmtime(&end_time_time);
                     if(tmp_tm_time == NULL)
                     {
-                        goto err;
+                        goto err3;
                     }
                     end_tm_time = *tmp_tm_time;
                     sprintf(end_b, "%04d%02d%02d%02d%02d%02d.%06d",
@@ -1449,7 +1475,7 @@ globus_i_gfs_log_usage_stats(
     GlobusGFSDebugExit();
     return;
 
-err:
+err3:
     GlobusGFSDebugExitWithError();
 }
 
