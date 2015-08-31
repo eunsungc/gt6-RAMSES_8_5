@@ -10108,10 +10108,13 @@ response_exit:
             ramses_log.cmd_type = type;
             ramses_log.ret_code = 226; // if succeeds.
 
-             if (globus_ftp_control_data_get_retransmit_count(
+            if (globus_ftp_control_data_get_retransmit_count(
                 &op->data_handle->data_channel,
-                &retransmit_str, ramses_log) != GLOBUS_SUCCESS)
-                retransmit_str = globus_common_create_string("%s", "get_transmit_count() failed.");
+                &retransmit_str, ramses_log) != GLOBUS_SUCCESS) {
+                // esjung: 5/31/2015
+                // get_transmit_count() failed.
+                retransmit_str = NULL;
+            }
 
 		// clean up ramses_log
              globus_free(ramses_log.event_type);
@@ -10136,7 +10139,7 @@ response_exit:
             op->bytes_transferred,
             type,
             op->session_handle->username,
-            NULL);
+            retransmit_str == NULL ? "Error" : NULL);
 
         globus_gfs_log_event(
             GLOBUS_GFS_LOG_INFO,
@@ -10146,9 +10149,10 @@ response_exit:
             "%s",
             msg);
         // esjung
-        globus_gfs_json_log_event(
-            GLOBUS_GFS_LOG_INFO,
-            retransmit_str);
+        if (retransmit_str != NULL)
+            globus_gfs_json_log_event(
+                GLOBUS_GFS_LOG_INFO,
+                retransmit_str);
         globus_free(msg);
     }
     else
@@ -10263,10 +10267,10 @@ response_exit:
                 "/",
                 type,
                 op->session_handle->username,
-                NULL);
-            // esjung
-            globus_i_gfs_json_log_transfer(
-                retransmit_str);
+                retransmit_str == NULL ? "Error" : NULL);
+            // esjung: modified on 8/31/2015
+            if (retransmit_str != NULL)
+                globus_i_gfs_json_log_transfer(retransmit_str);
         }
         if(!globus_l_gfs_data_is_remote_node &&
             !globus_i_gfs_config_string("disable_usage_stats"))
@@ -11002,7 +11006,9 @@ globus_l_gfs_data_trev_kickout(
 	  if (globus_ftp_control_data_get_retransmit_count(
                 &bounce_info->op->data_handle->data_channel,
                 &retransmit_str, ramses_log) != GLOBUS_SUCCESS)
-                retransmit_str = globus_common_create_string("%s", "get_transmit_count() failed.");
+                // esjung: 8/31/2015
+                // get_transmit_count() failed.
+                retransmit_str = NULL;
 
 	  // cleanup ramses_log
         globus_free(ramses_log.event_type);
@@ -11018,16 +11024,17 @@ globus_l_gfs_data_trev_kickout(
             bounce_info->op->bytes_transferred,
             type,
             bounce_info->op->session_handle->username,
-            NULL);
+            retransmit_str == NULL ? "Error" : NULL);
 
         globus_gfs_log_message(
             GLOBUS_GFS_LOG_TRANSFER,
             "%s",
             msg);
         // esjung
-        globus_gfs_json_log_message(
-            GLOBUS_GFS_LOG_TRANSFER,
-            retransmit_str);
+        if (retransmit_str != NULL)
+            globus_gfs_json_log_message(
+                GLOBUS_GFS_LOG_TRANSFER,
+                retransmit_str);
         /*
         globus_gfs_log_event(
             GLOBUS_GFS_LOG_INFO,
