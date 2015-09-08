@@ -516,7 +516,7 @@ globus_logging_module_t                 globus_logging_json_module =
     NULL,
     globus_logging_stdio_json_write_func,
     NULL,
-    globus_logging_stdio_header_func
+    NULL,
 };
 
 globus_logging_module_t                 globus_logging_stdio_module =
