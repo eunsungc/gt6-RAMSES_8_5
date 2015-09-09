@@ -591,8 +591,8 @@ globus_l_gfs_base64_encode(
     globus_size_t *                     out_len);
 
 // esjung; make json logging opt-in/out
-//#define ENABLE_JSON_END_TRANSFER_LOG
-//#define ENABLE_JSON_PERIODIC_LOG
+#define ENABLE_JSON_END_TRANSFER_LOG
+#define ENABLE_JSON_PERIODIC_LOG
 
 static
 globus_result_t
@@ -10083,7 +10083,7 @@ response_exit:
 
 
 
-#if ENABLE_JSON_END_TRANSFER_LOG // esjung
+#ifdef ENABLE_JSON_END_TRANSFER_LOG // esjung
          // esjung: uuid
          if (op->session_handle->taskid == NULL) 
          {     
@@ -10926,7 +10926,7 @@ globus_l_gfs_data_trev_kickout(
     event_reply->node_ndx = bounce_info->op->node_ndx;
     globus_mutex_lock(&bounce_info->op->session_handle->mutex);
 
-#if ENABLE_JSON_PERIODIC_LOG // esjung
+#ifdef ENABLE_JSON_PERIODIC_LOG // esjung
     {
         char *msg;
         char *retransmit_str=NULL;
