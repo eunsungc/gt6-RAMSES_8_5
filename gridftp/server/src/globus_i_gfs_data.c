@@ -590,6 +590,10 @@ globus_l_gfs_base64_encode(
     globus_byte_t *                     outbuf,
     globus_size_t *                     out_len);
 
+// esjung; make json logging opt-in/out
+//#define ENABLE_JSON_END_TRANSFER_LOG
+//#define ENABLE_JSON_PERIODIC_LOG
+
 static
 globus_result_t
 globus_i_gfs_data_http_print_response(
@@ -10079,7 +10083,7 @@ response_exit:
 
 
 
-#if 1 // esjung
+#if ENABLE_JSON_END_TRANSFER_LOG // esjung
          // esjung: uuid
          if (op->session_handle->taskid == NULL) 
          {     
@@ -10121,13 +10125,13 @@ response_exit:
              globus_free(ramses_log.start_timestamp);
 
         }
-#else // original codes
-        if(!op->data_handle->http_handle && op->data_handle->is_mine)
-        {
-            globus_ftp_control_data_get_retransmit_count(
-                &op->data_handle->data_channel,
-                &retransmit_str);
-        }
+// original codes
+//        if(!op->data_handle->http_handle && op->data_handle->is_mine)
+//        {
+//            globus_ftp_control_data_get_retransmit_count(
+//                &op->data_handle->data_channel,
+//                &retransmit_str);
+//        }
 #endif
 	  msg = globus_i_gfs_log_create_transfer_event_msg(
             op->node_count,
@@ -10148,11 +10152,13 @@ response_exit:
             0,
             "%s",
             msg);
+#ifdef ENABLE_JSON_END_TRANSFER_LOG
         // esjung
         if (retransmit_str != NULL)
             globus_gfs_json_log_event(
                 GLOBUS_GFS_LOG_INFO,
                 retransmit_str);
+#endif
         globus_free(msg);
     }
     else
@@ -10268,9 +10274,11 @@ response_exit:
                 type,
                 op->session_handle->username,
                 retransmit_str == NULL ? "Error" : NULL);
+#ifdef ENABLE_JSON_END_TRANSFER_LOG
             // esjung: modified on 8/31/2015
             if (retransmit_str != NULL)
                 globus_i_gfs_json_log_transfer(retransmit_str);
+#endif
         }
         if(!globus_l_gfs_data_is_remote_node &&
             !globus_i_gfs_config_string("disable_usage_stats"))
@@ -10918,7 +10926,7 @@ globus_l_gfs_data_trev_kickout(
     event_reply->node_ndx = bounce_info->op->node_ndx;
     globus_mutex_lock(&bounce_info->op->session_handle->mutex);
 
-#if 1 // esjung
+#if ENABLE_JSON_PERIODIC_LOG // esjung
     {
         char *msg;
         char *retransmit_str=NULL;
@@ -10980,6 +10988,7 @@ globus_l_gfs_data_trev_kickout(
 	    ramses_log.event_type = globus_common_create_string("%s", "Type-Error");
 	    break;
         }
+#ifdef ENABLE_JSON_PERIODIC_LOG
          // esjung: uuid
         if (bounce_info->op->session_handle->taskid == NULL)
         {
@@ -11013,6 +11022,7 @@ globus_l_gfs_data_trev_kickout(
 	  // cleanup ramses_log
         globus_free(ramses_log.event_type);
 	  globus_free(ramses_log.start_timestamp);
+#endif
 
         msg = globus_i_gfs_log_create_transfer_event_msg(
             bounce_info->op->node_count,
@@ -11030,6 +11040,7 @@ globus_l_gfs_data_trev_kickout(
             GLOBUS_GFS_LOG_TRANSFER,
             "%s",
             msg);
+#ifdef ENABLE_JSON_PERIODIC_LOG
         // esjung
         if (retransmit_str != NULL)
             globus_gfs_json_log_message(
@@ -11044,7 +11055,7 @@ globus_l_gfs_data_trev_kickout(
             "%s",
             msg);
         */
-
+#endif
         globus_free(msg);
         if (retransmit_str != NULL) globus_free(retransmit_str);
     }
