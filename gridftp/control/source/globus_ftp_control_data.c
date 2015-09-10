@@ -3876,7 +3876,7 @@ globus_ftp_control_data_get_retransmit_count(
         } else {
             memset(line, 0, GLOBUS_LINE_MAX);
             if (fgets(line, GLOBUS_LINE_MAX, fp) != NULL){
-                if (devname[strlen(line)-1] == '\n' ) devname[strlen(line)-1] = '\0';
+                if (devname[strlen(line)-1] == '\n' ) line[strlen(line)-1] = '\0';
                 json_object_set_new(root_json, "host", json_string(line));
             }
             pclose(fp);
