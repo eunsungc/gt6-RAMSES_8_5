@@ -37,7 +37,7 @@
 // esjung; for json
 #include "jansson.h"
 #include <stdlib.h>
-#define _RAMSES_DEBUG_
+//#define _RAMSES_DEBUG_
 
 /*
  *  logging messages
@@ -3792,14 +3792,13 @@ globus_ftp_control_data_get_retransmit_count(
         json_object_set_new(root_json, "event_type", json_string(ramses_log.event_type));
         json_object_set_new(root_json, "start_timestamp", json_string(ramses_log.start_timestamp));
         json_object_set_new(root_json, "end_timestamp", json_string(buf));
-        json_object_set_new(root_json, "host", json_string("host"));
+        //json_object_set_new(root_json, "host", json_string(ramses_log.host));
         json_object_set_new(root_json, "prog", json_string("globus-gridftp-server"));
         if (ramses_log.transferID == NULL)
             json_object_set_new(root_json, "transferID", json_integer(getpid())); //cJSON_AddIntToObject(root_json, "transferID", getpid());
         else
             json_object_set_new(root_json, "transferID", json_string(ramses_log.transferID)); //cJSON_AddStringToObject(root_json, "transferID", transferID);
         json_object_set_new(root_json, "user", json_string(ramses_log.user));
-        json_object_set_new(root_json, "volume", json_string("volume"));
         json_object_set_new(root_json, "file", json_string(ramses_log.file));
         json_object_set_new(root_json, "tcp_bufsize", json_integer(ramses_log.tcp_bufsize));
         json_object_set_new(root_json, "globus_blocksize", json_integer(ramses_log.globus_blocksize));
@@ -3866,7 +3865,39 @@ globus_ftp_control_data_get_retransmit_count(
             /* Use macros described under wait() to inspect `status' in order
                to determine success/failure of command executed by popen() */
         }
-
+        // hostname
+        sprintf(buf, "%s", "hostname --ip-address");
+#ifdef _RAMSES_DEBUG_
+        printf("buf = %s\n", buf);
+#endif
+        fp = popen(buf, "r");
+        if (fp == NULL) {
+            json_object_set_new(root_json, "host", json_string("Error"));
+        } else {
+            memset(line, 0, GLOBUS_LINE_MAX);
+            if (fgets(line, GLOBUS_LINE_MAX, fp) != NULL){
+                if (devname[strlen(devname)-1] == '\n' ) devname[strlen(devname)-1] = '\0';
+                json_object_set_new(root_json, "host", json_string(line));
+            }
+            pclose(fp);
+        }
+        
+        // volume
+        sprintf(buf, "%s%s%s", "df -P ", ramses_log.file, " | tail -n 1| awk '{print $6}'");
+#ifdef _RAMSES_DEBUG_
+        printf("buf = %s\n", buf);
+#endif
+        fp = popen(buf, "r");
+        if (fp == NULL) {
+            json_object_set_new(root_json, "volume", json_string("Error"));
+        } else {
+            memset(devname, 0, GLOBUS_LINE_MAX);
+            if (fgets(devname, GLOBUS_LINE_MAX, fp) != NULL){
+                if (devname[strlen(devname)-1] == '\n' ) devname[strlen(devname)-1] = '\0';
+                json_object_set_new(root_json, "volume", json_string(devname));
+            }
+            pclose(fp);
+        }
         // iostat
         // CHANGES
         // 8/23: Find the device that a file belongs to, and iostat for 2 seconds.
@@ -3883,7 +3914,7 @@ globus_ftp_control_data_get_retransmit_count(
             printf("buf = %s\n", buf);
 #endif
             fp = popen(buf, "r"); if (fp == NULL) { status = -1;  break; }
-
+            
             if (fgets(devname, GLOBUS_LINE_MAX, fp) == NULL){ status = -1; pclose(fp); fp = NULL; break; }
             if ((status=pclose(fp)) != 0) break;
             if (devname[strlen(devname)-1] == '\n' ) devname[strlen(devname)-1] = '\0';
@@ -3901,7 +3932,7 @@ globus_ftp_control_data_get_retransmit_count(
             fp = popen(buf, "r");
             memset(line, 0, GLOBUS_LINE_MAX);
             if (fgets(line, GLOBUS_LINE_MAX, fp) != NULL) {
-                if (strlen(line) > 2 ){ b_iostat = 1; status = pclose(fp); }
+                if (strlen(line) > 2 ){ b_iostat = 1; }
             }
             if ((status=pclose(fp)) != 0){ fp = NULL; break; }
             
@@ -3924,7 +3955,7 @@ globus_ftp_control_data_get_retransmit_count(
             fp = popen(buf, "r");
             memset(line, 0, GLOBUS_LINE_MAX);
             if (fgets(line, GLOBUS_LINE_MAX, fp) != NULL) {
-                if (strlen(line) > 2 ){ b_nfsiostat = 1; status = pclose(fp); }
+                if (strlen(line) > 2 ){ b_nfsiostat = 1; }
             }
             if ((status=pclose(fp)) != 0){ fp = NULL; break; }
             
@@ -3973,10 +4004,10 @@ globus_ftp_control_data_get_retransmit_count(
                 tok2 = strtok(NULL, " "); Blk_wrtn = strtof(tok2, NULL) - Blk_wrtn;
                 
                 json_object_set_new(iostat_json, "tps", json_real(tps));
-                json_object_set_new(iostat_json, "Blk_read/s", json_real(Blk_readps));
-                json_object_set_new(iostat_json, "Blk_wrtn/s", json_real(Blk_wrtnps));
-                json_object_set_new(iostat_json, "Blk_read", json_real(Blk_read));
-                json_object_set_new(iostat_json, "Blk_wrtn", json_real(Blk_wrtn));
+                json_object_set_new(iostat_json, "Blk_read/s", json_real(Blk_read));
+                json_object_set_new(iostat_json, "Blk_wrtn/s", json_real(Blk_wrtn));
+                //json_object_set_new(iostat_json, "Blk_read", json_real(Blk_read));
+                //json_object_set_new(iostat_json, "Blk_wrtn", json_real(Blk_wrtn));
             } else if (b_nfsiostat > 0) {
                 float Blk_readps, Blk_wrtnps;
                 tok = strtok(line, " ");
