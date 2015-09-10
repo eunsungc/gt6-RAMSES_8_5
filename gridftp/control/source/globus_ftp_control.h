@@ -1775,6 +1775,7 @@ globus_ftp_control_data_get_socket_buf(
     int *                               sndbuf);
 
 // esjung
+// 9/10/2015: added host and volume fields.
 #if 1
 typedef struct globus_ramses_log_s {
     char *		event_type; // Range-Marker, Perf-Marker, Transfer-End
@@ -1786,6 +1787,8 @@ typedef struct globus_ramses_log_s {
     long		globus_blocksize;
     long		nbytes;
     int		nstreams;
+    char *      host;
+    char *      volume;
     char *		dest;
     char *		cmd_type;
     int		ret_code;

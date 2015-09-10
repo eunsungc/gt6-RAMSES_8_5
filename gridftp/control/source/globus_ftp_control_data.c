@@ -37,6 +37,7 @@
 // esjung; for json
 #include "jansson.h"
 #include <stdlib.h>
+#define _RAMSES_DEBUG_
 
 /*
  *  logging messages
@@ -3768,8 +3769,9 @@ globus_ftp_control_data_get_retransmit_count(
         // variables for popen()
         int status;
 #define GLOBUS_LINE_MAX 1024
-        char *tok;
+        char *tok, *tok2;
         char line[GLOBUS_LINE_MAX];
+        char line2[GLOBUS_LINE_MAX];
         // variables for getrusage()
         int who = RUSAGE_SELF;
         struct rusage usage;
@@ -3786,15 +3788,18 @@ globus_ftp_control_data_get_retransmit_count(
         sprintf(buf, "%ld.%01ld", now.tv_sec, now.tv_usec / 100000);
 
         root_json = json_object();
-        streams_json = json_array(); //cJSON_CreateArray();
-        json_object_set_new(root_json, "event_type", json_string(ramses_log.event_type)); //cJSON_AddStringToObject(root_json, "type", type);
+        streams_json = json_array();
+        json_object_set_new(root_json, "event_type", json_string(ramses_log.event_type));
         json_object_set_new(root_json, "start_timestamp", json_string(ramses_log.start_timestamp));
-        json_object_set_new(root_json, "end_timestamp", json_string(buf)); //cJSON_AddStringToObject(root_json, "timestamp", buf);
+        json_object_set_new(root_json, "end_timestamp", json_string(buf));
+        json_object_set_new(root_json, "host", json_string("host"));
+        json_object_set_new(root_json, "prog", json_string("globus-gridftp-server"));
         if (ramses_log.transferID == NULL)
             json_object_set_new(root_json, "transferID", json_integer(getpid())); //cJSON_AddIntToObject(root_json, "transferID", getpid());
         else
             json_object_set_new(root_json, "transferID", json_string(ramses_log.transferID)); //cJSON_AddStringToObject(root_json, "transferID", transferID);
         json_object_set_new(root_json, "user", json_string(ramses_log.user));
+        json_object_set_new(root_json, "volume", json_string("volume"));
         json_object_set_new(root_json, "file", json_string(ramses_log.file));
         json_object_set_new(root_json, "tcp_bufsize", json_integer(ramses_log.tcp_bufsize));
         json_object_set_new(root_json, "globus_blocksize", json_integer(ramses_log.globus_blocksize));
@@ -3872,7 +3877,6 @@ globus_ftp_control_data_get_retransmit_count(
         status = 0;
         int b_iostat=0, b_nfsiostat=0;
         do {
-//#define _RAMSES_DEBUG_
             // 1. Find the device
             sprintf(buf, "%s%s%s", "df ", ramses_log.file, " | tail -n 2 | awk '$1 ~ /\\//' | awk '{print $1}'");
 #ifdef _RAMSES_DEBUG_
@@ -3888,65 +3892,103 @@ globus_ftp_control_data_get_retransmit_count(
 #endif
 
             // 2. check if iostat or nfsiostat work
-            sprintf(buf, "%s%s%s", "iostat 1 2 -x ", devname, " | tail -n 2 | awk '!/Device:/'| head -n 1"); // run iostat twice to measure throughput
+            // 9/10/2015: iostat 1 2 => iostat; sleep(1); iostat
+            sprintf(buf, "%s%s%s", "iostat ", devname, " | tail -n 2 | awk '!/Device:/'| head -n 1"); // run iostat twice to measure throughput, 'sed -e '$a\\' adds newline at the end of output.
 #ifdef _RAMSES_DEBUG_
             printf("buf = %s\n", buf);
 #endif
-            fp = popen(buf, "r");
-            memset(line, 0, GLOBUS_LINE_MAX);
-            if (fgets(line, GLOBUS_LINE_MAX, fp) == NULL){ status = -1; }
-            if ((status=pclose(fp)) != 0){ fp = NULL; break; }
-            if (strlen(line) > 2 ){ b_iostat = 1; break; }
 
-            sprintf(buf, "%s%s%s", "nfsiostat 1 2 | grep ", devname, " | awk '$1 ~ /\\//' | tail -n 1"); // run nfsiostat twice to measure throughput
+            fp = popen(buf, "r");
+            memset(line, 0, GLOBUS_LINE_MAX);
+            if (fgets(line, GLOBUS_LINE_MAX, fp) != NULL) {
+                if (strlen(line) > 2 ){ b_iostat = 1; status = pclose(fp); }
+            }
+            if ((status=pclose(fp)) != 0){ fp = NULL; break; }
+            
+            sleep(1);
+            
+            if ( b_iostat != 0 ) {
+                b_iostat = 0;
+                fp = popen(buf, "r");
+                memset(line2, 0, GLOBUS_LINE_MAX);
+                if (fgets(line2, GLOBUS_LINE_MAX, fp) != NULL) {
+                    if (strlen(line) > 2 ){ b_iostat = 1; status = pclose(fp); break; }
+                }
+                if ((status=pclose(fp)) != 0){ fp = NULL; break; }
+            }
+            
+            sprintf(buf, "%s%s%s", "nfsiostat | grep ", devname, " | awk '$1 ~ /\\//' | tail -n 1"); // run nfsiostat twice to measure throughput
 #ifdef _RAMSES_DEBUG_
             printf("buf = %s\n", buf);
 #endif
             fp = popen(buf, "r");
             memset(line, 0, GLOBUS_LINE_MAX);
-            if (fgets(line, GLOBUS_LINE_MAX, fp) == NULL){ status = -1; pclose(fp); fp = NULL; break; }
-            if ((status=pclose(fp)) != 0) break;
-#ifdef _RAMSES_DEBUG_
-            printf("line = %s\n", line);
-#endif
-            if (strlen(line) > 2 ){ b_nfsiostat = 1; break; }
+            if (fgets(line, GLOBUS_LINE_MAX, fp) != NULL) {
+                if (strlen(line) > 2 ){ b_nfsiostat = 1; status = pclose(fp); }
+            }
+            if ((status=pclose(fp)) != 0){ fp = NULL; break; }
+            
+            sleep(1);
+            
+            if ( b_nfsiostat != 0 ) {
+                b_nfsiostat = 0;
+                fp = popen(buf, "r");
+                memset(line2, 0, GLOBUS_LINE_MAX);
+                if (fgets(line2, GLOBUS_LINE_MAX, fp) != NULL) {
+                    if (strlen(line) > 2 ){ b_nfsiostat = 1; status = pclose(fp); break; }
+                }
+                if ((status=pclose(fp)) != 0){ fp = NULL; break; }
+            }
 			
             if (b_iostat == 0 && b_nfsiostat == 0){ status = -1; break; }
+
 			
         } while (0);
-		
+
         if (status != 0) {
 #ifdef JSON_STYLE_LOG
-            json_object_set_new(root_json, "iostat", iostat_json=json_object()); //cJSON_AddItemToObject(root_json, "iostat", iosta_json=cJSON_CreateObject());
+            json_object_set_new(root_json, "iostat", iostat_json=json_object());
 #else
             iostat_str = globus_common_create_string("\n[iostat]\n ERROR");
 #endif
         } else {
 #ifdef JSON_STYLE_LOG
-            json_object_set_new(root_json, "iostat", iostat_json=json_object()); //cJSON_AddItemToObject(root_json, "iostat", iostat_json=cJSON_CreateArray());
+            json_object_set_new(root_json, "iostat", iostat_json=json_object());
             // Log only one device related to the file.
             if (b_iostat > 0) {
-                //if (strlen(line) <= 1) break; // last line is blank.
-                //cJSON_AddItemToArray(iostat_json, iostat_dev_json=cJSON_CreateObject());
-                tok = strtok(line, " "); //if (tok == NULL) break;
-                json_object_set_new(iostat_json, "Dev", json_string(tok)); //cJSON_AddStringToObject(iostat_dev_json, "Dev", tok);
-                tok = strtok(NULL, " ");
-                json_object_set_new(iostat_json, "tps", json_real(strtof(tok, NULL))); //cJSON_AddFloatToObject(iostat_dev_json, "tps", strtof(tok, NULL));
-                tok = strtok(NULL, " ");
-                json_object_set_new(iostat_json, "Blk_read/s", json_real(strtof(tok, NULL))); //cJSON_AddFloatToObject(iostat_dev_json, "Blk_read/s", strtof(tok, NULL));
-                tok = strtok(NULL, " ");
-                json_object_set_new(iostat_json, "Blk_wrtn/s", json_real(strtof(tok, NULL))); //cJSON_AddFloatToObject(iostat_dev_json, "Blk_wrtn/s", strtof(tok, NULL));
-                tok = strtok(NULL, " ");
-                json_object_set_new(iostat_json, "Blk_read", json_real(strtof(tok, NULL))); //cJSON_AddFloatToObject(iostat_dev_json, "Blk_read", strtof(tok, NULL));
-                tok = strtok(NULL, " ");
-                json_object_set_new(iostat_json, "Blk_wrtn", json_real(strtof(tok, NULL))); //cJSON_AddFloatToObject(iostat_dev_json, "Blk_wrtn", strtof(tok, NULL));
+                float tps, Blk_readps, Blk_wrtnps, Blk_read, Blk_wrtn;
+                tok = strtok(line, " ");
+                json_object_set_new(iostat_json, "Dev", json_string(tok));
+                tok = strtok(NULL, " "); tps = strtof(tok, NULL);
+                tok = strtok(NULL, " "); Blk_readps = strtof(tok, NULL);
+                tok = strtok(NULL, " "); Blk_wrtnps = strtof(tok, NULL);
+                tok = strtok(NULL, " "); Blk_read = strtof(tok, NULL);
+                tok = strtok(NULL, " "); Blk_wrtn = strtof(tok, NULL);
+                
+                tok2 = strtok(line2, " ");
+                tok2 = strtok(NULL, " "); tps = strtof(tok2, NULL) - tps;
+                tok2 = strtok(NULL, " "); Blk_readps = strtof(tok2, NULL) - Blk_readps;
+                tok2 = strtok(NULL, " "); Blk_wrtnps = strtof(tok2, NULL) - Blk_wrtnps;
+                tok2 = strtok(NULL, " "); Blk_read = strtof(tok2, NULL) - Blk_read;
+                tok2 = strtok(NULL, " "); Blk_wrtn = strtof(tok2, NULL) - Blk_wrtn;
+                
+                json_object_set_new(iostat_json, "tps", json_real(tps));
+                json_object_set_new(iostat_json, "Blk_read/s", json_real(Blk_readps));
+                json_object_set_new(iostat_json, "Blk_wrtn/s", json_real(Blk_wrtnps));
+                json_object_set_new(iostat_json, "Blk_read", json_real(Blk_read));
+                json_object_set_new(iostat_json, "Blk_wrtn", json_real(Blk_wrtn));
             } else if (b_nfsiostat > 0) {
-                tok = strtok(line, " "); //if (tok == NULL) break;
-                json_object_set_new(iostat_json, "Dev", json_string(tok)); //cJSON_AddStringToObject(iostat_dev_json, "Dev", tok);
-                tok = strtok(NULL, " ");
-                json_object_set_new(iostat_json, "Blk_read/s", json_real(strtof(tok, NULL))); //cJSON_AddFloatToObject(iostat_dev_json, "Blk_read/s", strtof(tok, NULL));
-                tok = strtok(NULL, " ");
-                json_object_set_new(iostat_json, "Blk_wrtn/s", json_real(strtof(tok, NULL))); //cJSON_AddFloatToObject(iostat_dev_json, "Blk_wrtn/s", strtof(tok, NULL));
+                float Blk_readps, Blk_wrtnps;
+                tok = strtok(line, " ");
+                json_object_set_new(iostat_json, "Dev", json_string(tok));
+                tok = strtok(NULL, " "); Blk_readps = strtof(tok, NULL);
+                tok = strtok(NULL, " "); Blk_wrtnps = strtof(tok, NULL);
+                
+                tok2 = strtok(line2, " ");
+                tok2 = strtok(NULL, " "); Blk_readps = strtof(tok2, NULL) - Blk_readps;
+                tok2 = strtok(NULL, " "); Blk_wrtnps = strtof(tok2, NULL) - Blk_wrtnps;
+                json_object_set_new(iostat_json, "Blk_read/s", json_real(Blk_readps));
+                json_object_set_new(iostat_json, "Blk_wrtn/s", json_real(Blk_wrtnps));
             }
 #else
             iostat_str = globus_common_create_string("\n[iostat]\n"); 
@@ -3997,6 +4039,7 @@ globus_ftp_control_data_get_retransmit_count(
 #endif
 
 
+	    printf("3\n");	
 #ifdef JSON_STYLE_LOG
         json_object_set_new(root_json, "streams", streams_json=json_array()); //cJSON_AddItemToObject(root_json, "streams", streams_json);
 #endif
@@ -4140,6 +4183,8 @@ globus_ftp_control_data_get_retransmit_count(
 #endif
     }
     globus_mutex_unlock(&dc_handle->mutex);
+
+    printf("after mutex_unlock\n");
 
     return res;
 }
