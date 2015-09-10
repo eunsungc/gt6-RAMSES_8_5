@@ -3876,7 +3876,7 @@ globus_ftp_control_data_get_retransmit_count(
         } else {
             memset(line, 0, GLOBUS_LINE_MAX);
             if (fgets(line, GLOBUS_LINE_MAX, fp) != NULL){
-                if (devname[strlen(devname)-1] == '\n' ) devname[strlen(devname)-1] = '\0';
+                if (devname[strlen(line)-1] == '\n' ) devname[strlen(line)-1] = '\0';
                 json_object_set_new(root_json, "host", json_string(line));
             }
             pclose(fp);
@@ -4070,7 +4070,6 @@ globus_ftp_control_data_get_retransmit_count(
 #endif
 
 
-	    printf("3\n");	
 #ifdef JSON_STYLE_LOG
         json_object_set_new(root_json, "streams", streams_json=json_array()); //cJSON_AddItemToObject(root_json, "streams", streams_json);
 #endif
@@ -4214,8 +4213,6 @@ globus_ftp_control_data_get_retransmit_count(
 #endif
     }
     globus_mutex_unlock(&dc_handle->mutex);
-
-    printf("after mutex_unlock\n");
 
     return res;
 }
