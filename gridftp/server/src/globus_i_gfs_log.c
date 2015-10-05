@@ -1196,7 +1196,7 @@ void
 globus_i_gfs_json_log_transfer(
     char *                              msg)
 {
-    char                                out_buf[4096];
+    char                                out_buf[8192]; // esjung: 4096->8192
 	
     GlobusGFSName(globus_i_gfs_json_log_transfer);
     GlobusGFSDebugEnter();
