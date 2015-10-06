@@ -3789,7 +3789,9 @@ globus_ftp_control_data_get_retransmit_count(
 
         root_json = json_object();
         streams_json = json_array();
+        // esjung -- 10/6: added for UDT identification
         json_object_set_new(root_json, "event_type", json_string(ramses_log.event_type));
+        json_object_set_new(root_json, "protocol", json_string(ramses_log.protocol));
         json_object_set_new(root_json, "start_timestamp", json_string(ramses_log.start_timestamp));
         json_object_set_new(root_json, "end_timestamp", json_string(buf));
         //json_object_set_new(root_json, "host", json_string(ramses_log.host));

@@ -10100,6 +10100,10 @@ response_exit:
   
 				
             ramses_log.event_type = globus_common_create_string("%s", "Transfer-End");
+            if (globus_xio_driver_list_find_driver(op->session_handle->net_stack_list, "udt"))
+                ramses_log.event_type = globus_common_create_string("%s", "UDT");
+            else
+                ramses_log.event_type = globus_common_create_string("%s", "TCP");
             ramses_log.transferID = op->session_handle->taskid;
             ramses_log.start_timestamp = globus_common_create_string("%ld.%01ld", op->start_timeval.tv_sec, op->start_timeval.tv_usec / 100000); // op->start_timeval
             ramses_log.user = op->session_handle->username;
@@ -10124,6 +10128,7 @@ response_exit:
 
 		// clean up ramses_log
              globus_free(ramses_log.event_type);
+		globus_free(ramses_log.protocol);
              globus_free(ramses_log.start_timestamp);
 
         }
