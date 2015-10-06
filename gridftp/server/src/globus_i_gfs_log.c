@@ -1192,11 +1192,13 @@ err:
 }
 
 // esjung
+// 10/6: Fixed a bug related to the error with high stream numbers.
+//       Stop using out_buf, and directly use msg.
 void
 globus_i_gfs_json_log_transfer(
     char *                              msg)
 {
-    char                                out_buf[8192]; // esjung: 4096->8192
+    //char                                out_buf[4096];
 	
     GlobusGFSName(globus_i_gfs_json_log_transfer);
     GlobusGFSDebugEnter();
@@ -1207,16 +1209,19 @@ globus_i_gfs_json_log_transfer(
         goto err2;
     }
 
-    sprintf(out_buf, "%s", msg);
+    //sprintf(out_buf, "%s", msg);
 	
     if(globus_l_gfs_transfer_json_log_file != NULL)
     {
-        fwrite(out_buf, 1, strlen(out_buf), globus_l_gfs_transfer_json_log_file);
+        //fwrite(out_buf, 1, strlen(out_buf), globus_l_gfs_transfer_json_log_file);
+        fwrite(msg, 1, strlen(msg), globus_l_gfs_transfer_json_log_file);
+        
     }
     
     if(globus_l_gfs_json_log_mask & GLOBUS_GFS_LOG_TRANSFER)
     {
-        fwrite(out_buf, 1, strlen(out_buf), globus_l_gfs_json_log_file);
+        //fwrite(out_buf, 1, strlen(out_buf), globus_l_gfs_json_log_file);
+        fwrite(msg, 1, strlen(msg), globus_l_gfs_json_log_file);
     }
     
 
