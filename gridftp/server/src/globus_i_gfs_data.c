@@ -11007,11 +11007,14 @@ globus_l_gfs_data_trev_kickout(
             out[0], out[1], out[2], out[3], out[4], out[5], out[6], out[7], out[8], out[9], out[10], out[11], out[12], out[13], out[14], out[15]);
         }
 
+        recv_info = bounce_info->op->info_struct; // esjung 12/4/2015: 
+		
         // fill in ramses_log
         ramses_log.transferID =  bounce_info->op->session_handle->taskid;
         ramses_log.start_timestamp = globus_common_create_string("%ld.%01ld",  bounce_info->op->start_timeval.tv_sec,  bounce_info->op->start_timeval.tv_usec / 100000); // op->start_timeval
         ramses_log.user = bounce_info->op->session_handle->username;
-        ramses_log.file = bounce_info->op->pathname;
+        // esjung 12/4/2015: ramses_log.file = bounce_info->op->pathname;
+        ramses_log.file = recv_info->pathname;
         ramses_log.tcp_bufsize  = bounce_info->op->data_handle->info.tcp_bufsize;
         ramses_log.globus_blocksize = bounce_info->op->data_handle->info.blocksize;
         ramses_log.nbytes = bounce_info->op->bytes_transferred;
@@ -11039,7 +11042,7 @@ globus_l_gfs_data_trev_kickout(
             bounce_info->op->remote_ip ? bounce_info->op->remote_ip : "0.0.0.0",
             bounce_info->op->data_handle->info.blocksize,
             bounce_info->op->data_handle->info.tcp_bufsize,
-            bounce_info->op->pathname,
+            recv_info->pathname, // esjung 12/4/2015: bounce_info->op->pathname,
             bounce_info->op->bytes_transferred,
             type,
             bounce_info->op->session_handle->username,
