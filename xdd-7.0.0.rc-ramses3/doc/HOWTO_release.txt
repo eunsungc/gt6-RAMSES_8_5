@@ -1,0 +1,59 @@
+This document describes how to cut a release of the XDD software.
+--
+
+
+Before anything else, Tom, Steve, all get the tree to a place where it 
+has the features we think it needs.  This includes modifying the CHANGES 
+file so that it contains a summary of what new features the tree should 
+contain.
+
+Then perform the following steps:
+
+1.  Retrieve the repository:
+	> git clone https://github.com/bws/xdd.git
+
+2.  Increment the version release number for the build.  Versions 
+numbers are in the format MAJOR.MINOR.MAINTENANCE[.PRE-RELEASE].  This 
+is the standard convention for most Linux software packaged and publicly 
+available:
+	> cd xdd
+	> vi configure.ac # and edit the VERSION variable
+	> autoconf
+	> ./configure --prefix=$HOME/sw/xdd
+	> make baseversion
+	> make
+	> make install
+	> xdd -version
+
+3.  Test the new features:
+	> ./run_some_tests.sh . . .
+
+4.  If the tests don't pass, we go back to before step 1.  Otherwise, we 
+continue cutting the release.
+
+5.  Ensure the ChangeLog is up to date
+	> vi ChangeLog
+
+6.  Resolve all conflicts with main repository
+	> git commit -a	
+	> git push
+
+
+7.  Tag the code push the tag to the Durmstrang repository..
+	> TAG_NAME=xdd-MAJOR.MINOR.MAINTENANCE[.PRE-RELEASE]
+	> git tag -a ${TAG_NAME}
+	> git push --tags
+
+8.  At this point, the release is ready.  It can be retrieved by anyone with 
+    access to the repository.  To retrieve the release, run the following command:
+	> make dist
+    or alternatively if the distribution is US only:
+	> make dist-usa
+
+The resulting tar file now contains the released code only.
+
+9.  Prepare for the next release
+	> vi configure.ac # And set the version in AC_INIT to pre-nextrelease
+	> autoconf
+	> git commit -a
+	> git push

@@ -1,0 +1,256 @@
+-----------------------
+XDD Release ChangeLog
+-----------------------
+XDD-7.0.0 RC28
+==============
+* XDDPROF: Add a functioning xddprof
+
+XDD-7.0.0 RC27
+==============
+* XDDMCP: Fix thread counts so that 100% hang does not occur
+* XDDMCP: Use port 40010 by default for XDD
+* XDD: Add call to close() fd
+
+XDD-7.0.0 RC26-1
+==============
+* XDDMCP: Make small files work by fixing partitioner
+* XDDMCP: Use port 40010 by default for XDD
+* XDDMCP: Improve a few error messages
+
+XDD-7.0.0 RC26
+==============
+* XDD: Organize XDD around the concept of plans
+* XDD: Simplified restart functionality
+* XDD: Uses the TOT to prevent significant thread re-ordering
+* XDD-GETFILESIZE:  Determine size of block devices correctly.
+* XDDCP: Add ETA as a heartbeat output in XDD
+* XDDCP:  Enable block device transfers
+* XDDMCP: Add XDDMCP, a new tool that replaces XDDCP
+* XDDMCP: Supports multiple sources, enhanced status output, a single
+	persistent SSH channel to each endpoint, empty files, symbolic
+	links, directory creation, warns on preallocation failure,
+
+XDD-7.0.0 RC25
+==============
+* XDD: Update the TOT even when no ordering is suggested so
+       that a restart value is properly emitted
+* XDD: Inject the symbol xgp_xfs_enabled when XDD is built with XFS support
+* XDDCP: Fix restart functionality
+* XDDCP: Type check that the thread count is numeric
+* XDDCP: Type check that the retry count is numeric
+* XDDCP: Fix the retry documentation
+* XDDCP: Output bandwidth in addition to pct complete.
+
+XDD-7.0.0 RC24
+==============
+* XDD: Remove more out of range memory reads
+* XDD: Fix a bunch of nightly tests
+* XDD: Get lockstep working for some basic cases
+* XDD: Properly exit with 1 when e2e EOF sends fail
+* XDDCP: Fix checking for mixing /dev/null and dio
+* XDDCP: Add additional unit tests
+* XDDCP: Rename logs to indicate what generated the logs
+
+XDD-7.0.0 RC23
+==============
+* XDD: Add NUMA node binding
+* XDD: Remove some out of range memory reads
+* XDD: Fix a bunch of nightly tests
+* XDDCP: Change multi-node spec format
+* XDDCP: Add numa-node selection to spec format
+* XDDCP: Add unit tests
+
+XDD-7.0.0 RC22-1
+==============
+* XDDCP: Add multinic support
+
+XDD-7.0.0 RC22
+==============
+* XDD: Add MacOSX/Darwin support
+* XDD: Change nightly tests to use buildbot
+* XDD: Remove use of System V semaphores
+* XDD: Add nightly tests for multi-nic, and new features
+* XDD: Port XDD to Linux used on PERCS machines
+* XDD: Alter build system so that shared libraries are no longer generated
+* XDDCP: Add MacOSX/Darwin support
+* XDDCP: Change nightly tests to use buildbot
+* XDDCP: Add restart and retry functionality for recursive transfers
+* MacOSX and AIX are not nightly testing platforms
+
+xdd-7.0.0 RC21-1
+==============
+* Fix build system regression that prevented pre-allocation
+* XFS packages for CentOS 6 are broken.  Must install libuuid-devel
+  by hand
+* XDDCP names timestamps consistently for all verbosity levels
+
+xdd-7.0.0 RC21
+==============
+* XDD now provides its own utilties for resolving IPs, truncating files, and
+	determining file size
+* XDD now supports --enable-static for static executable builds
+* XDDCP does not create log files by default (must use -v to create logs)
+* XDDCP supported on AIX running on Power7
+* XDDCP now waits for the destination to complete before exiting
+* XDDCP now supports Durmstrang's kernel level I/O tracing tool
+* XDDCP log files now use '-' rather than '.' as field seperator
+* XDDCP: Allow small file transfers, enable force mode as default,
+* XDD: Fix name resolution so that a name resolution cache is used in XDD
+
+xdd-7.0.0 RC20
+==============
+* XDD: Fix deadlock issue(s) in networking code.
+* XDDCP: Modify so that hostnames are resolved once by xddcp.  Note, this
+    does not fix the name resolution in XDD.
+
+xdd-7.0.0 RC19
+==============
+* XDD: AIX supported again for xdd.
+* XDD: Version string changed to not include platform.
+* XDD: Set exit status to 1 on error.
+* XDDCP: Add support for recursive copies.
+* XDDCP: Change direct I/O and ordering options so that they can
+	can be specified on source, destination, or both.  The way
+	to invoke is xddcp -d s|d|b, where s enables source DIO,
+	d enabled destination DIO, and b enables DIO on both ends.
+	Alternative spellings are also enabled: source, dest, both,
+	and sd can also be used to specify the relevant ends to
+	configure.
+* XDDCP: Add option for creating time series graph of transfer (-w)
+* XDDCP: Add option that will allow a number of automatic retries (-n).  If 
+	you use this, you probably want to also use -a and -f.  And while
+	I am presently allowing this option to work with multi-file transfers
+	I do not believe that it will work all that well for that case.
+
+
+xdd-7.0.0 RC18
+==============
+* XDD: Add in configure check for sched_getcpu() support.
+
+xdd-7.0.0 RC17
+==============
+* XDD: Fix bug introduced with not performing the last pass in a -passes run
+* XDD: Check preconditions before enabling the MONOTONIC clock
+* Tests:  Beginning development of automated test suite.
+
+xdd-7.0.0 RC16
+==============
+* XDD: Several bug fixes with thread ordering
+* XDD: Qthreads now use file descriptor from target thread if possible on
+	Linux
+* XDD: Timestamp binary format is now versioned
+* XDDCP: Default ordering is loose on source, no-ordering on destination
+* XDDCP: Serial ordering is available on both source and destination with -o
+* XDDFT:  XDD forkthread supports options now.
+* XDDFT:  XDD forkthread installs with rest of XDD.
+
+xdd-7.0.0 RC15
+==============
+* XDD: Supports serial ordered thread scheduling
+* XDD: Default mode is now loosely ordered thread scheduling
+* XDD: Strict ordered thread scheduling is no longer available
+* XDD: Enter debugger on ctrl-c by setting XDD_DEBUG_ENABLE environment var.
+* XDD: Enter debugger by sending SIGUSR1 signal to xdd
+* XDDCP: Truncates file to correct length
+* XDDCP: Checks versions of xdd.Linux on both ends
+* XDDCP: More robust error messages
+* XDDCP: Various types of 3rd party and local transfers now work
+* XDDCP: Serial ordering option supported and is now the default
+* XDDCP: Force mode that kills competing XDDs on destination if the required
+         ports are not available
+* XDDCP: Verbose option that logs detailed performance information
+* XDDCP: Detect if the destination side ports are already in use.
+* XDDCP: Disallow -dio when using devices -- it won't work anyway
+* XDDCP: Changing request size back to 16MiB
+* XDDCP: Increasing default thread count to 12.
+* XDDMCP: Adding initial hard-coded test script.
+
+xdd-7.0.0 RC14
+==============
+* XDD: Fixed bug so --disable-xfs builds properly
+* XDD: Improved cancel ability
+* XDD: Preallocation now occurs in 4GB chunks
+* XDDCP: 10 second sleep between remote and local xdd invokes
+* XDDCP: Added options to specify source & dest log directories
+* Included script 'tests/scripts/test_xddcp1.sh' to test multiple runs
+  of XDDCP and record the reported performance in a .csv file.
+
+xdd-7.0.0 RC13
+==============
+* XDD: Build system modified
+* XDD: Add preallocate support for XFS file writes
+* XDD: Switch from System V semaphores to phtread barriers
+* XDD: Heartbeat changes
+* XDDCP: Change request size from 16MiB to 32MiB
+* XDDCP: Enable preallocate on transfers
+
+xdd-7.0.0 RC12
+=============
+* XDD: Add AIX support
+* XDDCP: Proper support for SIGINT, SIGQUIT, and SIGTERM (i.e. Ctrl-C support)
+
+xdd-7.0.0 RC11
+=============
+* XDDCP: Destination logs are written to the home dir if permissions don't
+         exist to write log to destination dir.  If home dir permissions
+         don't exist, an error is triggered.
+* XDDCP: Source logs are written to stdout if permissions don't exist
+         to write log to the local directory.  A warning message diagnostic
+         is printed in this case.
+
+xdd-7.0.0 RC10
+=============
+* XDD: Restart supports arbitrary filename
+* XDD: Source side restart cookie removed
+* XDD: Output less scary (WARNING Root locks pages, etc)
+* XDD: Added -dryrun
+* XDD: Miscellaneous cleanups
+* XDD: Fixed issue that resulted in corrupt data after restarts
+* XDDCP: Heatbeat info on source side stdout
+* XDDCP: Log files and restart file named consistently
+* XDDCP: Destination side log and restart file are put in the
+         same directory as destination file
+
+xdd-7.0.0 RC9
+=============
+* XDD: Added a -restart option to allow resuming a partial transfer
+* XDDCP: Added a -a option to automate the restart/resume process for user
+* XDDCP: Added -p portnum option to script
+* XDDCP: Remove option that appeared to allow partial file transfers.  It
+  didn't do exactly what it said it did, and positional parameters are error prone.
+* XDDCP: Explictly documented the host:<path_to_file> format of input.  Its supported,
+  if it doesn't work for you, file a bug and we'll fix it.
+* XDDCP: Tried to fix trailing message in script (still says 
+  "Transfer finished."  when the user explicitly cancels xdd with Ctrl-c.
+* XDDCP: Added -F option that allows user to specify transfer files inside
+  of the source side file.
+
+xdd-7.0.0 RC8
+=============
+* -createnewfiles patched to correctly create file sizes over multiple passes
+* -dio works on destination side of e2e transfers of files of odd sizes
+* fastinstall makefile target added
+
+xdd-7.0.0 RC7
+=============
+* ChangeLog file added for changelog information.
+* HOWTO file added describing how a release is cut.
+* xddcp script updated to work with -e2e style options and fix mis-quote
+  in supplied script that launched remote command without focus.
+* Add -bytes option to specify any file size for transfer.
+* Transfer files of arbitrary sizes without DIO.  NOTE:  When DIO is
+  enabled, the amount of data to be transferred must be divisible by 4096.
+* Fix option handling in xddcp to work correctly and add -s option for DIO
+  on the source side.
+* Fix bug in xddcp script so that remote side works a bit (still not fully
+  guaranteed to work -- the script kills itself, so xdd processes may still
+  exist on remote side).
+* Include contrib/TEST_xdd_copy.sh, a copy test driver that generates the
+  the source, removes existing destination files, and computes the md5sum
+  of the resulting files for comparison after transfer.
+* Including testing results in tests/output/rc7 subdirectory.
+
+xdd-7.0.0 RC6
+=============
+* Randomized reads now work with random offsets.
+* xdd_forkthread.sh script included to demonstrate forkthread behavior.
