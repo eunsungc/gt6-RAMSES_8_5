@@ -3684,7 +3684,7 @@ globus_ftp_control_data_get_socket_buf(
 
 
 // esjung; this function returns a log string for the handle.
-
+// 12/11/2015: added xddprof related logs.
 globus_result_t
 globus_ftp_control_data_get_retransmit_count(
     globus_ftp_control_handle_t *               handle,
@@ -3781,6 +3781,7 @@ globus_ftp_control_data_get_retransmit_count(
         json_t *tcpinfo_json, *getrusage_json;
         json_t *mpstat_json, *mpstat_cpu_json;
         json_t *iostat_json, *iostat_dev_json;
+        json_t *xddprof_json;
         char *json_out, buf[GLOBUS_LINE_MAX], devname[GLOBUS_LINE_MAX];
         struct timeval now;
                                                                                 
@@ -4005,7 +4006,7 @@ globus_ftp_control_data_get_retransmit_count(
                 tok2 = strtok(NULL, " "); Blk_read = strtof(tok2, NULL) - Blk_read;
                 tok2 = strtok(NULL, " "); Blk_wrtn = strtof(tok2, NULL) - Blk_wrtn;
                 
-                json_object_set_new(iostat_json, "tps", json_real(tps));
+                //json_object_set_new(iostat_json, "tps", json_real(tps)); // 12/13/2015: remove tps field.
                 json_object_set_new(iostat_json, "Blk_read/s", json_real(Blk_read));
                 json_object_set_new(iostat_json, "Blk_wrtn/s", json_real(Blk_wrtn));
                 //json_object_set_new(iostat_json, "Blk_read", json_real(Blk_read));
