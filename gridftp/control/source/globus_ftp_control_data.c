@@ -4058,8 +4058,8 @@ globus_ftp_control_data_get_retransmit_count(
         json_object_set_new(getrusage_json, "ru_nswap", json_integer(usage.ru_nswap)); //cJSON_AddIntToObject(getrusage_json, "ru_nswap", usage.ru_nswap);
         json_object_set_new(getrusage_json, "ru_oublock", json_integer(usage.ru_inblock)); //cJSON_AddIntToObject(getrusage_json, "ru_inblock", usage.ru_inblock);
         json_object_set_new(getrusage_json, "ru_inblock", json_integer(usage.ru_maxrss)); //cJSON_AddIntToObject(getrusage_json, "ru_oublock", usage.ru_oublock);
-        json_object_set_new(getrusage_json, "ru_oublock", json_integer(usage.ru_oublock)); //cJSON_AddIntToObject(getrusage_json, "ru_msgsnd", usage.ru_msgsnd);
-        json_object_set_new(getrusage_json, "ru_msgsnd", json_integer(usage.ru_msgsnd)); //cJSON_AddIntToObject(getrusage_json, "ru_msgrcv", usage.ru_msgrcv);
+        json_object_set_new(getrusage_json, "ru_msgsnd", json_integer(usage.ru_msgsnd)); //cJSON_AddIntToObject(getrusage_json, "ru_msgsnd", usage.ru_msgsnd);
+        json_object_set_new(getrusage_json, "ru_msgrcv", json_integer(usage.ru_msgrcv)); //cJSON_AddIntToObject(getrusage_json, "ru_msgrcv", usage.ru_msgrcv);
         json_object_set_new(getrusage_json, "ru_nsignals", json_integer(usage.ru_nsignals)); //cJSON_AddIntToObject(getrusage_json, "ru_nsignals", usage.ru_nsignals);
         json_object_set_new(getrusage_json, "ru_nvcsw", json_integer(usage.ru_nvcsw)); //cJSON_AddIntToObject(getrusage_json, "ru_nvcsw", usage.ru_nvcsw);
         json_object_set_new(getrusage_json, "ru_nivcsw", json_integer(usage.ru_nivcsw)); //cJSON_AddIntToObject(getrusage_json, "ru_nivcsw", usage.ru_nivcsw);
