@@ -32,8 +32,9 @@
 #endif
 
 
-// esjung; for getrusage()
+// esjung; for getrusage() and nrprocs
 #include <sys/resource.h>
+#include <unistd.h>
 // esjung; for json
 #include "jansson.h"
 #include <stdlib.h>
@@ -3825,9 +3826,11 @@ globus_ftp_control_data_get_retransmit_count(
             json_object_set_new(root_json, "mpstat", mpstat_json=json_object()); //cJSON_AddItemToObject(root_json, "mpstat", mpstat_json=cJSON_CreateArray());
             // log only average CPU info.
             if (fgets(line, GLOBUS_LINE_MAX, fp) != NULL) {
+                int nrprocs = sysconf(_SC_NPROCESSORS_ONLN);
                 //cJSON_AddItemToArray(mpstat_json, mpstat_cpu_json=cJSON_CreateObject());
                 tok = strtok(line, " "); tok = strtok(NULL, " "); // skip time stamp
                 tok = strtok(NULL, " ");
+                json_object_set_new(mpstat_json, "nr_CPU", json_integer(nrprocs));
                 json_object_set_new(mpstat_json, "CPU", json_string(tok)); //cJSON_AddStringToObject(mpstat_cpu_json, "CPU", tok);
                 tok = strtok(NULL, " ");
                 json_object_set_new(mpstat_json, "\%usr", json_real(strtof(tok, NULL))); //cJSON_AddFloatToObject(mpstat_cpu_json, "\%usr", strtof(tok, NULL));
