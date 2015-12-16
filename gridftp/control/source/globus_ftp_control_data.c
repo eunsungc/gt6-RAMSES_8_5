@@ -3708,6 +3708,7 @@ globus_ftp_control_data_get_retransmit_count(
     char *                                      mpstat_str = NULL;
     char *                                      getrusage_str = NULL;
     char *                                      iostat_str = NULL;
+    char *					xddprof_str = NULL;
     char *                                      tmp_str = NULL;
     static char *                               myname=
                           "globus_ftp_control_data_get_retransmit_count";
@@ -3910,7 +3911,6 @@ globus_ftp_control_data_get_retransmit_count(
         //   - Find the device: df ./globus-url-copy.help | tail -n 1 | awk {'print $1'}
         //   - iostat for 2 secs: Try in the order of iostat, nfsiostat. CAVEAT: gpfs ('mmpmon') requires root privilege.
 
-        //fp = popen("iostat -d | tail -n +4", "r");
         status = 0;
         int b_iostat=0, b_nfsiostat=0;
         do {
@@ -4036,6 +4036,50 @@ globus_ftp_control_data_get_retransmit_count(
             }
 #endif
         }
+
+        // xddprof
+        int b_xddprof_sender = 0;
+        if (status != 0) {
+#ifdef JSON_STYLE_LOG
+            json_object_set_new(root_json, "xddprof", xddprof_json=json_object());
+#else
+            xddprof_str = globus_common_create_string("\n[xddprof]\n ERROR");
+#endif
+        } else {
+#ifdef JSON_STYLE_LOG
+            int ReqSize, NrThreads, DirectIO;
+            float Duration, MBps;
+            json_object_set_new(root_json, "xddprof", xddprof_json=json_object());
+            if (b_xddprof_sender > 0) { // sender(reader)
+                json_object_set_new(xddprof_json, "Endpoint", json_string("sender"));                
+                json_object_set_new(xddprof_json, "Target", json_string(""));
+                json_object_set_new(xddprof_json, "Duration", json_real(0));
+                json_object_set_new(xddprof_json, "DurationUnit", json_string("sec"));
+                json_object_set_new(xddprof_json, "ReqSize", json_integer(0));
+                json_object_set_new(xddprof_json, "ReqSizeUnit", json_string("Byte"));
+                json_object_set_new(xddprof_json, "NrThreads", json_integer(0));
+                json_object_set_new(xddprof_json, "DirectIO", json_integer(1));
+                json_object_set_new(xddprof_json, "IssueType", json_string("serial"));
+                json_object_set_new(xddprof_json, "Pattern", json_string("sequential"));
+                json_object_set_new(xddprof_json, "Allocation", json_string("pre"));
+                json_object_set_new(xddprof_json, "MBps", json_real(0));
+            } else { // receiver(writer)
+                json_object_set_new(xddprof_json, "Endpoint", json_string("receiver"));                
+                json_object_set_new(xddprof_json, "Target", json_string(""));
+                json_object_set_new(xddprof_json, "Duration", json_real(0));
+                json_object_set_new(xddprof_json, "DurationUnit", json_string("sec"));
+                json_object_set_new(xddprof_json, "ReqSize", json_integer(0));
+                json_object_set_new(xddprof_json, "ReqSizeUnit", json_string("Byte"));
+                json_object_set_new(xddprof_json, "NrThreads", json_integer(0));
+                json_object_set_new(xddprof_json, "DirectIO", json_integer(1));
+                json_object_set_new(xddprof_json, "IssueType", json_string("loose"));
+                json_object_set_new(xddprof_json, "Pattern", json_string("sequential"));
+                json_object_set_new(xddprof_json, "Allocation", json_string("pre"));
+                json_object_set_new(xddprof_json, "MBps", json_real(0));
+            }
+        }
+#endif
+        
 
         if (status == -1) {
 
