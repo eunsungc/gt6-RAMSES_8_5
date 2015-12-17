@@ -3738,7 +3738,7 @@ globus_ftp_control_data_get_retransmit_count(
                   myname);
         return globus_error_put(err);
     }
-
+printf("1=============\n");
     dc_handle = &handle->dc_handle;
     GlobusFTPControlDataTestMagic(dc_handle);
     if(!dc_handle->initialized)
@@ -3751,11 +3751,12 @@ globus_ftp_control_data_get_retransmit_count(
                   myname);
         return globus_error_put(err);
     }
-
+printf("2=============\n");
     globus_mutex_lock(&dc_handle->mutex);
     {
         transfer_handle = dc_handle->transfer_handle;
 
+#if 0 // esjung
         if(transfer_handle == GLOBUS_NULL)
         {
             res = globus_error_put(globus_error_construct_string(
@@ -3765,6 +3766,8 @@ globus_ftp_control_data_get_retransmit_count(
             globus_mutex_unlock(&dc_handle->mutex);
             return res;
         }
+#endif
+printf("3=============\n");
 // esjung
 #define JSON_STYLE_LOG
         FILE *fp;
@@ -3792,7 +3795,7 @@ globus_ftp_control_data_get_retransmit_count(
 
         root_json = json_object();
         streams_json = json_array();
-        // esjung -- 10/6: added for UDT identification
+
         json_object_set_new(root_json, "event_type", json_string(ramses_log.event_type));
         //json_object_set_new(root_json, "protocol", json_string(ramses_log.protocol));
         json_object_set_new(root_json, "start_timestamp", json_string(ramses_log.start_timestamp));
@@ -3800,9 +3803,9 @@ globus_ftp_control_data_get_retransmit_count(
         //json_object_set_new(root_json, "host", json_string(ramses_log.host));
         json_object_set_new(root_json, "prog", json_string("globus-gridftp-server"));
         if (ramses_log.transferID == NULL)
-            json_object_set_new(root_json, "transferID", json_integer(getpid())); //cJSON_AddIntToObject(root_json, "transferID", getpid());
+            json_object_set_new(root_json, "transferID", json_integer(getpid()));
         else
-            json_object_set_new(root_json, "transferID", json_string(ramses_log.transferID)); //cJSON_AddStringToObject(root_json, "transferID", transferID);
+            json_object_set_new(root_json, "transferID", json_string(ramses_log.transferID));
         json_object_set_new(root_json, "user", json_string(ramses_log.user));
         json_object_set_new(root_json, "file", json_string(ramses_log.file));
         json_object_set_new(root_json, "tcp_bufsize", json_integer(ramses_log.tcp_bufsize));
@@ -3818,13 +3821,13 @@ globus_ftp_control_data_get_retransmit_count(
         fp = popen("mpstat -P ALL | tail -n +4", "r");
         if (fp == NULL) {
 #ifdef JSON_STYLE_LOG
-            json_object_set_new(root_json, "mpstat", mpstat_json=json_object()); //cJSON_AddItemToObject(root_json, "mpstat", mpstat_json=cJSON_CreateObject());
+            json_object_set_new(root_json, "mpstat", mpstat_json=json_object());
 #else
             mpstat_str = globus_common_create_string("\n[mpstat]\n ERROR");
 #endif
         } else {
 #ifdef JSON_STYLE_LOG
-            json_object_set_new(root_json, "mpstat", mpstat_json=json_object()); //cJSON_AddItemToObject(root_json, "mpstat", mpstat_json=cJSON_CreateArray());
+            json_object_set_new(root_json, "mpstat", mpstat_json=json_object());
             // log only average CPU info.
             if (fgets(line, GLOBUS_LINE_MAX, fp) != NULL) {
                 int nrprocs = sysconf(_SC_NPROCESSORS_ONLN);
@@ -3832,25 +3835,25 @@ globus_ftp_control_data_get_retransmit_count(
                 tok = strtok(line, " "); tok = strtok(NULL, " "); // skip time stamp
                 tok = strtok(NULL, " ");
                 json_object_set_new(mpstat_json, "nr_CPU", json_integer(nrprocs));
-                json_object_set_new(mpstat_json, "CPU", json_string(tok)); //cJSON_AddStringToObject(mpstat_cpu_json, "CPU", tok);
+                json_object_set_new(mpstat_json, "CPU", json_string(tok));
                 tok = strtok(NULL, " ");
-                json_object_set_new(mpstat_json, "\%usr", json_real(strtof(tok, NULL))); //cJSON_AddFloatToObject(mpstat_cpu_json, "\%usr", strtof(tok, NULL));
+                json_object_set_new(mpstat_json, "\%usr", json_real(strtof(tok, NULL)));
                 tok = strtok(NULL, " ");
-                json_object_set_new(mpstat_json, "\%nice", json_real(strtof(tok, NULL))); //cJSON_AddFloatToObject(mpstat_cpu_json, "\%nice", strtof(tok, NULL));
+                json_object_set_new(mpstat_json, "\%nice", json_real(strtof(tok, NULL)));
                 tok = strtok(NULL, " ");
-                json_object_set_new(mpstat_json, "\%sys", json_real(strtof(tok, NULL))); //cJSON_AddFloatToObject(mpstat_cpu_json, "\%sys", strtof(tok, NULL));
+                json_object_set_new(mpstat_json, "\%sys", json_real(strtof(tok, NULL)));
                 tok = strtok(NULL, " ");
-                json_object_set_new(mpstat_json, "\%iowait", json_real(strtof(tok, NULL))); //cJSON_AddFloatToObject(mpstat_cpu_json, "\%iowait", strtof(tok, NULL));
+                json_object_set_new(mpstat_json, "\%iowait", json_real(strtof(tok, NULL)));
                 tok = strtok(NULL, " ");
-                json_object_set_new(mpstat_json, "\%irq", json_real(strtof(tok, NULL))); //cJSON_AddFloatToObject(mpstat_cpu_json, "\%irq", strtof(tok, NULL));
+                json_object_set_new(mpstat_json, "\%irq", json_real(strtof(tok, NULL)));
                 tok = strtok(NULL, " ");
-                json_object_set_new(mpstat_json, "\%soft", json_real(strtof(tok, NULL))); //cJSON_AddFloatToObject(mpstat_cpu_json, "\%soft", strtof(tok, NULL));
+                json_object_set_new(mpstat_json, "\%soft", json_real(strtof(tok, NULL)));
                 tok = strtok(NULL, " ");
-                json_object_set_new(mpstat_json, "\%steal", json_real(strtof(tok, NULL))); //cJSON_AddFloatToObject(mpstat_cpu_json, "\%steal", strtof(tok, NULL));
+                json_object_set_new(mpstat_json, "\%steal", json_real(strtof(tok, NULL)));
                 tok = strtok(NULL, " ");
-                json_object_set_new(mpstat_json, "\%quest", json_real(strtof(tok, NULL))); //cJSON_AddFloatToObject(mpstat_cpu_json, "\%guest", strtof(tok, NULL));
+                json_object_set_new(mpstat_json, "\%quest", json_real(strtof(tok, NULL)));
                 tok = strtok(NULL, " ");
-                json_object_set_new(mpstat_json, "\%idle", json_real(strtof(tok, NULL))); //cJSON_AddFloatToObject(mpstat_cpu_json, "\%idle", strtof(tok, NULL));
+                json_object_set_new(mpstat_json, "\%idle", json_real(strtof(tok, NULL)));
             }
 #else
             mpstat_str = globus_common_create_string("\n[mpstat]\n"); 
@@ -4091,25 +4094,25 @@ globus_ftp_control_data_get_retransmit_count(
         // getrusage()
         status = getrusage(who, &usage);
 #ifdef JSON_STYLE_LOG
-        json_object_set_new(root_json, "getrusage", getrusage_json=json_object()); //cJSON_AddItemToObject(root_json, "getrusage", getrusage_json=cJSON_CreateObject());
+        json_object_set_new(root_json, "getrusage", getrusage_json=json_object());
         sprintf(buf, "%ld.%ld", usage.ru_utime.tv_sec, usage.ru_utime.tv_usec);
-        json_object_set_new(getrusage_json, "ru_utime", json_string(buf)); //cJSON_AddStringToObject(getrusage_json, "ru_utime", buf);
+        json_object_set_new(getrusage_json, "ru_utime", json_string(buf));
         sprintf(buf, "%ld.%ld", usage.ru_stime.tv_sec, usage.ru_stime.tv_usec);
-        json_object_set_new(getrusage_json, "ru_stime", json_string(buf)); //cJSON_AddStringToObject(getrusage_json, "ru_stime", buf);
-        json_object_set_new(getrusage_json, "ru_maxrss", json_integer(usage.ru_maxrss)); //cJSON_AddIntToObject(getrusage_json, "ru_maxrss", usage.ru_maxrss);
-        json_object_set_new(getrusage_json, "ru_ixrss", json_integer(usage.ru_ixrss)); //cJSON_AddIntToObject(getrusage_json, "ru_ixrss", usage.ru_ixrss);
-        json_object_set_new(getrusage_json, "ru_idrss", json_integer(usage.ru_idrss)); //cJSON_AddIntToObject(getrusage_json, "ru_idrss", usage.ru_idrss);
-        json_object_set_new(getrusage_json, "ru_isrss", json_integer(usage.ru_isrss)); //cJSON_AddIntToObject(getrusage_json, "ru_isrss", usage.ru_isrss);
-        json_object_set_new(getrusage_json, "ru_minflt", json_integer(usage.ru_minflt)); //cJSON_AddIntToObject(getrusage_json, "ru_minflt", usage.ru_minflt);
-        json_object_set_new(getrusage_json, "ru_majflt", json_integer(usage.ru_majflt)); //cJSON_AddIntToObject(getrusage_json, "ru_majflt", usage.ru_majflt);
-        json_object_set_new(getrusage_json, "ru_nswap", json_integer(usage.ru_nswap)); //cJSON_AddIntToObject(getrusage_json, "ru_nswap", usage.ru_nswap);
-        json_object_set_new(getrusage_json, "ru_oublock", json_integer(usage.ru_inblock)); //cJSON_AddIntToObject(getrusage_json, "ru_inblock", usage.ru_inblock);
-        json_object_set_new(getrusage_json, "ru_inblock", json_integer(usage.ru_maxrss)); //cJSON_AddIntToObject(getrusage_json, "ru_oublock", usage.ru_oublock);
-        json_object_set_new(getrusage_json, "ru_msgsnd", json_integer(usage.ru_msgsnd)); //cJSON_AddIntToObject(getrusage_json, "ru_msgsnd", usage.ru_msgsnd);
-        json_object_set_new(getrusage_json, "ru_msgrcv", json_integer(usage.ru_msgrcv)); //cJSON_AddIntToObject(getrusage_json, "ru_msgrcv", usage.ru_msgrcv);
-        json_object_set_new(getrusage_json, "ru_nsignals", json_integer(usage.ru_nsignals)); //cJSON_AddIntToObject(getrusage_json, "ru_nsignals", usage.ru_nsignals);
-        json_object_set_new(getrusage_json, "ru_nvcsw", json_integer(usage.ru_nvcsw)); //cJSON_AddIntToObject(getrusage_json, "ru_nvcsw", usage.ru_nvcsw);
-        json_object_set_new(getrusage_json, "ru_nivcsw", json_integer(usage.ru_nivcsw)); //cJSON_AddIntToObject(getrusage_json, "ru_nivcsw", usage.ru_nivcsw);
+        json_object_set_new(getrusage_json, "ru_stime", json_string(buf));
+        json_object_set_new(getrusage_json, "ru_maxrss", json_integer(usage.ru_maxrss));
+        json_object_set_new(getrusage_json, "ru_ixrss", json_integer(usage.ru_ixrss));
+        json_object_set_new(getrusage_json, "ru_idrss", json_integer(usage.ru_idrss));
+        json_object_set_new(getrusage_json, "ru_isrss", json_integer(usage.ru_isrss));
+        json_object_set_new(getrusage_json, "ru_minflt", json_integer(usage.ru_minflt));
+        json_object_set_new(getrusage_json, "ru_majflt", json_integer(usage.ru_majflt));
+        json_object_set_new(getrusage_json, "ru_nswap", json_integer(usage.ru_nswap));
+        json_object_set_new(getrusage_json, "ru_oublock", json_integer(usage.ru_inblock));
+        json_object_set_new(getrusage_json, "ru_inblock", json_integer(usage.ru_maxrss));
+        json_object_set_new(getrusage_json, "ru_msgsnd", json_integer(usage.ru_msgsnd));
+        json_object_set_new(getrusage_json, "ru_msgrcv", json_integer(usage.ru_msgrcv));
+        json_object_set_new(getrusage_json, "ru_nsignals", json_integer(usage.ru_nsignals));
+        json_object_set_new(getrusage_json, "ru_nvcsw", json_integer(usage.ru_nvcsw));
+        json_object_set_new(getrusage_json, "ru_nivcsw", json_integer(usage.ru_nivcsw));
 #else
         getrusage_str = globus_common_create_string("\n[getrusage]\n ru_utime: %ld.%lds, ru_stime: %ld.%lds, ru_maxrss: %ld, ru_ixrss: %ld, ru_idrss: %ld, ru_isrss: %ld, ru_minflt: %ld, ru_majflt: %ld, ru_nswap: %ld, ru_inblock: %ld, ru_oublock: %ld, ru_msgsnd: %ld, ru_msgrcv: %ld, ru_nsignals: %ld, ru_nvcsw: %ld, ru_nivcsw: %ld",
             usage.ru_utime.tv_sec, usage.ru_utime.tv_usec, usage.ru_stime.tv_sec, usage.ru_stime.tv_usec,
@@ -4126,7 +4129,7 @@ globus_ftp_control_data_get_retransmit_count(
 
         tcp_driver = globus_io_compat_get_tcp_driver();
         
-        for(ctr = 0; ctr < transfer_handle->stripe_count; ctr++)
+        for(ctr = 0; transfer_handle != NULL && ctr < transfer_handle->stripe_count; ctr++) // esjung; 12/16/2015
         {
             int stream_ctr=0; // esjung; to track stream count.
             stripe = &transfer_handle->stripes[ctr];
