@@ -3705,6 +3705,7 @@ globus_ftp_control_data_get_retransmit_count(
     // esjung
     char *                                      count_str = NULL;
     char *                                      tcpinfo_str = NULL;
+    char *							iperf_str = NULL;
     char *                                      mpstat_str = NULL;
     char *                                      getrusage_str = NULL;
     char *                                      iostat_str = NULL;
@@ -3756,7 +3757,7 @@ globus_ftp_control_data_get_retransmit_count(
     {
         transfer_handle = dc_handle->transfer_handle;
 
-#if 0 // esjung; 12/16/2015
+#if 0 // esjung; 12/16/2015: logging even in case of abort/cancel.
         if(transfer_handle == GLOBUS_NULL)
         {
             res = globus_error_put(globus_error_construct_string(
@@ -3782,11 +3783,10 @@ globus_ftp_control_data_get_retransmit_count(
         struct rusage usage;
 #ifdef JSON_STYLE_LOG
         // variables for JSON
-        json_t *root_json, *streams_json, *stream_json;
-        json_t *tcpinfo_json, *getrusage_json;
-        json_t *mpstat_json, *mpstat_cpu_json;
-        json_t *iostat_json, *iostat_dev_json;
-        json_t *xddprof_json;
+        json_t *root_json;
+        json_t *streams_json, *stream_json, *tcpinfo_json, *iperf_json; // network related
+        json_t *getrusage_json, *mpstat_json, *mpstat_cpu_json; // cpu related
+        json_t *iostat_json, *iostat_dev_json, *xddprof_json; // storage related
         char *json_out, buf[GLOBUS_LINE_MAX], devname[GLOBUS_LINE_MAX];
         struct timeval now;
                                                                                 
@@ -4041,7 +4041,12 @@ globus_ftp_control_data_get_retransmit_count(
         }
 
         // xddprof
-        int b_xddprof_sender = 0;
+        if (ramses_log.writing == 0) { // sender(reader)
+            // xddprof -f -k -l 0.5 -t 4 -r $((1024*1024)) -m r -e serial -d -o /tmp -p ramses /path/a_file_to profile
+        } else { // receiver(writer)
+            // xddprof -f -l 0.5 -t 4 -r $((1024*1024)) -m w -e loose -d -o /tmp -p ramses /path/"different file"
+            
+        }
         if (status != 0) {
 #ifdef JSON_STYLE_LOG
             json_object_set_new(root_json, "xddprof", xddprof_json=json_object());
@@ -4084,12 +4089,14 @@ globus_ftp_control_data_get_retransmit_count(
 #endif
         
 
+#if 0
         if (status == -1) {
 
         } else {
             /* Use macros described under wait() to inspect `status' in order
                to determine success/failure of command executed by popen() */
         }
+#endif
 
         // getrusage()
         status = getrusage(who, &usage);
@@ -4122,14 +4129,59 @@ globus_ftp_control_data_get_retransmit_count(
             usage.ru_nvcsw, usage.ru_nivcsw);
 #endif
 
+        // iperf
+        int b_iperf=0;
+        if (ramses_log.writing == 0) { // only on sender(reader)
+            // iperf -c
+            sprintf(buf, "%s%s%s", "iperf -t 1 -p 51000 -c ", ramses_log.dest, " | tail -n 1 | awk '{print $8\" \"$9}' " );
+#ifdef _RAMSES_DEBUG_
+            printf("buf = %s\n", buf);
+#endif
 
+            fp = popen(buf, "r");
+            memset(line, 0, GLOBUS_LINE_MAX);
+            if (fgets(line, GLOBUS_LINE_MAX, fp) != NULL) {
+                if (strlen(line) > 2 ){ b_iperf = 1; }
+            }
+            if ((status=pclose(fp)) != 0){ fp = NULL;}
+
+printf("buf: %s\n iperf result: %s\n", buf, line);
+
+            if (status != 0) {
 #ifdef JSON_STYLE_LOG
-        json_object_set_new(root_json, "streams", streams_json=json_array()); //cJSON_AddItemToObject(root_json, "streams", streams_json);
+                json_object_set_new(root_json, "iperf", iperf_json=json_object());
+#else
+                iperf_str = globus_common_create_string("\n[iperf]\n ERROR");
+#endif
+            } else {
+#ifdef JSON_STYLE_LOG
+                float Throughput=0;
+                json_object_set_new(root_json, "iperf", iperf_json=json_object());
+                tok = strtok(line, " "); // Throughput
+                json_object_set_new(iperf_json, "Throughput", json_real(strtof(tok, NULL)));
+                tok = strtok(NULL, " "); // Unit
+                if (tok != NULL) {
+                    if (tok[0] == 'G')
+                        json_object_set_new(iperf_json, "Unit", json_string("Gbps"));
+                    else if (tok[0] == 'M')
+                        json_object_set_new(iperf_json, "Unit", json_string("Mbps"));
+                    else if (tok[0] == 'K')
+                        json_object_set_new(iperf_json, "Unit", json_string("Kbps"));
+                    else
+                        json_object_set_new(iperf_json, "Unit", json_string("Unknown"));
+                }
+            }
+        }
+#endif
+
+        // streams
+#ifdef JSON_STYLE_LOG
+        json_object_set_new(root_json, "streams", streams_json=json_array());
 #endif
 
         tcp_driver = globus_io_compat_get_tcp_driver();
         
-        for(ctr = 0; transfer_handle != NULL && ctr < transfer_handle->stripe_count; ctr++) // esjung; 12/16/2015
+        for(ctr = 0; transfer_handle != NULL && ctr < transfer_handle->stripe_count; ctr++) // esjung; 12/16/2015, added tranfer_handle condition.
         {
             int stream_ctr=0; // esjung; to track stream count.
             stripe = &transfer_handle->stripes[ctr];
@@ -4222,37 +4274,22 @@ globus_ftp_control_data_get_retransmit_count(
                     // aggregate all strings
                     stream_str = globus_common_create_string("\n---- Stripe: %d, Stream: %d ----%s%s%s%s", ctr, stream_ctr, tcpinfo_str, mpstat_str, getrusage_str, iostat_str);
 
-                    globus_free(tcpinfo_str);
-                    globus_free(mpstat_str);
-                    globus_free(getrusage_str);
-                    globus_free(iostat_str);
+
 #endif // JSON_STYLE_LOG
-#endif
+#endif // 1
                 }
 
 #endif // #if defined()
 
-#if 1  // esjung; deal with multiple data stripe/streams 
-                /*
+#ifdef JSON_STYLE_LOG 
+#else // esjung; not tested for generic case. 
+                if (tcpinfo_str) globus_free(tcpinfo_str);
                 if (stream_str) {
                     tmp_str = count_str; 
                     count_str = globus_common_create_string("%s%s", count_str, stream_str);
                     globus_free(tmp_str);
                     globus_free(stream_str);
                 }
-                */
-#else
-                if(count_str)
-                {
-                    tmp_str = globus_common_create_string("%s,%d", count_str, count);
-                    globus_free(count_str);
-                    count_str = tmp_str;
-                }
-                else
-                {
-                    count_str = globus_common_create_string("%d", count);
-                }
-
 #endif
             } // end of for (stream)
         } // end of for(stripe)
@@ -4262,7 +4299,15 @@ globus_ftp_control_data_get_retransmit_count(
         json_object_clear(root_json); //cJSON_Delete(root_json);
         globus_free(json_out);
 #else
+        // aggregate all strings
+        count_str = globus_common_create_string("%s%s%s%s%s%s", stream_str, iperf_str, getrusage_str, mpstat_str, xddprof_str, iostat_str);
         *retransmit_count = count_str;
+        globus_free(count_str);
+        globus_free(tcpinfo_str);
+        globus_free(mpstat_str);
+        globus_free(getrusage_str);
+        globus_free(iostat_str);
+        globus_free(iperf_str);
 #endif
     }
     globus_mutex_unlock(&dc_handle->mutex);
