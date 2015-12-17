@@ -3738,7 +3738,7 @@ globus_ftp_control_data_get_retransmit_count(
                   myname);
         return globus_error_put(err);
     }
-printf("1=============\n");
+
     dc_handle = &handle->dc_handle;
     GlobusFTPControlDataTestMagic(dc_handle);
     if(!dc_handle->initialized)
@@ -3751,12 +3751,12 @@ printf("1=============\n");
                   myname);
         return globus_error_put(err);
     }
-printf("2=============\n");
+
     globus_mutex_lock(&dc_handle->mutex);
     {
         transfer_handle = dc_handle->transfer_handle;
 
-#if 0 // esjung
+#if 0 // esjung; 12/16/2015
         if(transfer_handle == GLOBUS_NULL)
         {
             res = globus_error_put(globus_error_construct_string(
@@ -3767,7 +3767,7 @@ printf("2=============\n");
             return res;
         }
 #endif
-printf("3=============\n");
+
 // esjung
 #define JSON_STYLE_LOG
         FILE *fp;
@@ -4053,7 +4053,7 @@ printf("3=============\n");
             int ReqSize, NrThreads, DirectIO;
             float Duration, MBps;
             json_object_set_new(root_json, "xddprof", xddprof_json=json_object());
-            if (b_xddprof_sender > 0) { // sender(reader)
+            if (ramses_log.writing == 0) { // sender(reader)
                 json_object_set_new(xddprof_json, "Endpoint", json_string("sender"));                
                 json_object_set_new(xddprof_json, "Target", json_string(""));
                 json_object_set_new(xddprof_json, "Duration", json_real(0));

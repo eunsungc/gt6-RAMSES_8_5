@@ -1778,6 +1778,7 @@ globus_ftp_control_data_get_socket_buf(
 // 9/10/2015: added host and volume fields.
 #if 1
 typedef struct globus_ramses_log_s {
+    int		writing;
     char *		event_type; // Range-Marker, Perf-Marker, Transfer-End
     char *		protocol; // tcp or udt
     char *		transferID;

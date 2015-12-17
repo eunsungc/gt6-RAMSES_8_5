@@ -592,6 +592,7 @@ globus_l_gfs_base64_encode(
 
 // esjung; make json logging opt-in/out
 #define ENABLE_JSON_END_TRANSFER_LOG
+#define ENABLE_JSON_ABORT_TRANSFER_LOG
 #define ENABLE_JSON_PERIODIC_LOG
 
 static
@@ -10105,6 +10106,7 @@ response_exit:
             //    ramses_log.protocol = globus_common_create_string("%s", "UDT");
             //else
             //    ramses_log.protocol = globus_common_create_string("%s", "TCP");
+            ramses_log.writing = strcmp(type, "STOR") == 0 ? 1 : 0;
             ramses_log.transferID = op->session_handle->taskid;
             ramses_log.start_timestamp = globus_common_create_string("%ld.%01ld", op->start_timeval.tv_sec, op->start_timeval.tv_usec / 100000); // op->start_timeval
             ramses_log.user = op->session_handle->username;
@@ -10187,6 +10189,7 @@ response_exit:
             op->cached_res,
             "file=\"%s\"",
             ((globus_gfs_transfer_info_t *) op->info_struct)->pathname);
+
     }
     if(disconnect && op->data_handle->is_mine)
     {
@@ -11010,6 +11013,7 @@ globus_l_gfs_data_trev_kickout(
         recv_info = bounce_info->op->info_struct; // esjung 12/4/2015: 
 		
         // fill in ramses_log
+        ramses_log.writing = strcmp(type, "STOR") == 0 ? 1 : 0;
         ramses_log.transferID =  bounce_info->op->session_handle->taskid;
         ramses_log.start_timestamp = globus_common_create_string("%ld.%01ld",  bounce_info->op->start_timeval.tv_sec,  bounce_info->op->start_timeval.tv_usec / 100000); // op->start_timeval
         ramses_log.user = bounce_info->op->session_handle->username;
@@ -11276,6 +11280,7 @@ globus_l_gfs_data_force_close(
     GlobusGFSDebugExit();
 }
 
+// esjung; 12/16/2015
 /* must be called locked */
 static
 void
@@ -11296,6 +11301,45 @@ globus_l_gfs_data_start_abort(
         case GLOBUS_L_GFS_DATA_CONNECTED:
             if(op->data_handle->is_mine)
             {
+                // esjung; 12/16/2015
+                char *retransmit_str=NULL;
+                globus_ramses_log_t	ramses_log;
+                globus_gfs_transfer_info_t *    info;
+
+                info = (globus_gfs_transfer_info_t *) op->info_struct;
+
+                ramses_log.writing = op->writing > 0 ? 0 : 1;
+                ramses_log.event_type = globus_common_create_string("%s", "Transfer-Abort");
+                ramses_log.transferID = op->session_handle->taskid;
+                ramses_log.start_timestamp = globus_common_create_string("%ld.%01ld", op->start_timeval.tv_sec, op->start_timeval.tv_usec / 100000);
+                ramses_log.user = op->session_handle->username;
+                ramses_log.file = info->pathname;
+                ramses_log.tcp_bufsize  = op->data_handle->info.tcp_bufsize;
+                ramses_log.globus_blocksize = op->data_handle->info.blocksize;
+                ramses_log.nbytes = op->bytes_transferred;
+                ramses_log.nstreams = op->data_handle->info.nstreams;
+                ramses_log.host = op->data_handle->session_handle->client_ip ? op->data_handle->session_handle->client_ip : "0.0.0.0";
+                ramses_log.volume = "/";
+                ramses_log.dest = op->remote_ip ? op->remote_ip : "0.0.0.0";
+                ramses_log.cmd_type = "N/A"; 
+                ramses_log.ret_code = 500; // *(c) CODE - ftp result code (226 = success, 5xx = fail)
+
+                if (globus_ftp_control_data_get_retransmit_count(
+                    &op->data_handle->data_channel,
+                    &retransmit_str, ramses_log) != GLOBUS_SUCCESS) {
+                    retransmit_str = NULL;
+                }
+	         // clean up ramses_log
+               globus_free(ramses_log.event_type);
+               globus_free(ramses_log.start_timestamp);
+			 
+#ifdef ENABLE_JSON_ABORT_TRANSFER_LOG
+                if (retransmit_str != NULL) {
+                    globus_i_gfs_json_log_transfer(retransmit_str);
+		    globus_free(retransmit_str);
+                }
+#endif
+
                 globus_assert(op->data_handle->state ==
                     GLOBUS_L_GFS_DATA_HANDLE_INUSE);
                 op->data_handle->state = GLOBUS_L_GFS_DATA_HANDLE_CLOSING;
