@@ -602,6 +602,8 @@ static globus_hashtable_t           globus_l_ftp_control_data_layout_table;
 #define GLOBUS_FTP_CONTROL_DATA_DESCRIPTOR_EOF            0x40
 #define GLOBUS_FTP_CONTROL_DATA_DESCRIPTOR_EOR            0x80
 
+//esjung
+#define  _RAMSES_DEBUG_
 /*
  *  NETLOGGER functions
  */
@@ -3791,6 +3793,7 @@ globus_ftp_control_data_get_retransmit_count(
         struct timeval now;
                                                                                 
         gettimeofday(&now, NULL);
+        memset(buf, 0, GLOBUS_LINE_MAX);
         sprintf(buf, "%ld.%01ld", now.tv_sec, now.tv_usec / 100000);
 
         root_json = json_object();
@@ -3829,6 +3832,7 @@ globus_ftp_control_data_get_retransmit_count(
 #ifdef JSON_STYLE_LOG
             json_object_set_new(root_json, "mpstat", mpstat_json=json_object());
             // log only average CPU info.
+            memset(line, 0, GLOBUS_LINE_MAX);
             if (fgets(line, GLOBUS_LINE_MAX, fp) != NULL) {
                 int nrprocs = sysconf(_SC_NPROCESSORS_ONLN);
                 //cJSON_AddItemToArray(mpstat_json, mpstat_cpu_json=cJSON_CreateObject());
@@ -3857,9 +3861,11 @@ globus_ftp_control_data_get_retransmit_count(
             }
 #else
             mpstat_str = globus_common_create_string("\n[mpstat]\n"); 
+            memset(line, 0, GLOBUS_LINE_MAX);
             while (fgets(line, GLOBUS_LINE_MAX, fp) != NULL) {
                 tmp_str = mpstat_str; 
                 mpstat_str = globus_common_create_string("%s%s", mpstat_str, line); 
+                memset(line, 0, GLOBUS_LINE_MAX);
                 globus_free(tmp_str); 
             }
 #endif
@@ -3876,6 +3882,7 @@ globus_ftp_control_data_get_retransmit_count(
                to determine success/failure of command executed by popen() */
         }
         // hostname
+        memset(buf, 0, GLOBUS_LINE_MAX);
         sprintf(buf, "%s", "hostname --ip-address");
 #ifdef _RAMSES_DEBUG_
         printf("buf = %s\n", buf);
@@ -3893,6 +3900,7 @@ globus_ftp_control_data_get_retransmit_count(
         }
         
         // volume
+        memset(buf, 0, GLOBUS_LINE_MAX);
         sprintf(buf, "%s%s%s", "df -P ", ramses_log.file, " | tail -n 1| awk '{print $6}'");
 #ifdef _RAMSES_DEBUG_
         printf("buf = %s\n", buf);
@@ -3918,12 +3926,14 @@ globus_ftp_control_data_get_retransmit_count(
         int b_iostat=0, b_nfsiostat=0;
         do {
             // 1. Find the device
+            memset(buf, 0, GLOBUS_LINE_MAX);
             sprintf(buf, "%s%s%s", "df ", ramses_log.file, " | tail -n 2 | awk '$1 ~ /\\//' | awk '{print $1}'");
 #ifdef _RAMSES_DEBUG_
             printf("buf = %s\n", buf);
 #endif
             fp = popen(buf, "r"); if (fp == NULL) { status = -1;  break; }
             
+            memset(line, 0, GLOBUS_LINE_MAX);
             if (fgets(devname, GLOBUS_LINE_MAX, fp) == NULL){ status = -1; pclose(fp); fp = NULL; break; }
             if ((status=pclose(fp)) != 0) break;
             if (devname[strlen(devname)-1] == '\n' ) devname[strlen(devname)-1] = '\0';
@@ -3933,6 +3943,7 @@ globus_ftp_control_data_get_retransmit_count(
 
             // 2. check if iostat or nfsiostat work
             // 9/10/2015: iostat 1 2 => iostat; sleep(1); iostat
+            memset(buf, 0, GLOBUS_LINE_MAX);
             sprintf(buf, "%s%s%s", "iostat ", devname, " | tail -n 2 | awk '!/Device:/'| head -n 1"); // run iostat twice to measure throughput, 'sed -e '$a\\' adds newline at the end of output.
 #ifdef _RAMSES_DEBUG_
             printf("buf = %s\n", buf);
@@ -3957,6 +3968,7 @@ globus_ftp_control_data_get_retransmit_count(
                 if ((status=pclose(fp)) != 0){ fp = NULL; break; }
             }
             
+            memset(buf, 0, GLOBUS_LINE_MAX);
             sprintf(buf, "%s%s%s", "nfsiostat | grep ", devname, " | awk '$1 ~ /\\//' | tail -n 1"); // run nfsiostat twice to measure throughput
 #ifdef _RAMSES_DEBUG_
             printf("buf = %s\n", buf);
@@ -4032,21 +4044,49 @@ globus_ftp_control_data_get_retransmit_count(
             }
 #else
             iostat_str = globus_common_create_string("\n[iostat]\n"); 
+            memset(line, 0, GLOBUS_LINE_MAX);
             while (fgets(line, GLOBUS_LINE_MAX, fp) != NULL) {
                 tmp_str = iostat_str; 
                 iostat_str = globus_common_create_string("%s%s", iostat_str, line); 
+                memset(line, 0, GLOBUS_LINE_MAX);
                 globus_free(tmp_str); 
             }
 #endif
         }
 
         // xddprof
+        int b_xddprof=0;
         if (ramses_log.writing == 0) { // sender(reader)
             // xddprof -f -k -l 0.5 -t 4 -r $((1024*1024)) -m r -e serial -d -o /tmp -p ramses /path/a_file_to profile
+            memset(buf, 0, GLOBUS_LINE_MAX);
+            sprintf(buf, "%s%s", "xddprof -f -k -l 0.5 -t 4 -r $((1024*1024)) -m r -e serial -d -o /tmp -p ramses ", ramses_log.file);
+#ifdef _RAMSES_DEBUG_
+            printf("buf = %s\n", buf);
+#endif
+
+            fp = popen(buf, "r");
+            memset(line, 0, GLOBUS_LINE_MAX);
+            if (fgets(line, GLOBUS_LINE_MAX, fp) != NULL) {
+                if (strlen(line) > 2 ){ b_xddprof = 1; }
+            }
+            if ((status=pclose(fp)) != 0){ fp = NULL;}
         } else { // receiver(writer)
             // xddprof -f -l 0.5 -t 4 -r $((1024*1024)) -m w -e loose -d -o /tmp -p ramses /path/"different file"
-            
+            memset(buf, 0, GLOBUS_LINE_MAX);
+	    sprintf(buf, "%s%s%s", "xddprof -f -l 0.5 -t 4 -r $((1024*1024)) -m w -e loose -d -o /tmp -p ramses ", ramses_log.file, ".test");
+#ifdef _RAMSES_DEBUG_
+            printf("buf = %s\n", buf);
+#endif
+
+            fp = popen(buf, "r");
+            memset(line, 0, GLOBUS_LINE_MAX);
+            if (fgets(line, GLOBUS_LINE_MAX, fp) != NULL) {
+                if (strlen(line) > 2 ){ b_xddprof = 1; }
+            }
+            if ((status=pclose(fp)) != 0){ fp = NULL;}
+            // should remove afterwards.
         }
+
         if (status != 0) {
 #ifdef JSON_STYLE_LOG
             json_object_set_new(root_json, "xddprof", xddprof_json=json_object());
@@ -4085,8 +4125,8 @@ globus_ftp_control_data_get_retransmit_count(
                 json_object_set_new(xddprof_json, "Allocation", json_string("pre"));
                 json_object_set_new(xddprof_json, "MBps", json_real(0));
             }
-        }
 #endif
+        }
         
 
 #if 0
@@ -4102,8 +4142,10 @@ globus_ftp_control_data_get_retransmit_count(
         status = getrusage(who, &usage);
 #ifdef JSON_STYLE_LOG
         json_object_set_new(root_json, "getrusage", getrusage_json=json_object());
+        memset(buf, 0, GLOBUS_LINE_MAX);
         sprintf(buf, "%ld.%ld", usage.ru_utime.tv_sec, usage.ru_utime.tv_usec);
         json_object_set_new(getrusage_json, "ru_utime", json_string(buf));
+        memset(buf, 0, GLOBUS_LINE_MAX);
         sprintf(buf, "%ld.%ld", usage.ru_stime.tv_sec, usage.ru_stime.tv_usec);
         json_object_set_new(getrusage_json, "ru_stime", json_string(buf));
         json_object_set_new(getrusage_json, "ru_maxrss", json_integer(usage.ru_maxrss));
@@ -4133,7 +4175,9 @@ globus_ftp_control_data_get_retransmit_count(
         int b_iperf=0;
         if (ramses_log.writing == 0) { // only on sender(reader)
             // iperf -c
-            sprintf(buf, "%s%s%s", "iperf -t 1 -p 51000 -c ", ramses_log.dest, " | tail -n 1 | awk '{print $8\" \"$9}' " );
+            //sprintf(buf, "%s%s%s", "iperf -t 1 -p 51000 -c ", ramses_log.dest, " | tail -n 1 | awk '{print $8\" \"$9}' " );
+            memset(buf, 0, GLOBUS_LINE_MAX);
+            sprintf(buf, "%s%s%s", "iperf -p 51000 -c ", ramses_log.dest, ">/tmp/iperf.result");
 #ifdef _RAMSES_DEBUG_
             printf("buf = %s\n", buf);
 #endif
@@ -4144,16 +4188,14 @@ globus_ftp_control_data_get_retransmit_count(
                 if (strlen(line) > 2 ){ b_iperf = 1; }
             }
             if ((status=pclose(fp)) != 0){ fp = NULL;}
-
-printf("buf: %s\n iperf result: %s\n", buf, line);
-
+#if 0
             if (status != 0) {
 #ifdef JSON_STYLE_LOG
                 json_object_set_new(root_json, "iperf", iperf_json=json_object());
 #else
                 iperf_str = globus_common_create_string("\n[iperf]\n ERROR");
 #endif
-            } else {
+            } else if (b_iperf) {
 #ifdef JSON_STYLE_LOG
                 float Throughput=0;
                 json_object_set_new(root_json, "iperf", iperf_json=json_object());
@@ -4171,8 +4213,9 @@ printf("buf: %s\n iperf result: %s\n", buf, line);
                         json_object_set_new(iperf_json, "Unit", json_string("Unknown"));
                 }
             }
-        }
 #endif
+#endif
+        }
 
         // streams
 #ifdef JSON_STYLE_LOG
