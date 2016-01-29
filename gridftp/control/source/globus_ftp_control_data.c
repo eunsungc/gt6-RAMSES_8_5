@@ -3920,15 +3920,15 @@ globus_ftp_control_data_get_retransmit_count(
             // 1. Find the device
             sprintf(buf, "%s%s%s", "df ", ramses_log.file, " | tail -n 2 | awk '$1 ~ /\\//' | awk '{print $1}'");
 #ifdef _RAMSES_DEBUG_
-            printf("buf = %s\n", buf);
+    printf("buf = %s\n", buf);
 #endif
             fp = popen(buf, "r"); if (fp == NULL) { status = -1;  break; }
             
             if (fgets(devname, GLOBUS_LINE_MAX, fp) == NULL){ status = -1; pclose(fp); fp = NULL; break; }
-            if ((status=pclose(fp)) != 0) break;
+            if ((status=pclose(fp)) == -1) break;
             if (devname[strlen(devname)-1] == '\n' ) devname[strlen(devname)-1] = '\0';
 #ifdef _RAMSES_DEBUG_
-            printf("devname = %s\n", devname);
+    printf("devname = %s\n", devname);
 #endif
 
             // 2. check if iostat or nfsiostat work
@@ -3942,7 +3942,7 @@ globus_ftp_control_data_get_retransmit_count(
             if (fgets(line, GLOBUS_LINE_MAX, fp) != NULL) {
                 if (strlen(line) > 2 ){ b_iostat = 1; }
             }
-            if ((status=pclose(fp)) != 0){ fp = NULL; break; }
+            if ((status=pclose(fp)) == -1){ fp = NULL; break; }
             
             sleep(1);
             
@@ -3952,7 +3952,7 @@ globus_ftp_control_data_get_retransmit_count(
                 if (fgets(line2, GLOBUS_LINE_MAX, fp) != NULL) {
                     if (strlen(line) > 2 ){ b_iostat = 1; status = pclose(fp); break; }
                 }
-                if ((status=pclose(fp)) != 0){ fp = NULL; break; }
+                if ((status=pclose(fp)) == -1){ fp = NULL; break; }
             }
             
             sprintf(buf, "%s%s%s", "nfsiostat | grep ", devname, " | awk '$1 ~ /\\//' | tail -n 1"); // run nfsiostat twice to measure throughput
@@ -3973,7 +3973,7 @@ globus_ftp_control_data_get_retransmit_count(
                 if (fgets(line2, GLOBUS_LINE_MAX, fp) != NULL) {
                     if (strlen(line) > 2 ){ b_nfsiostat = 1; status = pclose(fp); break; }
                 }
-                if ((status=pclose(fp)) != 0){ fp = NULL; break; }
+                if ((status=pclose(fp)) == -1){ fp = NULL; break; }
             }
 			
             if (b_iostat == 0 && b_nfsiostat == 0){ status = -1; break; }
@@ -3981,7 +3981,7 @@ globus_ftp_control_data_get_retransmit_count(
 			
         } while (0);
 
-        if (status != 0) {
+        if (status == -1) {
 #ifdef JSON_STYLE_LOG
             json_object_set_new(root_json, "iostat", iostat_json=json_object());
 #else
@@ -4038,71 +4038,109 @@ globus_ftp_control_data_get_retransmit_count(
 
         // xddprof
         int b_xddprof=0;
-        if (ramses_log.writing == 0) { // sender(reader)
-            // xddprof -f -k -l 0.5 -t 4 -r $((1024*1024)) -m r -e serial -d -o /tmp -p ramses /path/a_file_to profile
-            sprintf(buf, "%s%s", "xddprof -f -k -l 0.5 -t 4 -r $((1024*1024)) -m r -e serial -d -o /tmp -p ramses ", ramses_log.file);
+        do {
+            if (ramses_log.writing == 0) { // sender(reader); read /tmp/readprof.tsv
+                // xddprof -f -k -l 0.5 -t 4 -r $((1024*1024)) -m r -e serial -d -o /tmp -p ramses /path/a_file_to profile
+                sprintf(buf, "%s%s", "xddprof -f -k -l 0.5 -t 4 -r $((1024*1024)) -m r -e serial -d -o /tmp -p ramses ", ramses_log.file);
 #ifdef _RAMSES_DEBUG_
-            printf("buf = %s\n", buf);
+    printf("buf = %s\n", buf);
 #endif
 
-            fp = popen(buf, "r");
-            if (fgets(line, GLOBUS_LINE_MAX, fp) != NULL) {
-                if (strlen(line) > 2 ){ b_xddprof = 1; }
-            }
-            if ((status=pclose(fp)) != 0){ fp = NULL;}
-        } else { // receiver(writer)
-            // xddprof -f -l 0.5 -t 4 -r $((1024*1024)) -m w -e loose -d -o /tmp -p ramses /path/"different file"
-	    sprintf(buf, "%s%s%s", "xddprof -f -l 0.5 -t 4 -r $((1024*1024)) -m w -e loose -d -o /tmp -p ramses ", ramses_log.file, ".test");
+                if ((fp=popen(buf, "r")) == NULL) break;
+                if (fgets(line, GLOBUS_LINE_MAX, fp) == NULL) break;
+                if (strlen(line) <= 2) break;
+                
+                if ((status=pclose(fp)) == -1) break;
+
+                // read /tmp/readprof.tsv
+                if ((fp=fopen("/tmp/readprof.tsv", "r")) == NULL) break;            
+                while (fgets(line, GLOBUS_LINE_MAX, fp) != NULL && line[0] == '#');
 #ifdef _RAMSES_DEBUG_
-            printf("buf = %s\n", buf);
+    printf("readprof.tsv = %s\n", line);
+#endif
+                if (line[0] == '#') break;
+                b_xddprof = 1;
+            } else { // receiver(writer); read /tmp/writeprof.tsv
+                // xddprof -f -l 0.5 -t 4 -r $((1024*1024)) -m w -e loose -d -o /tmp -p ramses /path/"different file"
+                sprintf(buf, "%s%s%s", "xddprof -f -l 0.5 -t 4 -r $((1024*1024)) -m w -e loose -d -o /tmp -p ramses ", ramses_log.file, ".test");
+#ifdef _RAMSES_DEBUG_
+    printf("buf = %s\n", buf);
 #endif
 
-            fp = popen(buf, "r");
-            if (fgets(line, GLOBUS_LINE_MAX, fp) != NULL) {
-                if (strlen(line) > 2 ){ b_xddprof = 1; }
+                fp = popen(buf, "r");
+                if (fgets(line, GLOBUS_LINE_MAX, fp) == NULL) break;
+                if (strlen(line) <= 2 ) break;
+                
+                if ((status=pclose(fp)) == -1) break;
+                
+                // read /tmp/writeprof.tsv
+                if ((fp=fopen("/tmp/writeprof.tsv", "r")) == NULL) break;            
+                while (fgets(line, GLOBUS_LINE_MAX, fp) != NULL && line[0] == '#');
+#ifdef _RAMSES_DEBUG_
+    printf("writeprof.tsv = %s\n", line);
+#endif
+                if (line[0] == '#') break;
+                b_xddprof = 1;
             }
-            if ((status=pclose(fp)) != 0){ fp = NULL;}
-            // should remove afterwards.
-        }
+        } while(0);
+        
+        // remove temporary files by xddprof
+        sprintf(buf, "%s", "\\rm -rf /tmp/*-read.log /tmp/*-write.log");
+#ifdef _RAMSES_DEBUG_
+    printf("buf = %s\n", buf);
+#endif
+        fp = popen(buf, "r");
+        if (status != -1) status = pclose(fp); else pclose(fp);
+        
 
-        if (status != 0) {
+        if (status == -1) {
 #ifdef JSON_STYLE_LOG
             json_object_set_new(root_json, "xddprof", xddprof_json=json_object());
 #else
             xddprof_str = globus_common_create_string("\n[xddprof]\n ERROR");
 #endif
-        } else {
+        } else if (b_xddprof == 1) {
 #ifdef JSON_STYLE_LOG
             int ReqSize, NrThreads, DirectIO;
             float Duration, MBps;
             json_object_set_new(root_json, "xddprof", xddprof_json=json_object());
+            
+            // parse line.
+            tok = strtok(line, "\t"); // skip ID
+            tok = strtok(NULL, "\t"); // skip Numvols
+            tok = strtok(NULL, "\t"); // skip Oper
+            tok = strtok(NULL, "\t"); // skip Trial
+
             if (ramses_log.writing == 0) { // sender(reader)
-                json_object_set_new(xddprof_json, "Endpoint", json_string("sender"));                
-                json_object_set_new(xddprof_json, "Target", json_string(""));
-                json_object_set_new(xddprof_json, "Duration", json_real(0));
-                json_object_set_new(xddprof_json, "DurationUnit", json_string("sec"));
-                json_object_set_new(xddprof_json, "ReqSize", json_integer(0));
-                json_object_set_new(xddprof_json, "ReqSizeUnit", json_string("Byte"));
-                json_object_set_new(xddprof_json, "NrThreads", json_integer(0));
-                json_object_set_new(xddprof_json, "DirectIO", json_integer(1));
-                json_object_set_new(xddprof_json, "IssueType", json_string("serial"));
-                json_object_set_new(xddprof_json, "Pattern", json_string("sequential"));
-                json_object_set_new(xddprof_json, "Allocation", json_string("pre"));
-                json_object_set_new(xddprof_json, "MBps", json_real(0));
+                json_object_set_new(xddprof_json, "Endpoint", json_string("sender"));
             } else { // receiver(writer)
-                json_object_set_new(xddprof_json, "Endpoint", json_string("receiver"));                
-                json_object_set_new(xddprof_json, "Target", json_string(""));
-                json_object_set_new(xddprof_json, "Duration", json_real(0));
-                json_object_set_new(xddprof_json, "DurationUnit", json_string("sec"));
-                json_object_set_new(xddprof_json, "ReqSize", json_integer(0));
-                json_object_set_new(xddprof_json, "ReqSizeUnit", json_string("Byte"));
-                json_object_set_new(xddprof_json, "NrThreads", json_integer(0));
-                json_object_set_new(xddprof_json, "DirectIO", json_integer(1));
-                json_object_set_new(xddprof_json, "IssueType", json_string("loose"));
-                json_object_set_new(xddprof_json, "Pattern", json_string("sequential"));
-                json_object_set_new(xddprof_json, "Allocation", json_string("pre"));
-                json_object_set_new(xddprof_json, "MBps", json_real(0));
+                json_object_set_new(xddprof_json, "Endpoint", json_string("receiver")); 
             }
+            
+            tok = strtok(NULL, "\t"); //printf("tok = %s\n", tok);              
+            json_object_set_new(xddprof_json, "Target", json_string(tok));
+            tok = strtok(NULL, "\t"); //printf("tok = %s\n", tok);
+            json_object_set_new(xddprof_json, "Duration", json_real(strtof(tok, NULL)));
+            json_object_set_new(xddprof_json, "DurationUnit", json_string("sec"));
+            tok = strtok(NULL, "\t"); //printf("tok = %s\n", tok);
+            json_object_set_new(xddprof_json, "ReqSize", json_integer(atoi(tok)));
+            json_object_set_new(xddprof_json, "ReqSizeUnit", json_string("Byte"));
+            tok = strtok(NULL, "\t"); //printf("tok = %s\n", tok);
+            json_object_set_new(xddprof_json, "NrThreads", json_integer(atoi(tok)));
+            tok = strtok(NULL, "\t"); //printf("tok = %s\n", tok);
+            json_object_set_new(xddprof_json, "DirectIO", json_string(tok));
+            tok = strtok(NULL, "\t"); //printf("tok = %s\n", tok);
+            json_object_set_new(xddprof_json, "IssueType", json_string(tok));
+            tok = strtok(NULL, "\t"); //printf("tok = %s\n", tok);
+            json_object_set_new(xddprof_json, "Pattern", json_string(tok));
+            tok = strtok(NULL, "\t"); //printf("tok = %s\n", tok);
+            json_object_set_new(xddprof_json, "Allocation", json_string(tok));
+            tok = strtok(NULL, "\t"); // skip Bytes
+            tok = strtok(NULL, "\t"); // skip TOPs
+            tok = strtok(NULL, "\t"); // skip Secs
+            tok = strtok(NULL, "\t"); // skip IOPs
+            tok = strtok(NULL, "\t"); //printf("tok = %s\n", tok);
+            json_object_set_new(xddprof_json, "MBps", json_real(strtof(tok, NULL)));
 #endif
         }
         
@@ -4150,7 +4188,7 @@ globus_ftp_control_data_get_retransmit_count(
         // iperf
         int b_iperf=0;
         if (ramses_log.writing == 0) { // only on sender(reader)
-            // iperf -c
+#if 0 // use SNMP instead of iperf.
             //sprintf(buf, "%s%s%s", "iperf -t 1 -p 51000 -c ", ramses_log.dest, " | tail -n 1 | awk '{print $8\" \"$9}' " );
             sprintf(buf, "%s%s%s", "iperf -p 51000 -c ", ramses_log.dest, ">/tmp/iperf.result");
 #ifdef _RAMSES_DEBUG_
@@ -4162,7 +4200,7 @@ globus_ftp_control_data_get_retransmit_count(
                 if (strlen(line) > 2 ){ b_iperf = 1; }
             }
             if ((status=pclose(fp)) != 0){ fp = NULL;}
-#if 0
+
             if (status != 0) {
 #ifdef JSON_STYLE_LOG
                 json_object_set_new(root_json, "iperf", iperf_json=json_object());
