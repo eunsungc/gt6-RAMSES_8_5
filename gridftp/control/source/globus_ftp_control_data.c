@@ -602,8 +602,6 @@ static globus_hashtable_t           globus_l_ftp_control_data_layout_table;
 #define GLOBUS_FTP_CONTROL_DATA_DESCRIPTOR_EOF            0x40
 #define GLOBUS_FTP_CONTROL_DATA_DESCRIPTOR_EOR            0x80
 
-//esjung
-#define  _RAMSES_DEBUG_
 /*
  *  NETLOGGER functions
  */
