@@ -87,6 +87,9 @@
 #define MAXPATHLEN 4096
 #endif
 
+//esjung
+#define _RAMSES_DEBUG_
+
 #define GFSDataOpDec(_op, _d_op, _d_s)                                  \
 do                                                                      \
 {                                                                       \
@@ -10095,6 +10098,9 @@ response_exit:
              out[0], out[1], out[2], out[3], out[4], out[5], out[6], out[7], out[8], out[9], out[10], out[11], out[12], out[13], out[14], out[15]);
         }
 
+#ifdef _RAMSES_DEBUG_
+    printf("end_transfer_kickout\n");
+#endif
         if(!op->data_handle->http_handle && op->data_handle->is_mine)
         {
             globus_ramses_log_t	ramses_log;

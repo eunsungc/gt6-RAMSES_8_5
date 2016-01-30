@@ -38,7 +38,7 @@
 // esjung; for json
 #include "jansson.h"
 #include <stdlib.h>
-//#define _RAMSES_DEBUG_
+#define _RAMSES_DEBUG_
 
 /*
  *  logging messages
@@ -3818,7 +3818,11 @@ globus_ftp_control_data_get_retransmit_count(
 #endif    
 
         // mpstat -P ALL; 'mpstat -P ALL | tail -n +4'
-        fp = popen("mpstat -P ALL | tail -n +4", "r");
+        sprintf(buf, "%s", "mpstat -P ALL | tail -n +4");
+#ifdef _RAMSES_DEBUG_
+        printf("buf = %s\n", buf);
+#endif
+        fp = popen(buf, "r");
         if (fp == NULL) {
 #ifdef JSON_STYLE_LOG
             json_object_set_new(root_json, "mpstat", mpstat_json=json_object());
@@ -4065,7 +4069,7 @@ globus_ftp_control_data_get_retransmit_count(
     printf("buf = %s\n", buf);
 #endif
 
-                fp = popen(buf, "r");
+                if ((fp=popen(buf, "r")) == NULL) break;
                 if (fgets(line, GLOBUS_LINE_MAX, fp) == NULL) break;
                 if (strlen(line) <= 2 ) break;
                 
@@ -4087,10 +4091,9 @@ globus_ftp_control_data_get_retransmit_count(
 #ifdef _RAMSES_DEBUG_
     printf("buf = %s\n", buf);
 #endif
-        fp = popen(buf, "r");
-        if (status != -1) status = pclose(fp); else pclose(fp);
+        if ((fp=popen(buf, "r")) != NULL)
+            pclose(fp);
         
-
         if (status == -1) {
 #ifdef JSON_STYLE_LOG
             json_object_set_new(root_json, "xddprof", xddprof_json=json_object());
