@@ -88,7 +88,7 @@
 #endif
 
 //esjung
-#define _RAMSES_DEBUG_
+//#define _RAMSES_DEBUG_
 
 #define GFSDataOpDec(_op, _d_op, _d_s)                                  \
 do                                                                      \
@@ -943,7 +943,7 @@ globus_l_gfs_data_watchdog_check(
     globus_l_gfs_data_session_t *       session_handle;
     
     session_handle = (globus_l_gfs_data_session_t *) arg;
-    
+
     if(!session_handle)
     {
         globus_gfs_log_message(GLOBUS_GFS_LOG_ERR,
@@ -972,18 +972,27 @@ globus_l_gfs_data_alive(
     session_handle->watch_updates++;
 }
 
+/*
+ * esjung:
+ * This function is called in multiple places.
+ */
 void
 globus_l_gfs_data_reset_watchdog(
     globus_l_gfs_data_session_t *       session_handle,
     char *                              operation)
 {
+    // esjung; 2016/4/20, default value of globus_l_gfs_watchdog_limit = 600.
+	
     if(globus_l_gfs_watchdog_limit)
     {
+#ifdef _RAMSES_DEBUG_
+printf("INSIDE reset_watchdog, operation: %s, ref=%d\n", operation, session_handle->ref);
+#endif
         session_handle->last_active = time(NULL);
         session_handle->watch = operation ? GLOBUS_TRUE : GLOBUS_FALSE;
         session_handle->watch_op = operation;
         session_handle->watch_updates = 0;
-        
+
         if(session_handle->watch)
         {
             if(session_handle->watch_handle == 0)
@@ -1000,8 +1009,8 @@ globus_l_gfs_data_reset_watchdog(
         }
         else if(session_handle->watch_handle != 0)
         {
-            globus_callback_unregister(session_handle->watch_handle, NULL, NULL, NULL);
-            session_handle->watch_handle = 0;
+                globus_callback_unregister(session_handle->watch_handle, NULL, NULL, NULL);
+                session_handle->watch_handle = 0;
         }
     }
 }
@@ -2802,6 +2811,7 @@ globus_l_gfs_data_brain_ready_delay_cb(
                 &finished_info,
                 op->user_arg);
         }
+
         globus_l_gfs_data_reset_watchdog(op->session_handle, NULL);
         
         globus_mutex_lock(&op->session_handle->mutex);
@@ -5247,6 +5257,7 @@ globus_i_gfs_data_request_stat(
     GlobusGFSDebugEnter();
 
     session_handle = (globus_l_gfs_data_session_t *) session_arg;
+
     globus_l_gfs_data_reset_watchdog(session_handle, NULL);
 
     result = globus_l_gfs_data_operation_init(&op, session_handle);
@@ -5687,6 +5698,7 @@ globus_i_gfs_data_request_command(
     GlobusGFSDebugEnter();
 
     session_handle = (globus_l_gfs_data_session_t *) session_arg;
+
     globus_l_gfs_data_reset_watchdog(session_handle, NULL);
 
     result = globus_l_gfs_data_operation_init(&op, session_handle);
@@ -7759,6 +7771,7 @@ globus_i_gfs_data_request_passive(
     GlobusGFSDebugEnter();
 
     session_handle = (globus_l_gfs_data_session_t *) session_arg;
+
     globus_l_gfs_data_reset_watchdog(session_handle, NULL);
 
     if(session_handle->hybrid && data_info->max_cs != 1 && 
@@ -7802,8 +7815,6 @@ globus_i_gfs_data_request_passive(
         hybrid_op->user_arg = user_arg;
         hybrid_op->session_handle = session_handle;
         hybrid_op->info_struct = data_info;
-
-        
         
         op->callback = globus_l_gfs_data_hybrid_session_start_cb;
         op->user_arg = op;
@@ -8081,6 +8092,7 @@ globus_i_gfs_data_request_active(
     GlobusGFSDebugEnter();
 
     session_handle = (globus_l_gfs_data_session_t *) session_arg;
+
     globus_l_gfs_data_reset_watchdog(session_handle, NULL);
 
     if(session_handle->hybrid && data_info->cs_count != 1 && 
@@ -8329,6 +8341,7 @@ globus_i_gfs_data_request_recv(
     GlobusGFSDebugEnter();
 
     session_handle = (globus_l_gfs_data_session_t *) session_arg;
+
     globus_l_gfs_data_reset_watchdog(session_handle, "RECV");
     
     /* YOU ARE ENTERING THE UGLY HACK ZONE */
@@ -8488,6 +8501,9 @@ globus_i_gfs_data_request_send(
 
     if(data_handle->is_mine)
     {
+#ifdef _RAMSES_DEBUG_
+printf("globus_i_gfs_data_request_send SEND\n");
+#endif
         globus_l_gfs_data_reset_watchdog(session_handle, "SEND");
     }
     else
@@ -8533,9 +8549,11 @@ globus_i_gfs_data_request_send(
     {
         /*globus_assert(data_handle->outstanding_op == NULL); */
         data_handle->outstanding_op = op;
-    globus_assert(data_handle->state == GLOBUS_L_GFS_DATA_HANDLE_VALID);
-/*
-        || data_handle->state == GLOBUS_L_GFS_DATA_HANDLE_TE_VALID); */
+    // esjung; uncomment TE_VALID so as to resolve bugs in threaded version.
+    // sudden crash due to this.
+    //globus_assert(data_handle->state == GLOBUS_L_GFS_DATA_HANDLE_VALID);
+    globus_assert(data_handle->state == GLOBUS_L_GFS_DATA_HANDLE_VALID
+    || data_handle->state == GLOBUS_L_GFS_DATA_HANDLE_TE_VALID); 
     data_handle->state = GLOBUS_L_GFS_DATA_HANDLE_INUSE;
     }
 
@@ -8578,6 +8596,7 @@ globus_i_gfs_data_request_send(
 
         }
     }
+
     if(op->dsi == NULL)
     {
         globus_gridftp_server_finished_transfer(
@@ -9207,6 +9226,7 @@ globus_i_gfs_data_request_list(
     GlobusGFSDebugEnter();
 
     session_handle = (globus_l_gfs_data_session_t *) session_arg;
+
     globus_l_gfs_data_reset_watchdog(session_handle, NULL);
 
     data_handle = (globus_l_gfs_data_handle_t *)
@@ -9826,7 +9846,6 @@ globus_l_gfs_data_end_transfer_kickout(
 
     memset(&reply, '\0', sizeof(globus_gfs_finished_info_t));
 
-
     if(op->cached_res == GLOBUS_SUCCESS && 
         op->writing && op->data_handle->http_handle)
     {
@@ -9840,7 +9859,7 @@ globus_l_gfs_data_end_transfer_kickout(
         globus_hashtable_t                  header_table = NULL;
         globus_bool_t                       eof = 0;
 
-        
+
         globus_xio_handle_cntl(
             handle,
             op->session_handle->http_driver,
@@ -9876,6 +9895,7 @@ globus_l_gfs_data_end_transfer_kickout(
                 &reason_phrase,
                 NULL,
                 &header_table);
+
         if(result != GLOBUS_SUCCESS)
         {
             result = GlobusGFSErrorWrapFailed("Reading HTTP Response", result);
@@ -9984,6 +10004,7 @@ globus_l_gfs_data_end_transfer_kickout(
         }
         
     }
+
 response_exit:
     if(op->cached_res == GLOBUS_SUCCESS)
     {
@@ -10099,7 +10120,7 @@ response_exit:
         }
 
 #ifdef _RAMSES_DEBUG_
-    printf("end_transfer_kickout\n");
+    printf("START end_transfer_kickout\n");
 #endif
         if(!op->data_handle->http_handle && op->data_handle->is_mine)
         {
@@ -10176,6 +10197,7 @@ response_exit:
                 retransmit_str);
 #endif
         globus_free(msg);
+
     }
     else
     {
@@ -10217,7 +10239,6 @@ response_exit:
                 &event_reply);
         }
     }
-
 
 
     /* log transfer */
@@ -10297,6 +10318,7 @@ response_exit:
                 globus_i_gfs_json_log_transfer(retransmit_str);
 #endif
         }
+
         if(!globus_l_gfs_data_is_remote_node &&
             !globus_i_gfs_config_string("disable_usage_stats"))
         {
@@ -10324,6 +10346,7 @@ response_exit:
                     "remote" : globus_i_gfs_config_string("load_dsi_module"));
         }
     }
+
     if(retransmit_str)
     {
         globus_free(retransmit_str);
@@ -10367,8 +10390,6 @@ response_exit:
     reply.id = op->id;
     reply.result = op->cached_res;
 
-
-
 /* RIGHT HERE I CAN GET ANOTHER SEND/RECV.  LEAVES IN TE STATE */
     globus_assert(!op->writing ||
         (op->sent_partial_eof == 1 || op->stripe_count == 1 ||
@@ -10401,8 +10422,8 @@ response_exit:
             op->ipc_handle,
             &reply);
     }
+
     globus_l_gfs_data_reset_watchdog(op->session_handle, NULL);
-    
     /* remove the refrence for this callback.  It is posible the before
         aquireing this lock the completing state occured and we are
         ready to finish */
@@ -10412,11 +10433,20 @@ response_exit:
             {
                 case GLOBUS_L_GFS_DATA_HANDLE_TE_VALID:
                     /* leave this state until after TC event? */
+#ifdef _RAMSES_DEBUG_
+printf("op->data_handle->state: GLOBUS_L_GFS_DATA_HANDLE_TE_VALID\n");
+#endif
                     break;
                 case GLOBUS_L_GFS_DATA_HANDLE_TE_PRE_CLOSED:
                     op->data_handle->state = GLOBUS_L_GFS_DATA_HANDLE_CLOSING;
+#ifdef _RAMSES_DEBUG_
+printf("op->data_handle->state: GLOBUS_L_GFS_DATA_HANDLE_TE_PRE_CLOSED\n");
+#endif
                     break;
                 case GLOBUS_L_GFS_DATA_HANDLE_TE_PRE_AND_DESTROYED:
+#ifdef _RAMSES_DEBUG_
+printf("op->data_handle->state: GLOBUS_L_GFS_DATA_HANDLE_TE_PRE_AND_DESTROYED\n");
+#endif
                     op->data_handle->state =
                         GLOBUS_L_GFS_DATA_HANDLE_CLOSING_AND_DESTROYED;
                     free_data = GLOBUS_TRUE;
@@ -10466,7 +10496,9 @@ response_exit:
     {
         globus_l_gfs_data_handle_free(data_handle);
     }
-
+#ifdef _RAMSES_DEBUG_
+printf("Successful END of end_transfer_kickout\n");
+#endif
     GlobusGFSDebugExit();
 }
 
@@ -11342,7 +11374,7 @@ globus_l_gfs_data_start_abort(
 #ifdef ENABLE_JSON_ABORT_TRANSFER_LOG
                 if (retransmit_str != NULL) {
                     globus_i_gfs_json_log_transfer(retransmit_str);
-		    globus_free(retransmit_str);
+		      globus_free(retransmit_str);
                 }
 #endif
 
@@ -12791,6 +12823,7 @@ globus_l_gfs_operation_finished_kickout(
                 bounce->finished_info);
         }
     }
+
     globus_l_gfs_data_reset_watchdog(op->session_handle, NULL);
 
     globus_mutex_lock(&op->session_handle->mutex);
@@ -13918,6 +13951,7 @@ globus_i_gfs_data_request_set_cred(
     GlobusGFSDebugEnter();
 
     session_handle = (globus_l_gfs_data_session_t *) session_arg;
+printf("request_set_cred\n");
     globus_l_gfs_data_reset_watchdog(session_handle, NULL);
     
     if(del_cred != NULL)
@@ -13949,6 +13983,7 @@ globus_i_gfs_data_request_buffer_send(
     GlobusGFSDebugEnter();
 
     session_handle = (globus_l_gfs_data_session_t *) session_arg;
+printf("buffer_send\n");
     globus_l_gfs_data_reset_watchdog(session_handle, NULL);
     
     if(buffer_type & GLOBUS_GFS_BUFFER_SERVER_DEFINED)
