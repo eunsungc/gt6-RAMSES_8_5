@@ -31,6 +31,11 @@ static const volatile char rcsid[] = "$Id$";
 /* Interface */
 #include "nl_calipers.h"
 
+// esjung - start; for global variables
+nlcali_T nlcali_io[NLCALI_MAX_TRANSFER];
+nlcali_T nlcali_tcp[NLCALI_MAX_TRANSFER];
+int nlcali_cur_nr;
+// esjung - end
 /* ---------------------------------------------------------------
  * Utility functions
  */

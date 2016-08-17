@@ -329,6 +329,12 @@ void nlcali_free(T self);
 
 /** @} */
 
+// esjung
+#define NLCALI_MAX_TRANSFER 32
+extern T nlcali_io[NLCALI_MAX_TRANSFER];
+extern T nlcali_tcp[NLCALI_MAX_TRANSFER];
+extern int nlcali_cur_nr;
+
 #undef T
 
 #ifdef __cplusplus
