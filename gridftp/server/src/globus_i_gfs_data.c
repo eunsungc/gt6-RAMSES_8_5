@@ -20,8 +20,10 @@
 #include "extensions.h"
 #include <unistd.h>
 #include <openssl/des.h>
-// esjung: UUID
+// esjung -- start
 #include <uuid/uuid.h>
+#include <nl_calipers.h>
+// esjung -- end
 #ifndef TARGET_ARCH_WIN32
 #include <pwd.h>
 #include <grp.h>
@@ -8017,6 +8019,10 @@ error_op:
     GlobusGFSDebugExitWithError();
 }
 
+/*
+ * esjung
+ * 8/29/2016: add nl_calipers functions.
+ */
 static
 void
 globus_l_gfs_data_active_kickout(
@@ -8028,6 +8034,10 @@ globus_l_gfs_data_active_kickout(
     GlobusGFSDebugEnter();
 
     bounce_info = (globus_l_gfs_data_active_bounce_t *) user_arg;
+
+    // esjung -- start
+    nlcali_tcp[0] = nlcali_new(10);
+    // esjung -- end
 
     memset(&reply, '\0', sizeof(globus_gfs_finished_info_t));
     reply.type = GLOBUS_GFS_OP_ACTIVE;
