@@ -90,7 +90,7 @@
 #endif
 
 //esjung
-//#define _RAMSES_DEBUG_
+#define _RAMSES_DEBUG_
 
 #define GFSDataOpDec(_op, _d_op, _d_s)                                  \
 do                                                                      \
@@ -8037,6 +8037,9 @@ globus_l_gfs_data_active_kickout(
 
     // esjung -- start
     nlcali_tcp[0] = nlcali_new(10);
+#ifdef _RAMSES_DEBUG_
+    printf("nlcali_new\n");
+#endif
     // esjung -- end
 
     memset(&reply, '\0', sizeof(globus_gfs_finished_info_t));
@@ -9830,8 +9833,12 @@ globus_l_gfs_data_get_nl_msg(
     return msg_out;
 }
 
-// esjung
-// callback function when the data transfer is done.
+/*
+ * esjung
+ * callback function when the data transfer is done.
+ * 9/8/16: add nlcali_free()
+ */
+
 static
 void
 globus_l_gfs_data_end_transfer_kickout(
@@ -10119,9 +10126,18 @@ response_exit:
 
 
 #ifdef ENABLE_JSON_END_TRANSFER_LOG // esjung
-         // esjung: uuid
-         if (op->session_handle->taskid == NULL) 
-         {     
+#ifdef _RAMSES_DEBUG_
+        printf("START end_transfer_kickout\n");
+#endif
+        // netlogger
+#ifdef _RAMSES_DEBUG_
+        printf("nlcali_free\n");
+#endif
+        nlcali_free(nlcali_tcp[0]);
+        
+        // uuid
+        if (op->session_handle->taskid == NULL)
+        {
              uuid_t out;
              uuid_generate_time_safe(out);
              op->session_handle->taskid =
@@ -10129,9 +10145,7 @@ response_exit:
              out[0], out[1], out[2], out[3], out[4], out[5], out[6], out[7], out[8], out[9], out[10], out[11], out[12], out[13], out[14], out[15]);
         }
 
-#ifdef _RAMSES_DEBUG_
-    printf("START end_transfer_kickout\n");
-#endif
+
         if(!op->data_handle->http_handle && op->data_handle->is_mine)
         {
             globus_ramses_log_t	ramses_log;
