@@ -77,5 +77,10 @@ log_transfer /home/esjung/gridftp-transfer-ramses.log
 * Separate files for json logging.
 * Integrated with the latest version of globus toolkit which resolved udt issues.
 
+# CHANGES for netlogger
+* add source directory 'calipers'; need to compile and install as a root. 
+  * The libraries will be installed under /usr/local/lib. 
+  * add this path to 'LD_LIBRARY_PATH'.
+
 # Troubleshooting
 * If log messages are broken, try `globus-gridftp-server -log-module stdio:buffer=32768:interval=0`
