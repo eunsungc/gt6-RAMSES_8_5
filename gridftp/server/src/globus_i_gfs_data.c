@@ -880,6 +880,9 @@ globus_l_gfs_data_check(
 {
     void *                              remote_data_arg = NULL;
 
+#ifdef _RAMSES_DEBUG_
+    printf("globus_l_gfs_data_check\n");
+#endif
     if(data_handle == NULL)
     {
         return NULL;
@@ -1024,6 +1027,9 @@ globus_l_gfs_data_fire_cb(
     void *                              remote_data_arg,
     globus_bool_t                       free_session)
 {
+#ifdef _RAMSES_DEBUG_
+    printf("globus_l_gfs_data_fire_cb\n");
+#endif
     if(remote_data_arg != NULL)
     {
         /* if i have something to call i should not be freeing */
@@ -1078,6 +1084,9 @@ globus_l_gfs_data_post_transfer_event_cb(
     globus_l_gfs_data_handle_t *        data_handle)
 {
     void *                              remote_data_arg = NULL;
+#ifdef _RAMSES_DEBUG_
+    printf("globus_l_gfs_data_post_transfer_event_cb\n");
+#endif
 
     if(data_handle == NULL)
     {
@@ -1802,6 +1811,9 @@ void
 globus_l_gfs_free_session_handle(
     globus_l_gfs_data_session_t *       session_handle)
 {
+#ifdef _RAMSES_DEBUG_
+    printf("globus_l_gfs_free_session_handle\n");
+#endif
     if(session_handle->dsi != globus_l_gfs_dsi)
     {
         globus_extension_release(session_handle->dsi_handle);
@@ -2341,7 +2353,9 @@ globus_l_gfs_authorize_cb(
     globus_bool_t                       destroy_op = GLOBUS_FALSE;
     GlobusGFSName(globus_l_gfs_authorize_cb);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_l_gfs_authorize_cb\n");
+#endif
     if(user_arg != NULL)
     {
         if(action == GFS_ACL_ACTION_COMMIT)
@@ -2544,6 +2558,9 @@ globus_l_gfs_data_send_stat_cb(
     GlobusGFSName(globus_l_gfs_data_recv_stat_cb);
     GlobusGFSDebugEnter();
 
+#ifdef _RAMSES_DEBUG_
+    printf("globus_l_gfs_data_send_stat_cb\n");
+#endif
     op = (globus_l_gfs_data_operation_t *) user_arg;
 
     globus_l_gfs_data_alive(op->session_handle);
@@ -2742,7 +2759,9 @@ globus_l_gfs_data_brain_ready_delay_cb(
     globus_result_t                     result;
     GlobusGFSName(globus_l_gfs_data_brain_ready_delay_cb);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_l_gfs_data_brain_ready_delay_cb\n");
+#endif
     op = (globus_l_gfs_data_operation_t *) user_arg;
     session_info = (globus_gfs_session_info_t *) op->info_struct;
 
@@ -2852,7 +2871,9 @@ globus_l_gfs_data_auth_init_cb(
     globus_bool_t                       ready = GLOBUS_FALSE;
     GlobusGFSName(globus_l_gfs_data_auth_init_cb);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_l_gfs_data_auth_init_cb\n");
+#endif
     op = (globus_l_gfs_data_operation_t *) user_arg;
     session_info = (globus_gfs_session_info_t *) op->info_struct;
 
@@ -4041,7 +4062,9 @@ globus_l_gfs_data_authorize(
     char *                              share_file = NULL;
     GlobusGFSName(globus_l_gfs_data_authorize);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_l_gfs_data_authorize\n");
+#endif
     globus_gfs_log_event(
         GLOBUS_GFS_LOG_INFO,
         GLOBUS_GFS_LOG_EVENT_START,
@@ -5032,7 +5055,9 @@ globus_i_gfs_data_init()
     char *                              driver;
     GlobusGFSName(globus_i_gfs_data_init);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_i_gfs_data_init\n");
+#endif
     globus_extension_register_builtins(local_extensions);
 
     dsi_name = globus_i_gfs_config_string("load_dsi_module");
@@ -5165,7 +5190,9 @@ globus_l_gfs_data_operation_init(
     globus_result_t                     result;
     GlobusGFSName(globus_l_gfs_data_operation_init);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_l_gfs_data_operation_init\n");
+#endif
     op = (globus_l_gfs_data_operation_t *)
         globus_calloc(1, sizeof(globus_l_gfs_data_operation_t));
     if(!op)
@@ -5205,7 +5232,9 @@ globus_l_gfs_data_operation_destroy(
 {
     GlobusGFSName(globus_l_gfs_data_operation_destroy);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_l_gfs_data_operation_destroy\n");
+#endif
     globus_range_list_destroy(op->recvd_ranges);
     globus_range_list_destroy(op->stripe_range_list);
     if(op->pathname)
@@ -5698,7 +5727,9 @@ globus_i_gfs_data_request_command(
     char *                              starttag;
     GlobusGFSName(globus_i_gfs_data_request_command);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_i_gfs_data_request_command\n");
+#endif
     session_handle = (globus_l_gfs_data_session_t *) session_arg;
 
     globus_l_gfs_data_reset_watchdog(session_handle, NULL);
@@ -6743,7 +6774,9 @@ globus_l_gfs_data_handle_init(
     gss_cred_id_t                       cred;
     GlobusGFSName(globus_l_gfs_data_handle_init);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_l_gfs_data_handle_init\n");
+#endif
     handle = (globus_l_gfs_data_handle_t *)
         globus_calloc(1, sizeof(globus_l_gfs_data_handle_t));
     if(!handle)
@@ -7181,7 +7214,9 @@ globus_l_gfs_data_fc_return(
     GlobusGFSName(globus_l_gfs_data_fc_return);
 
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_l_gfs_data_fc_return\n");
+#endif
     switch(op->data_handle->state)
     {
         case GLOBUS_L_GFS_DATA_HANDLE_CLOSING:
@@ -7220,7 +7255,9 @@ globus_l_gfs_data_complete_fc_cb(
     globus_l_gfs_data_operation_t *     op;
     GlobusGFSName(globus_l_gfs_data_complete_fc_cb);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_l_gfs_data_complete_fc_cb\n");
+#endif
     op = (globus_l_gfs_data_operation_t *) callback_arg;
 
     memset(&event_info, '\0', sizeof(globus_gfs_event_info_t));
@@ -7280,7 +7317,9 @@ globus_l_gfs_data_finish_fc_cb(
     globus_l_gfs_data_operation_t *     op;
     GlobusGFSName(globus_l_gfs_data_finish_fc_cb);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_l_gfs_data_finish_fc_cb\n");
+#endif
     op = (globus_l_gfs_data_operation_t *) callback_arg;
 
     globus_mutex_lock(&op->session_handle->mutex);
@@ -7331,7 +7370,9 @@ globus_l_gfs_data_destroy_cb(
     globus_l_gfs_data_handle_t *        data_handle;
     GlobusGFSName(globus_l_gfs_data_destroy_cb);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_l_gfs_data_destroy_cb\n");
+#endif
     data_handle = (globus_l_gfs_data_handle_t *) callback_arg;
     session_handle = data_handle->session_handle;
 
@@ -8036,9 +8077,13 @@ globus_l_gfs_data_active_kickout(
     bounce_info = (globus_l_gfs_data_active_bounce_t *) user_arg;
 
     // esjung -- start
-    nlcali_tcp[0] = nlcali_new(10);
 #ifdef _RAMSES_DEBUG_
-    printf("nlcali_new\n");
+    printf("globus_l_gsf_data_active_kickout\n");
+    //printf("nlcali_new\n");
+#endif
+    //nlcali_tcp[0] = nlcali_new(10);
+#ifdef _RAMSES_DEBUG_
+    //printf("nlcali_tcp[0]: %x\n", nlcali_tcp[0]);
 #endif
     // esjung -- end
 
@@ -8103,7 +8148,9 @@ globus_i_gfs_data_request_active(
     globus_l_gfs_data_session_t *       session_handle;
     GlobusGFSName(globus_i_gfs_data_request_active);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_i_gfs_data_request_active\n");
+#endif
     session_handle = (globus_l_gfs_data_session_t *) session_arg;
 
     globus_l_gfs_data_reset_watchdog(session_handle, NULL);
@@ -8352,7 +8399,9 @@ globus_i_gfs_data_request_recv(
     globus_l_gfs_data_session_t *       session_handle;
     GlobusGFSName(globus_i_gfs_data_request_recv);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_i_gfs_data_request_recv\n");
+#endif
     session_handle = (globus_l_gfs_data_session_t *) session_arg;
 
     globus_l_gfs_data_reset_watchdog(session_handle, "RECV");
@@ -8490,7 +8539,9 @@ globus_i_gfs_data_request_send(
     globus_gfs_acl_object_desc_t        object;
     GlobusGFSName(globus_i_gfs_data_send_request);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_i_gfs_data_request_send\n");
+#endif
     session_handle = (globus_l_gfs_data_session_t *) session_arg;
 
     /* YOU ARE ENTRERING THE UGLY HACK ZONE */
@@ -8671,6 +8722,9 @@ globus_l_gfs_data_list_done(
     globus_l_gfs_data_operation_t*      op, 
     globus_result_t                     result)
 {
+#ifdef _RAMSES_DEBUG_
+    printf("globus_l_gfs_data_list_done\n");
+#endif
     while(op->path_list)
     {
         globus_l_gfs_data_path_list_t* tofree = op->path_list;
@@ -8767,7 +8821,9 @@ globus_l_gfs_data_list_write_cb(
 
     GlobusGFSName(globus_l_gfs_data_list_write_cb);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_l_gfs_data_list_write_cb\n");
+#endif
     globus_l_gfs_data_alive(op->session_handle);
 
     bounce_info = (globus_l_gfs_data_stat_bounce_t *) user_arg;
@@ -9237,7 +9293,9 @@ globus_i_gfs_data_request_list(
     globus_gfs_acl_object_desc_t        object;
     GlobusGFSName(globus_i_gfs_data_request_list);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_i_gfs_data_request_list\n");
+#endif
     session_handle = (globus_l_gfs_data_session_t *) session_arg;
 
     globus_l_gfs_data_reset_watchdog(session_handle, NULL);
@@ -9392,7 +9450,9 @@ globus_l_gfs_data_finish_connected(
     globus_result_t                     result = GLOBUS_SUCCESS;
     GlobusGFSName(globus_l_gfs_data_finish_connected);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_l_gfs_data_finish_connected\n");
+#endif
     if(op->data_handle->is_mine)
     {
         if(op->writing)
@@ -9497,7 +9557,9 @@ globus_l_gfs_data_begin_cb(
     void *                              remote_data_arg = NULL;
     GlobusGFSName(globus_l_gfs_data_begin_cb);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_l_gfs_data_begin_cb\n");
+#endif
     op = (globus_l_gfs_data_operation_t *) callback_arg;
 
     globus_mutex_lock(&op->session_handle->mutex);
@@ -9760,7 +9822,9 @@ globus_l_gfs_data_begin_kickout(
     globus_l_gfs_data_operation_t *     op;
     GlobusGFSName(globus_l_gfs_data_begin_kickout);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_l_gfs_data_begin_kickout\n");
+#endif
     op = (globus_l_gfs_data_operation_t *) callback_arg;
 
     globus_l_gfs_data_begin_cb(
@@ -10132,8 +10196,12 @@ response_exit:
         // netlogger
 #ifdef _RAMSES_DEBUG_
         printf("nlcali_free\n");
+        printf("nlcali_tcp[0]: %x\n", nlcali_tcp[0]);
 #endif
-        nlcali_free(nlcali_tcp[0]);
+        if (nlcali_tcp[0] != NULL) {
+            nlcali_free(nlcali_tcp[0]);
+            nlcali_tcp[0] = NULL;
+        }
         
         // uuid
         if (op->session_handle->taskid == NULL)
@@ -10544,7 +10612,9 @@ globus_l_gfs_data_end_read_kickout(
 
     GlobusGFSName(globus_l_gfs_data_end_read_kickout);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_l_gfs_data_end_read_kickout\n");
+#endif
     op = (globus_l_gfs_data_operation_t *) user_arg;
 
     if(op->data_handle->info.mode == 'E' || 
@@ -10719,7 +10789,9 @@ globus_l_gfs_data_send_eof_cb(
     globus_l_gfs_data_operation_t *     op;
     GlobusGFSName(globus_l_gfs_data_send_eof_cb);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_l_gfs_data_send_eof_cb\n");
+#endif
     op = (globus_l_gfs_data_operation_t *) callback_arg;
     if(error != NULL)
     {
@@ -10748,7 +10820,9 @@ globus_l_gfs_data_write_eof_cb(
     globus_l_gfs_data_operation_t *     op;
     GlobusGFSName(globus_l_gfs_data_write_eof_cb);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_l_gfs_data_write_eof_cb\n");
+#endif
     op = (globus_l_gfs_data_operation_t *) user_arg;
 
     GlobusGFSDebugState(op->state);
@@ -10856,7 +10930,9 @@ globus_l_gfs_data_send_eof(
     globus_result_t                     result;
     GlobusGFSName(globus_l_gfs_data_send_eof);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_l_gfs_data_send_eof\n");
+#endif
     globus_mutex_lock(&op->session_handle->mutex);
     {
         switch(op->state)
@@ -10915,7 +10991,9 @@ globus_l_gfs_data_write_cb(
     globus_l_gfs_data_bounce_t *        bounce_info;
     GlobusGFSName(globus_l_gfs_data_write_cb);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_l_gfs_data_write_cb\n");
+#endif
     bounce_info = (globus_l_gfs_data_bounce_t *) user_arg;
     globus_l_gfs_data_alive(bounce_info->op->session_handle);
 
@@ -10948,7 +11026,9 @@ globus_l_gfs_data_read_cb(
     globus_l_gfs_data_bounce_t *        bounce_info;
     GlobusGFSName(globus_l_gfs_data_read_cb);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_l_gfs_data_read_cb\n");
+#endif
     bounce_info = (globus_l_gfs_data_bounce_t *) user_arg;
     globus_l_gfs_data_alive(bounce_info->op->session_handle);
 
@@ -10990,7 +11070,9 @@ globus_l_gfs_data_trev_kickout(
 
     GlobusGFSName(globus_l_gfs_data_trev_kickout);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_l_gfs_data_trev_kickout\n");
+#endif
     bounce_info = (globus_l_gfs_data_trev_bounce_t *) user_arg;
     event_reply = (globus_gfs_event_info_t *)
         globus_calloc(1, sizeof(globus_gfs_event_info_t));
@@ -11479,7 +11561,9 @@ globus_i_gfs_data_request_transfer_event(
     globus_bool_t                       pass = GLOBUS_FALSE;
     GlobusGFSName(globus_i_gfs_data_request_transfer_event);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_i_gfs_data_request_transfer_event\n");
+#endif
     session_handle = (globus_l_gfs_data_session_t *) session_arg;
     op = (globus_l_gfs_data_operation_t *) 
         globus_handle_table_lookup(
@@ -11692,7 +11776,9 @@ globus_i_gfs_data_session_start(
     globus_l_gfs_data_session_t *       session_handle;
     GlobusGFSName(globus_i_gfs_data_session_start);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_i_gfs_data_session_start\n");
+#endif
     session_handle = (globus_l_gfs_data_session_t *)
         globus_calloc(1, sizeof(globus_l_gfs_data_session_t));
     if(session_handle == NULL)
@@ -11871,7 +11957,9 @@ globus_i_gfs_data_session_stop(
     globus_l_gfs_data_session_t *       session_handle;
     GlobusGFSName(globus_i_gfs_data_session_stop);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_i_gfs_data_session_stop\n");
+#endif
     session_handle = (globus_l_gfs_data_session_t *) session_arg;
     if(session_handle != NULL)
     {
@@ -12464,7 +12552,9 @@ globus_gridftp_server_begin_transfer(
     char *                              freq;
     GlobusGFSName(globus_gridftp_server_begin_transfer);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_gridftp_server_begin_transfer\n");
+#endif
     globus_l_gfs_data_alive(op->session_handle);
 
     gettimeofday(&op->start_timeval, NULL);
@@ -12698,7 +12788,9 @@ globus_gridftp_server_finished_transfer(
 {
     GlobusGFSName(globus_gridftp_server_finished_transfer);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_gridftp_server_finished_transfer\n");
+#endif
     globus_l_gfs_data_alive(op->session_handle);
 
     globus_mutex_lock(&op->session_handle->mutex);
@@ -12797,7 +12889,9 @@ globus_l_gfs_operation_finished_kickout(
     globus_l_gfs_data_operation_t *     op;
     GlobusGFSName(globus_l_gfs_operation_finished_kickout);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_l_gfs_operation_finished_kickout\n");
+#endif
     bounce = (globus_l_gfs_data_bounce_t *) user_arg;
     op = bounce->op;
 
@@ -12890,7 +12984,9 @@ globus_gridftp_server_operation_finished(
     globus_bool_t                       kickout = GLOBUS_TRUE;
     GlobusGFSName(globus_gridftp_server_operation_finished);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_gridftp_server_operation_finished\n");
+#endif
     globus_l_gfs_data_alive(op->session_handle);
 
     if(finished_info->code / 100 == 1)
@@ -13884,7 +13980,9 @@ globus_gridftp_server_finished_session_start(
     globus_gfs_finished_info_t          finished_info;
     GlobusGFSName(globus_gridftp_server_finished_session_start);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_gridftp_server_finished_session_start\n");
+#endif
     globus_l_gfs_data_alive(op->session_handle);
 
     memset(&finished_info, '\0', sizeof(globus_gfs_finished_info_t));
@@ -13916,7 +14014,9 @@ globus_gridftp_server_finished_active_data(
     globus_gfs_finished_info_t          finished_info;
     GlobusGFSName(globus_gridftp_server_finished_active_data);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_gridftp_server_finished_active_data\n");
+#endif
     globus_l_gfs_data_alive(op->session_handle);
 
     memset(&finished_info, '\0', sizeof(globus_gfs_finished_info_t));
@@ -13945,7 +14045,9 @@ globus_gridftp_server_finished_passive_data(
     globus_gfs_finished_info_t          finished_info;
     GlobusGFSName(globus_gridftp_server_finished_passive_data);
     GlobusGFSDebugEnter();
-
+#ifdef _RAMSES_DEBUG_
+    printf("globus_gridftp_server_finished_passive_data\n");
+#endif
     globus_l_gfs_data_alive(op->session_handle);
 
     memset(&finished_info, '\0', sizeof(globus_gfs_finished_info_t));
