@@ -92,6 +92,7 @@
 //esjung
 #define _RAMSES_DEBUG_
 //#define _RAMSES_DEBUG_FUNC_
+#define _RAMSES_DEBUG_SUPPRESS_
 
 #define GFSDataOpDec(_op, _d_op, _d_s)                                  \
 do                                                                      \
@@ -991,7 +992,7 @@ globus_l_gfs_data_reset_watchdog(
 	
     if(globus_l_gfs_watchdog_limit)
     {
-#ifdef _RAMSES_DEBUG_
+#ifndef _RAMSES_DEBUG_SUPPRESS_
 printf("INSIDE reset_watchdog, operation: %s, ref=%d\n", operation, session_handle->ref);
 #endif
         session_handle->last_active = time(NULL);
@@ -10565,7 +10566,7 @@ printf("op->data_handle->state: GLOBUS_L_GFS_DATA_HANDLE_TE_PRE_AND_DESTROYED\n"
         globus_l_gfs_data_handle_free(data_handle);
     }
 #ifdef _RAMSES_DEBUG_
-printf("Successful END of end_transfer_kickout\n");
+    printf("Successful END of end_transfer_kickout\n");
 #endif
     GlobusGFSDebugExit();
 }
@@ -14081,7 +14082,7 @@ globus_i_gfs_data_request_set_cred(
     GlobusGFSDebugEnter();
 
     session_handle = (globus_l_gfs_data_session_t *) session_arg;
-printf("request_set_cred\n");
+
     globus_l_gfs_data_reset_watchdog(session_handle, NULL);
     
     if(del_cred != NULL)

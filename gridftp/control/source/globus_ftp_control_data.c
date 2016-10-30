@@ -39,6 +39,7 @@
 #include "jansson.h"
 #include <stdlib.h>
 #define _RAMSES_DEBUG_
+//#define _RAMSES_DEBUG_FUNC_
 
 /*
  *  logging messages
@@ -7366,7 +7367,9 @@ globus_l_ftp_control_send_data_kickout(
     entry = (globus_l_ftp_handle_table_entry_t *)user_args;
     data_conn = entry->whos_my_daddy;
     stripe = data_conn->whos_my_daddy;
-
+#ifdef _RAMSES_DEBUG_FUNC_
+    printf("globus_l_ftp_control_send_data_kickout\n");
+#endif
     dc_handle = entry->dc_handle;
     GlobusFTPControlDataTestMagic(dc_handle);
     transfer_handle = entry->transfer_handle;
