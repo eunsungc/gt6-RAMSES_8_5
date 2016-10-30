@@ -11957,8 +11957,7 @@ globus_i_gfs_data_session_stop(
 
     // netlogger
 #ifdef _RAMSES_DEBUG_
-    printf("nlcali_free\n");
-    printf("nlcali_tcp[0]: %x\n", nlcali_tcp[0]);
+    printf("nlcali_free -- nlcali_tcp[0]: %x\n", nlcali_tcp[0]);
 #endif
     if (nlcali_tcp[0] != NULL) {
         nlcali_free(nlcali_tcp[0]);
