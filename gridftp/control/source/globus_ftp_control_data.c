@@ -4246,14 +4246,20 @@ globus_ftp_control_data_get_retransmit_count(
         // netlogger
 #ifdef JSON_STYLE_LOG
         json_object_set_new(root_json, "netlogger", netlogger_json=json_object());
-        sprintf(buf, "%f", 1.0);
+        nlcali_calc(ramses_log.iotime);
+        sprintf(buf, "%f", ramses_log.iotime.dur_sum);
         json_object_set_new(netlogger_json, "iotime", json_real(strtof(buf, NULL)));
-        sprintf(buf, "%f", 1.0);
+        nlcali_calc(ramses_log.nettime);
+        sprintf(buf, "%f", ramses_log.nettime.dur_sum);
         json_object_set_new(netlogger_json, "nettime", json_real(strtof(buf, NULL)));
 #else
         getrusage_str = globus_common_create_string("\n[netlogger]\n iotime: %f, nettime: %f",
             1.0,
             1.0);
+#endif
+
+#ifdef _RAMSES_DEBUG_
+        printf("nlcali_clear\n");
 #endif
         // reset netlogger data structure.
         nlcali_clear(ramses_log.iotime);

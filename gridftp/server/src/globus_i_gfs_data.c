@@ -11456,7 +11456,8 @@ globus_l_gfs_data_start_abort(
                 ramses_log.dest = op->remote_ip ? op->remote_ip : "0.0.0.0";
                 ramses_log.cmd_type = "N/A"; 
                 ramses_log.ret_code = 500; // *(c) CODE - ftp result code (226 = success, 5xx = fail)
-
+                ramses_log.iotime = op->session_handle->storage_spent_time;
+                ramses_log.nettime = op->session_handle->net_spent_time;
                 if (globus_ftp_control_data_get_retransmit_count(
                     &op->data_handle->data_channel,
                     &retransmit_str, ramses_log) != GLOBUS_SUCCESS) {
