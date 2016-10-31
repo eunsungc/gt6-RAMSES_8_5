@@ -22,7 +22,7 @@
 #include <openssl/des.h>
 // esjung -- start
 #include <uuid/uuid.h>
-#include <nl_calipers.h>
+#include "nl_calipers.h"
 // esjung -- end
 #ifndef TARGET_ARCH_WIN32
 #include <pwd.h>
@@ -9893,7 +9893,8 @@ globus_l_gfs_data_get_nl_msg(
     return msg_out;
 }
 
-
+// esjung
+// 10/2016: add netlogger related functions.
 static
 void
 globus_l_gfs_data_end_transfer_kickout(
@@ -10221,6 +10222,8 @@ response_exit:
             ramses_log.dest = op->remote_ip ? op->remote_ip : "0.0.0.0";
             ramses_log.cmd_type = type;
             ramses_log.ret_code = 226; // if succeeds.
+            ramses_log.iotime = op->session_handle->storage_spent_time;
+            ramses_log.nettime = op->session_handle->net_spent_time;
 
             if (globus_ftp_control_data_get_retransmit_count(
                 &op->data_handle->data_channel,
@@ -11031,6 +11034,8 @@ globus_l_gfs_data_read_cb(
 }
 
 // esjung; for periodic logging
+// 10/2016: add netlogger related function.
+
 static
 void
 globus_l_gfs_data_trev_kickout(
@@ -11153,8 +11158,10 @@ globus_l_gfs_data_trev_kickout(
         ramses_log.dest = bounce_info->op->remote_ip ? bounce_info->op->remote_ip : "0.0.0.0";
         ramses_log.cmd_type = type;
         ramses_log.ret_code = 0; // nothing to set
+        ramses_log.iotime = bounce_info->op->session_handle->storage_spent_time;
+        ramses_log.nettime = bounce_info->op->session_handle->net_spent_time;
 
-	  if (globus_ftp_control_data_get_retransmit_count(
+        if (globus_ftp_control_data_get_retransmit_count(
                 &bounce_info->op->data_handle->data_channel,
                 &retransmit_str, ramses_log) != GLOBUS_SUCCESS)
                 // esjung: 8/31/2015

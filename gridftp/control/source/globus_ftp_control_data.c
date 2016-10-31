@@ -3690,6 +3690,7 @@ globus_ftp_control_data_get_socket_buf(
 // esjung; this function returns a log string for the handle.
 // 12/11/2015: added xddprof related logs.
 // 10/2016: remove iostat, xddprof, and iperf. Instead, add netlogger
+// 10/2016: add netlogger function.
 globus_result_t
 globus_ftp_control_data_get_retransmit_count(
     globus_ftp_control_handle_t *               handle,
@@ -3794,6 +3795,7 @@ globus_ftp_control_data_get_retransmit_count(
         json_t *streams_json, *stream_json, *tcpinfo_json, *iperf_json; // network related
         json_t *getrusage_json, *mpstat_json, *mpstat_cpu_json; // cpu related
         json_t *iostat_json, *iostat_dev_json, *xddprof_json; // storage related
+        json_t *netlogger_json;
         char *json_out, buf[GLOBUS_LINE_MAX], devname[GLOBUS_LINE_MAX];
         struct timeval now;
                                                                                 
@@ -4241,6 +4243,22 @@ globus_ftp_control_data_get_retransmit_count(
         }
 #endif
 
+        // netlogger
+#ifdef JSON_STYLE_LOG
+        json_object_set_new(root_json, "netlogger", netlogger_json=json_object());
+        sprintf(buf, "%f", 1.0);
+        json_object_set_new(netlogger_json, "iotime", json_real(buf));
+        sprintf(buf, "%f", 1.0);
+        json_object_set_new(netlogger_json, "nettime", json_real(buf));
+#else
+        getrusage_str = globus_common_create_string("\n[netlogger]\n iotime: %f, nettime: %f",
+            1.0,
+            1.0);
+#endif
+        // reset netlogger data structure.
+        nlcali_clear(ramses_log.iotime);
+        nlcali_clear(ramses_log.nettime);
+		
         // streams
 #ifdef JSON_STYLE_LOG
         json_object_set_new(root_json, "streams", streams_json=json_array());

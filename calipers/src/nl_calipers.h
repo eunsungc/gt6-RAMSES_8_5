@@ -95,7 +95,7 @@ struct nlcali_t {
 
 /** Type definition for pointer to Caliper struct.
  */
-typedef struct nlcali_t *T;
+typedef struct nlcali_t *nlcali_T; // esjung; modified from T to nlcali_T
 
 /* ---------------------------------------------------------------
  * Methods
