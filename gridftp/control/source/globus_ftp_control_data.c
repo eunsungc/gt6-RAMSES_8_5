@@ -38,8 +38,10 @@
 // esjung; for json
 #include "jansson.h"
 #include <stdlib.h>
-#define _RAMSES_DEBUG_
-//#define _RAMSES_DEBUG_FUNC_
+// esjung; several selective compile options
+#define _RAMSES_DEBUG_ // enable debug message
+//#define _RAMSES_DEBUG_FUNC_ // enable debug message just for function entering/exiting
+#define JSON_STYLE_LOG // enable json style logging
 
 /*
  *  logging messages
@@ -3687,6 +3689,7 @@ globus_ftp_control_data_get_socket_buf(
 
 // esjung; this function returns a log string for the handle.
 // 12/11/2015: added xddprof related logs.
+// 10/2016: remove iostat, xddprof, and iperf. Instead, add netlogger
 globus_result_t
 globus_ftp_control_data_get_retransmit_count(
     globus_ftp_control_handle_t *               handle,
@@ -3706,11 +3709,15 @@ globus_ftp_control_data_get_retransmit_count(
     // esjung
     char *                                      count_str = NULL;
     char *                                      tcpinfo_str = NULL;
-    char *							iperf_str = NULL;
     char *                                      mpstat_str = NULL;
     char *                                      getrusage_str = NULL;
+#if 0 // esjung 10/2016
     char *                                      iostat_str = NULL;
     char *					xddprof_str = NULL;
+    char *							iperf_str = NULL;
+#else
+    char *					netlogger_str=NULL;	
+#endif
     char *                                      tmp_str = NULL;
     static char *                               myname=
                           "globus_ftp_control_data_get_retransmit_count";
@@ -3771,7 +3778,6 @@ globus_ftp_control_data_get_retransmit_count(
 #endif
 
 // esjung
-#define JSON_STYLE_LOG
         FILE *fp;
         // variables for popen()
         int status;
@@ -3911,8 +3917,9 @@ globus_ftp_control_data_get_retransmit_count(
             }
             pclose(fp);
         }
-        // iostat
+#if 0        // iostat
         // CHANGES
+        // 10/2016: remove
         // 8/23: Find the device that a file belongs to, and iostat for 2 seconds.
         //   - Find the device: df ./globus-url-copy.help | tail -n 1 | awk {'print $1'}
         //   - iostat for 2 secs: Try in the order of iostat, nfsiostat. CAVEAT: gpfs ('mmpmon') requires root privilege.
@@ -4038,8 +4045,9 @@ globus_ftp_control_data_get_retransmit_count(
             }
 #endif
         }
+#endif
 
-        // xddprof
+#if 0        // xddprof
         int b_xddprof=0;
         do {
             if (ramses_log.writing == 0) { // sender(reader); read /tmp/readprof.tsv
@@ -4155,6 +4163,7 @@ globus_ftp_control_data_get_retransmit_count(
                to determine success/failure of command executed by popen() */
         }
 #endif
+#endif
 
         // getrusage()
         status = getrusage(who, &usage);
@@ -4187,7 +4196,7 @@ globus_ftp_control_data_get_retransmit_count(
             usage.ru_nvcsw, usage.ru_nivcsw);
 #endif
 
-        // iperf
+#if 0        // iperf
         int b_iperf=0;
         if (ramses_log.writing == 0) { // only on sender(reader)
 #if 0 // use SNMP instead of iperf.
@@ -4230,6 +4239,7 @@ globus_ftp_control_data_get_retransmit_count(
 #endif
 #endif
         }
+#endif
 
         // streams
 #ifdef JSON_STYLE_LOG
