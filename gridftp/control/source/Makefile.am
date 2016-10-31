@@ -9,7 +9,7 @@ doc_DATA = GLOBUS_LICENSE
 pkgconfig_DATA = globus-ftp-control.pc
 
 libglobus_ftp_control_la_CPPFLAGS = $(PACKAGE_DEP_CFLAGS)
-libglobus_ftp_control_la_LIBADD = $(PACKAGE_DEP_LIBS)
+libglobus_ftp_control_la_LIBADD = $(PACKAGE_DEP_LIBS) -lnl_calipers
 libglobus_ftp_control_la_LDFLAGS = \
         -version-info $(MAJOR_VERSION):$(MINOR_VERSION):$(AGE_VERSION) \
         -no-undefined
