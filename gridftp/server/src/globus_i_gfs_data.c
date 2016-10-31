@@ -11765,22 +11765,25 @@ globus_i_gfs_data_session_start(
     printf("globus_i_gfs_data_session_start\n");
 #endif
 
-    // esjung -- start
-#ifdef _RAMSES_DEBUG_
-    printf("nlcali_new\n");
-#endif
-    nlcali_tcp[0] = nlcali_new(10);
-#ifdef _RAMSES_DEBUG_
-    printf("nlcali_tcp[0]: %x\n", nlcali_tcp[0]);
-#endif
-    // esjung -- end
-    
     session_handle = (globus_l_gfs_data_session_t *)
         globus_calloc(1, sizeof(globus_l_gfs_data_session_t));
     if(session_handle == NULL)
     {
         /* XXX deal with this */
     }
+
+    // esjung -- start
+#ifdef _RAMSES_DEBUG_
+    printf("nlcali_new\n");
+#endif
+    session_handle->net_spent_time = nlcali_new(10);
+    session_handle->storage_spent_time = nlcali_new(10);
+
+#ifdef _RAMSES_DEBUG_
+    printf("net_spent_time: %x, storage_spent_time: %x\n", session_handle->net_spent_time, session_handle->storage_spent_time);
+#endif
+    // esjung -- end
+    
     session_handle->dsi = globus_l_gfs_dsi;
     globus_handle_table_init(&session_handle->handle_table, NULL);
     globus_mutex_init(&session_handle->mutex, NULL);
@@ -11960,18 +11963,23 @@ globus_i_gfs_data_session_stop(
     printf("globus_i_gfs_data_session_stop\n");
 #endif
 
-    // netlogger
-#ifdef _RAMSES_DEBUG_
-    printf("nlcali_free -- nlcali_tcp[0]: %x\n", nlcali_tcp[0]);
-#endif
-    if (nlcali_tcp[0] != NULL) {
-        nlcali_free(nlcali_tcp[0]);
-        nlcali_tcp[0] = NULL;
-    }
-
     session_handle = (globus_l_gfs_data_session_t *) session_arg;
     if(session_handle != NULL)
     {
+        // netlogger -- start
+#ifdef _RAMSES_DEBUG_
+        printf("nlcali_free -- net_spent_time: %x, storage_spent_time: %x\n", session_handle->net_spent_time, session_handle->storage_spent_time);
+#endif
+        if (session_handle->net_spent_time != NULL) {
+            nlcali_free(session_handle->net_spent_time);
+            session_handle->net_spent_time = NULL;
+        }
+        if (session_handle->storage_spent_time != NULL) {
+            nlcali_free(session_handle->storage_spent_time);
+            session_handle->storage_spent_time = NULL;
+        }
+        // netlogger -- end
+        
         globus_mutex_lock(&session_handle->mutex);
         {
             session_handle->ref--;
