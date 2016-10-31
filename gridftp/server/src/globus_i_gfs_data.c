@@ -197,6 +197,8 @@ typedef struct
     globus_bool_t                       final;
 } globus_l_gfs_data_bounce_t;
 
+// esjung
+// 10/2016: add netlogger related data structure.
 typedef struct
 {
     globus_i_gfs_acl_handle_t           acl_handle;
@@ -269,6 +271,9 @@ typedef struct
     globus_callback_handle_t            watch_handle;
     
     globus_hashtable_t                  custom_cmd_table;
+    // netlogger data structure.
+    nlcali_T				net_spent_time;
+    nlcali_T				storage_spent_time;
 } globus_l_gfs_data_session_t;
 
 typedef struct
