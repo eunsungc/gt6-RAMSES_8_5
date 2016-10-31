@@ -27,6 +27,8 @@
 #include "globus_io.h"
 #include "globus_gss_assist.h"
 #include "globus_handle_table.h"
+// esjung; netlogger
+#include "nl_calipers.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -1776,6 +1778,7 @@ globus_ftp_control_data_get_socket_buf(
 
 // esjung
 // 9/10/2015: added host and volume fields.
+// 10/2016: add netlogger object.
 #if 1
 typedef struct globus_ramses_log_s {
     int		writing;
@@ -1794,6 +1797,8 @@ typedef struct globus_ramses_log_s {
     char *		dest;
     char *		cmd_type;
     int		ret_code;
+    nlcali_T	iotime;
+    nlcali_T	nettime;
 } globus_ramses_log_t;
 
 globus_result_t
