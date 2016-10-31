@@ -43,8 +43,9 @@
 typedef __int64 int64_t;
 #elif defined(MONGO_USE_LONG_LONG_INT)
 typedef long long int int64_t;
-#else
-#error must have a 64bit int type
+#else 
+#include <stdint.h> // esjung; customized for CentOS6.7
+//#error must havea 64bit int type
 #endif
 
 /* big endian is only used for OID generation. little is used everywhere else */
