@@ -58,6 +58,8 @@ do                                                                          \
     }                                                                       \
 } while(0)
 
+//esjung
+#define _RAMSES_DEBUG_FUNC_
 #define GlobusLXIOActiveTest()                                              \
     if(!globus_l_xio_active) return GlobusXIOErrorNotActivated()
 /* 
@@ -190,6 +192,10 @@ void
 globus_i_xio_monitor_init(
     globus_i_xio_monitor_t *            monitor)
 {
+//esjung
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_i_xio_monitor_init\n");
+#endif
     monitor->count = 0;
 }
 
@@ -216,7 +222,9 @@ globus_l_xio_oneshot_wrapper_cb(
     globus_i_xio_space_info_t *         space_info;
     globus_i_xio_handle_t *             handle;
     globus_result_t                     res;
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_l_xio_oneshot_wrapper_cb\n");
+#endif
     space_info = (globus_i_xio_space_info_t *) user_arg;
 
     handle = space_info->handle;
@@ -249,7 +257,9 @@ globus_l_xio_cancel_data_ops(
     GlobusXIOName(globus_l_xio_cancel_data_ops);
 
     GlobusXIODebugInternalEnter();
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_l_xio_cancel_data_ops\n");
+#endif
     for(list = handle->read_op_list;
         !globus_list_empty(list);
         list = globus_list_rest(list))
@@ -286,7 +296,9 @@ globus_l_xio_handle_unopened_close_callback(
     globus_i_xio_op_t *                 op;
     globus_i_xio_handle_t *             handle;
     GlobusXIOName(globus_l_xio_handle_unopened_close_callback);
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_l_xio_handle_unopened_close_callback\n");
+#endif
     GlobusXIODebugInternalEnter();
     op = (globus_i_xio_op_t *) user_arg;
     handle = op->_op_handle;
@@ -315,7 +327,9 @@ globus_l_xio_handle_pre_close(
     globus_i_xio_op_t *                 op;
     globus_result_t                     res = GLOBUS_SUCCESS;
     GlobusXIOName(globus_l_xio_handle_pre_close);
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_l_xio_handle_pre_close\n");
+#endif
     GlobusXIODebugInternalEnter();
 
     GlobusXIOOperationCreate(op, handle->context);
@@ -489,7 +503,9 @@ globus_i_xio_close_handles(
     globus_i_xio_monitor_t              monitor;
     globus_result_t                     res;
     GlobusXIOName(globus_i_xio_close_handles);
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_i_xio_close_handles\n");
+#endif
     GlobusXIODebugInternalEnter();
     
     GlobusXIODebugPrintf(
@@ -751,7 +767,9 @@ globus_i_xio_register_oneshot(
     globus_i_xio_space_info_t *         space_info;
     globus_callback_handle_t *          ch = NULL;
     GlobusXIOName(globus_i_xio_register_oneshot);
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_i_xio_register_oneshot\n");
+#endif
     GlobusXIODebugInternalEnter();
 
     if(handle != NULL && space != GLOBUS_CALLBACK_GLOBAL_SPACE)
@@ -793,7 +811,9 @@ globus_l_xio_activate(void)
 {
     int                                 rc;
     GlobusXIOName(globus_l_xio_activate);
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_l_xio_activate\n");
+#endif
     GlobusXIODebugInternalEnter();
 
     rc = globus_module_activate(GLOBUS_COMMON_MODULE);
@@ -829,7 +849,9 @@ globus_l_xio_deactivate(void)
 {
     int                                 rc;
     GlobusXIOName(globus_l_xio_deactivate);
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_l_xio_deactivate\n");
+#endif
     GlobusXIODebugInternalEnter();
 
     globus_l_xio_handle_create_from_url_cleanup();
@@ -879,7 +901,9 @@ globus_l_xio_open_close_callback(
     globus_i_xio_handle_t *             handle;
     globus_bool_t                       fire_callback = GLOBUS_TRUE;
     GlobusXIOName(globus_l_xio_open_close_callback);
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_l_xio_open_close_callback\n");
+#endif
     GlobusXIODebugInternalEnter();
 
     handle = op->_op_handle;
@@ -986,7 +1010,9 @@ globus_l_xio_open_close_callback_kickout(
     globus_bool_t                       start_close = GLOBUS_FALSE;
     globus_bool_t                       destroy_handle = GLOBUS_FALSE;
     GlobusXIOName(globus_l_xio_open_close_callback_kickout);
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_l_xio_open_close_callback_kickout\n");
+#endif
     GlobusXIODebugInternalEnter();
 
     op = (globus_i_xio_op_t *) user_arg;
@@ -1119,7 +1145,9 @@ globus_i_xio_read_write_callback(
     globus_i_xio_handle_t *             handle;
     globus_bool_t                       fire_operation = GLOBUS_TRUE;
     GlobusXIOName(globus_i_xio_read_write_callback);
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_i_xio_read_write_callback\n");
+#endif
     GlobusXIODebugInternalEnter();
 
     handle = op->_op_handle;
@@ -1199,7 +1227,9 @@ globus_l_xio_read_write_callback_kickout(
     globus_i_xio_handle_t *             handle;
     globus_bool_t                       destroy_handle = GLOBUS_FALSE;
     GlobusXIOName(globus_l_xio_read_write_callback_kickout);
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_l_xio_read_write_callback_kickout\n");
+#endif
     GlobusXIODebugInternalEnter();
 
     op = (globus_i_xio_op_t *) user_arg;
@@ -1283,7 +1313,9 @@ globus_i_xio_operation_cancel(
     int                                 source_ndx)
 {
     GlobusXIOName(globus_i_xio_operation_cancel);
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_i_xio_operation_cancel\n");
+#endif
     GlobusXIODebugInternalEnter();
 
     /* internal function should never be passed NULL */
@@ -1377,7 +1409,9 @@ globus_l_xio_timeout_callback(
     globus_callback_space_t             space =
                             GLOBUS_CALLBACK_GLOBAL_SPACE;                   
     GlobusXIOName(globus_l_xio_timeout_callback);
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_l_xio_timeout_callback\n");
+#endif
     GlobusXIODebugInternalEnter();
     
     op = (globus_i_xio_op_t *) user_arg;
@@ -1559,7 +1593,9 @@ globus_l_xio_register_writev(
     globus_bool_t                       destroy_handle = GLOBUS_FALSE;
     globus_i_xio_handle_t *             handle;
     GlobusXIOName(globus_l_xio_register_writev);
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_l_xio_register_writev\n");
+#endif
     GlobusXIODebugInternalEnter();
 
     handle = op->_op_handle;
@@ -1671,7 +1707,9 @@ globus_l_xio_register_readv(
     globus_bool_t                       destroy_handle = GLOBUS_FALSE;
     globus_i_xio_handle_t *             handle;
     GlobusXIOName(globus_l_xio_register_readv);
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_l_xio_register_readv\n");
+#endif
     GlobusXIODebugInternalEnter();
 
     handle = op->_op_handle;
@@ -1794,7 +1832,9 @@ globus_l_xio_register_open(
     globus_result_t                     res;
     int                                 ctr;
     GlobusXIOName(globus_l_xio_register_open);
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_l_xio_register_open\n");
+#endif
     GlobusXIODebugInternalEnter();
     
     res = globus_xio_contact_parse(&contact_info, contact_string);
@@ -1909,7 +1949,9 @@ globus_l_xio_register_close(
     globus_i_xio_handle_t *             handle;
     globus_result_t                     res = GLOBUS_SUCCESS;
     GlobusXIOName(globus_l_xio_register_close);
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_l_xio_register_close\n");
+#endif
     GlobusXIODebugInternalEnter();
 
     handle = op->_op_handle;
@@ -2008,7 +2050,9 @@ globus_l_xio_handle_cancel_operations(
     globus_list_t *                     list;
     globus_i_xio_op_t *                 tmp_op;
     GlobusXIOName(globus_l_xio_handle_cancel_operations);
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_l_xio_handle_cancel_operations\n");
+#endif
     GlobusXIODebugInternalEnter();
 
     globus_mutex_lock(&xio_handle->context->cancel_mutex);
@@ -2066,7 +2110,9 @@ globus_xio_handle_create(
     globus_list_t *                     list;
     globus_result_t                     res = GLOBUS_SUCCESS;
     GlobusXIOName(globus_xio_handle_create);
-    
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_xio_handle_create\n");
+#endif
     GlobusXIODebugEnter();
     GlobusLXIOActiveTest();
     
@@ -2160,7 +2206,9 @@ globus_xio_register_open(
     globus_callback_space_t             space = 
             GLOBUS_CALLBACK_GLOBAL_SPACE;
     GlobusXIOName(globus_xio_register_open);
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_xio_register_open\n");
+#endif
     GlobusXIODebugEnter();
     GlobusLXIOActiveTest();
 
@@ -2274,7 +2322,9 @@ globus_xio_register_read(
     globus_result_t                     res;
     int                                 ref = 0;
     GlobusXIOName(globus_xio_register_read);
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_xio_register_read\n");
+#endif
     GlobusXIODebugEnter();
     GlobusLXIOActiveTest();
     
@@ -2351,6 +2401,9 @@ globus_xio_register_readv(
     globus_i_xio_op_t *                 op;
     int                                 ref = 0;
     GlobusXIOName(globus_xio_register_readv);
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_xio_register_readv\n");
+#endif
 
     GlobusXIODebugEnter();
     GlobusLXIOActiveTest();
@@ -2432,7 +2485,9 @@ globus_xio_register_write(
     globus_i_xio_handle_t *             handle;
     int                                 ref = 0;
     GlobusXIOName(globus_xio_register_write);
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_xio_register_write\n");
+#endif;
     GlobusXIODebugEnter();
     GlobusLXIOActiveTest();
 
@@ -2512,7 +2567,9 @@ globus_xio_register_writev(
     globus_i_xio_handle_t *             handle;
     int                                 ref = 0;
     GlobusXIOName(globus_xio_register_writev);
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_xio_register_writev\n");
+#endif
     GlobusXIODebugEnter();
     GlobusLXIOActiveTest();
 
@@ -2591,7 +2648,9 @@ globus_xio_register_close(
     globus_i_xio_op_t *                 op = NULL;
     globus_bool_t                       pass = GLOBUS_TRUE;
     GlobusXIOName(globus_xio_register_close);
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_xio_register_close\n");
+#endif
     GlobusXIODebugEnter();
     GlobusLXIOActiveTest();
 
@@ -2656,7 +2715,9 @@ globus_xio_handle_cancel_operations(
     globus_i_xio_handle_t *             xio_handle;
     globus_result_t                     res;
     GlobusXIOName(globus_xio_handle_cancel_operations);
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_xio_handle_cancel_operations\n");
+#endif
     GlobusXIODebugEnter();
     GlobusLXIOActiveTest();
 
@@ -2703,7 +2764,9 @@ globus_xio_handle_cntl(
     globus_xio_timeout_callback_t       timeout_cb;
     globus_reltime_t *                  delay_time;
     GlobusXIOName(globus_xio_handle_cntl);
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_xio_handle_cntl\n");
+#endif
     GlobusXIODebugEnter();
     GlobusLXIOActiveTest();
 
@@ -2838,7 +2901,9 @@ globus_i_xio_blocking_t *
 globus_i_xio_blocking_alloc()
 {
     globus_i_xio_blocking_t *           info;
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_i_xio_blocking_alloc\n");
+#endif
     info = (globus_i_xio_blocking_t *) 
                 globus_malloc(sizeof(globus_i_xio_blocking_t));
     if(info == NULL)
@@ -2870,7 +2935,9 @@ globus_l_xio_blocking_cb(
     globus_i_xio_blocking_t *           info;
 
     info = (globus_i_xio_blocking_t *) user_arg;
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_l_xio_blocking_cb\n");
+#endif
     globus_mutex_lock(&info->mutex);
     {
         info->error_obj = GlobusXIOResultToObj(result);
@@ -2891,7 +2958,9 @@ globus_l_xio_blocking_data_cb(
     void *                              user_arg)
 {
     globus_i_xio_blocking_t *               info;
-    
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_l_xio_blocking_data_cb\n");
+#endif
     info = (globus_i_xio_blocking_t *) user_arg;
 
     globus_mutex_lock(&info->mutex);
@@ -2916,7 +2985,9 @@ globus_l_xio_blocking_iov_cb(
     void *                              user_arg)
 {
     globus_i_xio_blocking_t *           info;
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_l_xio_blocking_iov_cb\n");
+#endif
     info = (globus_i_xio_blocking_t *) user_arg;
 
     globus_mutex_lock(&info->mutex);
@@ -2945,7 +3016,9 @@ globus_xio_open(
     globus_callback_space_t             space = 
             GLOBUS_CALLBACK_GLOBAL_SPACE;
     GlobusXIOName(globus_xio_open);
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_xio_open\n");
+#endif
     GlobusXIODebugEnter();
     GlobusLXIOActiveTest();
 
@@ -3086,7 +3159,10 @@ globus_xio_read(
     globus_bool_t                       destroy_op = GLOBUS_FALSE;
     globus_bool_t                       destroy_handle = GLOBUS_FALSE;
     GlobusXIOName(globus_xio_read);
-
+//esjung
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_xio_read\n");
+#endif
     GlobusXIODebugEnter();
     GlobusLXIOActiveTest();
 
@@ -3211,7 +3287,9 @@ globus_xio_readv(
     globus_bool_t                       destroy_op = GLOBUS_FALSE;
     globus_bool_t                       destroy_handle = GLOBUS_FALSE;
     GlobusXIOName(globus_xio_readv);
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_xio_readv\n");
+#endif
     GlobusXIODebugEnter();
     GlobusLXIOActiveTest();
 
@@ -3342,7 +3420,9 @@ globus_xio_write(
     globus_bool_t                       destroy_op = GLOBUS_FALSE;
     globus_bool_t                       destroy_handle = GLOBUS_FALSE;
     GlobusXIOName(globus_xio_write);
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_xio_write\n");
+#endif
     GlobusXIODebugEnter();
     GlobusLXIOActiveTest();
 
@@ -3467,7 +3547,9 @@ globus_xio_writev(
     int                                 ref = 0;
     globus_i_xio_blocking_t *           info;
     GlobusXIOName(globus_xio_writev);
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_xio_writev\n");
+#endif
     GlobusXIODebugEnter();
     GlobusLXIOActiveTest();
 
@@ -3589,7 +3671,9 @@ globus_xio_close(
     globus_bool_t                       destroy_handle = GLOBUS_FALSE;
     int                                 ctr;
     GlobusXIOName(globus_xio_close);
- 
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_xio_close\n");
+#endif
     GlobusXIODebugEnter();
     GlobusLXIOActiveTest();
 
