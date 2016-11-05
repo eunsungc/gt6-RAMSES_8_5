@@ -10224,7 +10224,9 @@ response_exit:
             ramses_log.ret_code = 226; // if succeeds.
             ramses_log.iotime = op->session_handle->storage_spent_time;
             ramses_log.nettime = op->session_handle->net_spent_time;
-
+#ifdef _RAMSES_DEBUG_
+printf("op->data_handle->http_handle: %x\n", op->data_handle->http_handle);
+#endif
             if (globus_ftp_control_data_get_retransmit_count(
                 &op->data_handle->data_channel,
                 &retransmit_str, ramses_log) != GLOBUS_SUCCESS) {
@@ -13831,6 +13833,9 @@ globus_gridftp_server_register_read(
     globus_l_gfs_data_bounce_t *        bounce_info;
     GlobusGFSName(globus_gridftp_server_register_read);
     GlobusGFSDebugEnter();
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_gridftp_server_register_read\n");
+#endif
 
     globus_l_gfs_data_alive(op->session_handle);
     bounce_info = (globus_l_gfs_data_bounce_t *)
@@ -13904,6 +13909,9 @@ globus_gridftp_server_register_write(
     globus_l_gfs_data_bounce_t *        bounce_info;
     GlobusGFSName(globus_gridftp_server_register_write);
     GlobusGFSDebugEnter();
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_gridftp_server_register_write\n");
+#endif
 
     globus_l_gfs_data_alive(op->session_handle);
     bounce_info = (globus_l_gfs_data_bounce_t *)
