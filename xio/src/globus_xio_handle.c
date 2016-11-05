@@ -60,6 +60,8 @@ do                                                                          \
 
 //esjung
 #define _RAMSES_DEBUG_FUNC_
+#define _RAMSES_DEBUG_
+
 #define GlobusLXIOActiveTest()                                              \
     if(!globus_l_xio_active) return GlobusXIOErrorNotActivated()
 /* 
@@ -2488,6 +2490,10 @@ globus_xio_register_write(
 #ifdef _RAMSES_DEBUG_FUNC_
 printf("globus_xio_register_write\n");
 #endif;
+#ifdef _RAMSES_DEBUG_
+printf("user_handle: %x\n", user_handle);
+#endif
+
     GlobusXIODebugEnter();
     GlobusLXIOActiveTest();
 
