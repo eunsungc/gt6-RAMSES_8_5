@@ -1677,6 +1677,10 @@ globus_gfs_ipc_reply_session(
     GlobusGFSName(globus_gfs_ipc_reply_session);
     GlobusGFSDebugEnter();
 
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_gfs_ipc_reply_session\n");
+#endif
+
     globus_assert(!globus_l_gfs_ipc_requester);
 
     globus_mutex_lock(&ipc->mutex);
@@ -6132,6 +6136,10 @@ globus_gfs_ipc_request_transfer_event(
     GlobusGFSName(globus_gfs_ipc_request_transfer_event);
     GlobusGFSDebugEnter();
 
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_gfs_ipc_request_transfer_event\n");
+#endif
+
     ipc = (globus_i_gfs_ipc_handle_t *) ipc_handle;
 
     globus_mutex_lock(&ipc->mutex);
@@ -6245,6 +6253,10 @@ globus_l_gfs_ipc_pack_data(
     globus_size_t                       ndx;
     GlobusGFSName(globus_l_gfs_ipc_pack_data);
     GlobusGFSDebugEnter();
+
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_l_gfs_ipc_pack_data\n");
+#endif
 
     if(data_info->del_cred == NULL)
     {
