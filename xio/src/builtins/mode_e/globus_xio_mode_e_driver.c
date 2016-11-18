@@ -39,6 +39,9 @@ GlobusXIODeclareDriver(mode_e);
         GLOBUS_L_XIO_MODE_E_DEBUG_TRACE,                                     \
         ("[%s] Exiting with error\n", _xio_name))
 
+// esjung
+#define _RAMSES_DEBUG_FUNC_
+
 enum globus_l_xio_error_levels
 {
     GLOBUS_L_XIO_MODE_E_DEBUG_TRACE                = 1,
@@ -2680,6 +2683,11 @@ globus_i_xio_mode_e_register_write(
     GlobusXIOName(globus_i_xio_mode_e_register_write);
 
     GlobusXIOModeEDebugEnter();
+
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_i_xio_mode_e_register_write\n");
+#endif
+
     handle = connection_handle->mode_e_handle;
     header = (globus_l_xio_mode_e_header_t *) globus_memory_pop_node(
                                                     &handle->header_memory);
