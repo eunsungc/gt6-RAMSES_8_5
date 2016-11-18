@@ -68,6 +68,9 @@
 #define MAXPATHLEN 4096
 #endif
 
+// esjung
+#define _RAMSES_DEBUG_FUNC_
+
 GlobusDebugDeclare(GLOBUS_GRIDFTP_SERVER_FILE);
 
 #define GlobusGFSFileDebugPrintf(level, message)                             \
@@ -2293,7 +2296,11 @@ globus_l_gfs_file_dispatch_write(
     globus_result_t                     result;
     GlobusGFSName(globus_l_gfs_file_dispatch_write);
     GlobusGFSFileDebugEnter();
-    
+
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_l_gfs_file_dispatch_write\n");
+#endif
+
     if(monitor->pending_writes == 0 && !monitor->aborted)
     {
         buf_info = (globus_l_buffer_info_t *)
