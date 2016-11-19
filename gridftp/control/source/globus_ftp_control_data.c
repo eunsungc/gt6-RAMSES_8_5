@@ -40,7 +40,7 @@
 #include <stdlib.h>
 // esjung; several selective compile options
 #define _RAMSES_DEBUG_ // enable debug message
-//#define _RAMSES_DEBUG_FUNC_ // enable debug message just for function entering/exiting
+#define _RAMSES_DEBUG_FUNC_ // enable debug message just for function entering/exiting
 #define JSON_STYLE_LOG // enable json style logging
 
 /*
@@ -4992,6 +4992,9 @@ globus_ftp_control_data_write(
     static char *                               myname=
                                       "globus_ftp_control_data_write";
 
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_ftp_control_data_write\n");
+#endif
     /*
      *  error checking
      */
@@ -6440,6 +6443,10 @@ globus_ftp_control_data_write_stripe(
     globus_object_t *                           err;
     static char *                               myname=
                                       "globus_ftp_control_data_write_stripe";
+
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_ftp_control_data_write_stripe\n");
+#endif
 
     /*
      *  error checking
