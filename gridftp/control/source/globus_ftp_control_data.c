@@ -5196,6 +5196,10 @@ globus_ftp_control_data_read(
     static char *                               myname=
                                       "globus_ftp_control_data_read";
 
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_ftp_control_data_read\n");
+#endif
+
     /*
      *  error checking
      */
@@ -5332,6 +5336,9 @@ globus_ftp_control_data_read_all(
     static char *                               myname=
                                       "globus_ftp_control_data_read";
 
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_ftp_control_data_read_all\n");
+#endif
     /*
      *  error checking
      */
