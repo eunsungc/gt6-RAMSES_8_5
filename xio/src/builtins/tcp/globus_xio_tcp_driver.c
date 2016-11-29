@@ -26,6 +26,9 @@
 #define EADDRINUSE              WSAEADDRINUSE
 #endif
 
+//esjung
+#define _RAMSES_DEBUG_FUNC_
+
 #include <fcntl.h>
 
 GlobusDebugDefine(GLOBUS_XIO_TCP);
@@ -2431,7 +2434,11 @@ globus_l_xio_tcp_system_read_cb(
 {
     globus_l_handle_t *                 handle;
     GlobusXIOName(globus_l_xio_tcp_system_read_cb);
-    
+//esjung
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_l_xio_tcp_system_read_cb\n");
+#endif
+
     GlobusXIOTcpDebugEnter();
     handle = (globus_l_handle_t *) user_arg;
     globus_l_xio_tcp_finish_read(handle, result, nbytes);
@@ -2453,7 +2460,11 @@ globus_l_xio_tcp_read(
     globus_size_t                       nbytes;
     globus_result_t                     result = GLOBUS_SUCCESS;
     GlobusXIOName(globus_l_xio_tcp_read);
-    
+//esjung
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_l_xio_tcp_read\n");
+#endif
+
     GlobusXIOTcpDebugEnter();
     handle = (globus_l_handle_t *) driver_specific_handle;
     
@@ -2582,7 +2593,11 @@ globus_l_xio_tcp_system_write_cb(
 {
     globus_l_handle_t *                 handle;
     GlobusXIOName(globus_l_xio_tcp_system_write_cb);
-    
+//esjung
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_l_xio_tcp_system_write_cb\n");
+#endif
+
     GlobusXIOTcpDebugEnter();
     handle = (globus_l_handle_t *) user_arg;
     globus_l_xio_tcp_finish_write(handle, result, nbytes);
@@ -2605,7 +2620,11 @@ globus_l_xio_tcp_write(
     globus_size_t                       nbytes;
     globus_result_t                     result = GLOBUS_SUCCESS;
     GlobusXIOName(globus_l_xio_tcp_write);
-    
+//esjung
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_l_xio_tcp_write\n");
+#endif
+
     GlobusXIOTcpDebugEnter();
     
     GlobusXIOTcpDebugPrintf(

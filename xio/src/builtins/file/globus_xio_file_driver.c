@@ -19,6 +19,9 @@
 #include "version.h"
 #include <stdio.h>
 
+// esjung
+#define _RAMSES_DEBUG_FUNC_
+
 GlobusDebugDefine(GLOBUS_XIO_FILE);
 
 #define GlobusXIOFileDebugPrintf(level, message)                            \
@@ -701,7 +704,11 @@ globus_l_xio_file_system_read_cb(
 {
     globus_xio_operation_t              op;
     GlobusXIOName(globus_l_xio_file_system_read_cb);
-    
+//esjung
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_l_xio_file_system_read_cb\n");
+#endif
+
     GlobusXIOFileDebugEnter();
     
     op = (globus_xio_operation_t) user_arg;
@@ -732,6 +739,11 @@ globus_l_xio_file_read(
     globus_result_t                     result;
     globus_off_t                        offset;
     GlobusXIOName(globus_l_xio_file_read);
+
+//esjung
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_l_xio_file_read\n");
+#endif
 
     GlobusXIOFileDebugEnter();
     
@@ -797,7 +809,11 @@ globus_l_xio_file_system_write_cb(
 {
     globus_xio_operation_t              op;
     GlobusXIOName(globus_l_xio_file_system_write_cb);
-    
+//esjung
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_l_xio_file_system_write_cb\n");
+#endif
+
     GlobusXIOFileDebugEnter();
     
     op = (globus_xio_operation_t) user_arg;
@@ -828,7 +844,11 @@ globus_l_xio_file_write(
     globus_result_t                     result;
     globus_off_t                        offset;
     GlobusXIOName(globus_l_xio_file_write);
-    
+//esjung
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_l_xio_file_write\n");
+#endif
+
     GlobusXIOFileDebugEnter();
     
     handle = (globus_l_handle_t *) driver_specific_handle;
