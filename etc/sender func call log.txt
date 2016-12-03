@@ -1,3 +1,10 @@
+Summary
+globus_ftp_control_data_write()
+-->globus_xio_register_read()
+-->globus_l_xio_file_read()
+-->globus_xio_register_write()
+-->globus_l_xio_tcp_write()
+
 [esjung@vm2 ~]$ globus_xio_handle_cntl
 globus_xio_register_close
 globus_l_xio_handle_pre_close
