@@ -4975,6 +4975,8 @@ globus_ftp_control_local_stru(
  *        User supplied argument to the callback function
  *
  */
+ // esjung
+ // 12. 3. 2016: modify the parameter list.
 globus_result_t
 globus_ftp_control_data_write(
     globus_ftp_control_handle_t *		handle,
@@ -4983,7 +4985,9 @@ globus_ftp_control_data_write(
     globus_off_t				offset,
     globus_bool_t				eof,
     globus_ftp_control_data_callback_t	        callback,
-    void *					callback_arg)
+    void *					callback_arg,
+    nlcali_T iotime,
+    nlcali_T nettime)
 {
     globus_i_ftp_dc_handle_t *                  dc_handle;
     globus_result_t                             result = GLOBUS_SUCCESS;
@@ -5182,13 +5186,17 @@ globus_ftp_control_get_stripe_count(
  *        User supplied argument to the callback function
  *
  */
+  // esjung
+ // 12. 3. 2016: modify the parameter list.
 globus_result_t
 globus_ftp_control_data_read(
     globus_ftp_control_handle_t *		handle,
     globus_byte_t *				buffer,
     globus_size_t				max_length,
     globus_ftp_control_data_callback_t	        callback,
-    void *					callback_arg)
+    void *					callback_arg,
+    nlcali_T iotime,
+    nlcali_T nettime)
 {
     globus_i_ftp_dc_handle_t *                  dc_handle;
     globus_result_t                             result;

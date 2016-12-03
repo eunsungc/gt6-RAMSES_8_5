@@ -1676,6 +1676,8 @@ globus_ftp_control_local_stru(
     globus_ftp_control_handle_t *		handle,
     globus_ftp_control_structure_t		structure);
 
+// esjung -- start
+// 12. 5. 2016: add iotime and nettime.
 globus_result_t
 globus_ftp_control_data_write(
     globus_ftp_control_handle_t *		handle,
@@ -1684,7 +1686,9 @@ globus_ftp_control_data_write(
     globus_off_t				offset,
     globus_bool_t				eof,
     globus_ftp_control_data_callback_t        	callback,
-    void *					callback_arg);
+    void *					callback_arg,
+    nlcali_T	iotime,
+    nlcali_T	nettime);
 
 globus_result_t
 globus_ftp_control_data_read(
@@ -1692,8 +1696,10 @@ globus_ftp_control_data_read(
     globus_byte_t *				buffer,
     globus_size_t				max_length,
     globus_ftp_control_data_callback_t     	callback,
-    void *					callback_arg);
-
+    void *					callback_arg,
+    nlcali_T	iotime,
+    nlcali_T	nettime);
+// esjung -- end
 globus_result_t
 globus_ftp_control_data_read_all(
     globus_ftp_control_handle_t *               handle,

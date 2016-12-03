@@ -91,7 +91,7 @@
 
 //esjung
 #define _RAMSES_DEBUG_
-//#define _RAMSES_DEBUG_FUNC_
+#define _RAMSES_DEBUG_FUNC_
 #define _RAMSES_DEBUG_SUPPRESS_
 
 #define GFSDataOpDec(_op, _d_op, _d_s)                                  \
@@ -296,6 +296,9 @@ typedef struct
 
 } globus_l_gfs_data_handle_t;
 
+// esjung
+// This data structure is used as a parameter in globus_gridftp_server_register_read/write()
+// which initiate xio read/write().
 typedef struct globus_l_gfs_data_operation_s
 {
     globus_l_gfs_data_state_t           state;
@@ -9482,6 +9485,7 @@ globus_l_gfs_data_finish_connected(
                 op->stripe_count == 1 ||
                 op->eof_ready)
             {
+                // esjung; modify the parameter list.s
                 result = globus_ftp_control_data_write(
                     &op->data_handle->data_channel,
                     (globus_byte_t *) "",
@@ -9489,7 +9493,9 @@ globus_l_gfs_data_finish_connected(
                     0,
                     GLOBUS_TRUE,
                     globus_l_gfs_data_write_eof_cb,
-                    op);
+                    op,
+                    NULL,
+                    NULL);
                 if(result != GLOBUS_SUCCESS)
                 {
                     globus_gfs_log_result(
@@ -10926,6 +10932,7 @@ globus_l_gfs_data_send_eof(
         {
             case GLOBUS_L_GFS_DATA_FINISH:
                 op->eof_ready = GLOBUS_TRUE;
+                // modify the parameter list.
                 result = globus_ftp_control_data_write(
                     &op->data_handle->data_channel,
                     (globus_byte_t *) "",
@@ -10933,7 +10940,9 @@ globus_l_gfs_data_send_eof(
                     0,
                     GLOBUS_TRUE,
                     globus_l_gfs_data_write_eof_cb,
-                    op);
+                    op,
+                    NULL,
+                    NULL);
                 if(result != GLOBUS_SUCCESS)
                 {
                     globus_gfs_log_result(
@@ -13869,12 +13878,15 @@ printf("globus_gridftp_server_register_read\n");
     }
     else
     {
+    // esjung; modify the paramter list.
     result = globus_ftp_control_data_read(
         &op->data_handle->data_channel,
         buffer,
         length,
         globus_l_gfs_data_read_cb,
-        bounce_info);
+        bounce_info,
+        NULL,
+        NULL);
     if(result != GLOBUS_SUCCESS)
     {
         result = GlobusGFSErrorWrapFailed(
@@ -13974,6 +13986,7 @@ printf("globus_gridftp_server_register_write\n");
         }
         else
         {
+        // esjung; modify the paramter list.
         result = globus_ftp_control_data_write(
             &op->data_handle->data_channel,
             buffer,
@@ -13981,7 +13994,9 @@ printf("globus_gridftp_server_register_write\n");
             offset + op->write_delta,
             GLOBUS_FALSE,
             globus_l_gfs_data_write_cb,
-            bounce_info);
+            bounce_info,
+            NULL,
+            NULL);
     }
     }
     if(result != GLOBUS_SUCCESS)

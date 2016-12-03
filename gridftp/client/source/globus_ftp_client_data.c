@@ -223,13 +223,15 @@ globus_ftp_client_register_read(
 	globus_i_ftp_client_plugin_notify_read(i_handle,
 					       data->buffer,
 					       data->buffer_length);
-
+        // esjung; modify the parameter list.
         result = globus_ftp_control_data_read(
             i_handle->source->control_handle,
             data->buffer,
             data->buffer_length,
             globus_l_ftp_client_data_callback,
-            i_handle);
+            i_handle,
+            NULL,
+            NULL);
 
         if(result != GLOBUS_SUCCESS)
         {
@@ -445,6 +447,7 @@ globus_ftp_client_register_write(
 	 * we don't need to, because the transfer can't finish without
 	 * us.
 	 */
+       // esjung; modify the function parameter list.
 	result = globus_ftp_control_data_write(
 	    i_handle->dest->control_handle,
 	    data->buffer,
@@ -452,7 +455,9 @@ globus_ftp_client_register_write(
 	    data->offset,
 	    data->eof,
 	    globus_l_ftp_client_data_callback,
-	    i_handle);
+	    i_handle,
+	    NULL,
+	    NULL);
 
 	if(result != GLOBUS_SUCCESS)
 	{
@@ -1210,12 +1215,15 @@ globus_i_ftp_client_data_dispatch_queue(
 	    }
 	    else
 	    {
+	       // esjung; modify the paramter list.
 		result = globus_ftp_control_data_read(
 		    handle->source->control_handle,
 		    data->buffer,
 		    data->buffer_length,
 		    globus_l_ftp_client_data_callback,
-		    handle);
+		    handle,
+		    NULL,
+		    NULL);
 	    }
 	    break;
 	case GLOBUS_FTP_CLIENT_PUT:
@@ -1224,6 +1232,7 @@ globus_i_ftp_client_data_dispatch_queue(
 						    data->buffer_length,
 						    data->offset,
 						    data->eof);
+           // esjung; modify the function parameter list.
 	    result = globus_ftp_control_data_write(
 		handle->dest->control_handle,
 		data->buffer,
@@ -1231,7 +1240,9 @@ globus_i_ftp_client_data_dispatch_queue(
 		data->offset,
 		data->eof,
 		globus_l_ftp_client_data_callback,
-		handle);
+		handle,
+		NULL,
+		NULL);
 
 	    break;
 	default: /* No other states should occur */
