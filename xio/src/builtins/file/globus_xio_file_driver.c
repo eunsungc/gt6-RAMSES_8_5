@@ -706,7 +706,7 @@ globus_l_xio_file_system_read_cb(
     GlobusXIOName(globus_l_xio_file_system_read_cb);
 //esjung
 #ifdef _RAMSES_DEBUG_FUNC_
-printf("globus_l_xio_file_system_read_cb\n");
+printf("globus_l_xio_file_system_read_cb(%s)\n", __func__);
 #endif
 
     GlobusXIOFileDebugEnter();
@@ -742,7 +742,7 @@ globus_l_xio_file_read(
 
 //esjung
 #ifdef _RAMSES_DEBUG_FUNC_
-printf("globus_l_xio_file_read\n");
+printf("globus_l_xio_file_read()%s\n", __func__);
 #endif
 
     GlobusXIOFileDebugEnter();
@@ -811,7 +811,7 @@ globus_l_xio_file_system_write_cb(
     GlobusXIOName(globus_l_xio_file_system_write_cb);
 //esjung
 #ifdef _RAMSES_DEBUG_FUNC_
-printf("globus_l_xio_file_system_write_cb\n");
+printf("globus_l_xio_file_system_write_cb(%s)\n", __func__);
 #endif
 
     GlobusXIOFileDebugEnter();
@@ -846,7 +846,7 @@ globus_l_xio_file_write(
     GlobusXIOName(globus_l_xio_file_write);
 //esjung
 #ifdef _RAMSES_DEBUG_FUNC_
-printf("globus_l_xio_file_write\n");
+printf("globus_l_xio_file_write(%s)\n", __func__);
 #endif
 
     GlobusXIOFileDebugEnter();
