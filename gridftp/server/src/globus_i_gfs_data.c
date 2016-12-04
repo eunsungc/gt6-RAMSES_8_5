@@ -13885,8 +13885,8 @@ printf("globus_gridftp_server_register_read\n");
         length,
         globus_l_gfs_data_read_cb,
         bounce_info,
-        NULL,
-        NULL);
+        op->session_handle->storage_spent_time,
+        op->session_handle->net_spent_time);
     if(result != GLOBUS_SUCCESS)
     {
         result = GlobusGFSErrorWrapFailed(
@@ -13995,8 +13995,8 @@ printf("globus_gridftp_server_register_write\n");
             GLOBUS_FALSE,
             globus_l_gfs_data_write_cb,
             bounce_info,
-            NULL,
-            NULL);
+            op->session_handle->storage_spent_time,
+            op->session_handle->net_spent_time);
     }
     }
     if(result != GLOBUS_SUCCESS)
