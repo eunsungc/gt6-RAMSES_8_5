@@ -411,7 +411,9 @@ globus_l_ftp_control_data_eb_write(
     globus_off_t                                offset,
     globus_bool_t                               eof,
     globus_ftp_control_data_callback_t          callback,
-    void *                                      callback_arg);
+    void *                                      callback_arg,
+    nlcali_T					iotime,
+    nlcali_T					nettime);
 
 void
 globus_l_ftp_eb_send_eof_callback(
@@ -566,7 +568,9 @@ globus_i_ftp_control_data_write_stripe(
     globus_off_t                                offset,
     globus_bool_t                               eof,
     int                                         stripe_ndx,
-    globus_ftp_control_data_write_info_t *      data_info);
+    globus_ftp_control_data_write_info_t *      data_info,
+    nlcali_T					iotime,
+    nlcali_T					nettime);
 
 globus_result_t
 globus_i_ftp_control_create_data_info(
@@ -5104,7 +5108,9 @@ printf("globus_ftp_control_data_write\n");
                          offset,
                          eof,
                          callback,
-                         callback_arg);
+                         callback_arg,
+                         iotime,
+                         nettime);
         }
         else
         {
@@ -5649,6 +5655,10 @@ globus_l_ftp_control_data_stream_read_write(
     static char *                               my_name = 
         "globus_l_ftp_control_data_stream_read_write";
 
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_l_ftp_control_data_stream_read_write\n");
+#endif
+
     if(dc_handle->state == GLOBUS_FTP_DATA_STATE_CLOSING)
     {
         err = globus_error_construct_string(
@@ -5694,7 +5704,9 @@ globus_l_ftp_control_data_eb_write(
     globus_off_t                                offset,
     globus_bool_t                               eof,
     globus_ftp_control_data_callback_t          callback,
-    void *                                      callback_arg)
+    void *                                      callback_arg,
+    nlcali_T					iotime,
+    nlcali_T					nettime)
 {
     globus_result_t                             res;
     globus_l_ftp_handle_table_entry_t *         tmp_ent;
@@ -5775,7 +5787,9 @@ globus_l_ftp_control_data_eb_write(
                 offset,
                 eof,
                 0,
-                &data_info);
+                &data_info,
+                iotime,
+                nettime);
             if(res != GLOBUS_SUCCESS)
             {
                 /* need to free what was created in:
@@ -6481,7 +6495,9 @@ globus_ftp_control_data_write_stripe(
     globus_bool_t                               eof,
     int                                         stripe_ndx,
     globus_ftp_control_data_callback_t          callback,
-    void *                                      callback_arg)
+    void *                                      callback_arg,
+    nlcali_T					iotime,
+    nlcali_T					nettime)
 {
     globus_ftp_control_data_write_info_t        data_info;
     globus_i_ftp_dc_handle_t *                  dc_handle;
@@ -6556,7 +6572,9 @@ printf("globus_ftp_control_data_write_stripe\n");
                   offset,
                   eof,
                   stripe_ndx,
-                  &data_info);
+                  &data_info,
+                  iotime,
+                  nettime);
 
         res = globus_i_ftp_control_release_data_info(
                   dc_handle,
@@ -6670,7 +6688,9 @@ globus_X_ftp_control_data_write_stripe(
               offset,
               eof,
               stripe_ndx,
-              data_info);
+              data_info,
+              NULL,
+              NULL);
 
     return res;
 }
@@ -6686,7 +6706,9 @@ globus_i_ftp_control_data_write_stripe(
     globus_off_t				offset,
     globus_bool_t				eof,
     int                                         stripe_ndx,
-    globus_ftp_control_data_write_info_t *      data_info)
+    globus_ftp_control_data_write_info_t *      data_info,
+    nlcali_T					iotime,
+    nlcali_T					nettime)
 {
     globus_l_ftp_handle_table_entry_t *         tmp_ent;
     globus_ftp_data_stripe_t *                  stripe;

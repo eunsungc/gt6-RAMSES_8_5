@@ -979,7 +979,9 @@ globus_ftp_control_data_write_stripe(
     globus_bool_t                               eof,
     int                                         stripe_ndx,
     globus_ftp_control_data_callback_t          callback,
-    void *                                      callback_arg);
+    void *                                      callback_arg,
+    nlcali_T					iotime,
+    nlcali_T					nettime);
 
 globus_result_t
 globus_X_ftp_control_data_write_stripe(
