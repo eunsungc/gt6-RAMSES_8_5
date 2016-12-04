@@ -38,6 +38,8 @@
 // esjung; for json
 #include "jansson.h"
 #include <stdlib.h>
+// esjung; netlogger
+#include "nl_calipers.h"
 // esjung; several selective compile options
 #define _RAMSES_DEBUG_ // enable debug message
 #define _RAMSES_DEBUG_FUNC_ // enable debug message just for function entering/exiting
@@ -89,7 +91,7 @@
     ci->data_conn = dc;                                                 \
 }
 
-#define TABLE_ENTRY_MALLOC(t_e, buf, len, off, _eof, cb, cb_a, dc_h)    \
+#define TABLE_ENTRY_MALLOC(t_e, buf, len, off, _eof, cb, cb_a, dc_h, _iotime, _nettime)    \
 {                                                                       \
     t_e = (globus_l_ftp_handle_table_entry_t *)                         \
           globus_malloc(sizeof(globus_l_ftp_handle_table_entry_t));     \
@@ -107,6 +109,8 @@
     t_e->whos_my_daddy = GLOBUS_NULL;                                   \
     t_e->ascii_buffer = GLOBUS_NULL;                                    \
     t_e->eof = _eof;                                                    \
+    t_e->iotime = _iotime; \
+    t_e->nettime = _nettime; \
 }
 
 /********************************************************************
@@ -227,6 +231,8 @@ typedef struct globus_l_ftp_send_eof_entry_s
     globus_handle_t                             callback_table_handle;
 } globus_l_ftp_send_eof_entry_t;
 
+// esjung
+// add iotime/nettime objects.
 typedef struct globus_l_ftp_handle_table_entry_s
 {
     globus_ftp_data_connection_state_t          direction;
@@ -246,6 +252,9 @@ typedef struct globus_l_ftp_handle_table_entry_s
     globus_handle_t                             callback_table_handle;
 
     globus_ftp_control_type_t                   type;
+
+    nlcali_T	iotime;
+    nlcali_T	nettime;
 
 } globus_l_ftp_handle_table_entry_t;
 
@@ -390,7 +399,9 @@ globus_l_ftp_control_data_stream_read_write(
     globus_off_t                                offset,
     globus_bool_t                               eof,
     globus_ftp_control_data_callback_t          callback,
-    void *                                      callback_arg);
+    void *                                      callback_arg,
+    nlcali_T				iotime,
+    nlcali_T				nettime);
 
 globus_result_t
 globus_l_ftp_control_data_eb_write(
@@ -4976,7 +4987,8 @@ globus_ftp_control_local_stru(
  *
  */
  // esjung
- // 12. 3. 2016: modify the parameter list.
+ // 12. 3. 2016: modify the parameter list to include nlcali_T objects.
+ // 12. 4. 2016: modify globus_l_ftp_control_data_stream_read_write() function declaration.
 globus_result_t
 globus_ftp_control_data_write(
     globus_ftp_control_handle_t *		handle,
@@ -5079,7 +5091,9 @@ printf("globus_ftp_control_data_write\n");
                          offset,
                          eof,
                          callback,
-                         callback_arg);
+                         callback_arg,
+                         iotime,
+                         nettime);
         }
         else if(dc_handle->mode == GLOBUS_FTP_CONTROL_MODE_EXTENDED_BLOCK)
         {
@@ -5286,7 +5300,9 @@ printf("globus_ftp_control_data_read\n");
                          0,
                          GLOBUS_FALSE,
                          callback,
-                         callback_arg);
+                         callback_arg,
+                         iotime,
+                         nettime);
         }
         else if(dc_handle->mode == GLOBUS_FTP_CONTROL_MODE_EXTENDED_BLOCK)
         {
@@ -5298,7 +5314,9 @@ printf("globus_ftp_control_data_read\n");
                          0,
                          GLOBUS_FALSE,
                          callback,
-                         callback_arg);
+                         callback_arg,
+                         iotime,
+                         nettime);
         }
         else
         {
@@ -5446,7 +5464,9 @@ printf("globus_ftp_control_data_read_all\n");
                       0,
                       GLOBUS_FALSE,
                       callback,
-                      callback_arg);
+                      callback_arg,
+                      NULL,
+                      NULL);
         }
         else if(dc_handle->mode == GLOBUS_FTP_CONTROL_MODE_EXTENDED_BLOCK)
         {
@@ -5496,7 +5516,9 @@ printf("globus_ftp_control_data_read_all\n");
                             GLOBUS_FALSE,
                             transfer_handle->big_buffer_cb,
                             transfer_handle->big_buffer_cb_arg,
-                            dc_handle);
+                            dc_handle,
+                            NULL,
+                            NULL);
                         t_e->whos_my_daddy = data_conn;
 
                         /*
@@ -5616,7 +5638,9 @@ globus_l_ftp_control_data_stream_read_write(
     globus_off_t                                offset,
     globus_bool_t                               eof,
     globus_ftp_control_data_callback_t          callback,
-    void *                                      callback_arg)
+    void *                                      callback_arg,
+    nlcali_T					iotime,
+    nlcali_T					nettime)
 {
     globus_l_ftp_handle_table_entry_t *         table_entry;
     globus_ftp_data_stripe_t *                  stripe;
@@ -5648,7 +5672,9 @@ globus_l_ftp_control_data_stream_read_write(
         eof,
         callback,
         callback_arg,
-        dc_handle);
+        dc_handle,
+        iotime,
+        nettime);
 
     stripe = &transfer_handle->stripes[0];
     globus_fifo_enqueue(&stripe->command_q,
@@ -5804,7 +5830,9 @@ globus_l_ftp_control_data_eb_write(
                     GLOBUS_TRUE,
                     GLOBUS_NULL,
                     GLOBUS_NULL,
-                    dc_handle);
+                    dc_handle,
+                    NULL,
+                    NULL);
                 tmp_ent->callback_table_handle = 
                     data_info.callback_table_handle;
                     
@@ -5869,6 +5897,7 @@ globus_l_ftp_control_data_extended_block_enqueue(
             stripe = &transfer_handle->stripes[stripe_ndx];
         }
 
+        // esjung
         TABLE_ENTRY_MALLOC(
             tmp_ent,
             &entry->buffer[(globus_size_t)(offset-entry->offset)],
@@ -5877,7 +5906,9 @@ globus_l_ftp_control_data_extended_block_enqueue(
             entry->eof,
             entry->callback,
             entry->callback_arg,
-            entry->dc_handle);
+            entry->dc_handle,
+            NULL,
+            NULL);
         tmp_ent->callback_table_handle = entry->callback_table_handle;
 
         globus_handle_table_increment_reference(
@@ -6703,6 +6734,7 @@ globus_i_ftp_control_data_write_stripe(
 
     stripe = &transfer_handle->stripes[stripe_ndx];
 
+    // esjung
     TABLE_ENTRY_MALLOC(
         tmp_ent,
         buffer,
@@ -6711,7 +6743,9 @@ globus_i_ftp_control_data_write_stripe(
         eof,
         data_info->cb,
         data_info->cb_arg,
-        dc_handle);
+        dc_handle,
+        NULL,
+        NULL);
 
     tmp_ent->callback_table_handle = data_info->callback_table_handle;
 
@@ -6740,6 +6774,7 @@ globus_i_ftp_control_create_data_info(
     transfer_handle = dc_handle->transfer_handle;
 
     transfer_handle->ref++;
+    // esjung
     TABLE_ENTRY_MALLOC(
         table_entry,
         buffer,
@@ -6748,7 +6783,9 @@ globus_i_ftp_control_create_data_info(
         eof,
         callback,
         callback_arg,
-        dc_handle);
+        dc_handle,
+        NULL,
+        NULL);
 
     /*
      *  insert main structure into the callback table
@@ -6877,6 +6914,10 @@ globus_l_ftp_data_stream_stripe_poll(
     globus_ftp_data_connection_t *                data_conn;
     globus_result_t                               result;
 
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_l_ftp_data_stream_stripe_poll\n");
+#endif
+
     globus_assert(stripe->whos_my_daddy->whos_my_daddy->mode == GLOBUS_FTP_CONTROL_MODE_STREAM);
     /*
      *  check to see that there is a connection
@@ -6918,6 +6959,7 @@ globus_l_ftp_data_stream_stripe_poll(
 
                 globus_fifo_dequeue(&stripe->free_conn_q);
 
+                // esjung
                 result = globus_io_register_write(
                              &data_conn->io_handle,
                              tmp_buf,
@@ -6932,6 +6974,7 @@ globus_l_ftp_data_stream_stripe_poll(
                 globus_fifo_dequeue(&stripe->command_q);
                 globus_fifo_dequeue(&stripe->free_conn_q);
 
+                // esjung
                 result = globus_io_register_read(
                              &data_conn->io_handle,
                              entry->buffer,
@@ -7202,6 +7245,7 @@ globus_l_ftp_data_eb_poll(
                     transfer_handle->ref++;
                     /* delay setting eof till command kickout */
                     /* dc_handle->state = GLOBUS_FTP_DATA_STATE_EOF; */
+                    // esjung
                     TABLE_ENTRY_MALLOC(
                         entry,
                         transfer_handle->big_buffer,
@@ -7210,7 +7254,9 @@ globus_l_ftp_data_eb_poll(
                         GLOBUS_TRUE,
                         transfer_handle->big_buffer_cb,
                         transfer_handle->big_buffer_cb_arg,
-                        dc_handle);
+                        dc_handle,
+                        NULL,
+                        NULL);
 
                     transfer_handle->big_buffer = GLOBUS_NULL;
                     GlobusTimeReltimeSet(reltime, 0, 0);
@@ -9431,7 +9477,9 @@ globus_l_ftp_stream_read_callback(
                               data_conn->offset + nbyte,
                               GLOBUS_FALSE,
                               transfer_handle->big_buffer_cb,
-                              transfer_handle->big_buffer_cb_arg);
+                              transfer_handle->big_buffer_cb_arg,
+                              NULL,
+                              NULL);
                     globus_assert(res == GLOBUS_SUCCESS);
                 }
             }
@@ -10082,6 +10130,7 @@ globus_l_ftp_eb_read_header_callback(
 
                         offset = data_conn->offset;
                         transfer_handle->ref++;
+                        // esjung
                         TABLE_ENTRY_MALLOC(
                             t_e,
                             &transfer_handle->big_buffer[data_conn->offset],
@@ -10090,7 +10139,9 @@ globus_l_ftp_eb_read_header_callback(
                             GLOBUS_FALSE,
                             transfer_handle->big_buffer_cb,
                             transfer_handle->big_buffer_cb_arg,
-                            dc_handle);
+                            dc_handle,
+                            NULL,
+                            NULL);
                         t_e->whos_my_daddy = data_conn;
 
                         /*
