@@ -2865,7 +2865,11 @@ globus_l_gfs_file_dispatch_read(
     globus_size_t                       read_length;
     GlobusGFSName(globus_l_gfs_file_dispatch_read);
     GlobusGFSFileDebugEnter();
-    
+
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_l_gfs_file_dispatch_read\n");
+#endif
+
     if(monitor->first_read && monitor->pending_reads == 0 && 
         !monitor->eof && !globus_list_empty(monitor->buffer_list) &&
         !monitor->aborted)
