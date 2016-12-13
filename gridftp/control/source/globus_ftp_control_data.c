@@ -5013,7 +5013,7 @@ globus_ftp_control_data_write(
                                       "globus_ftp_control_data_write";
 
 #ifdef _RAMSES_DEBUG_FUNC_
-printf("globus_ftp_control_data_write\n");
+printf("%s(%s)\n", __func__, __FILE__);
 #endif
     /*
      *  error checking
@@ -5225,7 +5225,7 @@ globus_ftp_control_data_read(
                                       "globus_ftp_control_data_read";
 
 #ifdef _RAMSES_DEBUG_FUNC_
-printf("globus_ftp_control_data_read\n");
+printf("%s(%s)\n", __func__, __FILE__);
 #endif
 
     /*
@@ -5369,8 +5369,7 @@ globus_ftp_control_data_read_all(
                                       "globus_ftp_control_data_read";
 
 #ifdef _RAMSES_DEBUG_FUNC_
-printf("globus_ftp_control_data_read_all\n");
-#endif
+printf("%s(%s)\n", __func__, __FILE__);#endif
     /*
      *  error checking
      */
@@ -5656,7 +5655,7 @@ globus_l_ftp_control_data_stream_read_write(
         "globus_l_ftp_control_data_stream_read_write";
 
 #ifdef _RAMSES_DEBUG_FUNC_
-printf("globus_l_ftp_control_data_stream_read_write\n");
+printf("%s(%s)\n", __func__, __FILE__);
 #endif
 
     if(dc_handle->state == GLOBUS_FTP_DATA_STATE_CLOSING)
@@ -6507,7 +6506,7 @@ globus_ftp_control_data_write_stripe(
                                       "globus_ftp_control_data_write_stripe";
 
 #ifdef _RAMSES_DEBUG_FUNC_
-printf("globus_ftp_control_data_write_stripe\n");
+printf("%s(%s)\n", __func__, __FILE__);
 #endif
 
     /*
@@ -6937,7 +6936,7 @@ globus_l_ftp_data_stream_stripe_poll(
     globus_result_t                               result;
 
 #ifdef _RAMSES_DEBUG_FUNC_
-printf("globus_l_ftp_data_stream_stripe_poll\n");
+printf("%s(%s)\n", __func__, __FILE__);
 #endif
 
     globus_assert(stripe->whos_my_daddy->whos_my_daddy->mode == GLOBUS_FTP_CONTROL_MODE_STREAM);
@@ -7492,7 +7491,7 @@ globus_l_ftp_control_send_data_kickout(
     data_conn = entry->whos_my_daddy;
     stripe = data_conn->whos_my_daddy;
 #ifdef _RAMSES_DEBUG_FUNC_
-    printf("globus_l_ftp_control_send_data_kickout\n");
+printf("%s(%s)\n", __func__, __FILE__);
 #endif
     dc_handle = entry->dc_handle;
     GlobusFTPControlDataTestMagic(dc_handle);
