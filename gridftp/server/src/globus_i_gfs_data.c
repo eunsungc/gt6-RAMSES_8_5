@@ -13829,7 +13829,9 @@ globus_gridftp_server_get_read_range(
 }
 
 
-
+// esjung
+// 2016. 12. 13 extend the paramters of 
+// 1) globus_ftp_control_data_read
 globus_result_t
 globus_gridftp_server_register_read(
     globus_gfs_operation_t              op,
@@ -13907,6 +13909,10 @@ error_alloc:
 }
 
 
+// esjung
+// 2016. 12. 13 extend the paramters of 
+// 1) globus_ftp_control_data_write_stripe
+// 2) globus_ftp_control_data_write
 globus_result_t
 globus_gridftp_server_register_write(
     globus_gfs_operation_t   op,
