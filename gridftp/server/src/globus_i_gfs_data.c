@@ -13951,6 +13951,7 @@ printf("%s(%s)\n", __func__, __FILE__);
             {
                 op->write_stripe %= op->stripe_count;
             }
+            // esjung; extend the parameter list.
             result = globus_ftp_control_data_write_stripe(
                 &op->data_handle->data_channel,
                 buffer,
@@ -13959,7 +13960,9 @@ printf("%s(%s)\n", __func__, __FILE__);
                 GLOBUS_FALSE,
                 op->write_stripe,
                 globus_l_gfs_data_write_cb,
-                bounce_info);
+                bounce_info,
+                op->session_handle->storage_spent_time,
+                op->session_handle->net_spent_time);
 
             op->write_stripe++;
         }
