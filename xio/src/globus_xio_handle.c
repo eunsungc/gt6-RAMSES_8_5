@@ -2472,6 +2472,9 @@ printf("%s(%s)\n", __func__, __FILE__);
  *  fake the iocev structure with the dummy iovec in the operation struct
  *  Then pass to the internal writev function
  */
+ // esjung
+ // user_arg <- bounce_info
+ // bounce_info->user_arg <- table entry
 globus_result_t
 globus_xio_register_write(
     globus_xio_handle_t                 user_handle,
