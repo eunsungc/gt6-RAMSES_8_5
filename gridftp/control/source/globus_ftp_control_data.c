@@ -4993,6 +4993,7 @@ globus_ftp_control_local_stru(
  // esjung
  // 12. 3. 2016: modify the parameter list to include nlcali_T objects.
  // 12. 4. 2016: modify globus_l_ftp_control_data_stream_read_write() function declaration.
+ //                   globus_l_ftp_control_data_eb_write() function declaration.
 globus_result_t
 globus_ftp_control_data_write(
     globus_ftp_control_handle_t *		handle,
@@ -5369,7 +5370,8 @@ globus_ftp_control_data_read_all(
                                       "globus_ftp_control_data_read";
 
 #ifdef _RAMSES_DEBUG_FUNC_
-printf("%s(%s)\n", __func__, __FILE__);#endif
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     /*
      *  error checking
      */
