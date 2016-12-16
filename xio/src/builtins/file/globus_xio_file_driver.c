@@ -20,7 +20,10 @@
 #include <stdio.h>
 
 // esjung
+#include <nl_calipers.h>
+#define _RAMSES_DEBUG_
 #define _RAMSES_DEBUG_FUNC_
+
 
 GlobusDebugDefine(GLOBUS_XIO_FILE);
 
@@ -743,6 +746,12 @@ globus_l_xio_file_read(
 //esjung
 #ifdef _RAMSES_DEBUG_FUNC_
 printf("%s(%s)\n", __func__, __FILE__);
+#endif
+
+//esjung
+#ifdef _RAMSES_DEBUG_
+nlcali_T *pte = op.user_arg;
+printf("iotime: %x, nettime: %x\n",  (nlcali_T)(pte[0]), (nlcali_T)(pte[1]));
 #endif
 
     GlobusXIOFileDebugEnter();
