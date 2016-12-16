@@ -750,7 +750,7 @@ printf("%s(%s)\n", __func__, __FILE__);
 
 //esjung
 #ifdef _RAMSES_DEBUG_
-nlcali_T *pte = op.user_arg;
+nlcali_T *pte = (nlcali_T *)(op->user_arg);
 printf("iotime: %x, nettime: %x\n",  (nlcali_T)(pte[0]), (nlcali_T)(pte[1]));
 #endif
 
