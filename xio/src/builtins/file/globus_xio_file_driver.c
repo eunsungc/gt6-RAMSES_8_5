@@ -21,6 +21,8 @@
 
 // esjung
 #include <nl_calipers.h>
+#include "globus_xio.h" // for struct definition of globus_xio_operation_t
+#include "globus_i_xio.h"
 #define _RAMSES_DEBUG_
 #define _RAMSES_DEBUG_FUNC_
 
@@ -741,6 +743,7 @@ globus_l_xio_file_read(
     globus_size_t                       nbytes;
     globus_result_t                     result;
     globus_off_t                        offset;
+    nlcali_T *pte;
     GlobusXIOName(globus_l_xio_file_read);
 
 //esjung
@@ -750,7 +753,7 @@ printf("%s(%s)\n", __func__, __FILE__);
 
 //esjung
 #ifdef _RAMSES_DEBUG_
-nlcali_T *pte = (nlcali_T *)(op->user_arg);
+pte = (nlcali_T *)(op->user_arg);
 printf("iotime: %x, nettime: %x\n",  (nlcali_T)(pte[0]), (nlcali_T)(pte[1]));
 #endif
 
@@ -768,7 +771,7 @@ printf("iotime: %x, nettime: %x\n",  (nlcali_T)(pte[0]), (nlcali_T)(pte[1]));
     {
         globus_l_xio_file_update_position(handle, offset, SEEK_SET);
     }
-    
+
     GlobusXIOFileDebugPrintf(
         GLOBUS_L_XIO_FILE_DEBUG_INFO,
         ("[%s] count=%d, 1st buflen=%d offset=%" GLOBUS_OFF_T_FORMAT "\n",
