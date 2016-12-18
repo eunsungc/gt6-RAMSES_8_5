@@ -1411,12 +1411,13 @@ globus_l_gram_protocol_connect_callback(
     }
 
     /* Write the framed GRAM request */
+    // esjung
     result = globus_io_register_write(
                  handle,
 		 connection->buf,
 		 connection->bufsize,
 		 globus_l_gram_protocol_write_request_callback,
-		 connection);
+		 connection, NULL, NULL);
 
     if(result != GLOBUS_SUCCESS)
     {
@@ -2299,13 +2300,13 @@ globus_l_gram_protocol_reply(
     connection->delegation_time_req = time_req;
     connection->delegation_major_status = GSS_S_CONTINUE_NEEDED;
     connection->delegation_minor_status = 0;
-
+    // esjung
     result = globus_io_register_write(
 	         connection->io_handle,
 		 connection->replybuf,
 		 connection->replybufsize,
 		 globus_l_gram_protocol_write_reply_callback,
-		 connection);
+		 connection, NULL, NULL);
 
     if(result != GLOBUS_SUCCESS)
     {
@@ -2666,13 +2667,13 @@ globus_l_gram_protocol_accept_delegation(
 	    output_buffer[2] = (output_token.length >>  8) & 0xff;
 	    output_buffer[3] = (output_token.length      ) & 0xff;
 	    memcpy(output_buffer+4, output_token.value, output_token.length);
-
+           // esjung
 	    result = globus_io_register_write(
 		    connection->io_handle,
 		    output_buffer,
 		    output_token.length+4,
 		    globus_l_gram_protocol_delegation_write_callback,
-		    connection);
+		    connection, NULL, NULL);
 	    globus_libc_free(output_token.value);
 
 	    if(result == GLOBUS_SUCCESS)
@@ -2774,13 +2775,13 @@ globus_l_gram_protocol_init_delegation(
 	    output_buffer[2] = (output_token.length >>  8) & 0xff;
 	    output_buffer[3] = (output_token.length      ) & 0xff;
 	    memcpy(output_buffer+4, output_token.value, output_token.length);
-		
+           // esjung
 	    result = globus_io_register_write(
 		    connection->io_handle,
 		    output_buffer,
 		    output_token.length+4,
 		    globus_l_gram_protocol_delegation_write_callback,
-		    connection);
+		    connection, NULL, NULL);
 	    globus_libc_free(output_token.value);
 
 	    if(result == GLOBUS_SUCCESS)
