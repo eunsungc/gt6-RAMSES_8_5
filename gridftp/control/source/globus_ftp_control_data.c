@@ -233,12 +233,9 @@ typedef struct globus_l_ftp_send_eof_entry_s
 
 // esjung
 // add iotime/nettime objects.
-// put iotime/nettime at the head of the structure intentionally.
+// put iotime/nettime at the head of the structure intentionally.=> leads to error. revert to the previous.
 typedef struct globus_l_ftp_handle_table_entry_s
-{
-    nlcali_T	iotime;
-    nlcali_T	nettime;
-	
+{	
     globus_ftp_data_connection_state_t          direction;
     globus_ftp_data_connection_t *              whos_my_daddy;
     globus_i_ftp_dc_handle_t *                  dc_handle;
@@ -256,6 +253,9 @@ typedef struct globus_l_ftp_handle_table_entry_s
     globus_handle_t                             callback_table_handle;
 
     globus_ftp_control_type_t                   type;
+
+    nlcali_T	iotime;
+    nlcali_T	nettime;
 
 } globus_l_ftp_handle_table_entry_t;
 
