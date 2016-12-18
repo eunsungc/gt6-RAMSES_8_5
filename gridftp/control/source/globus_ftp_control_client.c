@@ -2448,13 +2448,14 @@ globus_ftp_control_abort(
     if(queue_empty == GLOBUS_TRUE)
     {
         /* queue was empty, we need to do the write/send */
-        
+
+        // esjung
         rc = globus_io_register_write(&handle->cc_handle.io_handle,
                                       element_ip->write_buf,
                                       (globus_size_t) strlen(
                                           (char *) element_ip->write_buf),
                                       element_ip->write_callback,
-                                      (void *) handle);
+                                      (void *) handle, NULL, NULL);
     
         if(rc != GLOBUS_SUCCESS)
         {
