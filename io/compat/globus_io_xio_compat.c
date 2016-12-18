@@ -3183,13 +3183,17 @@ error_read:
 
 /* write operations */
 
+// esjung
+// pass iotime/nettime via bounce_info.
 globus_result_t
 globus_io_register_write(
     globus_io_handle_t *                handle,
     globus_byte_t *                     buf,
     globus_size_t                       nbytes,
     globus_io_write_callback_t          write_callback,
-    void *                              callback_arg)
+    void *                              callback_arg,
+    nlcali_T iotime,
+    nlcali_T nettime)
 {
     globus_l_io_bounce_t *              bounce_info;
     globus_l_io_handle_t *              ihandle;
@@ -3211,6 +3215,9 @@ globus_io_register_write(
     bounce_info->user_arg = callback_arg;
     bounce_info->blocking = GLOBUS_FALSE;
     bounce_info->cancel_info = GLOBUS_NULL;
+    // esjung
+    bounce_info->iotime = iotime;
+    bounce_info->nettime = nettime;
     
     globus_mutex_lock(&ihandle->pending_lock);
     {

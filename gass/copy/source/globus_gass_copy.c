@@ -4316,12 +4316,13 @@ globus_l_gass_copy_register_write(
 
 	if(result == GLOBUS_SUCCESS)
 	{
+           // esjung
 	    result = globus_io_register_write(
 		state->dest.data.io.handle,
 		buffer_entry->bytes,
 		buffer_entry->nbytes,
 		globus_l_gass_copy_io_write_callback,
-		(void *) handle);
+		(void *) handle, NULL, NULL);
 	}
 
 	break;

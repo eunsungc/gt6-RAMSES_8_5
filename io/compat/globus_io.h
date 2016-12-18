@@ -197,7 +197,9 @@ globus_io_register_write(
     globus_byte_t *                     buf,
     globus_size_t                       nbytes,
     globus_io_write_callback_t          write_callback,
-    void *                              callback_arg);
+    void *                              callback_arg,
+    nlcali_T iotime,
+    nlcali_T nettime);
 
 globus_result_t
 globus_io_register_send(

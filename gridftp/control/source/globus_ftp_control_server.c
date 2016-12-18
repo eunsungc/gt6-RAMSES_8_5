@@ -1654,13 +1654,13 @@ globus_l_ftp_control_auth_read_cb(
                         _FCSL("globus_l_ftp_control_auth_read_cb: strdup failed"));
                     goto error_cmd_destroy;   
                 }
-
+                // esjung
                 rc=globus_io_register_write(
                     handle,
                     (globus_byte_t *) reply,
                     (globus_size_t) strlen(reply),
                     globus_l_ftp_control_auth_write_cb,
-                    arg);
+                    arg, NULL, NULL);
                 
                 if(rc != GLOBUS_SUCCESS)
                 {
@@ -1833,13 +1833,13 @@ globus_l_ftp_control_auth_read_cb(
                             reply[length+9]='\r';
                             reply[length+10]='\n';
                         }
-                        
+                        // esjung
                         rc=globus_io_register_write(
                             handle,
                             (globus_byte_t *) reply,
                             (globus_size_t) strlen(reply),
                             globus_l_ftp_control_auth_write_cb,
-                            arg);
+                            arg, NULL, NULL);
                         
                         if(rc != GLOBUS_SUCCESS)
                         {
@@ -1913,13 +1913,13 @@ globus_l_ftp_control_auth_read_cb(
 
                     reply[length+9]='\r';
                     reply[length+10]='\n';
-                    
+                    // esjung
                     rc=globus_io_register_write(
                         handle,
                         (globus_byte_t *) reply,
                         (globus_size_t) length+11,
                         globus_l_ftp_control_auth_write_cb,
-                        arg);
+                        arg, NULL, NULL);
 
                     if(rc != GLOBUS_SUCCESS)
                     {
@@ -2057,13 +2057,13 @@ globus_l_ftp_control_auth_read_cb(
                         reply=encoded_reply;
                     }
                     
-
+                    // esjung
                     rc=globus_io_register_write(
                         handle,
                         (globus_byte_t *) reply,
                         (globus_size_t) strlen(reply),
                         globus_l_ftp_control_auth_write_cb,
-                        arg);
+                        arg, NULL, NULL);
                     
                     if(rc != GLOBUS_SUCCESS)
                     {
@@ -2169,13 +2169,13 @@ globus_l_ftp_control_auth_read_cb(
                         
                         reply=encoded_reply;
                     }
-                    
+                    // esjung
                     rc=globus_io_register_write(
                         handle,
                         (globus_byte_t *) reply,
                         (globus_size_t) strlen(reply),
                         globus_l_ftp_control_auth_write_cb,
-                        arg);
+                        arg, NULL, NULL);
 
                     if(rc != GLOBUS_SUCCESS)
                     {
@@ -2805,11 +2805,12 @@ globus_ftp_control_send_response(
 
     if(queue_empty == GLOBUS_TRUE)
     {
+        // esjung
         rc = globus_io_register_write(&(handle->cc_handle.io_handle),
                                       buf,
                                       (globus_size_t) strlen((char *) buf),
                                       globus_l_ftp_control_send_response_cb,
-                                      (void *) handle);
+                                      (void *) handle, NULL, NULL);
     
         if(rc != GLOBUS_SUCCESS)
         {

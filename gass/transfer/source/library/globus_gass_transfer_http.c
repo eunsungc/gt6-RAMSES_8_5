@@ -357,12 +357,13 @@ globus_l_gass_transfer_http_send(
     {
 	/* send data raw */
 	debug_printf(4, (_GTSL("%s(): Registering writev\n"), myname));
+       // esjung
 	result = globus_io_register_write(
 	    &new_proto->handle,
 	    new_proto->user_buffer,
 	    new_proto->user_buflen,
 	    globus_l_gass_transfer_http_write_callback,
-	    new_proto);
+	    new_proto, NULL, NULL);
     }
 
     if(result == GLOBUS_SUCCESS)
@@ -917,11 +918,12 @@ globus_l_gass_transfer_http_read_callback(
 			  CRLF);
 
 	debug_printf(4,(_GTSL("%s(): Registering write\n"),myname));
+       // esjung
 	globus_io_register_write(&proto->handle,
 				 (globus_byte_t *) response,
 				 strlen(response),
 				 globus_l_gass_transfer_http_write_response,
-				 proto);
+				 proto, NULL, NULL);
     }
     /* Register the socket for closing if we're done reading from it */
     else if(proto->recv_state == GLOBUS_GASS_TRANSFER_HTTP_RECV_STATE_EOF ||
@@ -1091,11 +1093,12 @@ globus_l_gass_transfer_http_read_buffered_callback(
 			  CRLF);
 
 	debug_printf(4,(_GTSL("%s(): Registering write\n"),myname));
+	// esjung
 	globus_io_register_write(&proto->handle,
 				 (globus_byte_t *) response,
 				 strlen(response),
 				 globus_l_gass_transfer_http_write_response,
-				 proto);
+				 proto, NULL, NULL);
     }
     /* Register the socket for closing if we're done reading from it */
     else if(proto->recv_state == GLOBUS_GASS_TRANSFER_HTTP_RECV_STATE_EOF ||
@@ -1750,12 +1753,13 @@ globus_l_gass_transfer_http_request_refer(
 
     debug_printf(4, (_GTSL("%s(): Registering write on %p\n"),
 		     myname,
-		     &proto->handle));        
+		     &proto->handle));
+    // esjung
     globus_io_register_write(&proto->handle,
 			     (globus_byte_t *) referral_string,
 			     strlen(referral_string),
 			     globus_l_gass_transfer_http_write_response,
-			     proto);
+			     proto, NULL, NULL);
 
     globus_l_gass_transfer_http_unlock();
 }
@@ -1855,12 +1859,13 @@ globus_l_gass_transfer_http_request_deny(
 
     debug_printf(4, (_GTSL("%s(): Registering write on %p\n"),
 		     myname,
-		     &proto->handle));        
+		     &proto->handle));
+    // esjung
     globus_io_register_write(&proto->handle,
 			     (globus_byte_t *) deny_string,
 			     strlen(deny_string),
 			     globus_l_gass_transfer_http_write_response,
-			     proto);
+			     proto, NULL, NULL);
 
     globus_l_gass_transfer_http_unlock();
 }
@@ -1961,12 +1966,12 @@ globus_l_gass_transfer_http_request_authorize(
 	debug_printf(4, (_GTSL("%s(): registering write on %p\n"),
 			 myname,
 			 &proto->handle));
-
+       // esjung
 	globus_io_register_write(&proto->handle,
 				 (globus_byte_t *) authorize_string,
 				 strlen(authorize_string),
 				 globus_l_gass_transfer_http_write_response,
-				 proto);
+				 proto, NULL, NULL);
     }
     else
     {
@@ -2896,13 +2901,13 @@ globus_l_gass_transfer_http_connect_callback(
     debug_printf(4,(_GTSL("%s(): Registering write on %p\n"),
 		    myname,
 		    &proto->handle));
-    
+    // esjung
     result = globus_io_register_write(
 	&proto->handle,
 	(globus_byte_t *) cmd,
 	strlen(cmd) * sizeof(char),
 	globus_l_gass_transfer_http_command_callback,
-	proto);
+	proto, NULL, NULL);
 
     if(result == GLOBUS_SUCCESS)
     {

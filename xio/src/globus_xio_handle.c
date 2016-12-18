@@ -2310,6 +2310,8 @@ printf("%s(%s)\n", __func__, __FILE__);
  *  fake the iovec structure with the dummy iovec in the operation struct
  *  Then pass to the internal readv function
  */
+ // esjung
+ // pass iotime/nettime via op.
 globus_result_t
 globus_xio_register_read(
     globus_xio_handle_t                 handle,
@@ -2323,6 +2325,8 @@ globus_xio_register_read(
     globus_i_xio_op_t *                 op;
     globus_result_t                     res;
     int                                 ref = 0;
+    // esjung
+    nlcali_T *pnlcali=(nlcali_T *)user_arg;
     GlobusXIOName(globus_xio_register_read);
 #ifdef _RAMSES_DEBUG_FUNC_
 printf("%s(%s)\n", __func__, __FILE__);
@@ -2367,6 +2371,17 @@ printf("%s(%s)\n", __func__, __FILE__);
     op->_op_wait_for = waitforbytes;
     op->user_arg = user_arg;
     op->entry[0].prev_ndx = -1;
+    // esjung
+    if (pnlcali != NULL) {
+      op->iotime = pnlcali[0];
+      op->nettime = pnlcali[1];
+    } else {
+      op->iotime = NULL;
+      op->nettime = NULL;
+    }
+#ifdef _RAMSES_DEBUG_
+printf("iotime: %x, nettime: %x\n", op->iotime, op->nettime);
+#endif
 
     res = globus_l_xio_register_readv(op, ref);
     if(res != GLOBUS_SUCCESS)
@@ -2492,13 +2507,12 @@ globus_xio_register_write(
     globus_result_t                     res;
     globus_i_xio_handle_t *             handle;
     int                                 ref = 0;
+    // esjung
+    nlcali_T *pnlcali=(nlcali_T *)user_arg;
     GlobusXIOName(globus_xio_register_write);
 #ifdef _RAMSES_DEBUG_FUNC_
 printf("%s(%s)\n", __func__, __FILE__);
 #endif;
-#ifdef _RAMSES_DEBUG_
-printf("user_handle: %x\n", user_handle);
-#endif
 
     GlobusXIODebugEnter();
     GlobusLXIOActiveTest();
@@ -2543,7 +2557,12 @@ printf("user_handle: %x\n", user_handle);
     op->_op_iovec = &op->_op_mem_iovec;
     op->_op_wait_for = waitforbytes;
     op->user_arg = user_arg;
-
+    // esjung
+    op->iotime = pnlcali[0];
+    op->nettime = pnlcali[1];
+#ifdef _RAMSES_DEBUG_
+printf("iotime: %x, nettime: %x\n", op->iotime, op->nettime);
+#endif
     res = globus_l_xio_register_writev(op, ref);
     if(res != GLOBUS_SUCCESS)
     {

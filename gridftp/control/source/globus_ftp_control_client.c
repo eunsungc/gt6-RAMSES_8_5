@@ -1994,11 +1994,12 @@ globus_ftp_control_send_command(
     {
         /* queue was empty, we need to do the write/send */
 
+        // esjung
         rc = globus_io_register_write(&handle->cc_handle.io_handle,
                                       element->write_buf,
                                       (globus_size_t) strlen(buf),
                                       element->write_callback,
-                                      (void *) handle);
+                                      (void *) handle, NULL, NULL);
     
         if(rc != GLOBUS_SUCCESS)
         {
