@@ -22,6 +22,8 @@
 #endif
 #include <gssapi.h>
 #include <globus_error_gssapi.h>
+//esjung
+#include "nl_calipers.h"
 
 #ifdef __GNUC__
 #define GlobusIOName(func) static const char * _io_name __attribute__((__unused__)) = #func
@@ -191,8 +193,12 @@ typedef struct
     globus_bool_t                       blocking;
 } globus_l_io_cancel_info_t;
 
+// esjung
 typedef struct
 {
+    nlcali_T iotime;
+    nlcali_T nettime;
+	
     globus_l_io_handle_t *              handle;
     union
     {
