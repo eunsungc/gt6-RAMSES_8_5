@@ -24,6 +24,7 @@
 #include <globus_error_gssapi.h>
 //esjung
 #include "nl_calipers.h"
+#define _RAMSES_DEBUG_FUNC_
 
 #ifdef __GNUC__
 #define GlobusIOName(func) static const char * _io_name __attribute__((__unused__)) = #func
@@ -3036,7 +3037,9 @@ globus_io_register_read(
     globus_l_io_handle_t *              ihandle;
     globus_result_t                     result;
     GlobusIOName(globus_io_register_read);
-    
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     GlobusLIOCheckNullParam(callback);
     GlobusLIOCheckHandle(handle, 0);
     
@@ -3199,7 +3202,9 @@ globus_io_register_write(
     globus_l_io_handle_t *              ihandle;
     globus_result_t                     result;
     GlobusIOName(globus_io_register_write);
-    
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     GlobusLIOCheckNullParam(write_callback);
     GlobusLIOCheckHandle(handle, 0);
     
