@@ -542,6 +542,8 @@ globus_i_xio_blocked_thread_t;
 /*
  *  represents a requested io operation (open close read or write).
  */
+ // esjung
+ //   extend to include iotime, nettime.
 typedef struct globus_i_xio_op_s
 {
     /* operation type */
@@ -627,6 +629,10 @@ typedef struct globus_i_xio_op_s
     int                                 ndx;
     /* entry for each thing driver in the stack */
     globus_i_xio_op_entry_t             entry[1];
+
+    // esjung
+    nlcali_T iotime;
+    nlcali_T nettime;
 } globus_i_xio_op_t;
 
 typedef struct globus_i_xio_driver_s

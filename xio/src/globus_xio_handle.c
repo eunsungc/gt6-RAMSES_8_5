@@ -2473,8 +2473,11 @@ printf("%s(%s)\n", __func__, __FILE__);
  *  Then pass to the internal writev function
  */
  // esjung
- // user_arg <- bounce_info
- // bounce_info->user_arg <- table entry
+ // original:
+ //    user_arg <- bounce_info
+ //    bounce_info->user_arg <- table entry
+ // modification:
+ //   pass iotime, nettime info to op data structure.
 globus_result_t
 globus_xio_register_write(
     globus_xio_handle_t                 user_handle,
