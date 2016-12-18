@@ -4231,12 +4231,13 @@ globus_io_register_select(
     
     if(write_callback_func)
     {
+        // esjug
         result = globus_io_register_write(
             handle,
             (globus_byte_t *) write_callback_func,
             0,
             globus_l_io_bounce_select_cb,
-            write_callback_arg);
+            write_callback_arg, NULL, NULL);
         if(result != GLOBUS_SUCCESS)
         {
             /* XXX if the read callback was registered, I probably need
