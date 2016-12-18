@@ -21,6 +21,8 @@
 #include "globus_xio_tcp_driver.h"
 #include "globus_xio_file_driver.h"
 #include "globus_xio_gsi.h"
+// esjung
+#include "nl_calipers.h"
 
 #define GLOBUS_IO_OVER_XIO 1
 
