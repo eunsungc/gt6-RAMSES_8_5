@@ -963,7 +963,9 @@ globus_ftp_control_create_data_info(
     globus_off_t                                offset,
     globus_bool_t                               eof,
     globus_ftp_control_data_callback_t          callback,
-    void *                                      callback_arg);
+    void *                                      callback_arg,
+    nlcali_T iotime,
+    nlcali_T nettime);
 
 globus_result_t
 globus_ftp_control_release_data_info(

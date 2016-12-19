@@ -582,7 +582,9 @@ globus_i_ftp_control_create_data_info(
     globus_off_t                                offset,
     globus_bool_t                               eof,
     globus_ftp_control_data_callback_t          callback,
-    void *                                      callback_arg);
+    void *                                      callback_arg,
+    nlcali_T iotime,
+    nlcali_T nettime);
 
 globus_result_t
 globus_i_ftp_control_release_data_info(
@@ -5764,7 +5766,9 @@ printf("%s(%s)\n", __func__, __FILE__);
         offset,
         eof,
         callback,
-        callback_arg);
+        callback_arg,
+        iotime,
+        nettime);
 
     if(length > 0)
     {
@@ -6305,7 +6309,9 @@ globus_ftp_control_create_data_info(
     globus_off_t                                offset,
     globus_bool_t                               eof,
     globus_ftp_control_data_callback_t          callback,
-    void *                                      callback_arg)
+    void *                                      callback_arg,
+    nlcali_T iotime,
+    nlcali_T nettime)
 {
     globus_i_ftp_dc_handle_t *                  dc_handle;
     globus_result_t                             res;
@@ -6371,7 +6377,9 @@ globus_ftp_control_create_data_info(
                       offset,
                       eof,
                       callback,
-                      callback_arg);
+                      callback_arg,
+                      iotime,
+                      nettime);
         }
     }
     globus_mutex_unlock(&dc_handle->mutex);
@@ -6565,7 +6573,9 @@ printf("%s(%s)\n", __func__, __FILE__);
                       offset,
                       eof,
                       callback,
-                      callback_arg);
+                      callback_arg,
+                      iotime,
+                      nettime);
         if(res != GLOBUS_SUCCESS)
         {
             globus_mutex_unlock(&dc_handle->mutex);
@@ -6786,6 +6796,7 @@ globus_i_ftp_control_data_write_stripe(
     return GLOBUS_SUCCESS;
 }
 
+// esjung
 globus_result_t
 globus_i_ftp_control_create_data_info(
     globus_i_ftp_dc_handle_t *                  dc_handle,
@@ -6795,7 +6806,9 @@ globus_i_ftp_control_create_data_info(
     globus_off_t                                offset,
     globus_bool_t                               eof,
     globus_ftp_control_data_callback_t          callback,
-    void *                                      callback_arg)
+    void *                                      callback_arg,
+    nlcali_T iotime,
+    nlcali_T nettime)
 {
     globus_i_ftp_dc_transfer_handle_t *         transfer_handle;
     globus_l_ftp_handle_table_entry_t *         table_entry;
@@ -6813,8 +6826,8 @@ globus_i_ftp_control_create_data_info(
         callback,
         callback_arg,
         dc_handle,
-        NULL,
-        NULL);
+        iotime,
+        nettime);
 
     /*
      *  insert main structure into the callback table
