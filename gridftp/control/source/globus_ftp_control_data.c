@@ -5852,8 +5852,8 @@ printf("%s(%s)\n", __func__, __FILE__);
                     GLOBUS_NULL,
                     GLOBUS_NULL,
                     dc_handle,
-                    NULL,
-                    NULL);
+                    iotime,
+                    nettime);
                 tmp_ent->callback_table_handle = 
                     data_info.callback_table_handle;
                     
