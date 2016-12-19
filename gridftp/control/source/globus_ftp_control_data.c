@@ -5699,6 +5699,8 @@ printf("%s(%s)\n", __func__, __FILE__);
     return GLOBUS_SUCCESS;
 }
 
+// esjung
+// add iotime/nettime
 globus_result_t
 globus_l_ftp_control_data_eb_write(
     globus_i_ftp_dc_handle_t *                  dc_handle,
@@ -5721,7 +5723,9 @@ globus_l_ftp_control_data_eb_write(
     globus_ftp_control_layout_func_t            layout_func;
     static char *                               my_name =
       "globus_l_ftp_control_data_eb_write";
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     transfer_handle = dc_handle->transfer_handle;
     layout_func = dc_handle->layout_func;
     /*
@@ -6991,6 +6995,9 @@ printf("%s(%s)\n", __func__, __FILE__);
                              tmp_len,
                              globus_l_ftp_stream_write_callback,
                              (void *)entry, entry->iotime, entry->nettime);
+#ifdef _RAMSES_DEBUG_
+printf("entry->iotime: %x, entry->nettime: %x\n", entry->iotime, entry->nettime);
+#endif
                 globus_assert(result == GLOBUS_SUCCESS);
             }
             else if(entry->direction == GLOBUS_FTP_DATA_STATE_CONNECT_READ)
