@@ -6300,6 +6300,8 @@ globus_X_ftp_control_local_layout(
  * @param callback_arg
  *        User supplied argument to the callback function
  */
+ // esjung
+ // extend the parameter list.
 globus_result_t
 globus_ftp_control_create_data_info(
     globus_ftp_control_handle_t *		handle,
