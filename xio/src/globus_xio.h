@@ -21,6 +21,8 @@
 #include "globus_xio_types.h"
 #include "globus_xio_util.h"
 #include "globus_xio_load.h"
+//esjung
+#include "nl_calipers.h"
 
 #ifdef __cplusplus
 extern "C" {
