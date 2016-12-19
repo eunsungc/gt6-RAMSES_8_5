@@ -957,7 +957,7 @@ globus_l_gfs_reject_open_cb(
         {
             goto error;
         }
-
+        // esjung
         result = globus_xio_register_write(
             handle,
             (globus_byte_t *) sorry_msg,
@@ -965,7 +965,7 @@ globus_l_gfs_reject_open_cb(
             len,
             NULL,
             globus_l_gfs_reject_write_cb,
-            sorry_msg);
+            sorry_msg, NULL, NULL);
         if(result != GLOBUS_SUCCESS)
         {
             goto error;
