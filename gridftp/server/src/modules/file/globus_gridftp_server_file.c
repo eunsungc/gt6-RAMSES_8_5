@@ -2298,7 +2298,7 @@ globus_l_gfs_file_dispatch_write(
     GlobusGFSFileDebugEnter();
 
 #ifdef _RAMSES_DEBUG_FUNC_
-printf("globus_l_gfs_file_dispatch_write\n");
+printf("%s(%s)\n", __func__, __FILE__);
 #endif
 
     if(monitor->pending_writes == 0 && !monitor->aborted)
@@ -2867,7 +2867,7 @@ globus_l_gfs_file_dispatch_read(
     GlobusGFSFileDebugEnter();
 
 #ifdef _RAMSES_DEBUG_FUNC_
-printf("globus_l_gfs_file_dispatch_read\n");
+printf("%s(%s)\n", __func__, __FILE__);
 #endif
 
     if(monitor->first_read && monitor->pending_reads == 0 && 
