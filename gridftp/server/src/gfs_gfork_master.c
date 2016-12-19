@@ -286,6 +286,7 @@ gfs_l_gfork_read_remove_dynbe(
         buffer[GF_VERSION_NDX] = GF_VERSION;
         buffer[GF_MSG_TYPE_NDX] = GFS_GFORK_MSG_TYPE_ACK;
     }
+    // esjung
     result = globus_xio_register_write(
         handle,
         buffer,
@@ -293,7 +294,7 @@ gfs_l_gfork_read_remove_dynbe(
         GF_DYN_PACKET_LEN,
         NULL,
         gfs_l_gfork_write_cb,
-        NULL);
+        NULL, NULL, NULL);
     if(result != GLOBUS_SUCCESS)
     {
         globus_xio_register_close(
@@ -366,6 +367,7 @@ error_version:
     /* reuse the buffer we already have */
     buffer[GF_VERSION_NDX] = GF_VERSION;
     buffer[GF_MSG_TYPE_NDX] = GFS_GFORK_MSG_TYPE_NACK;
+    // esjung
     result = globus_xio_register_write(
         handle,
         buffer,
@@ -373,7 +375,7 @@ error_version:
         GF_DYN_PACKET_LEN,
         NULL,
         gfs_l_gfork_write_cb,
-        NULL);
+        NULL, NULL, NULL);
     if(result != GLOBUS_SUCCESS)
     {
         globus_xio_register_close(
@@ -510,7 +512,7 @@ gfs_l_gfork_read_dynbe(
     /* write ack */
     buffer[GF_VERSION_NDX] = GF_VERSION;
     buffer[GF_MSG_TYPE_NDX] = GFS_GFORK_MSG_TYPE_ACK;
-
+    // esjung
     result = globus_xio_register_write(
         handle,
         buffer,
@@ -518,7 +520,7 @@ gfs_l_gfork_read_dynbe(
         GF_DYN_PACKET_LEN,
         NULL,
         gfs_l_gfork_write_cb,
-        NULL);
+        NULL, NULL, NULL);
     if(result != GLOBUS_SUCCESS)
     {
         globus_xio_register_close(
@@ -713,6 +715,7 @@ error_not_allowed:
 
     buffer[GF_VERSION_NDX] = GF_VERSION;
     buffer[GF_MSG_TYPE_NDX] = GFS_GFORK_MSG_TYPE_NACK;
+    // esjung
     result = globus_xio_register_write(
         handle,
         buffer,
@@ -720,7 +723,7 @@ error_not_allowed:
         GF_DYN_PACKET_LEN,
         NULL,
         gfs_l_gfork_write_cb,
-        NULL);
+        NULL, NULL, NULL);
     if(result != GLOBUS_SUCCESS)
     {
         globus_xio_register_close(
@@ -1569,7 +1572,7 @@ gfs_l_gfork_backend_xio_open_cb(
     converted_32 = htonl(g_total_cons);
     memcpy(&buffer[GF_DYN_TOTAL_NDX], &converted_32, sizeof(uint32_t));
     strncpy((char *)&buffer[GF_DYN_CS_NDX], g_be_cs, GF_DYN_CS_LEN);
-
+    // esjung
     result = globus_xio_register_write(
         handle,
         buffer,
@@ -1577,7 +1580,7 @@ gfs_l_gfork_backend_xio_open_cb(
         GF_DYN_PACKET_LEN,
         NULL,
         gfs_l_gfork_backend_xio_write_cb,
-        NULL);
+        NULL, NULL, NULL);
     if(result != GLOBUS_SUCCESS)
     {
         goto error_write;
