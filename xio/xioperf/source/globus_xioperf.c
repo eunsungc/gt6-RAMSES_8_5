@@ -553,6 +553,7 @@ xioperf_next_write(
     globus_result_t                     res;
 
     globus_assert(!info->write_done);
+    // esjung
     res = globus_xio_register_write(
         info->xio_handle,
         info->next_write_buffer,
@@ -560,7 +561,7 @@ xioperf_next_write(
         info->next_buf_size,
         NULL,
         xioperf_write_cb,
-        info);
+        info, NULL, NULL);
     if(res != GLOBUS_SUCCESS)
     {
         goto error;

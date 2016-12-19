@@ -2327,7 +2327,7 @@ printf("%s(%s)\n", __func__, __FILE__);
                     goto error_seek;
                 }
             }
-            
+            // esjung
             result = globus_xio_register_write(
                 monitor->file_handle,
                 buf_info->buffer,
@@ -2335,7 +2335,7 @@ printf("%s(%s)\n", __func__, __FILE__);
                 buf_info->length,
                 NULL,
                 globus_l_gfs_file_write_cb,
-                monitor);
+                monitor, NULL, NULL);
             if(result != GLOBUS_SUCCESS)
             {
                 result = GlobusGFSErrorWrapFailed(

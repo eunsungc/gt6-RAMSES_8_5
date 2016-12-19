@@ -2720,6 +2720,7 @@ printf("globus_i_xio_mode_e_register_write\n");
     {
         handle->offset = offset;
     }
+    // esjung
     result = globus_xio_register_write(
                 connection_handle->xio_handle, 
                 (globus_byte_t*)header, 
@@ -2727,7 +2728,7 @@ printf("globus_i_xio_mode_e_register_write\n");
                 header_size,
                 GLOBUS_NULL,
                 globus_l_xio_mode_e_write_header_cb,
-                connection_handle);
+                connection_handle, NULL, NULL);
     if (result != GLOBUS_SUCCESS)
     {
         goto error;
@@ -3133,6 +3134,7 @@ globus_l_xio_mode_e_register_eod(
         globus_i_xio_mode_e_header_encode(
                         header->offset, handle->eod_count);
     }
+    // esjung
     result = globus_xio_register_write(
         connection_handle->xio_handle,
         (globus_byte_t*)header,
@@ -3140,7 +3142,7 @@ globus_l_xio_mode_e_register_eod(
         header_size,
         GLOBUS_NULL,
         globus_l_xio_mode_e_write_eod_cb,
-        connection_handle);
+        connection_handle, NULL, NULL);
     if (result != GLOBUS_SUCCESS)
     {
         goto error;

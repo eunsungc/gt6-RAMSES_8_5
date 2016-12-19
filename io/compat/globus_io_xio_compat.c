@@ -3220,12 +3220,10 @@ printf("%s(%s)\n", __func__, __FILE__);
     bounce_info->user_arg = callback_arg;
     bounce_info->blocking = GLOBUS_FALSE;
     bounce_info->cancel_info = GLOBUS_NULL;
-    // esjung
-    bounce_info->iotime = iotime;
-    bounce_info->nettime = nettime;
     
     globus_mutex_lock(&ihandle->pending_lock);
     {
+        // esjung
         result = globus_xio_register_write(
             ihandle->xio_handle,
             buf,
@@ -3233,7 +3231,7 @@ printf("%s(%s)\n", __func__, __FILE__);
             nbytes,
             GLOBUS_NULL,
             globus_l_io_bounce_io_cb,
-            bounce_info);
+            bounce_info, iotime, nettime);
         if(result != GLOBUS_SUCCESS)
         {
             globus_mutex_unlock(&ihandle->pending_lock);
@@ -3309,6 +3307,7 @@ globus_io_register_send(
     
     globus_mutex_lock(&ihandle->pending_lock);
     {
+        // esjung
         result = globus_xio_register_write(
             ihandle->xio_handle,
             buf,
@@ -3316,7 +3315,7 @@ globus_io_register_send(
             nbytes,
             dd,
             globus_l_io_bounce_io_cb,
-            bounce_info);
+            bounce_info, NULL, NULL);
         dd = GLOBUS_NULL; /* XXX is xio freeing this for us ?? */
         if(result != GLOBUS_SUCCESS)
         {

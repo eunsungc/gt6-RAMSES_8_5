@@ -771,7 +771,9 @@ globus_xio_register_write(
     globus_size_t                       waitforbytes,
     globus_xio_data_descriptor_t        data_desc,
     globus_xio_data_callback_t          cb,
-    void *                              user_arg);
+    void *                              user_arg,
+    nlcali_T iotime,
+    nlcali_T nettime);
 
 /**
  * Write data to a handle

@@ -1374,6 +1374,7 @@ globus_l_gsc_open_cb(
 
         msg = globus_gsc_string_to_959(
             220, server_handle->pre_auth_banner, NULL);
+        // esjung
         res = globus_xio_register_write(
             server_handle->xio_handle,
             (globus_byte_t *) msg,
@@ -1381,7 +1382,7 @@ globus_l_gsc_open_cb(
             strlen(msg),
             NULL,
             globus_l_gsc_220_write_cb,
-            server_handle);
+            server_handle, NULL, NULL);
         if(res != GLOBUS_SUCCESS)
         {
             goto err;
@@ -2453,6 +2454,7 @@ globus_l_gsc_final_reply(
     
     globus_i_gsc_log(
         server_handle, message, GLOBUS_GRIDFTP_SERVER_CONTROL_LOG_REPLY);
+    // esjung
     res = globus_xio_register_write(
             server_handle->xio_handle,
             (globus_byte_t *) tmp_ptr,
@@ -2460,7 +2462,7 @@ globus_l_gsc_final_reply(
             len,
             NULL,
             globus_l_gsc_final_reply_cb,
-            server_handle);
+            server_handle, NULL, NULL);
     if(res != GLOBUS_SUCCESS)
     {
         goto err;
@@ -2504,6 +2506,7 @@ globus_l_gsc_intermediate_reply(
         goto error_mem;
     }
     len = strlen(tmp_ptr);
+    // esjung
     res = globus_xio_register_write(
             server_handle->xio_handle,
             (globus_byte_t *) tmp_ptr,
@@ -2511,7 +2514,7 @@ globus_l_gsc_intermediate_reply(
             len,
             NULL,
             globus_l_gsc_intermediate_reply_cb,
-            server_handle);
+            server_handle, NULL, NULL);
     if(res != GLOBUS_SUCCESS)
     {
         goto err;

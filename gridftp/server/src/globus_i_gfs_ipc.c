@@ -1521,7 +1521,7 @@ printf("globus_l_gfs_ipc_send_start_session\n");
     msg_size = ptr - buffer;
     ptr = buffer + GFS_IPC_HEADER_SIZE_OFFSET;
     GFSEncodeUInt32(buffer, ipc->buffer_size, ptr, msg_size);
-
+    // esjung
     res = globus_xio_register_write(
         ipc->xio_handle,
         buffer,
@@ -1529,7 +1529,7 @@ printf("globus_l_gfs_ipc_send_start_session\n");
         msg_size,
         NULL,
         globus_l_gfs_ipc_start_session_write_cb,
-        ipc);
+        ipc, NULL, NULL);
     if(res != GLOBUS_SUCCESS)
     {
         goto error;
@@ -1756,6 +1756,7 @@ printf("globus_gfs_ipc_reply_session\n");
             ptr = buffer + GFS_IPC_HEADER_SIZE_OFFSET;
             GFSEncodeUInt32(
                 buffer, ipc->buffer_size, ptr, msg_size);
+            // esjung
             res = globus_xio_register_write(
                 ipc->xio_handle,
                 buffer,
@@ -1763,7 +1764,7 @@ printf("globus_gfs_ipc_reply_session\n");
                 msg_size,
                 NULL,
                 globus_l_gfs_ipc_reply_cb,
-                ipc);
+                ipc, NULL, NULL);
             if(res != GLOBUS_SUCCESS)
             {
                 globus_free(buffer);
@@ -2471,7 +2472,7 @@ globus_l_gfs_ipc_client_open_cb(
         msg_size = ptr - buffer;
         ptr = buffer + GFS_IPC_HEADER_SIZE_OFFSET;
         GFSEncodeUInt32(buffer, ipc->buffer_size, ptr, msg_size);
-
+        // esjung
         res = globus_xio_register_write(
             ipc->xio_handle,
             buffer,
@@ -2479,7 +2480,7 @@ globus_l_gfs_ipc_client_open_cb(
             msg_size,
             NULL,
             globus_l_gfs_ipc_handshake_write_cb,
-            ipc);
+            ipc, NULL, NULL);
         if(res != GLOBUS_SUCCESS)
         {
             goto xio_error;
@@ -2866,7 +2867,7 @@ globus_l_gfs_ipc_requestor_start_close(
     /* now that we know size, add it in */
     ptr = buffer + GFS_IPC_HEADER_SIZE_OFFSET;
     GFSEncodeUInt32(buffer, ipc_handle->buffer_size, ptr, msg_size);
-
+    // esjung
     res = globus_xio_register_write(
         ipc_handle->xio_handle,
         buffer,
@@ -2874,7 +2875,7 @@ globus_l_gfs_ipc_requestor_start_close(
         msg_size,
         NULL,
         globus_l_gfs_ipc_stop_write_cb,
-        ipc_handle);
+        ipc_handle, NULL, NULL);
     if(res != GLOBUS_SUCCESS)
     {
         res = globus_xio_register_close(
@@ -5213,6 +5214,7 @@ globus_gfs_ipc_reply_finished(
             ptr = buffer + GFS_IPC_HEADER_SIZE_OFFSET;
             GFSEncodeUInt32(
                 buffer, ipc->buffer_size, ptr, msg_size);
+            // esjung
             res = globus_xio_register_write(
                 ipc_handle->xio_handle,
                 buffer,
@@ -5220,7 +5222,7 @@ globus_gfs_ipc_reply_finished(
                 msg_size,
                 NULL,
                 globus_l_gfs_ipc_reply_cb,
-                ipc);
+                ipc, NULL, NULL);
             if(res != GLOBUS_SUCCESS)
             {
                 goto error_mem;
@@ -5404,6 +5406,7 @@ globus_gfs_ipc_reply_event(
             ptr = buffer + GFS_IPC_HEADER_SIZE_OFFSET;
             GFSEncodeUInt32(
                 buffer, ipc->buffer_size, ptr, msg_size);
+            // esjung
             res = globus_xio_register_write(
                 ipc_handle->xio_handle,
                 buffer,
@@ -5411,7 +5414,7 @@ globus_gfs_ipc_reply_event(
                 msg_size,
                 NULL,
                 globus_l_gfs_ipc_event_reply_cb,
-                ipc);
+                ipc, NULL, NULL);
             if(res != GLOBUS_SUCCESS)
             {
                 goto xio_error;
@@ -5691,7 +5694,7 @@ globus_gfs_ipc_request_buffer_send(
         /* now that we know size, add it in */
         ptr = buffer + GFS_IPC_HEADER_SIZE_OFFSET;
         GFSEncodeUInt32(buffer, ipc->buffer_size, ptr, msg_size);
-
+        // esjung
         res = globus_xio_register_write(
             ipc->xio_handle,
             buffer,
@@ -5699,7 +5702,7 @@ globus_gfs_ipc_request_buffer_send(
             msg_size,
             NULL,
             globus_l_gfs_ipc_no_read_write_cb,
-            request);
+            request, NULL, NULL);
         if(res != GLOBUS_SUCCESS)
         {
             goto err;
@@ -5788,7 +5791,7 @@ globus_l_gfs_ipc_transfer_pack(
     /* now that we know size, add it in */
     ptr = buffer + GFS_IPC_HEADER_SIZE_OFFSET;
     GFSEncodeUInt32(buffer, ipc->buffer_size, ptr, msg_size);
-
+    // esjung
     res = globus_xio_register_write(
         ipc->xio_handle,
         buffer,
@@ -5796,7 +5799,7 @@ globus_l_gfs_ipc_transfer_pack(
         msg_size,
         NULL,
         globus_l_gfs_ipc_write_cb,
-        request);
+        request, NULL, NULL);
     if(res != GLOBUS_SUCCESS)
     {
         globus_free(buffer);
@@ -6089,7 +6092,7 @@ globus_gfs_ipc_request_command(
         /* now that we know size, add it in */
         ptr = buffer + GFS_IPC_HEADER_SIZE_OFFSET;
         GFSEncodeUInt32(buffer, ipc->buffer_size, ptr, msg_size);
-
+        // esjung
         result = globus_xio_register_write(
             ipc_handle->xio_handle,
             buffer,
@@ -6097,7 +6100,7 @@ globus_gfs_ipc_request_command(
             msg_size,
             NULL,
             globus_l_gfs_ipc_write_cb,
-            request);
+            request, NULL, NULL);
         if(result != GLOBUS_SUCCESS)
         {
             goto xio_error;
@@ -6204,7 +6207,7 @@ printf("globus_gfs_ipc_request_transfer_event\n");
         /* now that we know size, add it in */
         ptr = buffer + GFS_IPC_HEADER_SIZE_OFFSET;
         GFSEncodeUInt32(buffer, ipc->buffer_size, ptr, msg_size);
-
+        // esjung
         result = globus_xio_register_write(
             ipc_handle->xio_handle,
             buffer,
@@ -6212,7 +6215,7 @@ printf("globus_gfs_ipc_request_transfer_event\n");
             msg_size,
             NULL,
             globus_l_gfs_ipc_no_read_write_cb,
-            request);
+            request, NULL, NULL);
         if(result != GLOBUS_SUCCESS)
         {
             goto xio_error;
@@ -6323,7 +6326,7 @@ printf("globus_l_gfs_ipc_pack_data\n");
     ptr = buffer + GFS_IPC_HEADER_SIZE_OFFSET;
     
     GFSEncodeUInt32(buffer, ipc->buffer_size, ptr, msg_size);
-
+    // esjung
     res = globus_xio_register_write(
         ipc->xio_handle,
         buffer,
@@ -6331,7 +6334,7 @@ printf("globus_l_gfs_ipc_pack_data\n");
         msg_size,
         NULL,
         globus_l_gfs_ipc_write_cb,
-        request);
+        request, NULL, NULL);
     if(res != GLOBUS_SUCCESS)
     {
         globus_free(buffer);
@@ -6540,7 +6543,7 @@ globus_gfs_ipc_request_stat(
         /* now that we know size, add it in */
         ptr = buffer + GFS_IPC_HEADER_SIZE_OFFSET;
         GFSEncodeUInt32(buffer, ipc->buffer_size, ptr, msg_size);
-
+        // esjung
         res = globus_xio_register_write(
             ipc_handle->xio_handle,
             buffer,
@@ -6548,7 +6551,7 @@ globus_gfs_ipc_request_stat(
             msg_size,
             NULL,
             globus_l_gfs_ipc_write_cb,
-            request);
+            request, NULL, NULL);
         if(res != GLOBUS_SUCCESS)
         {
             goto err;
@@ -6635,7 +6638,7 @@ globus_gfs_ipc_request_data_destroy(
         /* now that we know size, add it in */
         ptr = buffer + GFS_IPC_HEADER_SIZE_OFFSET;
         GFSEncodeUInt32(buffer, ipc->buffer_size, ptr, msg_size);
-
+        // esjung
         res = globus_xio_register_write(
             ipc_handle->xio_handle,
             buffer,
@@ -6643,7 +6646,7 @@ globus_gfs_ipc_request_data_destroy(
             msg_size,
             NULL,
             globus_l_gfs_ipc_no_read_write_cb,
-            request);
+            request, NULL, NULL);
         if(res != GLOBUS_SUCCESS)
         {
             goto err;

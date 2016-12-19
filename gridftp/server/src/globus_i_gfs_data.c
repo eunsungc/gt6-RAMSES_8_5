@@ -13978,6 +13978,7 @@ printf("%s(%s)\n", __func__, __FILE__);
     {
         if(op->data_handle->http_handle)
         {
+            // esjung
             result = globus_xio_register_write(
                 op->data_handle->http_handle,
                 buffer,
@@ -13985,7 +13986,7 @@ printf("%s(%s)\n", __func__, __FILE__);
                 length,
                 NULL,
                 globus_i_gfs_data_http_write_cb,
-                bounce_info);
+                bounce_info, NULL, NULL);
             if(result != GLOBUS_SUCCESS)
             {
                 result = GlobusGFSErrorWrapFailed(

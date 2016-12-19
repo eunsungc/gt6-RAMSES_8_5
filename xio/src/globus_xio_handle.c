@@ -2501,14 +2501,14 @@ globus_xio_register_write(
     globus_size_t                       waitforbytes,
     globus_xio_data_descriptor_t        data_desc,
     globus_xio_data_callback_t          cb,
-    void *                              user_arg)
+    void *                              user_arg,
+    nlcali_T iotime,
+    nlcali_T nettime)
 {
     globus_i_xio_op_t *                 op;
     globus_result_t                     res;
     globus_i_xio_handle_t *             handle;
     int                                 ref = 0;
-    // esjung
-    nlcali_T *pnlcali=(nlcali_T *)user_arg;
     GlobusXIOName(globus_xio_register_write);
 #ifdef _RAMSES_DEBUG_FUNC_
 printf("%s(%s)\n", __func__, __FILE__);
@@ -2558,8 +2558,8 @@ printf("%s(%s)\n", __func__, __FILE__);
     op->_op_wait_for = waitforbytes;
     op->user_arg = user_arg;
     // esjung
-    op->iotime = pnlcali[0];
-    op->nettime = pnlcali[1];
+    op->iotime = iotime;
+    op->nettime = nettime;
 #ifdef _RAMSES_DEBUG_
 printf("iotime: %x, nettime: %x\n", op->iotime, op->nettime);
 #endif
