@@ -694,7 +694,7 @@ gfs_l_gfork_open_server_cb(
             goto error_not_allowed;
         }
     }
-
+    // esjung
     result = globus_xio_register_read(
         handle,
         buffer,
@@ -702,7 +702,7 @@ gfs_l_gfork_open_server_cb(
         GF_DYN_PACKET_LEN,
         NULL,
         gfs_l_gfork_read_cb,
-        NULL);
+        NULL, NULL, NULL);
     if(result != GLOBUS_SUCCESS)
     {
         goto error_read;
@@ -1524,7 +1524,7 @@ gfs_l_gfork_backend_xio_write_cb(
         gfs_l_gfork_log(result, 0, "Backend registration failed\n");
         goto error;
     }
-
+    // esjung
     result = globus_xio_register_read(
         handle,
         buffer,
@@ -1532,7 +1532,7 @@ gfs_l_gfork_backend_xio_write_cb(
         GF_DYN_PACKET_LEN,
         NULL,
         gfs_l_gfork_backend_xio_read_cb,
-        NULL);
+        NULL, NULL, NULL);
     if(result != GLOBUS_SUCCESS)
     {
         goto error;
