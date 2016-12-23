@@ -325,6 +325,7 @@ gfork_l_write_open_cb(
         msg->from_kid = from_kid;
         gfork_log(1, "posting header read on %d for %d bytes\n",
             msg->from_kid->pid, sizeof(gfork_i_msg_header_t));
+        // esjung
         result = globus_xio_register_read(
             from_kid->read_xio_handle,
             (globus_byte_t *)&msg->header,
@@ -332,7 +333,7 @@ gfork_l_write_open_cb(
             sizeof(gfork_i_msg_header_t),
             NULL,
             gfork_l_read_header_cb,
-            msg); 
+            msg, NULL, NULL); 
         if(result != GLOBUS_SUCCESS)
         {
             goto error_post;
@@ -603,6 +604,7 @@ gfork_l_spawn_master(
         msg->from_kid = master_child_handle;
         gfork_log(1, "posting header read on %d for %d bytes\n",
             msg->from_kid->pid, sizeof(gfork_i_msg_header_t));
+        // esjung
         result = globus_xio_register_read(
             master_child_handle->read_xio_handle,
             (globus_byte_t *)&msg->header,
@@ -610,7 +612,7 @@ gfork_l_spawn_master(
             sizeof(gfork_i_msg_header_t),
             NULL,
             gfork_l_read_header_cb,
-            msg); 
+            msg, NULL, NULL); 
         if(result != GLOBUS_SUCCESS)
         {
             goto error_read_post;
@@ -1287,6 +1289,7 @@ gfork_l_read_body_cb(
     
         gfork_log(1, "posting header read on %d for %d bytes\n",
             msg->from_kid->pid, sizeof(gfork_i_msg_header_t));
+        // esjung
         result = globus_xio_register_read(
             msg->from_kid->read_xio_handle,
             (globus_byte_t *)&msg->header,
@@ -1294,7 +1297,7 @@ gfork_l_read_body_cb(
             sizeof(gfork_i_msg_header_t),
             NULL,
             gfork_l_read_header_cb,
-            msg);
+            msg, NULL, NULL);
         if(result != GLOBUS_SUCCESS)
         {
             goto error_post;
@@ -1342,6 +1345,7 @@ gfork_l_read_header_cb(
                 /* assume a bad message, report header */
                 gfork_log(1, "posting header read on %d for %d bytes\n",
                     msg->from_kid->pid, sizeof(gfork_i_msg_header_t));
+                // esjung
                 result = globus_xio_register_read(
                     msg->from_kid->read_xio_handle,
                     (globus_byte_t *)&msg->header,
@@ -1349,7 +1353,7 @@ gfork_l_read_header_cb(
                     sizeof(gfork_i_msg_header_t),
                     NULL,
                     gfork_l_read_header_cb,
-                    msg);
+                    msg, NULL, NULL);
                 if(result != GLOBUS_SUCCESS)
                 {
                     goto error_post;
@@ -1363,6 +1367,7 @@ gfork_l_read_header_cb(
 
                 gfork_log(1, "posting body read on %d for %d bytes\n",
                     msg->from_kid->pid, msg->header.size);
+                // esjung
                 result = globus_xio_register_read(
                     msg->from_kid->read_xio_handle,
                     msg->data->buffer,
@@ -1370,7 +1375,7 @@ gfork_l_read_header_cb(
                     msg->header.size,
                     NULL,
                     gfork_l_read_body_cb,
-                    msg);
+                    msg, NULL, NULL);
                 if(result != GLOBUS_SUCCESS)
                 {
                     goto error_post;
@@ -1384,6 +1389,7 @@ gfork_l_read_header_cb(
         default:
             gfork_log(1, "posting header read on %d for %d bytes\n",
                 msg->from_kid->pid, sizeof(gfork_i_msg_header_t));
+            // esjung
             result = globus_xio_register_read(
                 msg->from_kid->read_xio_handle,
                 (globus_byte_t *)&msg->header,
@@ -1391,7 +1397,7 @@ gfork_l_read_header_cb(
                 sizeof(gfork_i_msg_header_t),
                 NULL,
                 gfork_l_read_header_cb,
-                msg);
+                msg, NULL, NULL);
             if(result != GLOBUS_SUCCESS)
             {
                 goto error_post;
