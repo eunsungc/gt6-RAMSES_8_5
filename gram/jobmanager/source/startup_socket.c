@@ -611,7 +611,7 @@ globus_gram_job_manager_startup_socket_init(
         }
         goto create_handle_failed;
     }
-
+    // esjung
     result = globus_xio_register_read(
             *handle,
             byte,
@@ -619,7 +619,7 @@ globus_gram_job_manager_startup_socket_init(
             0,
             NULL,
             globus_l_gram_startup_socket_callback,
-            manager);
+            manager, NULL, NULL);
     if (result != GLOBUS_SUCCESS)
     {
         char *                          errstr;
@@ -2044,7 +2044,7 @@ failed_receive:
         close(newsock);
         newsock = -1;
     }
-
+    // esjung
     result = globus_xio_register_read(
             handle,
             buffer,
@@ -2052,7 +2052,7 @@ failed_receive:
             0,
             NULL,
             globus_l_gram_startup_socket_callback,
-            manager);
+            manager, NULL, NULL);
 }
 /* globus_l_gram_startup_socket_callback() */
 
