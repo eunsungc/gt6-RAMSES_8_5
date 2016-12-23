@@ -1989,6 +1989,7 @@ globus_i_xio_mode_e_register_read_header(
                     globus_memory_pop_node(
                         &connection_handle->mode_e_handle->header_memory);
     header_size = sizeof(globus_l_xio_mode_e_header_t);
+    // esjung
     result = globus_xio_register_read(
         connection_handle->xio_handle,
         (globus_byte_t*)header,
@@ -1996,7 +1997,7 @@ globus_i_xio_mode_e_register_read_header(
         header_size,
         NULL,               /* data_desc */
         globus_l_xio_mode_e_read_header_cb,
-        connection_handle);
+        connection_handle, NULL, NULL);
     GlobusXIOModeEDebugExit();
     return result;
 }
