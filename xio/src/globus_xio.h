@@ -711,6 +711,7 @@ globus_xio_open(
  *  Read data from a handle
  *  @ingroup GLOBUS_XIO_API
  */
+ // esjung
 globus_result_t
 globus_xio_register_read(
     globus_xio_handle_t                 handle,
@@ -719,7 +720,9 @@ globus_xio_register_read(
     globus_size_t                       waitforbytes,
     globus_xio_data_descriptor_t        data_desc,
     globus_xio_data_callback_t          cb,
-    void *                              user_arg);
+    void *                              user_arg,
+    nlcali_T iotime,
+    nlcali_T nettime);
 
 /**
  *  Read data from a handle
