@@ -429,6 +429,7 @@ int main(int argc, char *argv[])
         goto unregister_handler_out;
     }
 
+    // esjung
     result = globus_xio_register_read(
             stdin_handle,
             (globus_byte_t *) new_task->task,
@@ -436,7 +437,7 @@ int main(int argc, char *argv[])
             1,
             NULL,
             globus_l_fork_task_read,
-            new_task);
+            new_task, NULL, NULL);
 
     fclose(stderr); /* not used, save the FD */
 
@@ -635,6 +636,7 @@ globus_l_fork_task_read(
         if (task->tasklen != task->taskbuflen)
         {
             /* Room in the task buffer to read more data */
+            // esjung
             result = globus_xio_register_read(
                     handle,
                     (globus_byte_t *) task->task + task->tasklen,
@@ -642,7 +644,7 @@ globus_l_fork_task_read(
                     1,
                     NULL,
                     globus_l_fork_task_read,
-                    task);
+                    task, NULL, NULL);
         }
     }
 
