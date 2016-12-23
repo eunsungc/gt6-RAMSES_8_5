@@ -458,6 +458,7 @@ xioperf_read_cb(
             info->bytes_recv < info->bytes_to_transfer ||
             !info->writer)
         {
+            // esjung
             result = globus_xio_register_read(
                 info->xio_handle,
                 buffer,
@@ -465,7 +466,7 @@ xioperf_read_cb(
                 1,
                 NULL,
                 xioperf_read_cb,
-                info);
+                info, NULL, NULL);
             if(result != GLOBUS_SUCCESS)
             {
                 info->err = globus_error_get(result);
@@ -847,6 +848,7 @@ xioperf_post_io(
         if(info->reader && !info->read_done)
         {
             buffer = (globus_byte_t*)globus_malloc(info->block_size);
+            // esjung
             res = globus_xio_register_read(
                 info->xio_handle,
                 buffer,
@@ -854,7 +856,7 @@ xioperf_post_io(
                 1,
                 NULL,
                 xioperf_read_cb,
-                info);
+                info, NULL, NULL);
             if(res != GLOBUS_SUCCESS)
             {
                 info->read_done = GLOBUS_TRUE;
