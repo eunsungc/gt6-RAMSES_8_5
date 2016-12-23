@@ -3058,6 +3058,7 @@ printf("%s(%s)\n", __func__, __FILE__);
     
     globus_mutex_lock(&ihandle->pending_lock);
     {
+        // esjung
         result = globus_xio_register_read(
             ihandle->xio_handle,
             buf,
@@ -3065,7 +3066,7 @@ printf("%s(%s)\n", __func__, __FILE__);
             wait_for_nbytes,
             GLOBUS_NULL,
             globus_l_io_bounce_io_cb,
-            bounce_info);
+            bounce_info, NULL, NULL);
         if(result != GLOBUS_SUCCESS)
         {
             globus_mutex_unlock(&ihandle->pending_lock);
