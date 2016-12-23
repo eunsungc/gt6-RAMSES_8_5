@@ -1746,7 +1746,7 @@ globus_l_gfs_file_cksm_read_cb(
             globus_gridftp_server_intermediate_command(
                 monitor->op, GLOBUS_SUCCESS, count);
         }
-
+        // esjung
         result = globus_xio_register_read(
             handle,
             monitor->buffer,
@@ -1754,7 +1754,7 @@ globus_l_gfs_file_cksm_read_cb(
             monitor->count,
             NULL,
             globus_l_gfs_file_cksm_read_cb,
-            monitor);
+            monitor, NULL, NULL);
         if(result != GLOBUS_SUCCESS)
         {
             result = GlobusGFSErrorWrapFailed(
@@ -1903,7 +1903,7 @@ globus_l_gfs_file_open_cksm_cb(
     }
     
     MD5_Init(&monitor->mdctx);  
-    
+    // esjung
     result = globus_xio_register_read(
         handle,
         monitor->buffer,
@@ -1911,7 +1911,7 @@ globus_l_gfs_file_open_cksm_cb(
         monitor->count,
         NULL,
         globus_l_gfs_file_cksm_read_cb,
-        monitor);
+        monitor, NULL, NULL);
     if(result != GLOBUS_SUCCESS)
     {
         result = GlobusGFSErrorWrapFailed(
@@ -2925,7 +2925,7 @@ printf("%s(%s)\n", __func__, __FILE__);
         {
             read_length = monitor->block_size;
         }
-        
+        // esjung
         result = globus_xio_register_read(
             monitor->file_handle,
             buffer,
@@ -2933,7 +2933,7 @@ printf("%s(%s)\n", __func__, __FILE__);
             read_length,
             NULL,
             globus_l_gfs_file_read_cb,
-            monitor);
+            monitor, NULL, NULL);
         if(result != GLOBUS_SUCCESS)
         {
             globus_list_insert(&monitor->buffer_list, buffer);
