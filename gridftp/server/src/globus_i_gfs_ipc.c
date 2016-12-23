@@ -1257,6 +1257,7 @@ globus_l_gfs_ipc_request_ss_header_cb(
             result = GlobusGFSErrorIPC();
             goto mem_error;
         }
+        // esjung
         result = globus_xio_register_read(
             handle,
             new_buf,
@@ -1264,7 +1265,7 @@ globus_l_gfs_ipc_request_ss_header_cb(
             reply_size - GFS_IPC_HEADER_SIZE,
             NULL,
             globus_l_gfs_ipc_request_ss_body_cb,
-            ipc);
+            ipc, NULL, NULL);
         if(result != GLOBUS_SUCCESS)
         {
             goto mem_error;
@@ -1340,6 +1341,7 @@ globus_l_gfs_ipc_reply_ss_header_cb(
             result = GlobusGFSErrorIPC();
             goto mem_error;
         }
+        // esjung
         result = globus_xio_register_read(
             handle,
             new_buf,
@@ -1347,7 +1349,7 @@ globus_l_gfs_ipc_reply_ss_header_cb(
             reply_size - GFS_IPC_HEADER_SIZE,
             NULL,
             globus_l_gfs_ipc_reply_ss_body_cb,
-            ipc);
+            ipc, NULL, NULL);
         if(result != GLOBUS_SUCCESS)
         {
             goto mem_error;
@@ -1419,6 +1421,7 @@ globus_l_gfs_ipc_start_session_write_cb(
             result = GlobusGFSErrorIPC();
             goto error;
         }
+        // esjung
         result = globus_xio_register_read(
             ipc->xio_handle,
             new_buf,
@@ -1426,7 +1429,7 @@ globus_l_gfs_ipc_start_session_write_cb(
             GFS_IPC_HEADER_SIZE,
             NULL,
             globus_l_gfs_ipc_request_ss_header_cb,
-            ipc);
+            ipc, NULL, NULL);
         if(result != GLOBUS_SUCCESS)
         {
             goto mem_error;
@@ -1619,6 +1622,7 @@ globus_l_gfs_ipc_read_new_body_cb(
         ipc->cached_res = result;
         goto error;
     }
+    // esjung
     result = globus_xio_register_read(
         ipc->xio_handle,
         new_buf,
@@ -1626,7 +1630,7 @@ globus_l_gfs_ipc_read_new_body_cb(
         GFS_IPC_HEADER_SIZE,
         NULL,
         globus_l_gfs_ipc_reply_ss_header_cb,
-        ipc);
+        ipc, NULL, NULL);
     if(result != GLOBUS_SUCCESS)
     {
         goto error_io;
@@ -1776,6 +1780,7 @@ printf("globus_gfs_ipc_reply_session\n");
                 res = GlobusGFSErrorMemory("new_buf");
                 goto error;
             }
+            // esjung
             res = globus_xio_register_read(
                 ipc->xio_handle,
                 new_buf,
@@ -1783,7 +1788,7 @@ printf("globus_gfs_ipc_reply_session\n");
                 GFS_IPC_HEADER_SIZE,
                 NULL,
                 globus_l_gfs_ipc_reply_read_header_cb,
-                ipc);
+                ipc, NULL, NULL);
             if(res != GLOBUS_SUCCESS)
             {
                 goto error_mem;
@@ -1872,7 +1877,7 @@ globus_l_gfs_ipc_read_new_header_cb(
         res = GlobusGFSErrorMemory("new_buf");
         goto err;
     }
-
+    // esjung
     result = globus_xio_register_read(
         handle,
         new_buf,
@@ -1880,7 +1885,7 @@ globus_l_gfs_ipc_read_new_header_cb(
         reply_size - GFS_IPC_HEADER_SIZE,
         NULL,
         globus_l_gfs_ipc_read_new_body_cb,
-        ipc);
+        ipc, NULL, NULL);
     if(result != GLOBUS_SUCCESS)
     {
         goto mem_err;
@@ -1973,6 +1978,7 @@ globus_l_gfs_ipc_server_open_cb(
         result = GlobusGFSErrorMemory("buffer");
         goto error;
     }
+    // esjung
     result = globus_xio_register_read(
         ipc->xio_handle,
         buffer,
@@ -1980,7 +1986,7 @@ globus_l_gfs_ipc_server_open_cb(
         GFS_IPC_HEADER_SIZE,
         NULL,
         globus_l_gfs_ipc_read_new_header_cb,
-        ipc);
+        ipc, NULL, NULL);
     if(result != GLOBUS_SUCCESS)
     {
         goto mem_error;
@@ -2385,6 +2391,7 @@ globus_l_gfs_ipc_handshake_write_cb(
             {
                 goto error;
             }
+            // esjung
             result = globus_xio_register_read(
                 ipc->xio_handle,
                 new_buf,
@@ -2392,7 +2399,7 @@ globus_l_gfs_ipc_handshake_write_cb(
                 GFS_IPC_HEADER_SIZE,
                 NULL,
                 globus_l_gfs_ipc_reply_read_header_cb,
-                ipc);
+                ipc, NULL, NULL);
             if(result != GLOBUS_SUCCESS)
             {
                 goto read_error;
@@ -3863,6 +3870,7 @@ globus_l_gfs_ipc_request_read_body_cb(
                             {
                                 goto error;
                             }
+                            // esjung
                             result = globus_xio_register_read(
                                 ipc->xio_handle,
                                 new_buf,
@@ -3870,7 +3878,7 @@ globus_l_gfs_ipc_request_read_body_cb(
                                 GFS_IPC_HEADER_SIZE,
                                 NULL,
                                 globus_l_gfs_ipc_request_read_header_cb,
-                                request);
+                                request, NULL, NULL);
                             if(result != GLOBUS_SUCCESS)
                             {
                                 goto mem_error;
@@ -3926,6 +3934,7 @@ globus_l_gfs_ipc_request_read_body_cb(
                         {
                             goto error;
                         }
+                        // esjung
                         result = globus_xio_register_read(
                             ipc->xio_handle,
                             new_buf,
@@ -3933,7 +3942,7 @@ globus_l_gfs_ipc_request_read_body_cb(
                             GFS_IPC_HEADER_SIZE,
                             NULL,
                             globus_l_gfs_ipc_request_read_header_cb,
-                            request);
+                            request, NULL, NULL);
                         if(result != GLOBUS_SUCCESS)
                         {
                             goto mem_error;
@@ -4083,6 +4092,7 @@ globus_l_gfs_ipc_request_read_header_cb(
                     result = GlobusGFSErrorMemory("new_buf");
                     goto error;
                 }
+                // esjung
                 result = globus_xio_register_read(
                     handle,
                     new_buf,
@@ -4090,7 +4100,7 @@ globus_l_gfs_ipc_request_read_header_cb(
                     reply_size - GFS_IPC_HEADER_SIZE,
                     NULL,
                     globus_l_gfs_ipc_request_read_body_cb,
-                    request);
+                    request, NULL, NULL);
                 if(result != GLOBUS_SUCCESS)
                 {
                     goto mem_err;
@@ -4493,6 +4503,7 @@ globus_l_gfs_ipc_reply_read_body_cb(
         {
             goto err;
         }
+        // esjung
         result = globus_xio_register_read(
             ipc->xio_handle,
             new_buf,
@@ -4500,7 +4511,7 @@ globus_l_gfs_ipc_reply_read_body_cb(
             GFS_IPC_HEADER_SIZE,
             NULL,
             globus_l_gfs_ipc_reply_read_header_cb,
-            ipc);
+            ipc, NULL, NULL);
         if(result != GLOBUS_SUCCESS)
         {
             goto mem_error;
@@ -4674,6 +4685,7 @@ globus_l_gfs_ipc_reply_read_header_cb(
                         result = GlobusGFSErrorMemory("new_buf");
                         goto error;
                     }
+                    // esjung
                     result = globus_xio_register_read(
                         handle,
                         new_buf,
@@ -4681,7 +4693,7 @@ globus_l_gfs_ipc_reply_read_header_cb(
                         reply_size - GFS_IPC_HEADER_SIZE,
                         NULL,
                         globus_l_gfs_ipc_reply_read_body_cb,
-                        request);
+                        request, NULL, NULL);
                     if(result != GLOBUS_SUCCESS)
                     {
                         goto mem_err;
@@ -5589,6 +5601,7 @@ globus_l_gfs_ipc_write_cb(
                 {
                     goto error;
                 }
+                // esjung
                 result = globus_xio_register_read(
                     ipc->xio_handle,
                     new_buf,
@@ -5596,7 +5609,7 @@ globus_l_gfs_ipc_write_cb(
                     GFS_IPC_HEADER_SIZE,
                     NULL,
                     globus_l_gfs_ipc_request_read_header_cb,
-                    request);
+                    request, NULL, NULL);
                 if(result != GLOBUS_SUCCESS)
                 {
                     goto read_error;
