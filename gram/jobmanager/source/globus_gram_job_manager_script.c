@@ -575,6 +575,7 @@ globus_l_gram_job_manager_script_read(
 			(int) script_handle->return_buf_offset,
 			(int) (sizeof(script_handle->return_buf) - script_handle->return_buf_offset),
 			p);
+            // esjung
             result = globus_xio_register_read(
                     script_handle->handle,
                     &script_handle->return_buf[script_handle->return_buf_offset],
@@ -582,7 +583,7 @@ globus_l_gram_job_manager_script_read(
                     1,
                     NULL,
                     globus_l_gram_job_manager_script_read,
-                    script_context);
+                    script_context, NULL, NULL);
             if(result == GLOBUS_SUCCESS)
             {
                 /* New callback registered successfully */
@@ -2705,7 +2706,7 @@ globus_l_gram_script_register_read_and_write(
         return GLOBUS_GRAM_PROTOCOL_ERROR_OPENING_JOBMANAGER_SCRIPT;
     }
     script_context->handle->pending_ops++;
-
+    // esjung
     result = globus_xio_register_read(
             script_context->handle->handle,
             script_context->handle->return_buf,
@@ -2713,7 +2714,7 @@ globus_l_gram_script_register_read_and_write(
             1,
             NULL,
             globus_l_gram_job_manager_script_read,
-            script_context);
+            script_context, NULL, NULL);
     if (result != GLOBUS_SUCCESS)
     {
         globus_xio_register_close(
