@@ -287,7 +287,7 @@ globus_l_seg_stdout_activate(void)
     {
         goto destroy_mutex_error;
     }
-
+    // esjung
     result = globus_xio_register_read(
             globus_l_seg_input_handle,
             globus_l_seg_input_buffer,
@@ -295,7 +295,7 @@ globus_l_seg_stdout_activate(void)
             1,
             NULL,
             globus_l_xio_read_eof_callback,
-            NULL);
+            NULL, NULL, NULL);
 
     if (result != GLOBUS_SUCCESS)
     {
@@ -448,6 +448,7 @@ globus_l_xio_read_eof_callback(
     if (result == GLOBUS_SUCCESS)
     {
         /* shouldn't be reading stuff here!?! */
+        // esjung
         result = globus_xio_register_read(
                 globus_l_seg_input_handle,
                 globus_l_seg_input_buffer,
@@ -455,7 +456,7 @@ globus_l_xio_read_eof_callback(
                 1,
                 NULL,
                 globus_l_xio_read_eof_callback,
-                NULL);
+                NULL, NULL, NULL);
     }
 
     globus_scheduler_event_generator_fault(result);

@@ -296,7 +296,7 @@ globus_l_seg_stdout_activate(void)
 
     globus_l_seg_input_buffer_size = GLOBUS_SEG_INPUT_BUFFER_SIZE;
     globus_l_seg_input_buffer = malloc(globus_l_seg_input_buffer_size);
-
+    // esjung
     result = globus_xio_register_read(
             globus_l_seg_input_handle,
             globus_l_seg_input_buffer,
@@ -304,7 +304,7 @@ globus_l_seg_stdout_activate(void)
             1,
             NULL,
             globus_l_xio_read_eof_callback,
-            NULL);
+            NULL, NULL, NULL);
 
     if (result != GLOBUS_SUCCESS)
     {
@@ -498,6 +498,7 @@ globus_l_xio_read_eof_callback(
 
     if (result == GLOBUS_SUCCESS)
     {
+        // esjung
         result = globus_xio_register_read(
                 globus_l_seg_input_handle,
                 globus_l_seg_input_buffer + (end - prev),
@@ -505,7 +506,7 @@ globus_l_xio_read_eof_callback(
                 1,
                 NULL,
                 globus_l_xio_read_eof_callback,
-                NULL);
+                NULL, NULL, NULL);
         return;
     }
 
