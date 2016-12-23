@@ -767,6 +767,7 @@ globus_l_gsc_read_cb(
                             server_handle->max_q_len || 
                         server_handle->max_q_len <= 0)
                     {
+                        // esjung
                         res = globus_xio_register_read(
                                 xio_handle,
                                 globus_l_gsc_fake_buffer,
@@ -774,7 +775,7 @@ globus_l_gsc_read_cb(
                                 1,
                                 NULL,
                                 globus_l_gsc_read_cb,
-                                (void *) server_handle);
+                                (void *) server_handle, NULL, NULL);
                         if(res != GLOBUS_SUCCESS)
                         {
                             goto err_alloc_unlock;
@@ -804,6 +805,7 @@ globus_l_gsc_read_cb(
                         {
                             goto err_alloc_unlock;
                         }
+                        // esjung
                         res = globus_xio_register_read(
                             xio_handle,
                             globus_l_gsc_fake_buffer,
@@ -811,7 +813,7 @@ globus_l_gsc_read_cb(
                             1,
                             NULL,
                             globus_l_gsc_read_cb,
-                            (void *) server_handle);
+                            (void *) server_handle, NULL, NULL);
                         if(res != GLOBUS_SUCCESS)
                         {
                             goto err_alloc_unlock;
@@ -1313,6 +1315,7 @@ globus_l_gsc_220_write_cb(
         GlobusGSCHandleStateChange(server_handle, GLOBUS_L_GSC_STATE_OPEN);
 
         /*  post a read on the fake buffers */
+        // esjung
         res = globus_xio_register_read(
             xio_handle,
             globus_l_gsc_fake_buffer,
@@ -1320,7 +1323,7 @@ globus_l_gsc_220_write_cb(
             1,
             NULL,
             globus_l_gsc_read_cb,
-            (void *) server_handle);
+            (void *) server_handle, NULL, NULL);
         if(res != GLOBUS_SUCCESS)
         {
             goto err;
@@ -1453,6 +1456,7 @@ globus_l_gsc_final_reply_cb(
                 if(server_handle->abort_cnt == 0)
                 {
                     /* post a new read */
+                    // esjung
                     res = globus_xio_register_read(
                             server_handle->xio_handle,
                             globus_l_gsc_fake_buffer,
@@ -1460,7 +1464,7 @@ globus_l_gsc_final_reply_cb(
                             1,
                             NULL,
                             globus_l_gsc_read_cb,
-                            (void *) server_handle);
+                            (void *) server_handle, NULL, NULL);
                     if(res != GLOBUS_SUCCESS)
                     {
 			goto err;
@@ -1484,6 +1488,7 @@ globus_l_gsc_final_reply_cb(
                         server_handle->max_q_len <= 0) &&
                     server_handle->q_backup)
                 {
+                    // esjung
                     res = globus_xio_register_read(
                             xio_handle,
                             globus_l_gsc_fake_buffer,
@@ -1491,7 +1496,7 @@ globus_l_gsc_final_reply_cb(
                             1,
                             NULL,
                             globus_l_gsc_read_cb,
-                            (void *) server_handle);
+                            (void *) server_handle, NULL, NULL);
                     if(res != GLOBUS_SUCCESS)
                     {
                         goto err;
