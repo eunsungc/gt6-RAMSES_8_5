@@ -6723,6 +6723,8 @@ globus_X_ftp_control_data_write_stripe(
 /*
  *  internal stripe write functions
  */
+ // esjung
+ // add iotime/nettime
 globus_result_t
 globus_i_ftp_control_data_write_stripe(
     globus_i_ftp_dc_handle_t *                  dc_handle,
@@ -6791,8 +6793,8 @@ globus_i_ftp_control_data_write_stripe(
         data_info->cb,
         data_info->cb_arg,
         dc_handle,
-        NULL,
-        NULL);
+        iotime,
+        nettime);
 
     tmp_ent->callback_table_handle = data_info->callback_table_handle;
 
