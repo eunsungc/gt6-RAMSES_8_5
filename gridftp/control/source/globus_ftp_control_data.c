@@ -5020,6 +5020,10 @@ globus_ftp_control_data_write(
 #ifdef _RAMSES_DEBUG_FUNC_
 printf("%s(%s)\n", __func__, __FILE__);
 #endif
+
+#ifdef _RAMSES_DEBUG_
+printf("iotime: %x, nettime: %x\n", iotime, nettime);
+#endif
     /*
      *  error checking
      */
