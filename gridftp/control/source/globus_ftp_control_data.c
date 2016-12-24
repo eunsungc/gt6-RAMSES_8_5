@@ -5886,6 +5886,8 @@ printf("%s(%s) iotime: %x, nettime: %x\n\n", __func__, __FILE__, iotime, nettime
     return GLOBUS_SUCCESS;
 }
 
+// esjung
+// add iotime/nettime
 globus_result_t
 globus_l_ftp_control_data_extended_block_enqueue(
     globus_i_ftp_dc_handle_t *                  dc_handle,
@@ -5936,8 +5938,8 @@ globus_l_ftp_control_data_extended_block_enqueue(
             entry->callback,
             entry->callback_arg,
             entry->dc_handle,
-            NULL,
-            NULL);
+            entry->iotime,
+            entry->nettime);
         tmp_ent->callback_table_handle = entry->callback_table_handle;
 
         globus_handle_table_increment_reference(
