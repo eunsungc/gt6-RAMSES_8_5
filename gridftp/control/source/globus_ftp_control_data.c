@@ -5665,7 +5665,7 @@ globus_l_ftp_control_data_stream_read_write(
         "globus_l_ftp_control_data_stream_read_write";
 
 #ifdef _RAMSES_DEBUG_FUNC_
-printf("%s(%s)\n", __func__, __FILE__);
+printf("%s(%s) iotime: %x, nettime: %x\n\n", __func__, __FILE__, iotime, nettime);
 #endif
 
     if(dc_handle->state == GLOBUS_FTP_DATA_STATE_CLOSING)
@@ -5730,7 +5730,7 @@ globus_l_ftp_control_data_eb_write(
     static char *                               my_name =
       "globus_l_ftp_control_data_eb_write";
 #ifdef _RAMSES_DEBUG_FUNC_
-printf("%s(%s)\n", __func__, __FILE__);
+printf("%s(%s) iotime: %x, nettime: %x\n\n", __func__, __FILE__, iotime, nettime);
 #endif
     transfer_handle = dc_handle->transfer_handle;
     layout_func = dc_handle->layout_func;
