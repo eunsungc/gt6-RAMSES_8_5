@@ -24,7 +24,8 @@
 #include "globus_i_ftp_client.h"
 
 #include <string.h>
-
+// esjung
+#define _RAMSES_DEBUG_FUNC_
 /**
  * Data callback information structure.
  *
@@ -1131,7 +1132,9 @@ globus_i_ftp_client_data_dispatch_queue(
     globus_i_ftp_client_target_t *		target;
     globus_result_t				result;
     globus_object_t *				err;
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     globus_i_ftp_client_debug_printf(1, 
         (stderr, "globus_i_ftp_client_data_dispatch_queue() entering\n"));
 
