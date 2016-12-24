@@ -6818,7 +6818,9 @@ globus_i_ftp_control_create_data_info(
 {
     globus_i_ftp_dc_transfer_handle_t *         transfer_handle;
     globus_l_ftp_handle_table_entry_t *         table_entry;
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s) iotime: %x, nettime: %x\n\n", __func__, __FILE__, iotime, nettime);
+#endif
     transfer_handle = dc_handle->transfer_handle;
 
     transfer_handle->ref++;
