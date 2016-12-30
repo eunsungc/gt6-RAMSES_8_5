@@ -2457,7 +2457,9 @@ globus_ftp_control_abort(
                                       (globus_size_t) strlen(
                                           (char *) element_ip->write_buf),
                                       element_ip->write_callback,
-                                      (void *) handle, NULL, NULL);
+                                      (void *) handle,
+                                      handle->dc_handle.iotime,
+                                      handle->dc_handle.nettime);
     
         if(rc != GLOBUS_SUCCESS)
         {
