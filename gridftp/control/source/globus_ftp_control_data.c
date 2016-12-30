@@ -5043,7 +5043,6 @@ printf("iotime: %x, nettime: %x\n", iotime, nettime);
     // esjung
     dc_handle->iotime = iotime;
     dc_handle->nettime = nettime;
-
     GlobusFTPControlDataTestMagic(dc_handle);
     if(!dc_handle->initialized)
     {
