@@ -2000,8 +2000,8 @@ globus_ftp_control_send_command(
                                       (globus_size_t) strlen(buf),
                                       element->write_callback,
                                       (void *) handle, 
-                                      handle->dc_handle->iotime, 
-                                      handle->dc_handle->nettime);
+                                      handle->dc_handle.iotime, 
+                                      handle->dc_handle.nettime);
     
         if(rc != GLOBUS_SUCCESS)
         {
