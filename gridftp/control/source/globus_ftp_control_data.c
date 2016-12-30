@@ -5947,8 +5947,8 @@ globus_l_ftp_control_data_extended_block_enqueue(
             entry->callback,
             entry->callback_arg,
             entry->dc_handle,
-            entry->iotime,
-            entry->nettime);
+            dc_handle->iotime,
+            dc_handle->nettime);
         tmp_ent->callback_table_handle = entry->callback_table_handle;
 
         globus_handle_table_increment_reference(
