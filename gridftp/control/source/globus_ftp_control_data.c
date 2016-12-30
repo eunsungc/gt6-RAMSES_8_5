@@ -4998,6 +4998,7 @@ globus_ftp_control_local_stru(
  // 12. 3. 2016: modify the parameter list to include nlcali_T objects.
  // 12. 4. 2016: modify globus_l_ftp_control_data_stream_read_write() function declaration.
  //                   globus_l_ftp_control_data_eb_write() function declaration.
+ // 12. 2016: copy iotime/nettime into dc_handle structure.
 globus_result_t
 globus_ftp_control_data_write(
     globus_ftp_control_handle_t *		handle,
@@ -5039,6 +5040,10 @@ printf("iotime: %x, nettime: %x\n", iotime, nettime);
     }
 
     dc_handle = &handle->dc_handle;
+    // esjung
+    dc_handle->iotime = iotime;
+    dc_handle->nettime = nettime;
+
     GlobusFTPControlDataTestMagic(dc_handle);
     if(!dc_handle->initialized)
     {
@@ -5217,6 +5222,7 @@ globus_ftp_control_get_stripe_count(
  */
   // esjung
  // 12. 3. 2016: modify the parameter list.
+ // 12. 2016: copy iotime/nettime into dc_handle structure.
 globus_result_t
 globus_ftp_control_data_read(
     globus_ftp_control_handle_t *		handle,
@@ -5251,6 +5257,10 @@ printf("%s(%s)\n", __func__, __FILE__);
         return globus_error_put(err);
     }
     dc_handle = &handle->dc_handle;
+    // esjung
+    dc_handle->iotime = iotime;
+    dc_handle->nettime = nettime;
+
     GlobusFTPControlDataTestMagic(dc_handle);
     if(!dc_handle->initialized)
     {
