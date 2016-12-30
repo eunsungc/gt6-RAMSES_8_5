@@ -712,6 +712,7 @@ typedef globus_result_t (*globus_ftp_control_layout_func_t)(
 typedef globus_result_t (*globus_ftp_control_layout_verify_func_t)(
     char *                                     enqueue_str);
 
+// esjung
 typedef struct globus_i_ftp_dc_handle_s
 {
     char                                        magic[32];
@@ -755,6 +756,9 @@ typedef struct globus_i_ftp_dc_handle_s
     
     globus_object_t *                           connect_error;
     struct globus_ftp_control_handle_s *        whos_my_daddy;
+    // esjung
+    nlcali_T iotime;
+    nlcali_T nettime;
 } globus_i_ftp_dc_handle_t;
 
 typedef struct globus_ftp_control_handle_s
