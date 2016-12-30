@@ -13989,7 +13989,9 @@ printf("%s(%s)\n", __func__, __FILE__);
                 length,
                 NULL,
                 globus_i_gfs_data_http_write_cb,
-                bounce_info, NULL, NULL);
+                bounce_info,
+                op->session_handle->storage_spent_time,
+                op->session_handle->net_spent_time);
             if(result != GLOBUS_SUCCESS)
             {
                 result = GlobusGFSErrorWrapFailed(
