@@ -5368,6 +5368,8 @@ printf("%s(%s)\n", __func__, __FILE__);
 /*
  *  register a big buffer read
  */
+ // esjung
+ // pass iotime/nettime to globus_l_ftp_control_data_stream_read_write
 globus_result_t
 globus_ftp_control_data_read_all(
     globus_ftp_control_handle_t *		handle,
@@ -5481,6 +5483,7 @@ printf("%s(%s)\n", __func__, __FILE__);
 
         if(dc_handle->mode == GLOBUS_FTP_CONTROL_MODE_STREAM)
         {
+            // esjung
             res = globus_l_ftp_control_data_stream_read_write(
                       dc_handle,
                       buffer,
@@ -5489,8 +5492,8 @@ printf("%s(%s)\n", __func__, __FILE__);
                       GLOBUS_FALSE,
                       callback,
                       callback_arg,
-                      NULL,
-                      NULL);
+                      dc_handle->iotime,
+                      dc_handle->nettime);
         }
         else if(dc_handle->mode == GLOBUS_FTP_CONTROL_MODE_EXTENDED_BLOCK)
         {
@@ -5541,8 +5544,8 @@ printf("%s(%s)\n", __func__, __FILE__);
                             transfer_handle->big_buffer_cb,
                             transfer_handle->big_buffer_cb_arg,
                             dc_handle,
-                            NULL,
-                            NULL);
+                            dc_handle->iotime,
+                            dc_handle->nettime);
                         t_e->whos_my_daddy = data_conn;
 
                         /*
