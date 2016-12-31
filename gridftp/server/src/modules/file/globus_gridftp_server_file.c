@@ -2966,7 +2966,9 @@ globus_l_gfs_file_server_write_cb(
     globus_l_file_monitor_t *           monitor;
     GlobusGFSName(globus_l_gfs_file_server_write_cb);
     GlobusGFSFileDebugEnter();
-    
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     monitor = (globus_l_file_monitor_t *) user_arg;
     
     globus_mutex_lock(&monitor->lock);
@@ -3036,7 +3038,10 @@ globus_l_gfs_file_read_cb(
     globus_l_file_monitor_t *           monitor;
     GlobusGFSName(globus_l_gfs_file_read_cb);
     GlobusGFSFileDebugEnter();
-    
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
+
     monitor = (globus_l_file_monitor_t *) user_arg;
     
     globus_mutex_lock(&monitor->lock);
@@ -3145,7 +3150,9 @@ globus_l_gfs_file_open_read_cb(
     globus_l_file_monitor_t *           monitor;
     GlobusGFSName(globus_l_gfs_file_open_read_cb);
     GlobusGFSFileDebugEnter();
-    
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     monitor = (globus_l_file_monitor_t *) user_arg;
     if(result != GLOBUS_SUCCESS)
     {
