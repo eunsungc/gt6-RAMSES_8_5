@@ -18,6 +18,8 @@
 #include "globus_xio_gridftp_driver.h"
 #include "globus_ftp_client.h"  
 #include "version.h"
+//esjung
+#define _RAMSES_DEBUG_FUNC_
 
 GlobusDebugDefine(GLOBUS_XIO_GRIDFTP);
 GlobusXIODeclareDriver(gridftp);
@@ -741,6 +743,9 @@ globus_l_xio_gridftp_process_pending_ops(
     globus_bool_t                       reading;
     GlobusXIOName(globus_l_xio_gridftp_process_pending_ops);
 
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     GlobusXIOGridftpDebugEnter();
     handle->state = GLOBUS_XIO_GRIDFTP_OPEN;
     globus_assert(!globus_fifo_empty(&handle->pending_ops_q));
