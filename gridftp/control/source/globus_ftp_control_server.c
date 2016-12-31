@@ -2658,6 +2658,8 @@ error_auth_destroy:
  *         The user argument passed to the callback.
  */
 
+// esjung
+// 12. 2016: add dc_handle->iotime/nettime
 globus_result_t
 globus_ftp_control_send_response(
     globus_ftp_control_handle_t *               handle,
@@ -2810,7 +2812,9 @@ globus_ftp_control_send_response(
                                       buf,
                                       (globus_size_t) strlen((char *) buf),
                                       globus_l_ftp_control_send_response_cb,
-                                      (void *) handle, NULL, NULL);
+                                      (void *) handle,
+                                      handle->dc_handle.iotime,
+                                      handle->dc_handle.nettime);
     
         if(rc != GLOBUS_SUCCESS)
         {
