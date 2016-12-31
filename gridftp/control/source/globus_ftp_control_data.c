@@ -7324,8 +7324,8 @@ globus_l_ftp_data_eb_poll(
                         transfer_handle->big_buffer_cb,
                         transfer_handle->big_buffer_cb_arg,
                         dc_handle,
-                        NULL,
-                        NULL);
+                        dc_handle->iotime,
+                        dc_handle->nettime);
 
                     transfer_handle->big_buffer = GLOBUS_NULL;
                     GlobusTimeReltimeSet(reltime, 0, 0);
