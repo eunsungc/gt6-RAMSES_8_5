@@ -5790,6 +5790,9 @@ printf("%s(%s) iotime: %x, nettime: %x\n\n", __func__, __FILE__, iotime, nettime
     {
         if(layout_func)
         {
+#ifdef _RAMSES_DEBUG_
+printf("layout_func NOT NULL\n");
+#endif
             transfer_handle->x_state = GLOBUS_TRUE;
 
             layout_func(
@@ -6755,6 +6758,9 @@ globus_i_ftp_control_data_write_stripe(
     globus_object_t *                           err;
     static char *                               myname =
         "globus_i_ftp_control_data_write_stripe";
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
 
     transfer_handle = dc_handle->transfer_handle;
 
