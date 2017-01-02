@@ -7581,7 +7581,9 @@ globus_l_ftp_control_data_register_eod(
               (globus_byte_t *)eb_header,
               sizeof(globus_l_ftp_eb_header_t),
               globus_l_ftp_eb_eof_eod_callback,
-              (void *)cb_info, NULL, NULL);
+              (void *)cb_info,
+              stripe->whos_my_daddy->whos_my_daddy->iotime, 
+              stripe->whos_my_daddy->whos_my_daddy->nettime);
     globus_assert(res == GLOBUS_SUCCESS);
 
     return res;
