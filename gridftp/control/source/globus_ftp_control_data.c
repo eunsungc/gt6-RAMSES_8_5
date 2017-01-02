@@ -637,7 +637,9 @@ globus_i_ftp_control_data_set_netlogger(
     globus_object_t *                           err;
     static char *                               myname=
                                       "globus_ftp_control_set_netlogger";
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     /*
      *  error checking
      */
@@ -712,7 +714,9 @@ globus_i_ftp_control_create_stack(
     globus_list_t *                             list;
     static char *                               myname =
                                         "globus_i_ftp_control_create_stack";
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     if(handle == GLOBUS_NULL)
     {
         err = globus_io_error_construct_null_parameter(
@@ -798,7 +802,9 @@ globus_i_ftp_control_unload_xio_drivers(
     globus_list_t *                        driver_list)
 {
     globus_i_ftp_control_stack_entry_t *   driver_ent;
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     while(!globus_list_empty(driver_list))
     {
         driver_ent = (globus_i_ftp_control_stack_entry_t *)
@@ -840,7 +846,9 @@ globus_i_ftp_control_load_xio_drivers(
     globus_xio_driver_t                 driver;
     globus_list_t *                     list = NULL;
     globus_i_ftp_control_stack_entry_t *stack_ent;
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     if(driver_string != NULL)
     {
         driver_str = globus_libc_strdup(driver_string);
@@ -933,7 +941,9 @@ globus_i_ftp_control_data_set_stack(
     globus_object_t *                           err;
     static char *                               myname =
                                       "globus_i_ftp_control_data_set_stack";
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     /*
      *  error checking
      */
@@ -987,7 +997,9 @@ globus_i_ftp_control_data_get_attr(
 {
     globus_result_t                             result;
     globus_i_ftp_dc_handle_t *                  dc_handle;
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     dc_handle = &handle->dc_handle;
     GlobusFTPControlDataTestMagic(dc_handle);
 
@@ -1003,7 +1015,9 @@ globus_list_remove_element(
     void *                                      datum)
 {
     globus_list_t *                             list;
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     for(list = *headp;
         !globus_list_empty(list);
         list = globus_list_rest(list))
@@ -1054,7 +1068,9 @@ globus_ftp_control_data_connect_read(
     globus_object_t *                           err;
     static char *                               my_name=
                                         "globus_ftp_control_data_connect_read";
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     if(handle == GLOBUS_NULL)
     {
         err = globus_io_error_construct_null_parameter(
@@ -1165,7 +1181,9 @@ globus_ftp_control_data_set_interface(
     globus_object_t *                           err;
     static char *                               my_name=
                                       "globus_ftp_control_data_set_interface";
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     if(handle == GLOBUS_NULL)
     {
         err = globus_io_error_construct_null_parameter(
@@ -1249,7 +1267,9 @@ globus_ftp_control_data_connect_write(
     globus_object_t *                           err;
     static char *                               my_name=
                                       "globus_ftp_control_data_connect_write";
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     if(handle == GLOBUS_NULL)
     {
         err = globus_io_error_construct_null_parameter(
@@ -1359,7 +1379,9 @@ globus_l_ftp_control_data_eb_connect_write(
     globus_l_ftp_dc_connect_cb_info_t *         connect_cb_info;
     static char *                               my_name =
        "globus_l_ftp_control_data_eb_connect_write";
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     /*
      *  make sure that we still exist
      */
@@ -1541,6 +1563,9 @@ globus_l_ftp_control_data_eb_connect_read(
     globus_l_ftp_dc_connect_cb_info_t *         connect_cb_info;
     static char *                               my_name =
         "globus_l_ftp_control_data_eb_connect_read";
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     /*
      *  make sure that we still exist
      */
@@ -1715,7 +1740,9 @@ globus_l_ftp_control_data_stream_connect_direction(
     globus_object_t *                           err;
     static char *                               my_name =
         "globus_l_ftp_control_data_stream_connect_direction";
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     /*
      *  make sure that we still exist
      */
@@ -1860,7 +1887,9 @@ globus_ftp_control_data_add_channels(
     globus_object_t *                           err;
     static char *                               myname=
                                       "globus_ftp_control_data_add_channels";
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     if(handle == GLOBUS_NULL)
     {
         err = globus_io_error_construct_null_parameter(
@@ -1948,7 +1977,9 @@ globus_ftp_control_data_send_eof(
     int                                            ctr;
     static char *                                  myname=
                                         "globus_ftp_control_data_send_eof";
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     /*
      *  error checking
      */
@@ -2135,7 +2166,9 @@ globus_l_ftp_control_data_send_eof(
     globus_result_t                             res;
     int                                         ctr;
     globus_i_ftp_dc_transfer_handle_t *         transfer_handle;
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     transfer_handle = dc_handle->transfer_handle;
     stripe = data_conn->whos_my_daddy;
     /*
@@ -2210,7 +2243,9 @@ globus_ftp_control_data_remove_channels(
     globus_object_t *                           err;
     static char *                               myname=
                                   "globus_ftp_control_data_remove_channels";
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     /*
      *  error checking
      */
@@ -2316,7 +2351,9 @@ globus_ftp_control_data_query_channels(
     globus_object_t *                           err;
     static char *                               myname=
                                   "globus_ftp_control_data_query_channels";
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     /*
      *  error checking
      */
@@ -2405,7 +2442,9 @@ globus_ftp_control_data_get_total_data_channels(
     globus_object_t *                           err;
     static char *                               myname=
                           "globus_ftp_control_data_get_total_data_channels";
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     /*
      *  error checking
      */
@@ -2491,7 +2530,9 @@ globus_ftp_control_data_get_remote_hosts(
     int                                         count;
     static char *                               myname=
                           "globus_ftp_control_data_get_remote_hosts";
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     /*
      *  error checking
      */
@@ -2624,7 +2665,9 @@ globus_ftp_control_local_send_eof(
     globus_object_t *                           err;
     static char *                               myname=
                                       "globus_ftp_control_local_send_eof";
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     /*
      *  error checking
      */
@@ -2670,7 +2713,9 @@ globus_ftp_control_get_parallelism(
     globus_object_t *                           err;
     static char *                               myname=
                                       "globus_ftp_control_get_parallelism";
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     /*
      *  error checking
      */
@@ -2743,7 +2788,9 @@ globus_ftp_control_local_parallelism(
     globus_i_ftp_dc_transfer_handle_t *         transfer_handle;
     static char *                               myname=
                                       "globus_ftp_control_local_parallelism";
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     /*
      *  error checking
      */
@@ -2831,7 +2878,9 @@ globus_ftp_control_local_pasv(
     globus_object_t *                           err;
     static char *                               myname=
                                       "globus_ftp_control_local_pasv";
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     /*
      *  error checking
      */
@@ -3026,7 +3075,9 @@ globus_ftp_control_local_port(
     globus_object_t *                           err;
     static char *                               myname=
                                       "globus_ftp_control_local_port";
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     /*
      *  error checking
      */
@@ -3109,7 +3160,9 @@ globus_ftp_control_get_spor(
     globus_object_t *                                err;
     static char *                                    myname=
                                       "globus_ftp_control_get_spor";
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     /*
      *  error checking
      */
@@ -5158,7 +5211,9 @@ globus_ftp_control_get_stripe_count(
     globus_i_ftp_dc_transfer_handle_t *         transfer_handle;
     static char *                               myname=
                                       "globus_ftp_control_get_stripe_count";
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     /*
      *  error checking
      */
@@ -5915,7 +5970,9 @@ globus_l_ftp_control_data_extended_block_enqueue(
     globus_l_ftp_handle_table_entry_t *         tmp_ent;
     globus_size_t                               size;
     globus_i_ftp_dc_transfer_handle_t *         transfer_handle;
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     transfer_handle = dc_handle->transfer_handle;
 
     /* determine what stripe to put things on */
@@ -6341,7 +6398,9 @@ globus_ftp_control_create_data_info(
     globus_object_t *                           err;
     static char *                               myname=
                                       "globus_ftp_control_create_data_info";
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     /*
      *  error checking
      */
@@ -6880,7 +6939,9 @@ globus_l_ftp_control_release_data_kickout(
     void *                                      user_args)
 {
     globus_l_ftp_handle_table_entry_t *          cb_ent;
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     cb_ent = (globus_l_ftp_handle_table_entry_t *)user_args;
 
     cb_ent->callback(
@@ -6942,7 +7003,9 @@ globus_l_ftp_data_stripe_poll(
     globus_ftp_data_stripe_t *                   stripe;
     globus_result_t                              result;
     globus_i_ftp_dc_transfer_handle_t *          transfer_handle;
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
         transfer_handle = dc_handle->transfer_handle;
         if(dc_handle->state == GLOBUS_FTP_DATA_STATE_CLOSING)
         {
@@ -7103,7 +7166,9 @@ globus_l_ftp_data_eb_poll(
     globus_byte_t *                              tmp_buf;
     int                                          ctr;
     globus_i_ftp_dc_transfer_handle_t *          transfer_handle;
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     transfer_handle = dc_handle->transfer_handle;
 
     if(transfer_handle == GLOBUS_NULL)
@@ -7789,7 +7854,9 @@ globus_l_ftp_control_stripes_destroy(
     globus_result_t                              res;
     globus_i_ftp_dc_transfer_handle_t *          transfer_handle;
     globus_list_t *                              list;
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     if(dc_handle->state == GLOBUS_FTP_DATA_STATE_CLOSING ||
        dc_handle->transfer_handle == GLOBUS_NULL)
     {
@@ -8002,7 +8069,9 @@ globus_l_ftp_control_command_flush_callback(
     globus_i_ftp_dc_handle_t *                   dc_handle;
     globus_i_ftp_dc_transfer_handle_t *          transfer_handle;
     globus_ftp_control_data_callback_t           callback = GLOBUS_NULL;
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     entry = (globus_l_ftp_handle_table_entry_t *)user_args;
     dc_handle = entry->dc_handle;
     GlobusFTPControlDataTestMagic(dc_handle);
@@ -8117,7 +8186,9 @@ globus_l_ftp_control_command_kickout(
     globus_i_ftp_dc_handle_t *                   dc_handle;
     globus_i_ftp_dc_transfer_handle_t *          transfer_handle;
     globus_bool_t                               poll;
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     entry = (globus_l_ftp_handle_table_entry_t *)user_args;
     dc_handle = entry->dc_handle;
     GlobusFTPControlDataTestMagic(dc_handle);
@@ -8369,7 +8440,9 @@ globus_l_ftp_control_close_kickout(
     globus_ftp_control_callback_t                cb;
     void *                                       cb_arg;
     globus_i_ftp_dc_handle_t *                   dc_handle;
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     dc_handle = (globus_i_ftp_dc_handle_t *)user_args;
     GlobusFTPControlDataTestMagic(dc_handle);
     /*
@@ -8742,7 +8815,9 @@ globus_l_ftp_io_close_callback(
     globus_ftp_control_data_callback_t          eof_callback = GLOBUS_NULL;
     globus_l_ftp_handle_table_entry_t *         eof_cb_ent;
     globus_bool_t                               poll;
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     callback_info = (globus_l_ftp_data_callback_info_t *)arg;
 
     data_conn = callback_info->data_conn;
@@ -8847,7 +8922,9 @@ globus_l_ftp_stream_write_eof_callback(
     globus_ftp_control_data_callback_t 		big_buffer_cb = GLOBUS_NULL;
     globus_byte_t *				big_buffer = GLOBUS_NULL;
     globus_bool_t                               poll;
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     entry = (globus_l_ftp_handle_table_entry_t *) arg;
 
     data_conn = entry->whos_my_daddy;
@@ -9298,7 +9375,9 @@ globus_l_ftp_stream_write_callback(
     globus_i_ftp_dc_transfer_handle_t *         transfer_handle;
     globus_size_t                               nl_nbytes;
     globus_bool_t                               poll;
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     nl_nbytes = nbytes;
 
     entry = (globus_l_ftp_handle_table_entry_t *) arg;
@@ -9448,7 +9527,9 @@ globus_l_ftp_stream_read_callback(
     globus_bool_t                               fire_callback = GLOBUS_TRUE;
     globus_bool_t                               poll;
     globus_size_t                               nl_nbytes;
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     nl_nbytes = nbyte;
     entry = (globus_l_ftp_handle_table_entry_t *) arg;
 
@@ -10713,7 +10794,9 @@ globus_l_ftp_eb_write_callback(
     globus_l_ftp_send_eof_entry_t *             send_eof_ent = GLOBUS_NULL;
     globus_size_t                               nl_bytes;
     globus_bool_t                               poll = GLOBUS_TRUE;
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     nl_bytes = nbytes;
 
     entry = (globus_l_ftp_handle_table_entry_t *)arg;
@@ -11050,7 +11133,9 @@ globus_l_ftp_eb_send_eof_callback(
     transfer_handle = stripe->whos_my_daddy;
     dc_handle = transfer_handle->whos_my_daddy;
     GlobusFTPControlDataTestMagic(dc_handle);
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     globus_mutex_lock(&dc_handle->mutex);
     {
         /* in case of error we ended up never calling the user cb, since 
