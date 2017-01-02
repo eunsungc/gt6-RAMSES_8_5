@@ -1685,6 +1685,8 @@ error:
     return result;
 }
 
+// esjung
+// pass storage_spent_time/net_spent_time parameters.
 static
 void
 globus_l_gfs_file_cksm_read_cb(
@@ -1754,7 +1756,9 @@ globus_l_gfs_file_cksm_read_cb(
             monitor->count,
             NULL,
             globus_l_gfs_file_cksm_read_cb,
-            monitor, NULL, NULL);
+            monitor,
+            monitor->op->session_handle->storage_spent_time,
+            monitor->op->session_handle->io_spent_time);
         if(result != GLOBUS_SUCCESS)
         {
             result = GlobusGFSErrorWrapFailed(
@@ -1911,7 +1915,9 @@ globus_l_gfs_file_open_cksm_cb(
         monitor->count,
         NULL,
         globus_l_gfs_file_cksm_read_cb,
-        monitor, NULL, NULL);
+        monitor, 
+        monitor->op->session_handle->storage_spent_time, 
+        monitor->op->session_handle->net_spent_time);
     if(result != GLOBUS_SUCCESS)
     {
         result = GlobusGFSErrorWrapFailed(
@@ -2287,6 +2293,8 @@ error_dispatch:
 }
 
 /* Called LOCKED */
+// esjung
+// pass storage_spent_time/net_spent_time parameters.
 static
 globus_result_t
 globus_l_gfs_file_dispatch_write(
@@ -2335,7 +2343,9 @@ printf("%s(%s)\n", __func__, __FILE__);
                 buf_info->length,
                 NULL,
                 globus_l_gfs_file_write_cb,
-                monitor, NULL, NULL);
+                monitor, 
+                monitor->op->session_handle->storage_spent_time, 
+                monitor->op->session_handle->net_spent_time);
             if(result != GLOBUS_SUCCESS)
             {
                 result = GlobusGFSErrorWrapFailed(
@@ -2855,6 +2865,8 @@ globus_l_gfs_file_read_cb(
     void *                              user_arg);
     
 /* called LOCKED */
+// esjung
+// pass storage_spent_time/net_spent_time parameters.
 static
 globus_result_t
 globus_l_gfs_file_dispatch_read(
@@ -2933,7 +2945,9 @@ printf("%s(%s)\n", __func__, __FILE__);
             read_length,
             NULL,
             globus_l_gfs_file_read_cb,
-            monitor, NULL, NULL);
+            monitor,
+            monitor->op->session_handle->storage_spent_time,
+            monitor->op->session_handle->net_spent_time);
         if(result != GLOBUS_SUCCESS)
         {
             globus_list_insert(&monitor->buffer_list, buffer);
