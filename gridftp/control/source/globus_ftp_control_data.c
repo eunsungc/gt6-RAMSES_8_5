@@ -7037,9 +7037,11 @@ printf("%s(%s)\n", __func__, __FILE__);
                              tmp_buf,
                              tmp_len,
                              globus_l_ftp_stream_write_callback,
-                             (void *)entry, entry->iotime, entry->nettime);
+                             (void *)entry, 
+                             stripe->whos_my_daddy->whos_my_daddy->iotime, 
+                             stripe->whos_my_daddy->whos_my_daddy->nettime);
 #ifdef _RAMSES_DEBUG_
-printf("entry->iotime: %x, entry->nettime: %x\n", entry->iotime, entry->nettime);
+printf("iotime: %x, nettime: %x\n", entry->iotime, entry->nettime);
 #endif
                 globus_assert(result == GLOBUS_SUCCESS);
             }
