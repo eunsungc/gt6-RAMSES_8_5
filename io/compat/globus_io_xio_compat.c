@@ -3211,7 +3211,9 @@ globus_io_register_write(
     globus_result_t                     result;
 
     GlobusIOName(globus_io_register_write);
-	
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s) iotime: %x nettime: %x\n", __func__, __FILE__, iotime, nettime);
+#endif
     GlobusLIOCheckNullParam(write_callback);
     GlobusLIOCheckHandle(handle, 0);
     
