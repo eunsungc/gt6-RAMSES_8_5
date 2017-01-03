@@ -2374,13 +2374,8 @@ printf("%s(%s)\n", __func__, __FILE__);
     op->user_arg = user_arg;
     op->entry[0].prev_ndx = -1;
     // esjung
-    if (pnlcali != NULL) {
-      op->iotime = pnlcali[0];
-      op->nettime = pnlcali[1];
-    } else {
-      op->iotime = NULL;
-      op->nettime = NULL;
-    }
+    op->iotime = iotime;
+    op->nettime = nettime;
 #ifdef _RAMSES_DEBUG_
 printf("iotime: %x, nettime: %x\n", op->iotime, op->nettime);
 #endif
