@@ -1827,6 +1827,9 @@ globus_ftp_control_data_get_retransmit_count(
     char **                             retransmit_count);
 #endif
 
+// esjung
+nlcali_T ramses_get_iotime(void *arg);
+nlcali_T ramses_get_nettime(void *arg);
 #ifdef __cplusplus
 }
 #endif

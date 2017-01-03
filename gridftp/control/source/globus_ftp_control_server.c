@@ -1298,13 +1298,15 @@ globus_ftp_control_server_authenticate(
         error=globus_error_get(rc);
         goto error_std;
     }
-
+    // esjung
     rc=globus_io_register_read(&cc_handle->io_handle,
                                cc_handle->read_buffer,
                                GLOBUS_FTP_CONTROL_READ_BUFFER_SIZE,
                                1, 
                                globus_l_ftp_control_auth_read_cb,
-                               handle);
+                               handle,
+                               handle->dc_handle.iotime,
+                               handle->dc_handle.nettime);
     if(rc != GLOBUS_SUCCESS)
     {
         error=globus_error_get(rc);
@@ -1437,13 +1439,15 @@ globus_l_ftp_control_auth_write_cb(
     /* call register_read with 0 byte minimum because we may already
      * have read the command
      */
-
+    // esjung
     rc=globus_io_register_read(handle,
                                cc_handle->read_buffer,
                                GLOBUS_FTP_CONTROL_READ_BUFFER_SIZE,
                                0,
                                globus_l_ftp_control_auth_read_cb,
-                               arg);
+                               arg,
+                               c_handle->dc_handle.iotime,
+                               c_handle->dc_handle.nettime);
 
     if(rc != GLOBUS_SUCCESS)
     {
@@ -1660,7 +1664,9 @@ globus_l_ftp_control_auth_read_cb(
                     (globus_byte_t *) reply,
                     (globus_size_t) strlen(reply),
                     globus_l_ftp_control_auth_write_cb,
-                    arg, NULL, NULL);
+                    arg,
+                    c_handle->dc_handle.iotime, 
+                    c_handle->dc_handle.nettime);
                 
                 if(rc != GLOBUS_SUCCESS)
                 {
@@ -1839,7 +1845,9 @@ globus_l_ftp_control_auth_read_cb(
                             (globus_byte_t *) reply,
                             (globus_size_t) strlen(reply),
                             globus_l_ftp_control_auth_write_cb,
-                            arg, NULL, NULL);
+                            arg, 
+                            c_handle->dc_handle.iotime, 
+                            c_handle->dc_handle.nettime);
                         
                         if(rc != GLOBUS_SUCCESS)
                         {
@@ -1919,7 +1927,9 @@ globus_l_ftp_control_auth_read_cb(
                         (globus_byte_t *) reply,
                         (globus_size_t) length+11,
                         globus_l_ftp_control_auth_write_cb,
-                        arg, NULL, NULL);
+                        arg, 
+                        c_handle->dc_handle.iotime, 
+                        c_handle->dc_handle.nettime);
 
                     if(rc != GLOBUS_SUCCESS)
                     {
@@ -2063,7 +2073,9 @@ globus_l_ftp_control_auth_read_cb(
                         (globus_byte_t *) reply,
                         (globus_size_t) strlen(reply),
                         globus_l_ftp_control_auth_write_cb,
-                        arg, NULL, NULL);
+                        arg, 
+                        c_handle->dc_handle.iotime, 
+                        c_handle->dc_handle.nettime);
                     
                     if(rc != GLOBUS_SUCCESS)
                     {
@@ -2175,7 +2187,9 @@ globus_l_ftp_control_auth_read_cb(
                         (globus_byte_t *) reply,
                         (globus_size_t) strlen(reply),
                         globus_l_ftp_control_auth_write_cb,
-                        arg, NULL, NULL);
+                        arg, 
+                        c_handle->dc_handle.iotime, 
+                        c_handle->dc_handle.nettime);
 
                     if(rc != GLOBUS_SUCCESS)
                     {
@@ -2289,7 +2303,7 @@ globus_l_ftp_control_auth_read_cb(
         globus_libc_free(cc_handle->read_buffer);
         cc_handle->read_buffer=new_buf;
     }
-    
+    // esjung
     rc=globus_io_register_read(&(cc_handle->io_handle),
                                &(cc_handle->read_buffer[
                                      cc_handle->bytes_read]),
@@ -2297,7 +2311,9 @@ globus_l_ftp_control_auth_read_cb(
                                cc_handle->bytes_read,
                                1,
                                globus_l_ftp_control_auth_read_cb,
-                               arg);
+                               arg,
+                               c_handle->dc_handle.iotime,
+                               c_handle->dc_handle.nettime);
     
     if(rc != GLOBUS_SUCCESS)
     {
@@ -2400,7 +2416,7 @@ globus_ftp_control_read_commands(
     }
     globus_mutex_unlock(&(handle->cc_handle.mutex));
 
-    
+    // esjung    
     rc=globus_io_register_read(&(handle->cc_handle.io_handle),
                                &(handle->cc_handle.read_buffer[
                                      handle->cc_handle.bytes_read]),
@@ -2408,7 +2424,9 @@ globus_ftp_control_read_commands(
                                handle->cc_handle.bytes_read,
                                0,
                                globus_l_ftp_control_read_command_cb,
-                               (void *) handle);
+                               (void *) handle,
+                               handle->dc_handle.iotime,
+                               handle->dc_handle.nettime);
 
     if(rc != GLOBUS_SUCCESS)
     {
@@ -2589,6 +2607,7 @@ globus_l_ftp_control_read_command_cb(
     
     if(code != GLOBUS_FTP_CONTROL_COMMAND_QUIT)
     {
+        // esjung
         rc=globus_io_register_read(&(cc_handle->io_handle),
                                    &(cc_handle->read_buffer[
                                          cc_handle->bytes_read]),
@@ -2596,7 +2615,9 @@ globus_l_ftp_control_read_command_cb(
                                    cc_handle->bytes_read,
                                    1,
                                    globus_l_ftp_control_read_command_cb,
-                                   arg);
+                                   arg,
+                                   c_handle->dc_handle.iotime,
+                                   c_handle->dc_handle.nettime);
         
         if(rc != GLOBUS_SUCCESS)
         {

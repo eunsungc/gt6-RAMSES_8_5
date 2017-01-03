@@ -1171,14 +1171,14 @@ globus_l_gram_protocol_accept_callback(
         goto error_exit;
     }
     connection->replybufsize = GLOBUS_GRAM_PROTOCOL_MAX_MSG_SIZE;
-
+    // esjung
     result = globus_io_register_read(
                  connection->io_handle,
                  connection->buf,
 		 connection->bufsize,
 		 1,
 		 globus_l_gram_protocol_read_request_callback,
-		 connection);
+		 connection, NULL, NULL);
     if(result)
     {
         rc = GLOBUS_GRAM_PROTOCOL_ERROR_NO_RESOURCES;
@@ -1325,13 +1325,14 @@ globus_l_gram_protocol_read_request_callback(
     return;
 
   reregister_read:
+    // esjung
     result = globus_io_register_read(
                  connection->io_handle,
 		 connection->buf + connection->n_read,
 		 connection->bufsize - connection->n_read,
 		 1,
 		 globus_l_gram_protocol_read_request_callback,
-		 connection);
+		 connection, NULL, NULL);
     if(result == GLOBUS_SUCCESS)
     {
 	return;
@@ -1525,12 +1526,13 @@ globus_l_gram_protocol_write_request_callback(
         goto error_exit;
     }
     /* Read reply from server */
+    // esjung
     result = globus_io_register_read(connection->io_handle,
 				     connection->replybuf,
 				     connection->replybufsize,
 				     1,
 				     globus_l_gram_protocol_read_reply_callback,
-				     connection);
+				     connection, NULL, NULL);
 
     if(result)
     {
@@ -1622,13 +1624,14 @@ globus_l_gram_protocol_write_reply_callback(
 		connection->replybuf = globus_libc_malloc(4096);
 		connection->replybufsize = 4096;
 	    }
+           // esjung
 	    result = globus_io_register_read(
 		    handle,
 		    connection->replybuf,
 		    4,
 		    4,
 		    globus_l_gram_protocol_delegation_read_callback,
-		    connection);
+		    connection, NULL, NULL);
 
 	    if(result == GLOBUS_SUCCESS)
 	    {
@@ -1770,14 +1773,14 @@ globus_l_gram_protocol_read_reply_callback(
     /* Missing part of the header or payload, register another read */
     globus_assert((!connection->got_header) ||
 	          (connection->n_read < connection->payload_length));
-
+    // esjung
     result = globus_io_register_read(
                  connection->io_handle,
 		 connection->replybuf + connection->n_read,
 		 connection->replybufsize - connection->n_read,
 		 1,
 		 globus_l_gram_protocol_read_reply_callback,
-		 connection);
+		 connection, NULL, NULL);
 
     if(result == GLOBUS_SUCCESS)
     {
@@ -2539,14 +2542,14 @@ globus_l_gram_protocol_delegation_read_callback(
 		globus_libc_malloc(connection->token_length);
 	    connection->replybufsize = connection->token_length;
 	}
-
+       // esjung
 	result = globus_io_register_read(
 		connection->io_handle,
 		connection->replybuf,
 		connection->token_length,
 		connection->token_length,
 		globus_l_gram_protocol_delegation_read_callback,
-		connection);
+		connection, NULL, NULL);
 
 	if(result == GLOBUS_SUCCESS)
 	{
@@ -2689,13 +2692,14 @@ globus_l_gram_protocol_accept_delegation(
     }
     if(connection->delegation_major_status & GSS_S_CONTINUE_NEEDED)
     {
+       // esjung
 	result = globus_io_register_read(
 		connection->io_handle,
 		connection->replybuf,
 		4,
 		4,
 		globus_l_gram_protocol_delegation_read_callback,
-		connection);
+		connection, NULL, NULL);
 	if(result == GLOBUS_SUCCESS)
 	{
 	    return;
@@ -2794,14 +2798,14 @@ globus_l_gram_protocol_init_delegation(
 		    GSS_S_DEFECTIVE_TOKEN | GSS_S_CALL_INACCESSIBLE_READ;
 	    }
 	}
-
+       // esjung
 	result = globus_io_register_read(
 		connection->io_handle,
 		connection->replybuf,
 		4,
 		4,
 		globus_l_gram_protocol_delegation_read_callback,
-		connection);
+		connection, NULL, NULL);
 	if(result == GLOBUS_SUCCESS)
 	{
 	    return;
@@ -2827,13 +2831,14 @@ globus_l_gram_protocol_init_delegation(
 	    globus_libc_malloc(GLOBUS_GRAM_PROTOCOL_MAX_MSG_SIZE);
 	connection->replybufsize = GLOBUS_GRAM_PROTOCOL_MAX_MSG_SIZE;
     }
+    // esjung
     result = globus_io_register_read(
 	    connection->io_handle,
 	    connection->replybuf,
 	    connection->replybufsize,
 	    1,
 	    globus_l_gram_protocol_read_reply_callback,
-	    connection);
+	    connection, NULL, NULL);
 
     if(result == GLOBUS_SUCCESS)
     {

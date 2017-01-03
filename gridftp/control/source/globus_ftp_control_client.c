@@ -666,7 +666,9 @@ globus_l_ftp_control_connect_cb(
                                GLOBUS_FTP_CONTROL_READ_BUFFER_SIZE,
                                1,
                                globus_l_ftp_control_read_cb,
-                               arg);
+                               arg,
+                               c_handle->dc_handle.iotime,
+                               c_handle->dc_handle.nettime);
     if(rc != GLOBUS_SUCCESS)
     {
         error=globus_error_get(rc);
@@ -975,7 +977,9 @@ globus_l_ftp_control_read_cb(
                                GLOBUS_FTP_CONTROL_READ_BUFFER_SIZE,
                                1,
                                globus_l_ftp_control_read_cb,
-                               arg);
+                               arg,
+                               c_handle->dc_handle.iotime,
+                               c_handle->dc_handle.nettime);
     if(rc != GLOBUS_SUCCESS)
     {
         error=globus_error_get(rc);
@@ -2155,7 +2159,9 @@ globus_l_ftp_control_write_cb(
                                        GLOBUS_FTP_CONTROL_READ_BUFFER_SIZE,
                                        1,
                                        element->read_callback,
-                                       arg);
+                                       arg,
+                                       c_handle->dc_handle.iotime,
+                                       c_handle->dc_handle.nettime);
             if(rc != GLOBUS_SUCCESS)
             {
                 globus_mutex_lock(&(cc_handle->mutex));
@@ -4773,12 +4779,15 @@ globus_l_ftp_control_read_next(
         
         element = globus_fifo_peek(&handle->cc_handle.readers);
 
+        // esjung
         rc=globus_io_register_read(&handle->cc_handle.io_handle,
                                    handle->cc_handle.read_buffer,
                                    GLOBUS_FTP_CONTROL_READ_BUFFER_SIZE,
                                    1, /* 0 or 1 here ? */
                                    element->read_callback,
-                                   (void *) handle);
+                                   (void *) handle,
+                                   handle->dc_handle.iotime,
+                                   handle->dc_handle.nettime);
         
         if(rc != GLOBUS_SUCCESS)
         {

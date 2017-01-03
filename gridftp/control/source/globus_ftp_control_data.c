@@ -1645,13 +1645,16 @@ printf("%s(%s)\n", __func__, __FILE__);
 
                 stripe->connection_count++;
                 /* register a header read */
+                // esjung
                 res = globus_io_register_read(
                           &data_conn->io_handle,
                           (globus_byte_t *)eb_header,
                           sizeof(globus_l_ftp_eb_header_t),
                           sizeof(globus_l_ftp_eb_header_t),
                           globus_l_ftp_eb_read_header_callback,
-                          (void *)data_conn);
+                          (void *)data_conn,
+                          dc_handle->iotime,
+                          dc_handle->nettime);
                 globus_assert(res == GLOBUS_SUCCESS);
 
                 if(callback != GLOBUS_NULL && register_onshot)
@@ -2207,7 +2210,9 @@ printf("%s(%s)\n", __func__, __FILE__);
               (globus_byte_t *)eb_header,
               sizeof(globus_l_ftp_eb_header_t),
               globus_l_ftp_eb_send_eof_callback,
-              (void *)eof_ent, NULL, NULL);
+              (void *)eof_ent,
+              dc_handle->iotime, 
+              dc_handle->nettime);
 
     return res;
 }
@@ -5607,13 +5612,16 @@ printf("%s(%s)\n", __func__, __FILE__);
                          *  register a read into the users buffer at the
                          *  correct offset.
                          */
+                        // esjung
                         res = globus_io_register_read(
                                   &data_conn->io_handle,
                                   &transfer_handle->big_buffer[data_conn->offset],
                                   data_conn->bytes_ready,
                                   data_conn->bytes_ready,
                                   globus_l_ftp_eb_read_callback,
-                                  (void *)t_e);
+                                  (void *)t_e,
+                                  dc_handle->iotime,
+                                  dc_handle->nettime);
                         globus_assert(res == GLOBUS_SUCCESS);
                     }
                 }
@@ -7004,7 +7012,7 @@ globus_l_ftp_data_stripe_poll(
     globus_result_t                              result;
     globus_i_ftp_dc_transfer_handle_t *          transfer_handle;
 #ifdef _RAMSES_DEBUG_FUNC_
-printf("%s(%s)\n iotime: %x nettime: %x", __func__, __FILE__, dc_handle->iotime, dc_handle->nettime);
+printf("%s(%s)\n iotime: %x nettime: %x\n", __func__, __FILE__, dc_handle->iotime, dc_handle->nettime);
 #endif
         transfer_handle = dc_handle->transfer_handle;
         if(dc_handle->state == GLOBUS_FTP_DATA_STATE_CLOSING)
@@ -7121,7 +7129,9 @@ printf("iotime: %x, nettime: %x\n", entry->iotime, entry->nettime);
                              entry->length,
                              entry->length,
                              globus_l_ftp_stream_read_callback,
-                             (void *)entry);
+                             (void *)entry, 
+                             stripe->whos_my_daddy->whos_my_daddy->iotime, 
+                             stripe->whos_my_daddy->whos_my_daddy->nettime);
                 globus_assert(result == GLOBUS_SUCCESS);
             }
         }
@@ -7167,7 +7177,7 @@ globus_l_ftp_data_eb_poll(
     int                                          ctr;
     globus_i_ftp_dc_transfer_handle_t *          transfer_handle;
 #ifdef _RAMSES_DEBUG_FUNC_
-printf("%s(%s)\n iotime: %x nettime: %x", __func__, __FILE__, dc_handle->iotime, dc_handle->nettime);
+printf("%s(%s)\n iotime: %x nettime: %x\n", __func__, __FILE__, dc_handle->iotime, dc_handle->nettime);
 #endif
     transfer_handle = dc_handle->transfer_handle;
 
@@ -7467,13 +7477,16 @@ printf("%s(%s)\n iotime: %x nettime: %x", __func__, __FILE__, dc_handle->iotime,
                     /*
                      *  register a read
                      */
+                    // esjung
                     res = globus_io_register_read(
                               &data_conn->io_handle,
                               entry->buffer,
                               entry->length,
                               entry->length,
                               globus_l_ftp_eb_read_callback,
-                              (void *)entry);
+                              (void *)entry,
+                              entry->iotime,
+                              entry->nettime);
                     globus_assert(res == GLOBUS_SUCCESS);
                 }
                 /*
@@ -7540,7 +7553,9 @@ globus_l_ftp_control_data_register_eof(
               (globus_byte_t *)eb_header,
               sizeof(globus_l_ftp_eb_header_t),
               globus_l_ftp_eb_eof_eod_callback,
-              (void *)cb_info, NULL, NULL);
+              (void *)cb_info,
+              stripe->whos_my_daddy->whos_my_daddy->iotime,
+              stripe->whos_my_daddy->whos_my_daddy->nettime);
 
     return res;
 }
@@ -7824,7 +7839,9 @@ globus_l_ftp_control_register_close_msg(
               (globus_byte_t *)eb_header,
               sizeof(globus_l_ftp_eb_header_t),
               globus_l_ftp_close_msg_callback,
-              (void *)cb_info, NULL, NULL);
+              (void *)cb_info,
+              dc_handle->iotime,
+              dc_handle->nettime);
 
     return res;
 }
@@ -10004,14 +10021,16 @@ globus_l_ftp_eb_accept_callback(
 
             /* count active connections and total connections */
             data_conn->bytes_ready = 0;
-
+            // esjung
             res = globus_io_register_read(
                       &data_conn->io_handle,
                       (globus_byte_t *)eb_header,
                       sizeof(globus_l_ftp_eb_header_t),
                       sizeof(globus_l_ftp_eb_header_t),
                       globus_l_ftp_eb_read_header_callback,
-                      (void *)data_conn);
+                      (void *)data_conn,
+                      dc_handle->iotime,
+                      dc_handle->nettime);
             if(res != GLOBUS_SUCCESS)
             {
                 error = globus_error_get(res);
@@ -10244,7 +10263,9 @@ globus_l_ftp_eb_read_header_callback(
                               sizeof(globus_l_ftp_eb_header_t),
                               sizeof(globus_l_ftp_eb_header_t),
                               globus_l_ftp_eb_read_header_callback,
-                              (void *)data_conn);
+                              (void *)data_conn,
+                              dc_handle->iotime,
+                              dc_handle->nettime);
                     globus_assert(res == GLOBUS_SUCCESS);
                 }
             }
@@ -10302,8 +10323,8 @@ globus_l_ftp_eb_read_header_callback(
                             transfer_handle->big_buffer_cb,
                             transfer_handle->big_buffer_cb_arg,
                             dc_handle,
-                            NULL,
-                            NULL);
+                            dc_handle->iotime,
+                            dc_handle->nettime);
                         t_e->whos_my_daddy = data_conn;
 
                         /*
@@ -10316,7 +10337,9 @@ globus_l_ftp_eb_read_header_callback(
                                   data_conn->bytes_ready,
                                   data_conn->bytes_ready,
                                   globus_l_ftp_eb_read_callback,
-                                  (void *)t_e);
+                                  (void *)t_e,
+                                  dc_handle->iotime,
+                                  dc_handle->nettime);
                         globus_assert(res == GLOBUS_SUCCESS);
                     }
                 }
@@ -10473,14 +10496,16 @@ globus_l_ftp_eb_read_callback(
                     eb_header = (globus_l_ftp_eb_header_t *)
                                  globus_malloc(
                                      sizeof(globus_l_ftp_eb_header_t));
-
+                    // esjung
                     res = globus_io_register_read(
                                  &data_conn->io_handle,
                                  (globus_byte_t *)eb_header,
                                  sizeof(globus_l_ftp_eb_header_t),
                                  sizeof(globus_l_ftp_eb_header_t),
                                  globus_l_ftp_eb_read_header_callback,
-                                 (void *)data_conn);
+                                 (void *)data_conn,
+                                 dc_handle->iotime,
+                                 dc_handle->nettime);
                     if(res != GLOBUS_SUCCESS)
                     {
                         error = globus_error_get(result);
@@ -11665,4 +11690,17 @@ globus_l_ftp_control_state_to_string(
         return unknown;
         break;
     }
+}
+
+// esjung
+nlcali_T ramses_get_iotime(void *arg)
+{
+    globus_l_ftp_handle_table_entry_t *pte = (globus_l_ftp_handle_table_entry_t *)arg;
+    return pte->iotime;
+}
+
+nlcali_T ramses_get_nettime(void *arg)
+{
+    globus_l_ftp_handle_table_entry_t *pte = (globus_l_ftp_handle_table_entry_t *)arg;
+    return pte->nettime;
 }

@@ -2794,7 +2794,7 @@ globus_l_gass_copy_register_read(
 	    read_len,
 	    read_len,
 	    globus_l_gass_copy_io_read_callback,
-	    (void *) handle);
+	    (void *) handle, NULL, NULL);
 
 	break;
     case GLOBUS_GASS_COPY_URL_MODE_UNSUPPORTED:

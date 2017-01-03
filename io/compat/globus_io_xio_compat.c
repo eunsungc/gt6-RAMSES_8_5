@@ -3031,14 +3031,21 @@ globus_io_register_read(
     globus_size_t                       max_nbytes,
     globus_size_t                       wait_for_nbytes,
     globus_io_read_callback_t           callback,
-    void *                              callback_arg)
+    void *                              callback_arg,
+    nlcali_T iotime,
+    nlcali_T nettime)
 {
     globus_l_io_bounce_t *              bounce_info;
     globus_l_io_handle_t *              ihandle;
     globus_result_t                     result;
+	
     GlobusIOName(globus_io_register_read);
+    // esjung
+    //iotime = ramses_get_iotime(callback_arg);
+    //nettime = ramses_get_nettime(callback_arg);
+	
 #ifdef _RAMSES_DEBUG_FUNC_
-printf("%s(%s)\n", __func__, __FILE__);
+printf("%s(%s) iotime: %x nettime: %x\n", __func__, __FILE__, iotime, nettime);
 #endif
     GlobusLIOCheckNullParam(callback);
     GlobusLIOCheckHandle(handle, 0);
@@ -3066,7 +3073,7 @@ printf("%s(%s)\n", __func__, __FILE__);
             wait_for_nbytes,
             GLOBUS_NULL,
             globus_l_io_bounce_io_cb,
-            bounce_info, NULL, NULL);
+            bounce_info, iotime, nettime);
         if(result != GLOBUS_SUCCESS)
         {
             globus_mutex_unlock(&ihandle->pending_lock);
@@ -3202,10 +3209,9 @@ globus_io_register_write(
     globus_l_io_bounce_t *              bounce_info;
     globus_l_io_handle_t *              ihandle;
     globus_result_t                     result;
+
     GlobusIOName(globus_io_register_write);
-#ifdef _RAMSES_DEBUG_FUNC_
-printf("%s(%s)\n", __func__, __FILE__);
-#endif
+	
     GlobusLIOCheckNullParam(write_callback);
     GlobusLIOCheckHandle(handle, 0);
     
@@ -4201,7 +4207,9 @@ globus_io_register_select(
     globus_l_io_handle_t *              ihandle;
     globus_result_t                     result;
     GlobusIOName(globus_io_register_select);
-    
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("globus_io_register_select\n");
+#endif
     GlobusLIOCheckHandle(handle, 0);
     ihandle = *handle;
     
@@ -4221,13 +4229,14 @@ globus_io_register_select(
     
     if(read_callback_func)
     {
+        // esjung
         result = globus_io_register_read(
             handle,
             (globus_byte_t *) read_callback_func,
             0,
             0,
             globus_l_io_bounce_select_cb,
-            read_callback_arg);
+            read_callback_arg, NULL, NULL);
         if(result != GLOBUS_SUCCESS)
         {
             goto error_register;

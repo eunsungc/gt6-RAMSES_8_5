@@ -1622,13 +1622,14 @@ globus_l_gass_transfer_http_accept_callback(
 	{
             debug_printf(4, (_GTSL("%s(): Registering read on %p\n"),
 			     myname,
-			     &l->request->handle));        
+			     &l->request->handle));
+           // esjung
 	    globus_io_register_read(&l->request->handle,
 				    l->request->response_buffer,
 				    l->request->response_buflen,
 				    1,
 				    globus_l_gass_transfer_http_request_callback,
-				    l);
+				    l, NULL, NULL);
 	}
 	break;
 
@@ -3033,14 +3034,14 @@ globus_l_gass_transfer_http_command_callback(
 	debug_printf(4,(_GTSL("%s(): Registering read on %p\n"),
 			myname,
 			&proto->handle));
-	
+	// esjung
 	result = globus_io_register_read(
 	    &proto->handle,
 	    proto->response_buffer,
 	    proto->response_buflen,
 	    1,
 	    globus_l_gass_transfer_http_response_callback,
-	    proto);
+	    proto, NULL, NULL);
 	if(result != GLOBUS_SUCCESS)
 	{
 	    proto->failure_occurred = GLOBUS_TRUE;
@@ -3064,13 +3065,14 @@ globus_l_gass_transfer_http_command_callback(
 	debug_printf(4,(_GTSL("%s(): Registering read on %p\n"),
 			myname,
 			&proto->handle));
+	// esjung
 	result = globus_io_register_read(
 	    &proto->handle,
 	    proto->response_buffer,
 	    proto->response_buflen,
 	    1,
 	    globus_l_gass_transfer_http_response_callback,
-	    proto);
+	    proto, NULL, NULL);
 	if(result != GLOBUS_SUCCESS)
 	{
 	    /* should interpret the error object */
@@ -3583,6 +3585,7 @@ globus_l_gass_transfer_http_response_callback(
     debug_printf(4,(_GTSL("%s(): Registering read on %p\n"),
 		    myname,
 		    &proto->handle));
+    // esjung
     result = globus_io_register_read(&proto->handle,
 				     proto->response_buffer +
 				     proto->response_offset,
@@ -3590,7 +3593,7 @@ globus_l_gass_transfer_http_response_callback(
 				     proto->response_offset,
 				     1,
 				     globus_l_gass_transfer_http_response_callback,
-				     proto);
+				     proto, NULL, NULL);
     if(result != GLOBUS_SUCCESS)
     {
 	/* TODO interpret the error object */
@@ -3996,6 +3999,7 @@ globus_l_gass_transfer_http_request_callback(
     debug_printf(4,(_GTSL("%s(): Registering read on %p\n"),
 		    myname,
 		    &proto->handle));
+    // esjung
     result = globus_io_register_read(&proto->handle,
 				     proto->response_buffer +
 				     proto->response_offset,
@@ -4003,7 +4007,7 @@ globus_l_gass_transfer_http_request_callback(
 				     proto->response_offset,
 				     1,
 				     globus_l_gass_transfer_http_request_callback,
-				     l_proto);
+				     l_proto, NULL, NULL);
     if(result != GLOBUS_SUCCESS)
     {
 	/* TODO interpret the error object */
@@ -4449,6 +4453,7 @@ globus_l_gass_transfer_http_register_read(
 	debug_printf(4,(_GTSL("%s(): Registering read on %p\n"),
 		    myname,
 		    &proto->handle));
+       // esjung
 	return
 	    globus_io_register_read(&proto->handle,
 				    proto->user_buffer +
@@ -4456,7 +4461,7 @@ globus_l_gass_transfer_http_register_read(
 				    maximum,
 				    minimum,
 				    globus_l_gass_transfer_http_read_callback,
-				    proto);
+				    proto, NULL, NULL);
     }
     else
     {
@@ -4504,6 +4509,7 @@ globus_l_gass_transfer_http_register_read(
 	debug_printf(4,(_GTSL("%s(): Registering read on %p\n"),
 			myname,
 			&proto->handle));
+       // esjung
 	return
 	    globus_io_register_read(&proto->handle,
 				    proto->response_buffer +
@@ -4512,7 +4518,7 @@ globus_l_gass_transfer_http_register_read(
 				        proto->response_offset,
 				    smaller,
 				    globus_l_gass_transfer_http_read_buffered_callback,
-				    proto);
+				    proto, NULL, NULL);
     }
 }
 

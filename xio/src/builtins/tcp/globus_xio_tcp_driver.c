@@ -2597,7 +2597,7 @@ globus_l_xio_tcp_system_write_cb(
     GlobusXIOName(globus_l_xio_tcp_system_write_cb);
 //esjung
 #ifdef _RAMSES_DEBUG_FUNC_
-printf("globus_l_xio_tcp_system_write_cb\n");
+printf("%s(%s)\n", __func__, __FILE__);
 #endif
 
     GlobusXIOTcpDebugEnter();
