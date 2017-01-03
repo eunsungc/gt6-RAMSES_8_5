@@ -7004,7 +7004,7 @@ globus_l_ftp_data_stripe_poll(
     globus_result_t                              result;
     globus_i_ftp_dc_transfer_handle_t *          transfer_handle;
 #ifdef _RAMSES_DEBUG_FUNC_
-printf("%s(%s)\n", __func__, __FILE__);
+printf("%s(%s)\n iotime: %x nettime: %x", __func__, __FILE__, dc_handle->iotime, dc_handle->nettime);
 #endif
         transfer_handle = dc_handle->transfer_handle;
         if(dc_handle->state == GLOBUS_FTP_DATA_STATE_CLOSING)
@@ -7167,7 +7167,7 @@ globus_l_ftp_data_eb_poll(
     int                                          ctr;
     globus_i_ftp_dc_transfer_handle_t *          transfer_handle;
 #ifdef _RAMSES_DEBUG_FUNC_
-printf("%s(%s)\n", __func__, __FILE__);
+printf("%s(%s)\n iotime: %x nettime: %x", __func__, __FILE__, dc_handle->iotime, dc_handle->nettime);
 #endif
     transfer_handle = dc_handle->transfer_handle;
 

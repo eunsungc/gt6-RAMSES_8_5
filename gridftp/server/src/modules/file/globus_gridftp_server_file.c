@@ -2315,7 +2315,7 @@ globus_l_gfs_file_dispatch_write(
     nettime = ramses_get_net_spent_time((void *)monitor->op);
 	
 #ifdef _RAMSES_DEBUG_FUNC_
-printf("%s(%s)\n", __func__, __FILE__);
+printf("%s(%s) iotime: %x nettime: %x\n", __func__, __FILE__, iotime, nettime);
 #endif
 
     if(monitor->pending_writes == 0 && !monitor->aborted)

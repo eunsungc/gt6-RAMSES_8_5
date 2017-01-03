@@ -2508,7 +2508,7 @@ globus_xio_register_write(
     int                                 ref = 0;
     GlobusXIOName(globus_xio_register_write);
 #ifdef _RAMSES_DEBUG_FUNC_
-printf("%s(%s)\n", __func__, __FILE__);
+printf("%s(%s) iotime: %x nettime: %x\n", __func__, __FILE__, iotime, nettime);
 #endif;
 
     GlobusXIODebugEnter();
@@ -2557,9 +2557,7 @@ printf("%s(%s)\n", __func__, __FILE__);
     // esjung
     op->iotime = iotime;
     op->nettime = nettime;
-#ifdef _RAMSES_DEBUG_
-printf("iotime: %x, nettime: %x\n", op->iotime, op->nettime);
-#endif
+
     res = globus_l_xio_register_writev(op, ref);
     if(res != GLOBUS_SUCCESS)
     {
@@ -2595,9 +2593,7 @@ globus_xio_register_writev(
     globus_i_xio_handle_t *             handle;
     int                                 ref = 0;
     GlobusXIOName(globus_xio_register_writev);
-#ifdef _RAMSES_DEBUG_FUNC_
-printf("%s(%s)\n", __func__, __FILE__);
-#endif
+
     GlobusXIODebugEnter();
     GlobusLXIOActiveTest();
 
@@ -2618,6 +2614,9 @@ printf("%s(%s)\n", __func__, __FILE__);
     }
 
     op = data_desc;
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s) iotime: %x nettime: %x\n", __func__, __FILE__, op != NULL ? op->iotime : NULL, op != NULL ? op->nettime : NULL);
+#endif
     if(op == NULL)
     {
         GlobusXIOOperationCreate(op, handle->context);
