@@ -2460,9 +2460,8 @@ globus_l_xio_tcp_read(
     globus_size_t                       nbytes;
     globus_result_t                     result = GLOBUS_SUCCESS;
     GlobusXIOName(globus_l_xio_tcp_read);
-//esjung
 #ifdef _RAMSES_DEBUG_FUNC_
-printf("globus_l_xio_tcp_read\n");
+printf("%s(%s) iotime: %x nettime: %x\n", __func__, __FILE__, op->iotime, op->nettime);
 #endif
 
     GlobusXIOTcpDebugEnter();
@@ -2622,7 +2621,7 @@ globus_l_xio_tcp_write(
     GlobusXIOName(globus_l_xio_tcp_write);
 //esjung
 #ifdef _RAMSES_DEBUG_FUNC_
-printf("globus_l_xio_tcp_write\n");
+printf("%s(%s) iotime: %x nettime: %x\n", __func__, __FILE__, op->iotime, op->nettime);
 #endif
 
     GlobusXIOTcpDebugEnter();
