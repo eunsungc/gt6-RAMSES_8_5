@@ -1596,7 +1596,7 @@ globus_l_xio_register_writev(
     globus_i_xio_handle_t *             handle;
     GlobusXIOName(globus_l_xio_register_writev);
 #ifdef _RAMSES_DEBUG_FUNC_
-printf("%s(%s)\n", __func__, __FILE__);
+printf("%s(%s) iotime: %x nettime: %x\n", __func__, __FILE__, op->iotime, op->nettime);
 #endif
     GlobusXIODebugInternalEnter();
 
@@ -1710,7 +1710,7 @@ globus_l_xio_register_readv(
     globus_i_xio_handle_t *             handle;
     GlobusXIOName(globus_l_xio_register_readv);
 #ifdef _RAMSES_DEBUG_FUNC_
-printf("%s(%s)\n", __func__, __FILE__);
+printf("%s(%s) iotime: %x nettime: %x\n", __func__, __FILE__, op->iotime, op->nettime);
 #endif
     GlobusXIODebugInternalEnter();
 

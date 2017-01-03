@@ -748,14 +748,9 @@ globus_l_xio_file_read(
 
 //esjung
 #ifdef _RAMSES_DEBUG_FUNC_
-printf("%s(%s)\n", __func__, __FILE__);
+printf("%s(%s) iotime: %x nettime: %x\n", __func__, __FILE__, op->iotime, op->nettime);;
 #endif
 
-//esjung
-#ifdef _RAMSES_DEBUG_
-pte = (nlcali_T *)(op->user_arg);
-printf("iotime: %x, nettime: %x\n",  (nlcali_T)(pte[0]), (nlcali_T)(pte[1]));
-#endif
 
     GlobusXIOFileDebugEnter();
     
@@ -858,7 +853,7 @@ globus_l_xio_file_write(
     GlobusXIOName(globus_l_xio_file_write);
 //esjung
 #ifdef _RAMSES_DEBUG_FUNC_
-printf("%s(%s)\n", __func__, __FILE__);
+printf("%s(%s) iotime: %x nettime: %x\n", __func__, __FILE__, op->iotime, op->nettime);
 #endif
 
     GlobusXIOFileDebugEnter();
