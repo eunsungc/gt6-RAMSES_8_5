@@ -176,7 +176,9 @@ globus_io_register_read(
     globus_size_t                       max_nbytes,
     globus_size_t                       wait_for_nbytes,
     globus_io_read_callback_t           callback,
-    void *                              callback_arg);
+    void *                              callback_arg,
+    nlcali_T iotime,
+    nlcali_T nettime);
 
 globus_result_t
 globus_io_try_read(
