@@ -40,6 +40,8 @@
 #ifndef TARGET_ARCH_WIN32
 #include <grp.h>
 #endif
+// esjung
+#include "nl_calipers.h"
 
 #define GLOBUS_MAPPING_STRING ":globus-mapping:"
 
@@ -2141,4 +2143,7 @@ globus_gfs_config_inc_int(
     char *                              option_name,
     int                                 inc_val);
 
+// esjung
+nlcali_T ramses_get_storage_spent_time(void *op);
+nlcali_T ramses_get_net_spent_time(void *op);
 #endif

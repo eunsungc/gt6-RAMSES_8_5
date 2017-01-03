@@ -1685,8 +1685,6 @@ error:
     return result;
 }
 
-// esjung
-// pass storage_spent_time/net_spent_time parameters.
 static
 void
 globus_l_gfs_file_cksm_read_cb(
@@ -1703,11 +1701,17 @@ globus_l_gfs_file_cksm_read_cb(
     char *                              md5ptr;
     unsigned char                       md[MD5_DIGEST_LENGTH];
     char                                md5sum[MD5_DIGEST_LENGTH * 2 + 1];
-    int                                 i;    
+    int                                 i;
+    // esjung
+    nlcali_T iotime, nettime;
+	
     GlobusGFSName(globus_l_gfs_file_cksm_read_cb);
     GlobusGFSFileDebugEnter();
     
     monitor = (globus_l_gfs_file_cksm_monitor_t *) user_arg;
+    // esjung
+    iotime = ramses_get_storage_spent_time((void *)monitor->op);
+    nettime = ramses_get_net_spent_time((void *)monitor->op);
 
     if(result != GLOBUS_SUCCESS)
     {
@@ -1756,9 +1760,7 @@ globus_l_gfs_file_cksm_read_cb(
             monitor->count,
             NULL,
             globus_l_gfs_file_cksm_read_cb,
-            monitor,
-            monitor->op->session_handle->storage_spent_time,
-            monitor->op->session_handle->io_spent_time);
+            monitor, iotime, nettime);
         if(result != GLOBUS_SUCCESS)
         {
             result = GlobusGFSErrorWrapFailed(
@@ -1843,11 +1845,16 @@ globus_l_gfs_file_open_cksm_cb(
 {  
     globus_l_gfs_file_cksm_monitor_t *  monitor;
     char *                              freq;
+    // esjung
+    nlcali_T iotime, nettime;
     GlobusGFSName(globus_l_gfs_file_open_cksm_cb);
     GlobusGFSFileDebugEnter();
     
     monitor = (globus_l_gfs_file_cksm_monitor_t *) user_arg;
-
+    // esjung
+    iotime = ramses_get_storage_spent_time((void *)monitor->op);
+    nettime = ramses_get_net_spent_time((void *)monitor->op);
+	
     if(result != GLOBUS_SUCCESS)
     {
         result = GlobusGFSErrorWrapFailed(
@@ -1915,9 +1922,7 @@ globus_l_gfs_file_open_cksm_cb(
         monitor->count,
         NULL,
         globus_l_gfs_file_cksm_read_cb,
-        monitor, 
-        monitor->op->session_handle->storage_spent_time, 
-        monitor->op->session_handle->net_spent_time);
+        monitor, iotime, nettime);
     if(result != GLOBUS_SUCCESS)
     {
         result = GlobusGFSErrorWrapFailed(
@@ -2293,8 +2298,6 @@ error_dispatch:
 }
 
 /* Called LOCKED */
-// esjung
-// pass storage_spent_time/net_spent_time parameters.
 static
 globus_result_t
 globus_l_gfs_file_dispatch_write(
@@ -2302,9 +2305,15 @@ globus_l_gfs_file_dispatch_write(
 {
     globus_l_buffer_info_t *            buf_info;
     globus_result_t                     result;
+    // esjung
+    nlcali_T iotime, nettime;
     GlobusGFSName(globus_l_gfs_file_dispatch_write);
     GlobusGFSFileDebugEnter();
 
+    // esjung
+    iotime = ramses_get_storage_spent_time((void *)monitor->op);
+    nettime = ramses_get_net_spent_time((void *)monitor->op);
+	
 #ifdef _RAMSES_DEBUG_FUNC_
 printf("%s(%s)\n", __func__, __FILE__);
 #endif
@@ -2343,9 +2352,7 @@ printf("%s(%s)\n", __func__, __FILE__);
                 buf_info->length,
                 NULL,
                 globus_l_gfs_file_write_cb,
-                monitor, 
-                monitor->op->session_handle->storage_spent_time, 
-                monitor->op->session_handle->net_spent_time);
+                monitor, iotime, nettime);
             if(result != GLOBUS_SUCCESS)
             {
                 result = GlobusGFSErrorWrapFailed(
@@ -2865,8 +2872,6 @@ globus_l_gfs_file_read_cb(
     void *                              user_arg);
     
 /* called LOCKED */
-// esjung
-// pass storage_spent_time/net_spent_time parameters.
 static
 globus_result_t
 globus_l_gfs_file_dispatch_read(
@@ -2875,9 +2880,14 @@ globus_l_gfs_file_dispatch_read(
     globus_result_t                     result;
     globus_byte_t *                     buffer;
     globus_size_t                       read_length;
+    // esjung
+    nlcali_T iotime, nettime;
     GlobusGFSName(globus_l_gfs_file_dispatch_read);
     GlobusGFSFileDebugEnter();
 
+    // esjung
+    iotime = ramses_get_storage_spent_time((void *)monitor->op);
+    nettime = ramses_get_net_spent_time((void *)monitor->op);
 #ifdef _RAMSES_DEBUG_FUNC_
 printf("%s(%s)\n", __func__, __FILE__);
 #endif
@@ -2945,9 +2955,7 @@ printf("%s(%s)\n", __func__, __FILE__);
             read_length,
             NULL,
             globus_l_gfs_file_read_cb,
-            monitor,
-            monitor->op->session_handle->storage_spent_time,
-            monitor->op->session_handle->net_spent_time);
+            monitor, iotime, nettime);
         if(result != GLOBUS_SUCCESS)
         {
             globus_list_insert(&monitor->buffer_list, buffer);

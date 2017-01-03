@@ -299,6 +299,7 @@ typedef struct
 // esjung
 // This data structure is used as a parameter in globus_gridftp_server_register_read/write()
 // which initiate xio read/write().
+// move to globus_i_gfs_data.h
 typedef struct globus_l_gfs_data_operation_s
 {
     globus_l_gfs_data_state_t           state;
@@ -15444,9 +15445,20 @@ response_exit:
 }
 
 
+// esjung
+nlcali_T ramses_get_storage_spent_time(void *op)
+{
+    globus_l_gfs_data_operation_t *pgfs_data_op = (globus_l_gfs_data_operation_t *)op;
+    
+    return pgfs_data_op->session_handle->storage_spent_time;
+}
 
-
-
+nlcali_T ramses_get_net_spent_time(void *op)
+{
+    globus_l_gfs_data_operation_t *pgfs_data_op = (globus_l_gfs_data_operation_t *)op;
+    
+    return pgfs_data_op->session_handle->net_spent_time;
+}
 
 
 
