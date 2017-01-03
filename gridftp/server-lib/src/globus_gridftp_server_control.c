@@ -687,7 +687,9 @@ globus_l_gsc_read_cb(
     char *                              command_name = NULL;
     int                                 ctr;
     GlobusGridFTPServerName(globus_l_gsc_read_cb);
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s) iotime: %x nettime: %x\n", __func__, __FILE__, data_desc.iotime, data_desc.nettime);
+#endif
     GlobusGridFTPServerDebugInternalEnter();
 
     server_handle = (globus_i_gsc_server_handle_t *) user_arg;

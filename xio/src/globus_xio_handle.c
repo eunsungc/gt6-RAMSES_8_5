@@ -2327,8 +2327,7 @@ globus_xio_register_read(
     globus_i_xio_op_t *                 op;
     globus_result_t                     res;
     int                                 ref = 0;
-    // esjung
-    nlcali_T *pnlcali=(nlcali_T *)user_arg;
+
     GlobusXIOName(globus_xio_register_read);
 #ifdef _RAMSES_DEBUG_FUNC_
 printf("%s(%s)\n", __func__, __FILE__);
