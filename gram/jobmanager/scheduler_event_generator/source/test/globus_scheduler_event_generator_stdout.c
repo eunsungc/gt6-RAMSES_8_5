@@ -497,7 +497,7 @@ globus_l_seg_register_write(
             iov[i].iov_len = strlen((char *)iov[i].iov_base);
             nbytes += iov[i].iov_len;
         }
-
+        // esjung
         result = globus_xio_register_writev(
                 globus_l_seg_output_handle,
                 iov,
@@ -505,7 +505,7 @@ globus_l_seg_register_write(
                 nbytes,
                 NULL,
                 globus_l_seg_writev_callback,
-                NULL);
+                NULL, NULL, NULL);
 
         if (result != GLOBUS_SUCCESS)
         {

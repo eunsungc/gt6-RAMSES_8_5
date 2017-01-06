@@ -1482,6 +1482,7 @@ gfork_l_write(
             msg->data->ref++;
             iovc++;
         }
+        // esjung
         result = globus_xio_register_writev(
             to_kid->write_xio_handle,
             msg->write_iov,
@@ -1489,7 +1490,7 @@ gfork_l_write(
             msg->header.size + sizeof(gfork_i_msg_header_t),
             NULL,
             msg->cb,
-            msg);
+            msg, NULL, NULL);
         assert(msg->cb != NULL);
         if(result != GLOBUS_SUCCESS)
         {

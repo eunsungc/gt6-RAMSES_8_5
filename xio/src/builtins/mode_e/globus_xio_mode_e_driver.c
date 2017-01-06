@@ -17,7 +17,8 @@
 #include "globus_xio_driver.h"
 #include "globus_xio_mode_e_driver.h"
 #include "version.h"
-
+// esjung
+#define _RAMSES_DEBUG_FUNC_
 GlobusDebugDefine(GLOBUS_XIO_MODE_E);
 GlobusXIODeclareDriver(mode_e);
 
@@ -2140,7 +2141,9 @@ globus_i_xio_mode_e_register_read(
     globus_xio_iovec_t *                iovec;
     int                                 iovec_count;
     GlobusXIOName(globus_i_xio_mode_e_register_read);
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     GlobusXIOModeEDebugEnter();
     iovec = connection_handle->requestor->iovec;
     iovec_count = connection_handle->requestor->iovec_count;
@@ -2170,6 +2173,7 @@ globus_i_xio_mode_e_register_read(
             }
         }
     }
+    // esjung
     result = globus_xio_register_readv(
                 connection_handle->xio_handle,
                 (globus_xio_iovec_t*)iovec, 
@@ -2177,7 +2181,7 @@ globus_i_xio_mode_e_register_read(
                 iovec_len,
                 NULL,
                 globus_l_xio_mode_e_read_cb,
-                connection_handle);
+                connection_handle, NULL, NULL);
     GlobusXIOModeEDebugExit();
     return result;
 }                        
@@ -2553,7 +2557,9 @@ globus_l_xio_mode_e_write_header_cb(
     globus_bool_t                       finish = GLOBUS_FALSE;
     globus_result_t                     res;
     GlobusXIOName(globus_l_xio_mode_e_write_header_cb);
-
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s)\n", __func__, __FILE__);
+#endif
     GlobusXIOModeEDebugEnter();
     connection_handle = (globus_l_xio_mode_e_connection_handle_t *) user_arg;
     handle = connection_handle->mode_e_handle;
@@ -2578,6 +2584,7 @@ globus_l_xio_mode_e_write_header_cb(
             iovec = connection_handle->requestor->iovec;
             iovec_count = connection_handle->requestor->iovec_count;
             GlobusXIOUtilIovTotalLength(iovec_len, iovec, iovec_count);
+            // esjung
             res = globus_xio_register_writev(
                         connection_handle->xio_handle,
                         (globus_xio_iovec_t*)iovec,
@@ -2585,7 +2592,7 @@ globus_l_xio_mode_e_write_header_cb(
                         iovec_len,
                         GLOBUS_NULL,
                         globus_l_xio_mode_e_write_cb,
-                        connection_handle);
+                        connection_handle, NULL, NULL); 
             if (res != GLOBUS_SUCCESS)
             {
                 goto error;

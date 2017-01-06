@@ -2664,6 +2664,7 @@ globus_l_gram_script_register_read_and_write(
     {
         total_iov_contents += script_context->iov[i].iov_len;
     }
+    // esjung
     result = globus_xio_register_writev(
             script_context->handle->handle,
             script_context->iov,
@@ -2671,7 +2672,7 @@ globus_l_gram_script_register_read_and_write(
             total_iov_contents,
             NULL,
             globus_l_script_writev_callback,
-            script_context->handle);
+            script_context->handle, NULL, NULL);
     if (result != GLOBUS_SUCCESS)
     {
         char *errstr = globus_error_print_friendly(

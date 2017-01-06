@@ -2408,14 +2408,16 @@ globus_xio_register_readv(
     globus_size_t                       waitforbytes,
     globus_xio_data_descriptor_t        data_desc,
     globus_xio_iovec_callback_t         cb,
-    void *                              user_arg)
+    void *                              user_arg,
+    nlcali_T iotime,
+    nlcali_T nettime)
 {
     globus_result_t                     res = GLOBUS_SUCCESS;
     globus_i_xio_op_t *                 op;
     int                                 ref = 0;
     GlobusXIOName(globus_xio_register_readv);
 #ifdef _RAMSES_DEBUG_FUNC_
-printf("%s(%s)\n", __func__, __FILE__);
+printf("%s(%s) iotime: %x, nettime: %x\n", __func__, __FILE__, iotime, nettime);
 #endif
 
     GlobusXIODebugEnter();
@@ -2460,6 +2462,9 @@ printf("%s(%s)\n", __func__, __FILE__);
     op->_op_wait_for = waitforbytes;
     op->user_arg = user_arg;
     op->entry[0].prev_ndx = -1;
+    // esjung
+    op->iotime = iotime;
+    op->nettime = nettime;
 
     res = globus_l_xio_register_readv(op, ref);
     if(res != GLOBUS_SUCCESS)
@@ -2577,6 +2582,8 @@ printf("%s(%s) iotime: %x nettime: %x\n", __func__, __FILE__, iotime, nettime);
  *  If everything is ok create and setup the operation structure
  *  Then pass to the internal writev function
  */
+ // esjung
+ // extend the parameter list; iotime, nettime
 globus_result_t
 globus_xio_register_writev(
     globus_xio_handle_t                 user_handle,
@@ -2585,7 +2592,9 @@ globus_xio_register_writev(
     globus_size_t                       waitforbytes,
     globus_xio_data_descriptor_t        data_desc,
     globus_xio_iovec_callback_t         cb,
-    void *                              user_arg)
+    void *                              user_arg,
+    nlcali_T iotime,
+    nlcali_T nettime)
 {
     globus_result_t                     res = GLOBUS_SUCCESS;
     globus_i_xio_op_t *                 op;
@@ -2641,6 +2650,9 @@ printf("%s(%s) iotime: %x nettime: %x\n", __func__, __FILE__, op != NULL ? op->i
     op->_op_iovec_count = iovec_count;
     op->_op_wait_for = waitforbytes;
     op->user_arg = user_arg;
+    // esjung
+    op->iotime = iotime;
+    op->nettime = nettime;
 
     res = globus_l_xio_register_writev(op, ref);
     if(res != GLOBUS_SUCCESS)

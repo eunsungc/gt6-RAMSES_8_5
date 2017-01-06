@@ -3372,7 +3372,9 @@ globus_io_register_writev(
     GlobusLIOCheckNullParam(writev_callback);
     GlobusLIOCheckNullParam(iov);
     GlobusLIOCheckHandle(handle, 0);
-    
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s) iotime: %x, nettime: %x\n", __func__, __FILE__, iotime, nettime);
+#endif
     ihandle = *handle;
     result = GlobusLIOMalloc(bounce_info, globus_l_io_bounce_t);
     if(result != GLOBUS_SUCCESS)
@@ -3394,6 +3396,7 @@ globus_io_register_writev(
     
     globus_mutex_lock(&ihandle->pending_lock);
     {
+        // esjung
         result = globus_xio_register_writev(
             ihandle->xio_handle,
             iov,
@@ -3401,7 +3404,7 @@ globus_io_register_writev(
             nbytes,
             GLOBUS_NULL,
             globus_l_io_bounce_iovec_cb,
-            bounce_info);
+            bounce_info, iotime, nettime);
         if(result != GLOBUS_SUCCESS)
         {
             globus_mutex_unlock(&ihandle->pending_lock);

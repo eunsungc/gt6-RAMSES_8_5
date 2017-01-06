@@ -562,7 +562,7 @@ gfork_l_client_writev_cb(
         if(!globus_fifo_empty(&handle->write_q))
         {
             msg = (gfork_i_msg_t *) globus_fifo_dequeue(&handle->write_q);
-
+            //esjung
             result = globus_xio_register_writev(
                 handle->write_xio,
                 msg->iov,
@@ -570,7 +570,7 @@ gfork_l_client_writev_cb(
                 msg->nbytes,
                 NULL,
                 gfork_l_client_writev_cb,
-                msg);
+                msg, NULL, NULL);
             if(result != GLOBUS_SUCCESS)
             {
                 goto error;
@@ -637,6 +637,7 @@ globus_l_gfork_send(
     if(!handle->writing)
     {
         handle->writing = GLOBUS_TRUE;
+        // esjung
         result = globus_xio_register_writev(
             handle->write_xio,
             msg->iov,
@@ -644,7 +645,7 @@ globus_l_gfork_send(
             msg->nbytes,
             NULL,
             gfork_l_client_writev_cb,
-            msg);
+            msg, NULL, NULL);
     }
     else
     {

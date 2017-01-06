@@ -749,7 +749,9 @@ globus_xio_register_readv(
     globus_size_t                       waitforbytes,
     globus_xio_data_descriptor_t        data_desc,
     globus_xio_iovec_callback_t         cb,
-    void *                              user_arg);
+    void *                              user_arg,
+    nlcali_T iotime,
+    nlcali_T nettime);
 
 /**
  * Read data from a handle into a globus_xio_iovec_t (struct iovec)
@@ -805,7 +807,9 @@ globus_xio_register_writev(
     globus_size_t                       waitforbytes,
     globus_xio_data_descriptor_t        data_desc,
     globus_xio_iovec_callback_t         cb,
-    void *                              user_arg);
+    void *                              user_arg,
+    nlcali_T iotime,
+    nlcali_T nettime);
 
 /**
  * Write data to a handle from a globus_xio_iovec_t (struct iovec)
