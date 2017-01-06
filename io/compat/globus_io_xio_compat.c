@@ -3358,7 +3358,9 @@ globus_io_register_writev(
     struct iovec *                      iov,
     globus_size_t                       iovcnt,
     globus_io_writev_callback_t         writev_callback,
-    void *                              callback_arg)
+    void *                              callback_arg,
+    nlcali_T iotime,
+    nlcali_t nettime)
 {
     globus_l_io_bounce_t *              bounce_info;
     globus_l_io_handle_t *              ihandle;

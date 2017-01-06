@@ -7300,7 +7300,9 @@ printf("%s(%s)\n iotime: %x nettime: %x\n", __func__, __FILE__, dc_handle->iotim
                                          io_vec,
                                          2,
                                          globus_l_ftp_eb_write_callback,
-                                        (void *)entry);
+                                        (void *)entry,
+                                        dc_handle->iotime,
+                                        dc_handle->nettime);
                             globus_assert(res == GLOBUS_SUCCESS);
                         }
 
@@ -7365,7 +7367,9 @@ printf("%s(%s)\n iotime: %x nettime: %x\n", __func__, __FILE__, dc_handle->iotim
                                   io_vec,
                                   2,
                                   globus_l_ftp_eb_write_callback,
-                                  (void *)entry);
+                                  (void *)entry,
+                                  dc_handle->iotime,
+                                  dc_handle->nettime);
                         globus_assert(res == GLOBUS_SUCCESS);
                     }
                 }

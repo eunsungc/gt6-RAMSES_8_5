@@ -220,7 +220,9 @@ globus_io_register_writev(
     struct iovec *                      iov,
     globus_size_t                       iovcnt,
     globus_io_writev_callback_t         writev_callback,
-    void *                              callback_arg);
+    void *                              callback_arg,
+    nlcali_T iotime,
+    nlcali_T nettime);
 
 globus_result_t
 globus_io_try_write(

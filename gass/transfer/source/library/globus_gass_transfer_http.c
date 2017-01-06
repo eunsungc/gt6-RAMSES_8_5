@@ -346,12 +346,13 @@ globus_l_gass_transfer_http_send(
 	}
 
 	debug_printf(4, (_GTSL("%s(): Registering writev\n"), myname));
+	// esjung
 	result = globus_io_register_writev(
 	    &new_proto->handle,
 	    new_proto->iov,
 	    num_iovecs /* 3 iovecs header, body, final CRLF */,
 	    globus_l_gass_transfer_http_writev_callback,
-	    new_proto);
+	    new_proto, NULL, NULL);
     }
     else
     {
