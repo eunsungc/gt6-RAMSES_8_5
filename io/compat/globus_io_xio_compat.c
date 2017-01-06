@@ -3360,7 +3360,7 @@ globus_io_register_writev(
     globus_io_writev_callback_t         writev_callback,
     void *                              callback_arg,
     nlcali_T iotime,
-    nlcali_t nettime)
+    nlcali_T nettime)
 {
     globus_l_io_bounce_t *              bounce_info;
     globus_l_io_handle_t *              ihandle;
