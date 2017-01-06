@@ -2623,7 +2623,7 @@ globus_xio_register_writev(
 
     op = data_desc;
 #ifdef _RAMSES_DEBUG_FUNC_
-printf("%s(%s) iotime: %x nettime: %x\n", __func__, __FILE__, op != NULL ? op->iotime : NULL, op != NULL ? op->nettime : NULL);
+printf("%s(%s) iotime: %x nettime: %x\n", __func__, __FILE__, iotime, nettime);
 #endif
     if(op == NULL)
     {
