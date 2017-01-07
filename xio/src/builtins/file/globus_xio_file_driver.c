@@ -709,15 +709,20 @@ globus_l_xio_file_system_read_cb(
 {
     globus_xio_operation_t              op;
     GlobusXIOName(globus_l_xio_file_system_read_cb);
-//esjung
-#ifdef _RAMSES_DEBUG_FUNC_
-printf("%s(%s)\n", __func__, __FILE__);
-#endif
 
     GlobusXIOFileDebugEnter();
     
     op = (globus_xio_operation_t) user_arg;
-    
+    //esjung
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s) iotime: %x nettime: %x\n", __func__, __FILE__, op->iotime, op->nettime);
+#endif
+
+    // esjung
+    if (op->nettime != NULL) {
+        nlcali_end(op->iotime, 1.);
+    }
+
     globus_l_xio_file_update_position(
         (globus_l_handle_t *) globus_xio_operation_get_driver_specific(op),
         nbytes,
@@ -751,6 +756,10 @@ globus_l_xio_file_read(
 printf("%s(%s) iotime: %x nettime: %x\n", __func__, __FILE__, op->iotime, op->nettime);;
 #endif
 
+    // esjung
+    if (op->nettime != NULL) {
+        nlcali_begin(op->iotime);
+    }
 
     GlobusXIOFileDebugEnter();
     
@@ -816,15 +825,20 @@ globus_l_xio_file_system_write_cb(
 {
     globus_xio_operation_t              op;
     GlobusXIOName(globus_l_xio_file_system_write_cb);
-//esjung
-#ifdef _RAMSES_DEBUG_FUNC_
-printf("%s(%s)\n", __func__, __FILE__);
-#endif
 
     GlobusXIOFileDebugEnter();
     
     op = (globus_xio_operation_t) user_arg;
-    
+    //esjung
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s) iotime: %x nettime: %x\n", __func__, __FILE__, op->iotime, op->nettime);
+#endif
+
+    // esjung
+    if (op->nettime != NULL) {
+        nlcali_end(op->iotime, 1.);
+    }
+	
     globus_l_xio_file_update_position(
         (globus_l_handle_t *) globus_xio_operation_get_driver_specific(op),
         nbytes,
