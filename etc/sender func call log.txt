@@ -1,12 +1,16 @@
-Summary
-globus_ftp_control_data_write()
--->globus_l_ftp_control_data_stream_read_write()
--->globus_xio_register_read()
--->globus_l_xio_file_read()
--->globus_xio_register_write()
--->globus_l_xio_tcp_write()
-
-[esjung@vm2 ~]$ globus_xio_handle_cntl(globus_xio_handle.c)
+[esjung@vm2 ~]$ killall globus-gridftp-server; \rm ~/*.log ~/*.json; globus-gridftp-server -threads 1 -aa -d all -p 50000&
+[3] 42197
+[esjung@vm2 ~]$ globus_l_xio_activate(globus_xio_handle.c)
+globus_xio_handle_create(globus_xio_handle.c)
+globus_xio_open(globus_xio_handle.c)
+globus_i_xio_blocking_alloc(globus_xio_handle.c)
+globus_l_xio_register_open(globus_xio_handle.c)
+globus_i_xio_register_oneshot(globus_xio_handle.c)
+globus_l_xio_open_close_callback(globus_xio_handle.c)
+globus_l_xio_open_close_callback_kickout(globus_xio_handle.c)
+globus_l_xio_blocking_cb(globus_xio_handle.c)
+globus_i_gfs_data_init(globus_i_gfs_data.c)
+globus_xio_handle_cntl(globus_xio_handle.c)
 globus_xio_register_close(globus_xio_handle.c)
 globus_l_xio_handle_pre_close(globus_xio_handle.c)
 globus_i_xio_register_oneshot(globus_xio_handle.c)
@@ -40,28 +44,28 @@ globus_l_xio_register_open(globus_xio_handle.c)
 globus_i_xio_register_oneshot(globus_xio_handle.c)
 globus_l_xio_open_close_callback(globus_xio_handle.c)
 globus_l_xio_open_close_callback_kickout(globus_xio_handle.c)
-globus_xio_register_write(globus_xio_handle.c)
-user_handle: e400b0a0
-globus_l_xio_register_writev(globus_xio_handle.c)
-globus_l_xio_tcp_write
-globus_l_xio_tcp_system_write_cb
+globus_xio_register_write(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_register_writev(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_tcp_write(globus_xio_tcp_driver.c) iotime: 5 nettime: 0
+globus_l_xio_tcp_system_write_cb(globus_xio_tcp_driver.c)
 globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
 globus_xio_register_read(globus_xio_handle.c)
-globus_l_xio_register_readv(globus_xio_handle.c)
-globus_l_xio_tcp_read
+iotime: 0, nettime: 0
+globus_l_xio_register_readv(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_tcp_read(globus_xio_tcp_driver.c) iotime: 4 nettime: 0
 globus_l_xio_tcp_system_read_cb
 globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
 globus_xio_handle_cntl(globus_xio_handle.c)
 globus_xio_register_read(globus_xio_handle.c)
-globus_l_xio_register_readv(globus_xio_handle.c)
-globus_l_xio_tcp_read
-globus_xio_register_write(globus_xio_handle.c)
-user_handle: e400b0a0
-globus_l_xio_register_writev(globus_xio_handle.c)
-globus_l_xio_tcp_write
-globus_l_xio_tcp_system_write_cb
+iotime: 0, nettime: 0
+globus_l_xio_register_readv(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_tcp_read(globus_xio_tcp_driver.c) iotime: 4 nettime: 0
+globus_xio_register_write(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_register_writev(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_tcp_write(globus_xio_tcp_driver.c) iotime: 5 nettime: 0
+globus_l_xio_tcp_system_write_cb(globus_xio_tcp_driver.c)
 globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
 globus_l_xio_tcp_system_read_cb
@@ -69,12 +73,13 @@ globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
 globus_xio_handle_cntl(globus_xio_handle.c)
 globus_xio_register_read(globus_xio_handle.c)
-globus_l_xio_register_readv(globus_xio_handle.c)
-globus_l_xio_tcp_read
+iotime: 0, nettime: 0
+globus_l_xio_register_readv(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_tcp_read(globus_xio_tcp_driver.c) iotime: 4 nettime: 0
 globus_xio_handle_cntl(globus_xio_handle.c)
 globus_i_gfs_data_session_start(globus_i_gfs_data.c)
 nlcali_new
-net_spent_time: e4002380, storage_spent_time: e4002550
+net_spent_time: d4002380, storage_spent_time: d4002550
 globus_l_gfs_data_operation_init(globus_i_gfs_data.c)
 globus_l_gfs_data_authorize(globus_i_gfs_data.c)
 globus_l_gfs_data_auth_init_cb(globus_i_gfs_data.c)
@@ -85,11 +90,10 @@ globus_l_gfs_operation_finished_kickout(globus_i_gfs_data.c)
 globus_l_gfs_data_check(globus_i_gfs_data.c)
 globus_l_gfs_data_fire_cb
 globus_l_gfs_data_operation_destroy(globus_i_gfs_data.c)
-globus_xio_register_write(globus_xio_handle.c)
-user_handle: e400b0a0
-globus_l_xio_register_writev(globus_xio_handle.c)
-globus_l_xio_tcp_write
-globus_l_xio_tcp_system_write_cb
+globus_xio_register_write(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_register_writev(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_tcp_write(globus_xio_tcp_driver.c) iotime: 5 nettime: 0
+globus_l_xio_tcp_system_write_cb(globus_xio_tcp_driver.c)
 globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
 globus_l_xio_tcp_system_read_cb
@@ -97,13 +101,13 @@ globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
 globus_xio_handle_cntl(globus_xio_handle.c)
 globus_xio_register_read(globus_xio_handle.c)
-globus_l_xio_register_readv(globus_xio_handle.c)
-globus_l_xio_tcp_read
-globus_xio_register_write(globus_xio_handle.c)
-user_handle: e400b0a0
-globus_l_xio_register_writev(globus_xio_handle.c)
-globus_l_xio_tcp_write
-globus_l_xio_tcp_system_write_cb
+iotime: 0, nettime: 0
+globus_l_xio_register_readv(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_tcp_read(globus_xio_tcp_driver.c) iotime: 4 nettime: 0
+globus_xio_register_write(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_register_writev(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_tcp_write(globus_xio_tcp_driver.c) iotime: 5 nettime: 0
+globus_l_xio_tcp_system_write_cb(globus_xio_tcp_driver.c)
 globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
 globus_l_xio_tcp_system_read_cb
@@ -111,13 +115,13 @@ globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
 globus_xio_handle_cntl(globus_xio_handle.c)
 globus_xio_register_read(globus_xio_handle.c)
-globus_l_xio_register_readv(globus_xio_handle.c)
-globus_l_xio_tcp_read
-globus_xio_register_write(globus_xio_handle.c)
-user_handle: e400b0a0
-globus_l_xio_register_writev(globus_xio_handle.c)
-globus_l_xio_tcp_write
-globus_l_xio_tcp_system_write_cb
+iotime: 0, nettime: 0
+globus_l_xio_register_readv(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_tcp_read(globus_xio_tcp_driver.c) iotime: 4 nettime: 0
+globus_xio_register_write(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_register_writev(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_tcp_write(globus_xio_tcp_driver.c) iotime: 5 nettime: 0
+globus_l_xio_tcp_system_write_cb(globus_xio_tcp_driver.c)
 globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
 globus_l_xio_tcp_system_read_cb
@@ -125,18 +129,18 @@ globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
 globus_xio_handle_cntl(globus_xio_handle.c)
 globus_xio_register_read(globus_xio_handle.c)
-globus_l_xio_register_readv(globus_xio_handle.c)
-globus_l_xio_tcp_read
+iotime: 0, nettime: 0
+globus_l_xio_register_readv(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_tcp_read(globus_xio_tcp_driver.c) iotime: 4 nettime: 0
 globus_i_gfs_data_request_command(globus_i_gfs_data.c)
 globus_l_gfs_data_operation_init(globus_i_gfs_data.c)
-globus_xio_register_write(globus_xio_handle.c)
-user_handle: e400b0a0
-globus_l_xio_register_writev(globus_xio_handle.c)
-globus_l_xio_tcp_write
+globus_xio_register_write(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_register_writev(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_tcp_write(globus_xio_tcp_driver.c) iotime: 5 nettime: 0
 globus_l_gfs_data_check(globus_i_gfs_data.c)
 globus_l_gfs_data_fire_cb
 globus_l_gfs_data_operation_destroy(globus_i_gfs_data.c)
-globus_l_xio_tcp_system_write_cb
+globus_l_xio_tcp_system_write_cb(globus_xio_tcp_driver.c)
 globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
 globus_l_xio_tcp_system_read_cb
@@ -144,13 +148,13 @@ globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
 globus_xio_handle_cntl(globus_xio_handle.c)
 globus_xio_register_read(globus_xio_handle.c)
-globus_l_xio_register_readv(globus_xio_handle.c)
-globus_l_xio_tcp_read
-globus_xio_register_write(globus_xio_handle.c)
-user_handle: e400b0a0
-globus_l_xio_register_writev(globus_xio_handle.c)
-globus_l_xio_tcp_write
-globus_l_xio_tcp_system_write_cb
+iotime: 0, nettime: 0
+globus_l_xio_register_readv(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_tcp_read(globus_xio_tcp_driver.c) iotime: 4 nettime: 0
+globus_xio_register_write(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_register_writev(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_tcp_write(globus_xio_tcp_driver.c) iotime: 5 nettime: 0
+globus_l_xio_tcp_system_write_cb(globus_xio_tcp_driver.c)
 globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
 globus_l_xio_tcp_system_read_cb
@@ -158,13 +162,13 @@ globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
 globus_xio_handle_cntl(globus_xio_handle.c)
 globus_xio_register_read(globus_xio_handle.c)
-globus_l_xio_register_readv(globus_xio_handle.c)
-globus_l_xio_tcp_read
-globus_xio_register_write(globus_xio_handle.c)
-user_handle: e400b0a0
-globus_l_xio_register_writev(globus_xio_handle.c)
-globus_l_xio_tcp_write
-globus_l_xio_tcp_system_write_cb
+iotime: 0, nettime: 0
+globus_l_xio_register_readv(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_tcp_read(globus_xio_tcp_driver.c) iotime: 4 nettime: 0
+globus_xio_register_write(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_register_writev(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_tcp_write(globus_xio_tcp_driver.c) iotime: 5 nettime: 0
+globus_l_xio_tcp_system_write_cb(globus_xio_tcp_driver.c)
 globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
 globus_l_xio_tcp_system_read_cb
@@ -172,18 +176,18 @@ globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
 globus_xio_handle_cntl(globus_xio_handle.c)
 globus_xio_register_read(globus_xio_handle.c)
-globus_l_xio_register_readv(globus_xio_handle.c)
-globus_l_xio_tcp_read
+iotime: 0, nettime: 0
+globus_l_xio_register_readv(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_tcp_read(globus_xio_tcp_driver.c) iotime: 4 nettime: 0
 globus_l_gfs_data_operation_init(globus_i_gfs_data.c)
 globus_l_gfs_authorize_cb(globus_i_gfs_data.c)
 globus_l_gfs_data_check(globus_i_gfs_data.c)
 globus_l_gfs_data_fire_cb
 globus_l_gfs_data_operation_destroy(globus_i_gfs_data.c)
-globus_xio_register_write(globus_xio_handle.c)
-user_handle: e400b0a0
-globus_l_xio_register_writev(globus_xio_handle.c)
-globus_l_xio_tcp_write
-globus_l_xio_tcp_system_write_cb
+globus_xio_register_write(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_register_writev(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_tcp_write(globus_xio_tcp_driver.c) iotime: 5 nettime: 0
+globus_l_xio_tcp_system_write_cb(globus_xio_tcp_driver.c)
 globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
 globus_l_xio_tcp_system_read_cb
@@ -191,13 +195,13 @@ globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
 globus_xio_handle_cntl(globus_xio_handle.c)
 globus_xio_register_read(globus_xio_handle.c)
-globus_l_xio_register_readv(globus_xio_handle.c)
-globus_l_xio_tcp_read
-globus_xio_register_write(globus_xio_handle.c)
-user_handle: e400b0a0
-globus_l_xio_register_writev(globus_xio_handle.c)
-globus_l_xio_tcp_write
-globus_l_xio_tcp_system_write_cb
+iotime: 0, nettime: 0
+globus_l_xio_register_readv(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_tcp_read(globus_xio_tcp_driver.c) iotime: 4 nettime: 0
+globus_xio_register_write(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_register_writev(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_tcp_write(globus_xio_tcp_driver.c) iotime: 5 nettime: 0
+globus_l_xio_tcp_system_write_cb(globus_xio_tcp_driver.c)
 globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
 globus_l_xio_tcp_system_read_cb
@@ -205,16 +209,20 @@ globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
 globus_xio_handle_cntl(globus_xio_handle.c)
 globus_xio_register_read(globus_xio_handle.c)
-globus_l_xio_register_readv(globus_xio_handle.c)
-globus_l_xio_tcp_read
+iotime: 0, nettime: 0
+globus_l_xio_register_readv(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_tcp_read(globus_xio_tcp_driver.c) iotime: 4 nettime: 0
 globus_i_gfs_data_request_active(globus_i_gfs_data.c)
 globus_l_gfs_data_handle_init(globus_i_gfs_data.c)
+globus_ftp_control_local_parallelism(globus_ftp_control_data.c)
+globus_ftp_control_local_send_eof(globus_ftp_control_data.c)
+globus_ftp_control_local_port(globus_ftp_control_data.c)
+globus_l_ftp_control_stripes_destroy(globus_ftp_control_data.c)
 globus_l_gfs_data_active_kickout(globus_i_gfs_data.c)
-globus_xio_register_write(globus_xio_handle.c)
-user_handle: e400b0a0
-globus_l_xio_register_writev(globus_xio_handle.c)
-globus_l_xio_tcp_write
-globus_l_xio_tcp_system_write_cb
+globus_xio_register_write(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_register_writev(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_tcp_write(globus_xio_tcp_driver.c) iotime: 5 nettime: 0
+globus_l_xio_tcp_system_write_cb(globus_xio_tcp_driver.c)
 globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
 globus_l_xio_tcp_system_read_cb
@@ -222,8 +230,9 @@ globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
 globus_xio_handle_cntl(globus_xio_handle.c)
 globus_xio_register_read(globus_xio_handle.c)
-globus_l_xio_register_readv(globus_xio_handle.c)
-globus_l_xio_tcp_read
+iotime: 0, nettime: 0
+globus_l_xio_register_readv(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_tcp_read(globus_xio_tcp_driver.c) iotime: 4 nettime: 0
 globus_i_gfs_data_request_send(globus_i_gfs_data.c)
 globus_i_gfs_data_request_send SEND
 globus_l_gfs_data_operation_init(globus_i_gfs_data.c)
@@ -234,213 +243,397 @@ globus_l_xio_register_open(globus_xio_handle.c)
 globus_i_xio_register_oneshot(globus_xio_handle.c)
 globus_l_xio_open_close_callback(globus_xio_handle.c)
 globus_l_xio_open_close_callback_kickout(globus_xio_handle.c)
+globus_l_gfs_file_open_read_cb(globus_gridftp_server_file.c)
 globus_gridftp_server_begin_transfer(globus_i_gfs_data.c)
+globus_ftp_control_data_connect_write(globus_ftp_control_data.c)
+globus_l_ftp_control_data_eb_connect_write(globus_ftp_control_data.c)
 globus_xio_handle_create(globus_xio_handle.c)
 globus_xio_register_open(globus_xio_handle.c)
 globus_l_xio_register_open(globus_xio_handle.c)
-globus_l_gfs_file_dispatch_read
+globus_l_gfs_file_dispatch_read(globus_gridftp_server_file.c)
 globus_xio_register_read(globus_xio_handle.c)
-globus_l_xio_register_readv(globus_xio_handle.c)
-globus_l_xio_file_read(globus_xio_file_driver.c)
+iotime: d4002550, nettime: d4002380
+globus_l_xio_register_readv(globus_xio_handle.c) iotime: d4002550 nettime: d4002380
+globus_l_xio_file_read(globus_xio_file_driver.c) iotime: d4002550 nettime: d4002380
 globus_l_xio_file_system_read_cb(globus_xio_file_driver.c)
 globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
+globus_l_gfs_file_read_cb(globus_gridftp_server_file.c)
 globus_gridftp_server_register_write(globus_i_gfs_data.c)
 globus_ftp_control_data_write(globus_ftp_control_data.c)
-globus_l_gfs_file_dispatch_read
+iotime: d4002550, nettime: d4002380
+globus_l_ftp_control_data_eb_write(globus_ftp_control_data.c) iotime: d4002550, nettime: d4002380
+
+globus_i_ftp_control_create_data_info(globus_ftp_control_data.c) iotime: d4002550, nettime: d4002380
+
+globus_i_ftp_control_data_write_stripe(globus_ftp_control_data.c)
+globus_l_ftp_data_stripe_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_l_ftp_data_eb_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_l_gfs_file_dispatch_read(globus_gridftp_server_file.c)
 globus_xio_register_read(globus_xio_handle.c)
-globus_l_xio_register_readv(globus_xio_handle.c)
-globus_l_xio_file_read(globus_xio_file_driver.c)
+iotime: d4002550, nettime: d4002380
+globus_l_xio_register_readv(globus_xio_handle.c) iotime: d4002550 nettime: d4002380
+globus_l_xio_file_read(globus_xio_file_driver.c) iotime: d4002550 nettime: d4002380
 globus_l_xio_open_close_callback(globus_xio_handle.c)
 globus_l_xio_open_close_callback_kickout(globus_xio_handle.c)
 globus_l_gfs_data_begin_cb(globus_i_gfs_data.c)
 globus_xio_handle_cntl(globus_xio_handle.c)
 globus_xio_handle_cntl(globus_xio_handle.c)
+globus_ftp_control_data_get_remote_hosts(globus_ftp_control_data.c)
 globus_xio_handle_cntl(globus_xio_handle.c)
-globus_xio_register_write(globus_xio_handle.c)
-user_handle: e400b0a0
-globus_l_xio_register_writev(globus_xio_handle.c)
-globus_l_xio_tcp_write
-globus_xio_register_writev(globus_xio_handle.c)
-globus_l_xio_register_writev(globus_xio_handle.c)
-globus_l_xio_tcp_write
+globus_xio_register_write(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_register_writev(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_tcp_write(globus_xio_tcp_driver.c) iotime: 5 nettime: 0
+globus_l_ftp_data_stripe_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_l_ftp_data_eb_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_io_register_writev(globus_io_xio_compat.c) iotime: d4002550, nettime: d4002380
+globus_xio_register_writev(globus_xio_handle.c) iotime: d4002550 nettime: d4002380
+globus_l_xio_register_writev(globus_xio_handle.c) iotime: d4002550 nettime: d4002380
+globus_l_xio_tcp_write(globus_xio_tcp_driver.c) iotime: d4002550 nettime: d4002380
+globus_l_xio_tcp_system_write_cb(globus_xio_tcp_driver.c)
+globus_i_xio_read_write_callback(globus_xio_handle.c)
+globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
 globus_l_xio_file_system_read_cb(globus_xio_file_driver.c)
 globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
+globus_l_gfs_file_read_cb(globus_gridftp_server_file.c)
 globus_gridftp_server_register_write(globus_i_gfs_data.c)
 globus_ftp_control_data_write(globus_ftp_control_data.c)
-globus_l_gfs_file_dispatch_read
-globus_l_xio_tcp_system_write_cb
+iotime: d4002550, nettime: d4002380
+globus_l_ftp_control_data_eb_write(globus_ftp_control_data.c) iotime: d4002550, nettime: d4002380
+
+globus_i_ftp_control_create_data_info(globus_ftp_control_data.c) iotime: d4002550, nettime: d4002380
+
+globus_i_ftp_control_data_write_stripe(globus_ftp_control_data.c)
+globus_l_ftp_data_stripe_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_l_ftp_data_eb_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_l_gfs_file_dispatch_read(globus_gridftp_server_file.c)
+globus_l_xio_tcp_system_write_cb(globus_xio_tcp_driver.c)
 globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
-globus_l_xio_tcp_system_write_cb
-globus_i_xio_read_write_callback(globus_xio_handle.c)
-globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
+globus_l_ftp_eb_write_callback(globus_ftp_control_data.c)
 globus_l_gfs_data_write_cb(globus_i_gfs_data.c)
-globus_l_gfs_file_dispatch_read
+globus_l_gfs_file_server_write_cb(globus_gridftp_server_file.c)
+globus_l_gfs_file_dispatch_read(globus_gridftp_server_file.c)
 globus_xio_register_read(globus_xio_handle.c)
-globus_l_xio_register_readv(globus_xio_handle.c)
-globus_l_xio_file_read(globus_xio_file_driver.c)
-globus_xio_register_writev(globus_xio_handle.c)
-globus_l_xio_register_writev(globus_xio_handle.c)
-globus_l_xio_tcp_write
+iotime: d4002550, nettime: d4002380
+globus_l_xio_register_readv(globus_xio_handle.c) iotime: d4002550 nettime: d4002380
+globus_l_xio_file_read(globus_xio_file_driver.c) iotime: d4002550 nettime: d4002380
+globus_l_ftp_data_stripe_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_l_ftp_data_eb_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_io_register_writev(globus_io_xio_compat.c) iotime: d4002550, nettime: d4002380
+globus_xio_register_writev(globus_xio_handle.c) iotime: d4002550 nettime: d4002380
+globus_l_xio_register_writev(globus_xio_handle.c) iotime: d4002550 nettime: d4002380
+globus_l_xio_tcp_write(globus_xio_tcp_driver.c) iotime: d4002550 nettime: d4002380
 globus_l_xio_file_system_read_cb(globus_xio_file_driver.c)
 globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
+globus_l_gfs_file_read_cb(globus_gridftp_server_file.c)
 globus_gridftp_server_register_write(globus_i_gfs_data.c)
 globus_ftp_control_data_write(globus_ftp_control_data.c)
-globus_l_gfs_file_dispatch_read
-globus_l_xio_tcp_system_write_cb
+iotime: d4002550, nettime: d4002380
+globus_l_ftp_control_data_eb_write(globus_ftp_control_data.c) iotime: d4002550, nettime: d4002380
+
+globus_i_ftp_control_create_data_info(globus_ftp_control_data.c) iotime: d4002550, nettime: d4002380
+
+globus_i_ftp_control_data_write_stripe(globus_ftp_control_data.c)
+globus_l_ftp_data_stripe_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_l_ftp_data_eb_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_l_gfs_file_dispatch_read(globus_gridftp_server_file.c)
+globus_l_xio_tcp_system_write_cb(globus_xio_tcp_driver.c)
 globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
+globus_l_ftp_eb_write_callback(globus_ftp_control_data.c)
 globus_l_gfs_data_write_cb(globus_i_gfs_data.c)
-globus_l_gfs_file_dispatch_read
+globus_l_gfs_file_server_write_cb(globus_gridftp_server_file.c)
+globus_l_gfs_file_dispatch_read(globus_gridftp_server_file.c)
 globus_xio_register_read(globus_xio_handle.c)
-globus_l_xio_register_readv(globus_xio_handle.c)
-globus_l_xio_file_read(globus_xio_file_driver.c)
-globus_xio_register_writev(globus_xio_handle.c)
-globus_l_xio_register_writev(globus_xio_handle.c)
-globus_l_xio_tcp_write
+iotime: d4002550, nettime: d4002380
+globus_l_xio_register_readv(globus_xio_handle.c) iotime: d4002550 nettime: d4002380
+globus_l_xio_file_read(globus_xio_file_driver.c) iotime: d4002550 nettime: d4002380
+globus_l_ftp_data_stripe_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_l_ftp_data_eb_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_io_register_writev(globus_io_xio_compat.c) iotime: d4002550, nettime: d4002380
+globus_xio_register_writev(globus_xio_handle.c) iotime: d4002550 nettime: d4002380
+globus_l_xio_register_writev(globus_xio_handle.c) iotime: d4002550 nettime: d4002380
+globus_l_xio_tcp_write(globus_xio_tcp_driver.c) iotime: d4002550 nettime: d4002380
 globus_l_xio_file_system_read_cb(globus_xio_file_driver.c)
 globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
+globus_l_gfs_file_read_cb(globus_gridftp_server_file.c)
 globus_gridftp_server_register_write(globus_i_gfs_data.c)
 globus_ftp_control_data_write(globus_ftp_control_data.c)
-globus_l_gfs_file_dispatch_read
-globus_l_xio_tcp_system_write_cb
+iotime: d4002550, nettime: d4002380
+globus_l_ftp_control_data_eb_write(globus_ftp_control_data.c) iotime: d4002550, nettime: d4002380
+
+globus_i_ftp_control_create_data_info(globus_ftp_control_data.c) iotime: d4002550, nettime: d4002380
+
+globus_i_ftp_control_data_write_stripe(globus_ftp_control_data.c)
+globus_l_ftp_data_stripe_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_l_ftp_data_eb_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_l_gfs_file_dispatch_read(globus_gridftp_server_file.c)
+globus_l_xio_tcp_system_write_cb(globus_xio_tcp_driver.c)
 globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
+globus_l_ftp_eb_write_callback(globus_ftp_control_data.c)
 globus_l_gfs_data_write_cb(globus_i_gfs_data.c)
-globus_l_gfs_file_dispatch_read
+globus_l_gfs_file_server_write_cb(globus_gridftp_server_file.c)
+globus_l_gfs_file_dispatch_read(globus_gridftp_server_file.c)
 globus_xio_register_read(globus_xio_handle.c)
-globus_l_xio_register_readv(globus_xio_handle.c)
-globus_l_xio_file_read(globus_xio_file_driver.c)
-globus_xio_register_writev(globus_xio_handle.c)
-globus_l_xio_register_writev(globus_xio_handle.c)
-globus_l_xio_tcp_write
+iotime: d4002550, nettime: d4002380
+globus_l_xio_register_readv(globus_xio_handle.c) iotime: d4002550 nettime: d4002380
+globus_l_xio_file_read(globus_xio_file_driver.c) iotime: d4002550 nettime: d4002380
+globus_l_ftp_data_stripe_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_l_ftp_data_eb_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_io_register_writev(globus_io_xio_compat.c) iotime: d4002550, nettime: d4002380
+globus_xio_register_writev(globus_xio_handle.c) iotime: d4002550 nettime: d4002380
+globus_l_xio_register_writev(globus_xio_handle.c) iotime: d4002550 nettime: d4002380
+globus_l_xio_tcp_write(globus_xio_tcp_driver.c) iotime: d4002550 nettime: d4002380
 globus_l_xio_file_system_read_cb(globus_xio_file_driver.c)
 globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
+globus_l_gfs_file_read_cb(globus_gridftp_server_file.c)
 globus_gridftp_server_register_write(globus_i_gfs_data.c)
 globus_ftp_control_data_write(globus_ftp_control_data.c)
-globus_l_gfs_file_dispatch_read
-globus_l_xio_tcp_system_write_cb
+iotime: d4002550, nettime: d4002380
+globus_l_ftp_control_data_eb_write(globus_ftp_control_data.c) iotime: d4002550, nettime: d4002380
+
+globus_i_ftp_control_create_data_info(globus_ftp_control_data.c) iotime: d4002550, nettime: d4002380
+
+globus_i_ftp_control_data_write_stripe(globus_ftp_control_data.c)
+globus_l_ftp_data_stripe_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_l_ftp_data_eb_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_l_gfs_file_dispatch_read(globus_gridftp_server_file.c)
+globus_l_xio_tcp_system_write_cb(globus_xio_tcp_driver.c)
 globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
+globus_l_ftp_eb_write_callback(globus_ftp_control_data.c)
 globus_l_gfs_data_write_cb(globus_i_gfs_data.c)
-globus_l_gfs_file_dispatch_read
+globus_l_gfs_file_server_write_cb(globus_gridftp_server_file.c)
+globus_l_gfs_file_dispatch_read(globus_gridftp_server_file.c)
 globus_xio_register_read(globus_xio_handle.c)
-globus_l_xio_register_readv(globus_xio_handle.c)
-globus_l_xio_file_read(globus_xio_file_driver.c)
-globus_xio_register_writev(globus_xio_handle.c)
-globus_l_xio_register_writev(globus_xio_handle.c)
-globus_l_xio_tcp_write
+iotime: d4002550, nettime: d4002380
+globus_l_xio_register_readv(globus_xio_handle.c) iotime: d4002550 nettime: d4002380
+globus_l_xio_file_read(globus_xio_file_driver.c) iotime: d4002550 nettime: d4002380
+globus_l_ftp_data_stripe_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_l_ftp_data_eb_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_io_register_writev(globus_io_xio_compat.c) iotime: d4002550, nettime: d4002380
+globus_xio_register_writev(globus_xio_handle.c) iotime: d4002550 nettime: d4002380
+globus_l_xio_register_writev(globus_xio_handle.c) iotime: d4002550 nettime: d4002380
+globus_l_xio_tcp_write(globus_xio_tcp_driver.c) iotime: d4002550 nettime: d4002380
 globus_l_xio_file_system_read_cb(globus_xio_file_driver.c)
 globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
+globus_l_gfs_file_read_cb(globus_gridftp_server_file.c)
 globus_gridftp_server_register_write(globus_i_gfs_data.c)
 globus_ftp_control_data_write(globus_ftp_control_data.c)
-globus_l_gfs_file_dispatch_read
-globus_l_xio_tcp_system_write_cb
+iotime: d4002550, nettime: d4002380
+globus_l_ftp_control_data_eb_write(globus_ftp_control_data.c) iotime: d4002550, nettime: d4002380
+
+globus_i_ftp_control_create_data_info(globus_ftp_control_data.c) iotime: d4002550, nettime: d4002380
+
+globus_i_ftp_control_data_write_stripe(globus_ftp_control_data.c)
+globus_l_ftp_data_stripe_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_l_ftp_data_eb_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_l_gfs_file_dispatch_read(globus_gridftp_server_file.c)
+globus_l_xio_tcp_system_write_cb(globus_xio_tcp_driver.c)
 globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
+globus_l_ftp_eb_write_callback(globus_ftp_control_data.c)
 globus_l_gfs_data_write_cb(globus_i_gfs_data.c)
-globus_l_gfs_file_dispatch_read
+globus_l_gfs_file_server_write_cb(globus_gridftp_server_file.c)
+globus_l_gfs_file_dispatch_read(globus_gridftp_server_file.c)
 globus_xio_register_read(globus_xio_handle.c)
-globus_l_xio_register_readv(globus_xio_handle.c)
-globus_l_xio_file_read(globus_xio_file_driver.c)
-globus_xio_register_writev(globus_xio_handle.c)
-globus_l_xio_register_writev(globus_xio_handle.c)
-globus_l_xio_tcp_write
+iotime: d4002550, nettime: d4002380
+globus_l_xio_register_readv(globus_xio_handle.c) iotime: d4002550 nettime: d4002380
+globus_l_xio_file_read(globus_xio_file_driver.c) iotime: d4002550 nettime: d4002380
+globus_l_ftp_data_stripe_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_l_ftp_data_eb_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_io_register_writev(globus_io_xio_compat.c) iotime: d4002550, nettime: d4002380
+globus_xio_register_writev(globus_xio_handle.c) iotime: d4002550 nettime: d4002380
+globus_l_xio_register_writev(globus_xio_handle.c) iotime: d4002550 nettime: d4002380
+globus_l_xio_tcp_write(globus_xio_tcp_driver.c) iotime: d4002550 nettime: d4002380
 globus_l_xio_file_system_read_cb(globus_xio_file_driver.c)
 globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
+globus_l_gfs_file_read_cb(globus_gridftp_server_file.c)
 globus_gridftp_server_register_write(globus_i_gfs_data.c)
 globus_ftp_control_data_write(globus_ftp_control_data.c)
-globus_l_gfs_file_dispatch_read
-globus_l_xio_tcp_system_write_cb
+iotime: d4002550, nettime: d4002380
+globus_l_ftp_control_data_eb_write(globus_ftp_control_data.c) iotime: d4002550, nettime: d4002380
+
+globus_i_ftp_control_create_data_info(globus_ftp_control_data.c) iotime: d4002550, nettime: d4002380
+
+globus_i_ftp_control_data_write_stripe(globus_ftp_control_data.c)
+globus_l_ftp_data_stripe_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_l_ftp_data_eb_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_l_gfs_file_dispatch_read(globus_gridftp_server_file.c)
+globus_l_xio_tcp_system_write_cb(globus_xio_tcp_driver.c)
 globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
+globus_l_ftp_eb_write_callback(globus_ftp_control_data.c)
 globus_l_gfs_data_write_cb(globus_i_gfs_data.c)
-globus_l_gfs_file_dispatch_read
+globus_l_gfs_file_server_write_cb(globus_gridftp_server_file.c)
+globus_l_gfs_file_dispatch_read(globus_gridftp_server_file.c)
 globus_xio_register_read(globus_xio_handle.c)
-globus_l_xio_register_readv(globus_xio_handle.c)
-globus_l_xio_file_read(globus_xio_file_driver.c)
-globus_xio_register_writev(globus_xio_handle.c)
-globus_l_xio_register_writev(globus_xio_handle.c)
-globus_l_xio_tcp_write
+iotime: d4002550, nettime: d4002380
+globus_l_xio_register_readv(globus_xio_handle.c) iotime: d4002550 nettime: d4002380
+globus_l_xio_file_read(globus_xio_file_driver.c) iotime: d4002550 nettime: d4002380
+globus_l_ftp_data_stripe_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_l_ftp_data_eb_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_io_register_writev(globus_io_xio_compat.c) iotime: d4002550, nettime: d4002380
+globus_xio_register_writev(globus_xio_handle.c) iotime: d4002550 nettime: d4002380
+globus_l_xio_register_writev(globus_xio_handle.c) iotime: d4002550 nettime: d4002380
+globus_l_xio_tcp_write(globus_xio_tcp_driver.c) iotime: d4002550 nettime: d4002380
 globus_l_xio_file_system_read_cb(globus_xio_file_driver.c)
 globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
+globus_l_gfs_file_read_cb(globus_gridftp_server_file.c)
 globus_gridftp_server_register_write(globus_i_gfs_data.c)
 globus_ftp_control_data_write(globus_ftp_control_data.c)
-globus_l_gfs_file_dispatch_read
-globus_l_xio_tcp_system_write_cb
+iotime: d4002550, nettime: d4002380
+globus_l_ftp_control_data_eb_write(globus_ftp_control_data.c) iotime: d4002550, nettime: d4002380
+
+globus_i_ftp_control_create_data_info(globus_ftp_control_data.c) iotime: d4002550, nettime: d4002380
+
+globus_i_ftp_control_data_write_stripe(globus_ftp_control_data.c)
+globus_l_ftp_data_stripe_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_l_ftp_data_eb_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_l_gfs_file_dispatch_read(globus_gridftp_server_file.c)
+globus_l_xio_tcp_system_write_cb(globus_xio_tcp_driver.c)
 globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
+globus_l_ftp_eb_write_callback(globus_ftp_control_data.c)
 globus_l_gfs_data_write_cb(globus_i_gfs_data.c)
-globus_l_gfs_file_dispatch_read
+globus_l_gfs_file_server_write_cb(globus_gridftp_server_file.c)
+globus_l_gfs_file_dispatch_read(globus_gridftp_server_file.c)
 globus_xio_register_read(globus_xio_handle.c)
-globus_l_xio_register_readv(globus_xio_handle.c)
-globus_l_xio_file_read(globus_xio_file_driver.c)
-globus_xio_register_writev(globus_xio_handle.c)
-globus_l_xio_register_writev(globus_xio_handle.c)
-globus_l_xio_tcp_write
+iotime: d4002550, nettime: d4002380
+globus_l_xio_register_readv(globus_xio_handle.c) iotime: d4002550 nettime: d4002380
+globus_l_xio_file_read(globus_xio_file_driver.c) iotime: d4002550 nettime: d4002380
+globus_l_ftp_data_stripe_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_l_ftp_data_eb_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_io_register_writev(globus_io_xio_compat.c) iotime: d4002550, nettime: d4002380
+globus_xio_register_writev(globus_xio_handle.c) iotime: d4002550 nettime: d4002380
+globus_l_xio_register_writev(globus_xio_handle.c) iotime: d4002550 nettime: d4002380
+globus_l_xio_tcp_write(globus_xio_tcp_driver.c) iotime: d4002550 nettime: d4002380
 globus_l_xio_file_system_read_cb(globus_xio_file_driver.c)
 globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
-globus_l_gfs_file_dispatch_read
-globus_l_xio_tcp_system_write_cb
+globus_l_gfs_file_read_cb(globus_gridftp_server_file.c)
+globus_l_gfs_file_dispatch_read(globus_gridftp_server_file.c)
+globus_l_xio_tcp_system_write_cb(globus_xio_tcp_driver.c)
 globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
+globus_l_ftp_eb_write_callback(globus_ftp_control_data.c)
 globus_l_gfs_data_write_cb(globus_i_gfs_data.c)
-globus_l_gfs_file_dispatch_read
+globus_l_gfs_file_server_write_cb(globus_gridftp_server_file.c)
+globus_l_gfs_file_dispatch_read(globus_gridftp_server_file.c)
 globus_xio_register_close(globus_xio_handle.c)
 globus_l_xio_handle_pre_close(globus_xio_handle.c)
 globus_l_xio_cancel_data_ops(globus_xio_handle.c)
 globus_l_xio_register_close(globus_xio_handle.c)
 globus_i_xio_register_oneshot(globus_xio_handle.c)
+globus_l_ftp_data_stripe_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
+globus_l_ftp_data_eb_poll(globus_ftp_control_data.c)
+ iotime: d4002550 nettime: d4002380
 globus_l_xio_open_close_callback(globus_xio_handle.c)
 globus_l_xio_open_close_callback_kickout(globus_xio_handle.c)
 globus_gridftp_server_finished_transfer(globus_i_gfs_data.c)
 globus_l_gfs_data_finish_connected(globus_i_gfs_data.c)
 globus_ftp_control_data_write(globus_ftp_control_data.c)
+iotime: 0, nettime: 0
+globus_l_ftp_control_data_eb_write(globus_ftp_control_data.c) iotime: 0, nettime: 0
+
+globus_i_ftp_control_create_data_info(globus_ftp_control_data.c) iotime: 0, nettime: 0
+
+globus_l_ftp_data_stripe_poll(globus_ftp_control_data.c)
+ iotime: 0 nettime: 0
+globus_l_ftp_data_eb_poll(globus_ftp_control_data.c)
+ iotime: 0 nettime: 0
 globus_l_ftp_control_send_data_kickout(globus_ftp_control_data.c)
 globus_l_gfs_data_write_eof_cb(globus_i_gfs_data.c)
-globus_xio_register_write(globus_xio_handle.c)
-user_handle: e40146b0
-globus_l_xio_register_writev(globus_xio_handle.c)
-globus_l_xio_tcp_write
-globus_l_xio_tcp_system_write_cb
+globus_ftp_control_data_send_eof(globus_ftp_control_data.c)
+globus_l_ftp_data_stripe_poll(globus_ftp_control_data.c)
+ iotime: 0 nettime: 0
+globus_l_ftp_data_eb_poll(globus_ftp_control_data.c)
+ iotime: 0 nettime: 0
+globus_l_ftp_control_data_send_eof(globus_ftp_control_data.c)
+globus_io_register_write(globus_io_xio_compat.c) iotime: 0 nettime: 0
+globus_xio_register_write(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_register_writev(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_tcp_write(globus_xio_tcp_driver.c) iotime: 0 nettime: 0
+globus_l_ftp_data_stripe_poll(globus_ftp_control_data.c)
+ iotime: 0 nettime: 0
+globus_l_ftp_data_eb_poll(globus_ftp_control_data.c)
+ iotime: 0 nettime: 0
+globus_l_xio_tcp_system_write_cb(globus_xio_tcp_driver.c)
 globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
+globus_l_ftp_eb_send_eof_callback(globus_ftp_control_data.c)
 globus_l_gfs_data_send_eof_cb(globus_i_gfs_data.c)
 START end_transfer_kickout
 op->data_handle->http_handle: 0
 buf = mpstat -P ALL | tail -n +4
 buf = hostname --ip-address
-buf = df -P /mnt/hgfs/SrcRepos/RAMSES-vm/sender/testdataset/test0.dat | tail -n 1| awk '{print $6}'
+buf = df -P /mnt/hgfs/SrcRepos/RAMSES-vm/sender/testdataset/test1.dat | tail -n 1| awk '{print $6}'
 nlcali_clear
 globus_xio_handle_cntl(globus_xio_handle.c)
 globus_xio_write(globus_xio_handle.c)
 globus_i_xio_blocking_alloc(globus_xio_handle.c)
-globus_l_xio_register_writev(globus_xio_handle.c)
+globus_l_xio_register_writev(globus_xio_handle.c) iotime: 0 nettime: 0
 globus_i_xio_register_oneshot(globus_xio_handle.c)
 globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
 globus_l_xio_blocking_data_cb(globus_xio_handle.c)
 op->data_handle->state: GLOBUS_L_GFS_DATA_HANDLE_TE_VALID
 Successful END of end_transfer_kickout
+globus_l_ftp_data_stripe_poll(globus_ftp_control_data.c)
+ iotime: 0 nettime: 0
+globus_l_ftp_data_eb_poll(globus_ftp_control_data.c)
+ iotime: 0 nettime: 0
 globus_i_gfs_data_request_transfer_event(globus_i_gfs_data.c)
 globus_l_gfs_data_check(globus_i_gfs_data.c)
 globus_l_gfs_data_post_transfer_event_cb(globus_i_gfs_data.c)
 globus_l_gfs_data_fire_cb
 globus_l_gfs_data_operation_destroy(globus_i_gfs_data.c)
-globus_xio_register_write(globus_xio_handle.c)
-user_handle: e400b0a0
-globus_l_xio_register_writev(globus_xio_handle.c)
-globus_l_xio_tcp_write
-globus_l_xio_tcp_system_write_cb
+globus_xio_register_write(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_register_writev(globus_xio_handle.c) iotime: 0 nettime: 0
+globus_l_xio_tcp_write(globus_xio_tcp_driver.c) iotime: 5 nettime: 0
+globus_l_xio_tcp_system_write_cb(globus_xio_tcp_driver.c)
 globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
 globus_l_xio_tcp_system_read_cb
@@ -448,6 +641,7 @@ globus_i_xio_read_write_callback(globus_xio_handle.c)
 globus_l_xio_read_write_callback_kickout(globus_xio_handle.c)
 globus_xio_handle_cancel_operations(globus_xio_handle.c)
 globus_l_xio_handle_cancel_operations(globus_xio_handle.c)
+globus_l_ftp_control_stripes_destroy(globus_ftp_control_data.c)
 globus_xio_register_close(globus_xio_handle.c)
 globus_l_xio_handle_pre_close(globus_xio_handle.c)
 globus_l_xio_cancel_data_ops(globus_xio_handle.c)
@@ -459,6 +653,8 @@ globus_l_xio_register_close(globus_xio_handle.c)
 globus_i_xio_register_oneshot(globus_xio_handle.c)
 globus_l_xio_open_close_callback(globus_xio_handle.c)
 globus_l_xio_open_close_callback_kickout(globus_xio_handle.c)
+globus_l_ftp_io_close_callback(globus_ftp_control_data.c)
+globus_list_remove_element(globus_ftp_control_data.c)
 globus_l_xio_open_close_callback(globus_xio_handle.c)
 globus_l_xio_open_close_callback_kickout(globus_xio_handle.c)
 globus_xio_register_close(globus_xio_handle.c)
@@ -466,11 +662,12 @@ globus_l_xio_handle_pre_close(globus_xio_handle.c)
 globus_l_xio_cancel_data_ops(globus_xio_handle.c)
 globus_l_xio_register_close(globus_xio_handle.c)
 globus_i_xio_register_oneshot(globus_xio_handle.c)
+globus_l_ftp_control_close_kickout(globus_ftp_control_data.c)
 globus_l_gfs_data_destroy_cb(globus_i_gfs_data.c)
 globus_l_xio_open_close_callback(globus_xio_handle.c)
 globus_l_xio_open_close_callback_kickout(globus_xio_handle.c)
 globus_i_gfs_data_session_stop(globus_i_gfs_data.c)
-nlcali_free -- net_spent_time: e4002380, storage_spent_time: e4002550
+nlcali_free -- net_spent_time: d4002380, storage_spent_time: d4002550
 globus_l_gfs_free_session_handle(globus_i_gfs_data.c)
 globus_i_xio_close_handles(globus_xio_handle.c)
 globus_i_xio_monitor_init(globus_xio_handle.c)
@@ -485,4 +682,3 @@ globus_l_xio_open_close_callback_kickout(globus_xio_handle.c)
 globus_l_xio_blocking_cb(globus_xio_handle.c)
 globus_i_xio_close_handles(globus_xio_handle.c)
 globus_i_xio_monitor_init(globus_xio_handle.c)
-
