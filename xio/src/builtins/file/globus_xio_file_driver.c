@@ -869,6 +869,10 @@ globus_l_xio_file_write(
 #ifdef _RAMSES_DEBUG_FUNC_
 printf("%s(%s) iotime: %x nettime: %x\n", __func__, __FILE__, op->iotime, op->nettime);
 #endif
+    // esjung
+    if (op->nettime != NULL) {
+        nlcali_begin(op->iotime);
+    }
 
     GlobusXIOFileDebugEnter();
     
