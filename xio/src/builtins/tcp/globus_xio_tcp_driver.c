@@ -2436,16 +2436,24 @@ globus_l_xio_tcp_system_read_cb(
     void *                              user_arg)
 {
     globus_l_handle_t *                 handle;
+    globus_xio_operation_t              op;
     GlobusXIOName(globus_l_xio_tcp_system_read_cb);
-//esjung
-#ifdef _RAMSES_DEBUG_FUNC_
-printf("globus_l_xio_tcp_system_read_cb\n");
-#endif
-
+    
     GlobusXIOTcpDebugEnter();
     handle = (globus_l_handle_t *) user_arg;
+    // esjung
+    op = handle->read_op; // shoud be ahead of globus_l_xio_tcp_finish_read where read_op is set to NULL.
     globus_l_xio_tcp_finish_read(handle, result, nbytes);
     GlobusXIOTcpDebugExit();
+
+
+    //esjung
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s) iotime: %x nettime: %x\n", __func__, __FILE__, op->iotime, op->nettime);
+#endif
+    if (op->nettime != NULL) {
+        nlcali_end(op->nettime, 1.);
+    }
 }
 
 /*
@@ -2466,7 +2474,11 @@ globus_l_xio_tcp_read(
 #ifdef _RAMSES_DEBUG_FUNC_
 printf("%s(%s) iotime: %x nettime: %x\n", __func__, __FILE__, op->iotime, op->nettime);
 #endif
-
+    // esjung
+    if (op->nettime != NULL) {
+        nlcali_begin(op->nettime);
+    }
+	
     GlobusXIOTcpDebugEnter();
     handle = (globus_l_handle_t *) driver_specific_handle;
     
@@ -2594,16 +2606,23 @@ globus_l_xio_tcp_system_write_cb(
     void *                              user_arg)
 {
     globus_l_handle_t *                 handle;
+    globus_xio_operation_t              op;
     GlobusXIOName(globus_l_xio_tcp_system_write_cb);
-//esjung
-#ifdef _RAMSES_DEBUG_FUNC_
-printf("%s(%s)\n", __func__, __FILE__);
-#endif
 
     GlobusXIOTcpDebugEnter();
     handle = (globus_l_handle_t *) user_arg;
+    // esjung
+    op = handle->write_op; // shoud be ahead of globus_l_xio_tcp_finish_write where read_op is set to NULL.
     globus_l_xio_tcp_finish_write(handle, result, nbytes);
     GlobusXIOTcpDebugExit();
+
+    //esjung
+#ifdef _RAMSES_DEBUG_FUNC_
+printf("%s(%s) iotime: %x nettime: %x\n", __func__, __FILE__, op->iotime, op->nettime);
+#endif
+    if (op->nettime != NULL) {
+        nlcali_end(op->nettime, 1.);
+    }
 }
 
 /*
@@ -2626,7 +2645,11 @@ globus_l_xio_tcp_write(
 #ifdef _RAMSES_DEBUG_FUNC_
 printf("%s(%s) iotime: %x nettime: %x\n", __func__, __FILE__, op->iotime, op->nettime);
 #endif
-
+    // esjung
+    if (op->nettime != NULL) {
+        nlcali_begin(op->nettime);
+    }
+	
     GlobusXIOTcpDebugEnter();
     
     GlobusXIOTcpDebugPrintf(
