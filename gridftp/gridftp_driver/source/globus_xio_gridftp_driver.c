@@ -19,7 +19,7 @@
 #include "globus_ftp_client.h"  
 #include "version.h"
 //esjung
-#define _RAMSES_DEBUG_FUNC_
+//#define _RAMSES_DEBUG_FUNC_
 
 GlobusDebugDefine(GLOBUS_XIO_GRIDFTP);
 GlobusXIODeclareDriver(gridftp);

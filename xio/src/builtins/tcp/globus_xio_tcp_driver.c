@@ -30,7 +30,7 @@
 #include <nl_calipers.h>
 #include "globus_xio.h" // for struct definition of globus_xio_operation_t
 #include "globus_i_xio.h"
-#define _RAMSES_DEBUG_FUNC_
+//#define _RAMSES_DEBUG_FUNC_
 
 #include <fcntl.h>
 

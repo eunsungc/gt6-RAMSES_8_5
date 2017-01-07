@@ -25,7 +25,7 @@
 
 #include <string.h>
 // esjung
-#define _RAMSES_DEBUG_FUNC_
+//#define _RAMSES_DEBUG_FUNC_
 /**
  * Data callback information structure.
  *

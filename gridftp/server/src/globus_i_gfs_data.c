@@ -90,8 +90,8 @@
 #endif
 
 //esjung
-#define _RAMSES_DEBUG_
-#define _RAMSES_DEBUG_FUNC_
+//#define _RAMSES_DEBUG_
+//#define _RAMSES_DEBUG_FUNC_
 #define _RAMSES_DEBUG_SUPPRESS_
 
 #define GFSDataOpDec(_op, _d_op, _d_s)                                  \

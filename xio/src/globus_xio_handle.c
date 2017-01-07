@@ -59,8 +59,8 @@ do                                                                          \
 } while(0)
 
 //esjung
-#define _RAMSES_DEBUG_FUNC_
-#define _RAMSES_DEBUG_
+//#define _RAMSES_DEBUG_FUNC_
+//#define _RAMSES_DEBUG_
 
 #define GlobusLXIOActiveTest()                                              \
     if(!globus_l_xio_active) return GlobusXIOErrorNotActivated()

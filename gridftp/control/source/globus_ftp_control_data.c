@@ -41,8 +41,8 @@
 // esjung; netlogger
 #include "nl_calipers.h"
 // esjung; several selective compile options
-#define _RAMSES_DEBUG_ // enable debug message
-#define _RAMSES_DEBUG_FUNC_ // enable debug message just for function entering/exiting
+//#define _RAMSES_DEBUG_ // enable debug message
+//#define _RAMSES_DEBUG_FUNC_ // enable debug message just for function entering/exiting
 #define JSON_STYLE_LOG // enable json style logging
 
 /*

@@ -65,7 +65,7 @@
 static const char * globus_l_gfs_local_version = "IPC Version 1.1";
 
 //esjung
-#define _RAMSES_DEBUG_FUNC_
+//#define _RAMSES_DEBUG_FUNC_
 
 /* single mutex, assuming low contention, only used for handle tables,
    not ipc communication */

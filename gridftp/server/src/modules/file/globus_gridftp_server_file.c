@@ -69,7 +69,7 @@
 #endif
 
 // esjung
-#define _RAMSES_DEBUG_FUNC_
+//#define _RAMSES_DEBUG_FUNC_
 
 GlobusDebugDeclare(GLOBUS_GRIDFTP_SERVER_FILE);
 

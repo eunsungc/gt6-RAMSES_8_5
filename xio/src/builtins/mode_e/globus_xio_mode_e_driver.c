@@ -18,7 +18,7 @@
 #include "globus_xio_mode_e_driver.h"
 #include "version.h"
 // esjung
-#define _RAMSES_DEBUG_FUNC_
+//#define _RAMSES_DEBUG_FUNC_
 GlobusDebugDefine(GLOBUS_XIO_MODE_E);
 GlobusXIODeclareDriver(mode_e);
 
@@ -39,9 +39,6 @@ GlobusXIODeclareDriver(mode_e);
     GlobusXIOModeEDebugPrintf(                                               \
         GLOBUS_L_XIO_MODE_E_DEBUG_TRACE,                                     \
         ("[%s] Exiting with error\n", _xio_name))
-
-// esjung
-#define _RAMSES_DEBUG_FUNC_
 
 enum globus_l_xio_error_levels
 {

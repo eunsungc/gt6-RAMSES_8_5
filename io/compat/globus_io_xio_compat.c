@@ -24,7 +24,7 @@
 #include <globus_error_gssapi.h>
 //esjung
 #include "nl_calipers.h"
-#define _RAMSES_DEBUG_FUNC_
+//#define _RAMSES_DEBUG_FUNC_
 
 #ifdef __GNUC__
 #define GlobusIOName(func) static const char * _io_name __attribute__((__unused__)) = #func
