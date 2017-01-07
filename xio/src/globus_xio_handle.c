@@ -352,6 +352,9 @@ printf("%s(%s)\n", __func__, __FILE__);
     op->user_arg = user_arg;
     op->entry[0].prev_ndx = -1;/*for first pass there is no return*/
     op->blocking = blocking;
+    // esjung
+    op->iotime = NULL;
+    op->nettime = NULL;
     if(blocking)
     {
         GlobusXIOCurrentBlockedThread(op->blocked_thread);
@@ -2249,6 +2252,9 @@ printf("%s(%s)\n", __func__, __FILE__);
     op->_op_cb = cb;
     op->user_arg = user_arg;
     op->entry[0].prev_ndx = -1; /* for first pass there is no return */
+    // esjung
+    op->iotime = NULL;
+    op->nettime = NULL;
 
     handle->ref++; /* for operation */
     GlobusXIODebugPrintf(
