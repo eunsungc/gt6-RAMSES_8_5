@@ -2,12 +2,13 @@
 version 1439213997
 
 # Install procedure
-0. yum install packages for gcc, g++, sed, make, openssl-devel 0.9.8 or higher, perl 5.10 or higher, pkg-config, uuid-devel
+1. yum install packages for gcc, g++, sed, make, openssl-devel 0.9.8 or higher, perl 5.10 or higher, pkg-config, uuid-devel
 1. install netlogger library; cd calipers and follow appropriate installation procedures.
+1. [obsolete] install xdd; ./configure --disable-xfs --disable-xddmcp
    - [CAVEAT] In some cases you have to remove the directory of calipers/xdd for gridftp compile; \rm -rf calipers, xdd
-2. `git clone -b netlogger https://github.com/eunsungc/gt6-RAMSES_8_5`
-3. `cd gt6-RAMSES_8_5`
-4. `./build.sh`: The script will do the following. At step iii, we have to modify Makefile manually. automake 1.14/autoconf 2.69 version is required.
+1. `git clone -b netlogger https://github.com/eunsungc/gt6-RAMSES_8_5`
+1. `cd gt6-RAMSES_8_5`
+1. `./build.sh`: The script will do the following. At step iii, we have to modify Makefile manually. automake 1.14/autoconf 2.69 version is required.
   1. ./configure
   2. ~~modify aclocal.m4: replace the version of automake as appropriate.  e.g., 1.14.1 --> 1.14~~
   3. modify Makefile: For some reasons, make tries to update aclocal.m4. So comment out several lines as follows.
