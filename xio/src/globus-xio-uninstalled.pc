@@ -1,0 +1,13 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+abs_top_srcdir=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/xio/src
+abs_top_builddir=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/xio/src
+
+Name: globus-xio
+Description: Globus Toolkit - XIO Library
+Version: 5.9
+Requires.private: globus-common >= 14
+Libs: ${abs_top_builddir}/libglobus_xio.la
+Cflags: -I${abs_top_srcdir}  -I${abs_top_srcdir}/builtins/file -I${abs_top_srcdir}/builtins/http -I${abs_top_srcdir}/builtins/mode_e -I${abs_top_srcdir}/builtins/ordering -I${abs_top_srcdir}/builtins/queue -I${abs_top_srcdir}/builtins/tcp -I${abs_top_srcdir}/builtins/telnet -I${abs_top_srcdir}/builtins/udp

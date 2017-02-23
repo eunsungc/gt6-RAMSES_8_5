@@ -1,0 +1,21 @@
+service gridftp
+{
+    port = 2811
+    instances = 100
+    log_level = 0
+    env = GLOBUS_LOCATION=/home/esjung/gt6_inst
+    env += PATH=/home/esjung/gt6_inst/sbin:/home/esjung/gt6_inst/bin
+    env += LD_LIBRARY_PATH=/home/esjung/gt6_inst/lib
+#   might need additional envs for security
+
+    server = /home/esjung/gt6_inst/sbin/globus-gridftp-server
+    server_args = -i -aa -l /home/esjung/gt6_inst/var/log/gridftp.log
+    server_args += -d WARN -c /home/esjung/gt6_inst/etc/gridftp.conf
+    nice = -20
+    master = /home/esjung/gt6_inst/sbin/gfs-gfork-master
+    master_args = -G y
+    master_args += -l /home/esjung/gt6_inst/var/log/gridftp-master.log
+
+#   undoc the following for memory limiting
+#   master_args += -m
+}

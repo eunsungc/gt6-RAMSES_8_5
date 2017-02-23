@@ -1,0 +1,11 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: globus-gsi-callback
+Description: Globus Toolkit - Globus GSI Callback Library
+Version: 5.8
+Requires.private: globus-common >= 14, globus-openssl-module >= 3, globus-gsi-openssl-error >= 2, globus-gsi-cert-utils >= 8, globus-gsi-sysconfig >= 5, globus-gsi-proxy-ssl >= 4, openssl >= 0.9.8
+Libs: -L${libdir} -lglobus_gsi_callback
+Cflags: -I${includedir}

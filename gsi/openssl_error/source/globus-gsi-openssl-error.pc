@@ -1,0 +1,11 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: globus-gsi-openssl-error
+Description: Globus Toolkit - Globus OpenSSL Error Handling
+Version: 3.5
+Requires.private: globus-common >= 14, openssl >= 0.9.8
+Libs: -L${libdir} -lglobus_openssl_error
+Cflags: -I${includedir}

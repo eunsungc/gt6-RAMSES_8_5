@@ -1,0 +1,11 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: globus-gridftp-server-control
+Description: Globus Toolkit - Globus GridFTP Server Library
+Version: 3.7
+Requires.private: globus-common >= 14, globus-xio >= 3, globus-xio-gsi-driver >= 2, globus-xio-pipe-driver >= 2, globus-gss-assist >= 8, globus-gssapi-gsi >= 10, globus-gsi-openssl-error >= 2, globus-gssapi-error >= 4
+Libs: -L${libdir} -lglobus_gridftp_server_control
+Cflags: -I${includedir}

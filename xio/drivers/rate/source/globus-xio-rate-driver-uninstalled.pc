@@ -1,0 +1,12 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+abs_top_srcdir=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/xio/drivers/rate/source
+dlopen=-dlopen /mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/xio/drivers/rate/source/libglobus_xio_rate_driver.la
+
+Name: globus-xio-rate-driver
+Description: Globus Toolkit - Globus XIO Rate Limiting Driver
+Version: 1.7
+Requires.private: globus-common >= 0, globus-xio >= 0
+Cflags: -I${abs_top_srcdir}

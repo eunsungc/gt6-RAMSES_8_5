@@ -1,0 +1,2 @@
+libglobus_xio_la-globus_i_xio_win32_complete.lo: \
+ globus_i_xio_win32_complete.c

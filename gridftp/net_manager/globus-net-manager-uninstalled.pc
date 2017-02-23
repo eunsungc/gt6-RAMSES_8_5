@@ -1,0 +1,14 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+abs_top_builddir=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/gridftp/net_manager
+abs_top_srcdir=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/gridftp/net_manager
+
+Name: globus-net-manager
+Description: Globus Toolkit - Network Manager
+Version: 0.12
+Requires.private: globus-common >= 15.27, globus-xio >= 5
+Libs: ${abs_top_builddir}/libglobus_net_manager.la
+Libs.private: 
+Cflags: -I${abs_top_srcdir} 

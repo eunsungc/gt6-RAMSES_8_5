@@ -1,0 +1,11 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: globus-gass-copy
+Description: Globus Toolkit - Globus Gass Copy
+Version: 9.17
+Requires.private: globus-common >= 15, globus-ftp-client >= 7, globus-ftp-control >= 4, globus-gsi-sysconfig >= 4, globus-gass-transfer >= 7, globus-io >= 8, globus-gssapi-gsi >= 9, globus-gssapi-error >= 4, openssl >= 0.9.8
+Libs: -L${libdir} -lglobus_gass_copy
+Cflags: -I${includedir}

@@ -1,0 +1,11 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: globus-usage
+Description: Globus Toolkit - Usage Library
+Version: 4.4
+Requires.private: globus-common >= 14, globus-xio >= 3
+Libs: -L${libdir} -lglobus_usage
+Cflags: -I${includedir}

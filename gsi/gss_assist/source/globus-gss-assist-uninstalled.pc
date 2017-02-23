@@ -1,0 +1,13 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+abs_top_builddir=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/gsi/gss_assist/source
+abs_top_srcdir=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/gsi/gss_assist/source
+
+Name: globus-gss-assist
+Description: Globus Toolkit - GSSAPI Assist Library
+Version: 10.15
+Libs: ${abs_top_builddir}/libglobus_gss_assist.la
+Requires.private: globus-common >= 14, globus-gsi-sysconfig >= 5, globus-gsi-cert-utils >= 8, globus-gssapi-gsi >= 9, globus-callout >= 2, globus-gsi-credential >= 6
+Cflags: -I${abs_top_srcdir}

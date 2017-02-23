@@ -1,0 +1,9 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: globus-gridmap-callout-error
+Description: Globus Toolkit - Globus Gridmap Callout
+Version: 1.0
+Requires.private: globus-common >= 14, globus-gssapi-gsi >= 4, globus-gss-assist >= 3, globus-gridmap-callout-error >= 2, globus-gsi-credential >= 6

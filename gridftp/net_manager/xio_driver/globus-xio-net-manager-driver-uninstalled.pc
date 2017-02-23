@@ -1,0 +1,12 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+abs_top_srcdir=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/gridftp/net_manager
+dlopen=-dlopen /mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/gridftp/net_manager/xio_driver/libglobus_xio_net_manager_driver.la
+
+Name: globus-xio-net-manager-driver
+Description: Globus Toolkit - Globus XIO Net Manager Driver
+Version: 0.12
+Requires.private: globus-common >= 15.27, globus-xio >= 5 globus-net-manager
+Cflags: -I${abs_top_srcdir}

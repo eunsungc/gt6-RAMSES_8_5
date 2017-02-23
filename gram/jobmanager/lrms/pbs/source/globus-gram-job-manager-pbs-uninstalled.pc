@@ -1,0 +1,9 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: globus-gram-job-manager-pbs
+Description: Globus Toolkit - PBS Job Manager Support
+Version: 2.4
+Requires.private: globus-common >= 14, globus-scheduler-event-generator >= 4

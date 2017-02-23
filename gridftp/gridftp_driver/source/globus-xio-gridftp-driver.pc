@@ -1,0 +1,10 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: globus-xio-gridftp-driver
+Description: Globus Toolkit - Globus XIO GridFTP Driver
+Version: 2.12
+Requires.private: globus-common >= 14, globus-xio >= 3, globus-ftp-client >= 7, globus-xio-gsi-driver >= 2
+Cflags: -I${includedir}

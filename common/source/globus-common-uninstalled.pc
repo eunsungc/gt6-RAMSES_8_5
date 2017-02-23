@@ -1,0 +1,17 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+path=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/common/source/scripts:/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/common/source/programs
+abs_top_builddir=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/common/source
+abs_top_srcdir=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/common/source
+dlopen=-dlopen '${abs_top_builddir}/library/libglobus_thread_pthread.la' 
+thread_models= pthread
+perl5lib=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/common/source/scripts/lib/perl
+
+Name: globus-common
+Description: Globus Toolkit - Common Library
+Version: 15.31
+Libs:  ${abs_top_builddir}/library/libglobus_common.la
+Libs.private: -ldl  -lpthread -lltdl
+Cflags:   -g -O2 -pthread -I${abs_top_builddir} -I${abs_top_srcdir}/library

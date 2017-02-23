@@ -1,0 +1,58 @@
+prefix="${GLOBUS_LOCATION-/home/esjung/gt6_inst}"
+exec_prefix="${prefix}"
+sbindir="${exec_prefix}/sbin"
+bindir="${exec_prefix}/bin"
+includedir="${prefix}/include"
+datarootdir="${prefix}/share"
+datadir="${datarootdir}"
+libexecdir="${exec_prefix}/libexec"
+for arch_specific in "${libexecdir}/globus-script-initializer."*; do
+    if [ -f "${arch_specific}" ]; then
+        . "${arch_specific}"
+        if [ -d "$libdir" ]; then
+            libdirs="${libdirs:+$libdirs }$libdir"
+        fi
+    fi
+done
+sysconfdir="${prefix}/etc"
+sharedstatedir="${prefix}/com"
+localstatedir="${prefix}/var"
+
+for libdir in ${libdirs}; do
+    if [ x$prefix != "x/usr" ]; then
+        if [ `uname 2> /dev/null` = Linux -o \
+             `uname 2> /dev/null` = SunOS ]; then
+            LD_LIBRARY_PATH="${libdir}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+            export LD_LIBRARY_PATH 
+        fi
+
+        if [ `uname 2> /dev/null` = 'Darwin' ]; then
+            DYLD_LIBRARY_PATH="${libdir}${DYLD_LIBRARY_PATH:+:$DYLD_LIBRARY_PATH}"
+            export DYLD_LIBRARY_PATH
+        fi
+
+        if [ `uname 2> /dev/null` = 'AIX' ]; then
+            if [ -z "${LIBPATH}" ]; then
+                LIBPATH="/usr/lib:/lib"
+            fi
+            LIBPATH="${libdir}:${LIBPATH}"
+            export LIBPATH
+        fi
+
+        if [ `uname 2> /dev/null` = 'HP-UX' ]; then
+            SHLIB_PATH="${libdir}${SHLIB_PATH:+:$SHLIB_PATH}"
+            export SHLIB_PATH
+        fi
+    fi
+done
+
+globus_source () {
+
+  # Check if file exists and source it
+  if [ ! -f "$1" ] ; then
+     ${GLOBUS_SH_PRINTF-printf} "$1 not found.\n" >&2
+     exit 1
+  fi
+
+  . "$1"
+}

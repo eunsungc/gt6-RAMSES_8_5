@@ -1,0 +1,14 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+bindir=${exec_prefix}/bin
+sbindir=${exec_prefix}/sbin
+path=${bindir}:${sbindir}
+
+Name: globus-gsi-cert-utils
+Description: Globus Toolkit - Globus GSI Cert Utils Library
+Version: 9.11
+Requires.private: globus-common >= 14, globus-openssl-module >= 3, globus-gsi-openssl-error >= 2, globus-gsi-proxy-ssl >= 4, openssl >= 0.9.8
+Libs: -L${libdir} -lglobus_gsi_cert_utils
+Cflags: -I${includedir}

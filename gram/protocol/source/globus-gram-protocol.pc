@@ -1,0 +1,11 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: globus-gram-protocol
+Description: Globus Toolkit - GRAM Protocol Library
+Version: 12.12
+Requires.private: globus-common >= 14, globus-io >= 8, globus-gssapi-gsi >= 10, globus-gss-assist >= 8
+Libs: -L${libdir} -lglobus_gram_protocol
+Cflags: -I${includedir}

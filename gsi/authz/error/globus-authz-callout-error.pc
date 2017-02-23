@@ -1,0 +1,11 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: globus-authz-callout-error
+Description: Globus Toolkit - Globus authz error library (used by globus authz callouts)
+Version: 3.5
+Requires.private: globus-common >= 14
+Libs: -L${libdir} -lglobus_gsi_authz_callout_error
+Cflags: -I${includedir}

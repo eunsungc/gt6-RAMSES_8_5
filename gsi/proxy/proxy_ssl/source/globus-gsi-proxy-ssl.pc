@@ -1,0 +1,11 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: globus-gsi-proxy-ssl
+Description: Globus Toolkit - Globus GSI Proxy SSL Library
+Version: 5.7
+Requires.private: openssl >= 0.9.8
+Libs: -L${libdir} -lglobus_proxy_ssl
+Cflags: -I${includedir}

@@ -23,6 +23,7 @@
     <pkg-ref id="org.globus.globus_authz" version="3.10">globus_authz-3.10.pkg</pkg-ref>
     <pkg-ref id="org.globus.globus_xio_rate_driver" version="1.7">globus_xio_rate_driver-1.7.pkg</pkg-ref>
     <pkg-ref id="org.globus.globus_xio_popen_driver" version="3.5">globus_xio_popen_driver-3.5.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_xio_udt_driver" version="1.18">globus_xio_udt_driver-1.18.pkg</pkg-ref>
     <pkg-ref id="org.globus.globus_net_manager" version="0.12">globus_net_manager-0.12.pkg</pkg-ref>
     <pkg-ref id="org.globus.globus_gridftp_server" version="8.5">globus_gridftp_server-8.5.pkg</pkg-ref>
     <pkg-ref id="org.globus.globus_gram_protocol" version="12.12">globus_gram_protocol-12.12.pkg</pkg-ref>

@@ -1,0 +1,9 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: globus-gram-client-tools
+Description: Globus Toolkit - Job Management Tools (globusrun)
+Version: 11.7
+Requires.private: globus-common >= 14, globus-gram-client >= 12, globus-gram-protocol >= 11, globus-gass-transfer >= 7, globus-gass-server-ez >= 4, globus-rsl >= 9, globus-gss-assist >= 8

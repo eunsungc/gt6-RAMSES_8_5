@@ -1,0 +1,13 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+abs_top_srcdir=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/gram/client/source
+abs_top_builddir=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/gram/client/source
+
+Name: globus-gram-client
+Description: Globus Toolkit - GRAM Client Library
+Version: 13.12
+Requires.private: globus-common >= 14, globus-gram-protocol >= 11, globus-io >= 9, globus-rsl >= 9, globus-gss-assist >= 8
+Libs: ${abs_top_builddir}/libglobus_gram_client.la
+Cflags: -I${abs_top_srcdir}

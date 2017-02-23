@@ -1,0 +1,11 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: globus-gsi-sysconfig
+Description: Globus Toolkit - Globus GSI System Config Library
+Version: 6.8
+Requires.private: globus-common >= 15, globus-openssl-module >= 3, globus-gsi-openssl-error >= 2, openssl >= 0.9.8
+Libs: -L${libdir} -lglobus_gsi_sysconfig
+Cflags: -I${includedir}

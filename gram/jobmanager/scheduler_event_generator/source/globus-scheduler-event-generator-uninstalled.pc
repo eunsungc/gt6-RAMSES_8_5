@@ -1,0 +1,12 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+abs_top_srcdir=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/gram/jobmanager/scheduler_event_generator/source
+
+Name: globus-scheduler-event-generator
+Description: Globus Toolkit - Scheduler Event Generator
+Version: 5.11
+Requires.private: globus-common >= 14, globus-xio >= 3, globus-gram-protocol >= 11, globus-xio-gsi-driver >= 2
+Libs: /mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/gram/jobmanager/scheduler_event_generator/source/libglobus_scheduler_event_generator.la
+Cflags: -I${abs_top_srcdir}

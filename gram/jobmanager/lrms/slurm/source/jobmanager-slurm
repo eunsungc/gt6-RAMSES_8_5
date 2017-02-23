@@ -1,0 +1,1 @@
+stderr_log,local_cred - ${exec_prefix}/sbin/globus-job-manager globus-job-manager -conf ${prefix}/etc/globus/globus-gram-job-manager.conf -type slurm

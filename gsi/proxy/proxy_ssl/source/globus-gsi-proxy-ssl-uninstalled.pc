@@ -1,0 +1,13 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+abs_top_builddir=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/gsi/proxy/proxy_ssl/source
+abs_top_srcdir=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/gsi/proxy/proxy_ssl/source
+
+Name: globus-gsi-proxy-ssl
+Description: Globus Toolkit - Globus GSI Proxy SSL Library
+Version: 5.7
+Requires.private: openssl >= 0.9.8
+Libs: ${abs_top_builddir}/library/libglobus_proxy_ssl.la
+Cflags: -I${abs_top_srcdir} -I${abs_top_srcdir}/library

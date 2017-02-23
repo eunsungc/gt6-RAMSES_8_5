@@ -1,0 +1,11 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: globus-gfork
+Description: Globus Toolkit - GFork
+Version: 4.8
+Requires.private: globus-common >= 14, globus-xio >= 3
+Libs: -L${libdir} -lglobus_gfork
+Cflags: -I${includedir} 

@@ -1,0 +1,11 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: globus-ftp-client
+Description: Globus Toolkit - GridFTP Client Library
+Version: 8.24
+Requires.private: globus-common >= 15, globus-ftp-control >= 4, globus-gsi-callback >= 4, globus-gsi-credential >= 5, globus-gsi-sysconfig >= 5, globus-gssapi-gsi >= 10, globus-xio >= 3, globus-xio-popen-driver >= 2, openssl >= 0.9.8
+Libs: -L${libdir} -lglobus_ftp_client
+Cflags: -I${includedir}

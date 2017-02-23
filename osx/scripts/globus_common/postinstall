@@ -1,0 +1,207 @@
+#! /bin/sh
+
+SCRIPT_PATH="$0"
+PACKAGE_PATH="$1"
+TARGET_LOCATION="$2"
+TARGET_VOLUME="$3"
+
+prefix="/home/esjung/gt6_inst"
+exec_prefix="${prefix}"
+bindir="${exec_prefix}/bin"
+sbindir="${exec_prefix}/sbin"
+datarootdir="${prefix}/share"
+datadir="${datarootdir}"
+libdir="${exec_prefix}/lib"
+mandir="${datarootdir}/man"
+
+l="$(echo "${TARGET_LOCATION}/$prefix" | sed -e 's!//*!/!g')"
+b="$(echo "${TARGET_LOCATION}/$bindir" | sed -e 's!//*!/!g')"
+s="$(echo "${TARGET_LOCATION}/$sbindir" | sed -e 's!//*!/!g')"
+m="$(echo "${TARGET_LOCATION}/$mandir" | sed -e 's!//*!/!g')"
+p="$(echo "${TARGET_LOCATION}/$libdir/pkgconfig" | sed -e 's!//*!/!g')"
+
+
+if [ "$TARGET_LOCATION" = "/" ]; then
+    for d in /etc/paths.d /etc/manpaths.d; do
+        if [ ! -d $d ]; then
+            mkdir -m 755 $d
+        fi
+    done
+    cat <<-EOF > /etc/paths.d/Globus
+	$b
+	$s
+	EOF
+    cat <<-EOF > /etc/manpaths.d/Globus
+	$m
+	EOF
+else
+    for pc in "${TARGET_LOCATION}${libdir}/pkgconfig"/*.pc; do
+        sed -i '' -e "s|^prefix=|prefix=${TARGET_LOCATION}|" "${pc}"
+    done
+    user_shell="$(perl -e '@pw = getpwuid $< ; print $pw[8], "\n"')"
+    case "$user_shell" in 
+        /bin/bash|/bin/sh|/bin/ksh)
+            profile="${HOME}/.profile"
+            ;;
+        /bin/tcsh)
+            if [ -f "${HOME}/.tcshrc" ]; then
+                cshrc="${HOME}/.tcshrc"
+            elif [ -f "${HOME}/.cshrc" ]; then
+                cshrc="${HOME}/.cshrc"
+            else
+                cshrc="${HOME}/.tcshrc"
+            fi
+            ;;
+        /bin/zsh)
+            profile="${HOME}/.zprofile"
+            ;;
+        /bin/csh)
+            cshrc="${HOME}/.cshrc"
+            ;;
+    esac
+
+    if [ -n "${profile}" ]; then
+        if [ -f "${profile}" ]; then
+            profile_wo_globus="$(awk < "${profile}" "
+                /# BEGIN GLOBUS/ { skip=1; next; }
+                /# END GLOBUS/ { skip=0; next; }
+                skip == 1 { next; }
+                { print }
+            ")"
+        else
+            profile_wo_globus=""
+        fi
+        echo "$profile_wo_globus" > "${profile}.globus"
+        cat >> "${profile}.globus" <<-EOF
+	# BEGIN GLOBUS
+	PATH="\${PATH:+\$PATH:}${b}:${s}"
+	MANPATH="\${MANPATH:+\$MANPATH:}${m}"
+	GLOBUS_LOCATION="\${GLOBUS_LOCATION:-${l}}"
+	PKG_CONFIG_PATH="\${PKG_CONFIG_PATH:-/usr/lib/pkgconfig}:${p}"
+	# END GLOBUS
+	EOF
+        mv "${profile}" "${profile}.globus.save"
+        mv "${profile}.globus" "${profile}"
+    elif [ -n "${cshrc}" ]; then
+        if [ -f "${cshrc}" ]; then
+            cshrc_wo_globus="$(awk < "${cshrc}" "
+                /# BEGIN GLOBUS/ { skip=1; next; }
+                /# END GLOBUS/ { skip=0; next; }
+                skip == 1 { next; }
+                { print }
+            ")"
+        else
+            cshrc_wo_globus=""
+        fi
+        echo "${cshrc_wo_globus}" > "${cshrc}.globus"
+
+        cat >> "${cshrc}.globus" <<- EOF
+	# BEGIN GLOBUS
+	if ($?PATH) then
+	    setenv PATH "$PATH:${b}:${s}"
+	else
+	    setenv PATH "${b}:${s}"
+	endif
+	if ($?MANPATH) then
+	    setenv MANPATH "$MANPATH:${m}"
+	else
+	    setenv MANPATH "${m}"
+	endif
+	if ($?PKG_CONFIG_PATH) then
+	    setenv PKG_CONFIG_PATH "$PKG_CONFIG_PATH:${p}"
+	else
+	    setenv PKG_CONFIG_PATH "/usr/lib/pkgconfig:${p}"
+	endif
+	if (!$?GLOBUS_LOCATION) then
+	    setenv GLOBUS_LOCATION "${l}"
+	endif
+	# END GLOBUS
+	EOF
+        mv "${cshrc}" "${cshrc}.globus.save"
+        mv "${cshrc}.globus" "${cshrc}"
+    fi
+fi
+
+launchctl setenv GLOBUS_LOCATION "${l}"
+
+UNINSTALLER="${s}/globus-uninstall"
+cat <<EOF > "${UNINSTALLER}"
+#! /bin/sh
+
+files="\$(pkgutil --volume "${TARGET_LOCATION}" --regexp --files='^org\.globus.*')"
+target_prefix="\$(echo "${TARGET_LOCATION}/$prefix" | sed -e 's!//*!/!g')"
+for file in \$files; do
+    fp="\$(echo ${TARGET_LOCATION}/\$file | sed -e 's!//*!/!g')"
+    if expr "\${fp}" : "\$target_prefix" > /dev/null ; then
+        if [ -f "\${fp}" ] || [ -L "\${fp}" ]; then
+            rm -f "\${fp}";
+        fi
+    fi
+done
+rm -f "${UNINSTALLER}"
+find "${l}" -depth -type d -exec rmdir {} +
+pkgutil --volume "${TARGET_LOCATION}" --regexp --forget '^org\.globus.*' > /dev/null
+
+launchctl unsetenv GLOBUS_LOCATION
+EOF
+
+if [ "$TARGET_LOCATION" = "/" ]; then
+    cat <<-EOF >> "${UNINSTALLER}"
+	rm -f /etc/paths.d/Globus
+	rm -f /etc/manpaths.d/Globus
+	EOF
+else
+    cat <<-EOF >> "${UNINSTALLER}"
+	user_shell="\$(perl -e '@pw = getpwuid \$< ; print \$pw[8], "\n"')"
+	case "\$user_shell" in 
+	/bin/bash|/bin/sh|/bin/ksh)
+		profile="\${HOME}/.profile"
+		;;
+	/bin/tcsh)
+		if [ -f "\${HOME}/.tcshrc" ]; then
+			cshrc="\${HOME}/.tcshrc"
+		elif [ -f "\${HOME}/.cshrc" ]; then
+			cshrc="\${HOME}/.cshrc"
+		else
+			cshrc="\${HOME}/.tcshrc"
+		fi
+		;;
+	/bin/zsh)
+		profile="\${HOME}/.zprofile"
+		;;
+	/bin/csh)
+		cshrc="\${HOME}/.cshrc"
+		;;
+	esac
+	if [ -n "\${profile}" ]; then
+	    if [ -f "\${profile}" ]; then
+	        profile_wo_globus="\$(awk < "\${profile}" "
+	            /# BEGIN GLOBUS/ { skip=1; next; }
+	            /# END GLOBUS/ { skip=0; next; }
+	            skip == 1 { next; }
+	            { print }
+	        ")"
+	    else
+	        profile_wo_globus=""
+	    fi
+	    echo "\$profile_wo_globus" > "\${profile}.globus"
+	    mv "\${profile}" "\${profile}.globus.save"
+	    mv "\${profile}.globus" "\${profile}" 
+	elif [ -n "\${cshrc}" ]; then
+		if [ -f "\${cshrc}" ]; then
+			cshrc_wo_globus="\$(awk < "\${cshrc}" "
+			/# BEGIN GLOBUS/ { skip=1; next; }
+			/# END GLOBUS/ { skip=0; next; }
+			skip == 1 { next; }
+			{ print }
+			")"
+		else
+			cshrc_wo_globus=""
+		fi
+		echo "\${cshrc_wo_globus}" > "\${cshrc}.globus"
+		mv "${cshrc}" "${cshrc}.globus.save"
+		mv "${cshrc}.globus" "${cshrc}"
+	fi
+	EOF
+fi
+chmod a+x "${UNINSTALLER}"

@@ -1,0 +1,11 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: globus-authz
+Description: Globus Toolkit - Globus authz library
+Version: 3.10
+Requires.private: globus-common >= 14, globus-callout >= 2, globus-gssapi-gsi >= 9, globus-authz-callout-error >= 2, globus-gsi-sysconfig >= 5
+Libs: -L${libdir} -lglobus_authz
+Cflags: -I${includedir}

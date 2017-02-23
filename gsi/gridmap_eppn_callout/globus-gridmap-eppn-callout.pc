@@ -1,0 +1,9 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: globus-gridmap-eppn-callout
+Description: Globus Toolkit - Globus gridmap ePPN callout.
+Version: 1.8
+Requires.private: globus-common >= 14, globus-gsi-sysconfig >= 5, globus-gssapi-gsi >= 9, globus-gss-assist >= 8, globus-gridmap-callout-error >= 0, globus-gsi-credential >= 6, globus-gsi-openssl-error >= 2, globus-gssapi-error >= 4, openssl >= 0.9.8

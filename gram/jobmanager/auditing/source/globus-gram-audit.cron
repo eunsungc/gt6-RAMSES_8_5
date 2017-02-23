@@ -1,0 +1,10 @@
+#! /bin/sh
+
+prefix="${GLOBUS_LOCATION-/home/esjung/gt6_inst}"
+exec_prefix="${prefix}"
+
+if [ -x ${exec_prefix}/sbin/globus-gram-audit ] ; then
+${exec_prefix}/sbin/globus-gram-audit --quiet
+fi
+
+exit 0

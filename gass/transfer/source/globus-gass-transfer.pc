@@ -1,0 +1,11 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: globus-gass-transfer
+Description: Globus Toolkit - Globus Gass Transfer
+Version: 8.8
+Requires.private: globus-common >= 14, globus-gssapi-gsi >= 10, globus-gss-assist >= 8, globus-io >= 8
+Libs: -L${libdir} -lglobus_gass_transfer
+Cflags: -I${includedir}

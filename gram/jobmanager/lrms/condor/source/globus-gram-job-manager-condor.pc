@@ -1,0 +1,8 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: globus-gram-job-manager-condor
+Description: Globus Toolkit - Condor Job Manager Support
+Version: 2.5

@@ -1,0 +1,11 @@
+/home/esjung/gt6_inst/var/log/globus/gram_*.log {
+    daily
+    dateext
+    compress
+    missingok
+    notifempty
+    nocreate
+    rotate 4
+    sharedscripts
+    copytruncate
+}

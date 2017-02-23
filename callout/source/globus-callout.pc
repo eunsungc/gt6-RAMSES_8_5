@@ -1,0 +1,11 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: globus-callout
+Description: Globus Toolkit - Globus Callout Library
+Version: 3.13
+Requires.private: globus-common >= 15
+Libs: -L${libdir} -lglobus_callout
+Cflags: -I${includedir}

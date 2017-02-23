@@ -1,0 +1,263 @@
+#! /usr/bin/perl
+
+# Copyright 1999-2006 University of Chicago
+# 
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# 
+# http://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Replace this with your command filtering programing of choice.
+# A return value of '0' indicates that the command will be allowed, and
+# any other return value indicates that the command will be denied.
+#$FILTER_COMMAND = '/usr/local/bin/commsh --check-user';
+
+
+my $prefix = "/home/esjung/gt6_inst";
+my $exec_prefix;
+my $sbindir;
+my $bindir;
+my $includedir;
+my $datarootdir;
+my $datadir;
+my $libdir;
+my $libexecdir;
+my $sysconfdir;
+my $sharedstatedir;
+my $localstatedir;
+my $perlmoduledir;
+
+BEGIN {
+    $prefix = $ENV{GLOBUS_LOCATION} if $ENV{GLOBUS_LOCATION};
+    $exec_prefix = "${prefix}";
+    $sbindir = "${exec_prefix}/sbin";
+    $bindir = "${exec_prefix}/bin";
+    $includedir = "${prefix}/include";
+    $datarootdir = "${prefix}/share";
+    $datadir = "${datarootdir}";
+    $libexecdir = "${exec_prefix}/libexec";
+    $sysconfdir = "${prefix}/etc";
+    $sharedstatedir = "${prefix}/com";
+    $localstatedir = "${prefix}/var";
+    $perlmoduledir = "${libdir}/perl";
+
+    unshift (@INC, $perlmoduledir);
+}
+
+
+my $library_map = {
+    'linux' => [ 'LD_LIBRARY_PATH'],
+    'hpux' => [ 'SHLIB_PATH', 'LD_LIBRARY_PATH' ],
+    'solaris' => [ 'LD_LIBRARY_PATH', 'LD_LIBRARY_PATH_64' ],
+    'aix' => [ 'LIBPATH' ],
+    'irix' => [ 'LD_LIBRARY_PATH', 'LD_LIBRARYN32_PATH', 'LD_LIBRARY64_PATH' ],
+    'darwin' => [ 'DYLD_LIBRARY_PATH' ],
+    'freebsd' => [ 'LD_LIBRARY_PATH' ],
+    'openbsd' => [ 'LD_LIBRARY_PATH' ]
+};
+
+use Getopt::Long;
+use Globus::GRAM::Error;
+use Globus::GRAM::JobDescription;
+
+eval "require Globus::GRAM::JobManagerGratia"; # Gratia patch to save DN/FQAN on submit
+my $gratia_callout = $@?0:1; # Don't make the callout if the file is not there.
+
+my($manager_name, $argument_file, $command, $help);
+
+GetOptions('manager-name|m=s' => \$manager_name,
+           'argument-file|f=s' => \$argument_file,
+	   'command|c=s' => \$command,
+           'libdir|l=s' => \$libdir,
+           "help|h" => \$help);
+$|=1;
+
+if ($help)
+{
+    my $managers;
+    print "USAGE: $0 -m MANAGER -f FILE -c COMMAND\n";
+    print "Installed managers:";
+    foreach (<$perlmoduledir/Globus/GRAM/JobManager/*.pm>)
+    {
+        my $manager = $_;
+        chomp($manager);
+        $manager =~ s|.*/||;
+        $manager =~ s|\.pm$||;
+        print " $manager";
+    }
+    print "\n";
+    exit(0);
+}
+
+if ($libdir) {
+    foreach my $libvar (@{$library_map->{$^O}})
+    {
+        &append_path(\%ENV, $libvar, $libdir);
+    }
+}
+
+if (!defined($manager_name))
+{
+    &fail(Globus::GRAM::Error::BAD_SCRIPT_ARG_FILE);
+}
+elsif (!defined($command))
+{
+    &fail(Globus::GRAM::Error::BAD_SCRIPT_ARG_FILE);
+}
+elsif ($command ne 'interactive' && !defined($argument_file))
+{
+    &fail(Globus::GRAM::Error::BAD_SCRIPT_ARG_FILE);
+}
+
+my $manager_class = "Globus::GRAM::JobManager::$manager_name";
+
+eval "require $manager_class";
+
+if ($command eq 'interactive')
+{
+    my $input = '';
+    my $icmd = '';
+    my $line;
+
+    while ($line = <>)
+    {
+        if ($icmd eq '')
+        {
+            chomp($icmd = $line);
+            if ($icmd eq 'quit')
+            {
+                exit(0);
+            }
+            next;
+        }
+        elsif ($line eq "\n")
+        {
+            # End of input
+            my $jd = eval $input;
+            if ($@)
+            {
+                &fail(Globus::GRAM::Error::BAD_SCRIPT_ARG_FILE);
+            }
+            my $job_description_class = $manager_class->job_description_class();
+            $job_description = new $job_description_class($jd);
+            $manager = new $manager_class($job_description) or
+                &fail(Globus::GRAM::Error::BAD_SCRIPT_ARG_FILE);
+            &run_command($icmd, $manager);
+
+            $input = '';
+            $icmd = '';
+        }
+        else
+        {
+            $input .= $line;
+        }
+    }
+}
+else
+{
+    my $error_string = '';
+    if($@)
+    {
+        $error_string = $@;
+        warn $error_string;
+    }
+    my $job_description_class = $manager_class->job_description_class();
+    $job_description = new $job_description_class($argument_file);
+        
+    if ($error_string)
+    {
+        my $msg = "Error loading $manager_class: $error_string";
+
+        $msg =~ s/\\/\\\\/g;
+        $msg =~ s/\n/\\n/g;
+        $msg =~ s/\"/\\\"/g;
+
+        print "GRAM_SCRIPT_LOG:msg=\"$msg\"\n";
+
+        &fail(Globus::GRAM::Error::BAD_SCRIPT_ARG_FILE);
+    }
+
+    $manager = new $manager_class($job_description) or
+        &fail(Globus::GRAM::Error::BAD_SCRIPT_ARG_FILE);
+
+    run_command($command, $manager);
+}
+
+
+sub run_command
+{
+    my ($cmd, $manager) = @_;
+
+    # If we are submitting a job, we may need to update things like
+    # executable & stdin to look in the cache.
+    # We may also need to run the command through a filter script.
+    if($cmd eq 'submit')
+    {
+        if(defined $FILTER_COMMAND)
+        {
+            my $commandName = join(" ", $job_description->executable,
+                                           $job_description->arguments);
+            my @filterArgs = split(/\s+/, $FILTER_COMMAND);
+            if(-x $filterArgs[0])  # Make sure program is executable
+            {
+                my $rVal = (system(@filterArgs, $commandName)) >> 8;
+                if($rVal != 0)  # The filter command returned an error, so deny.
+                {
+                    &fail(Globus::GRAM::Error::AUTHORIZATION_DENIED_EXECUTABLE);
+                    goto FILTERED;
+                }
+            }
+        }
+    }
+    $result = $manager->$cmd();
+
+    if(UNIVERSAL::isa($result, 'Globus::GRAM::Error'))
+    {
+        &fail($result);
+    }
+    else
+    {
+        $manager->respond($result);
+        # Save cert information for Gratia accounting if appropriate.
+        if ($gratia_callout and ($cmd eq 'submit') and (exists $result->{JOB_ID})) {
+            Globus::GRAM::JobManagerGratia::gratia_save_cert_info($manager, $result->{JOB_ID});
+        }
+
+    }
+FILTERED:
+    if ($command eq 'interactive')
+    {
+        print "\n";
+    }
+}
+
+sub fail
+{
+    my $error = shift;
+
+    print 'GRAM_SCRIPT_ERROR:', $error->value(), "\n";
+    exit(1) if ($command ne 'interactive');
+}
+
+sub append_path
+{
+    my $ref = shift;
+    my $var = shift;
+    my $path = shift;
+
+    if(exists($ref->{$var}))
+    {
+	$ref->{$var} .= ":$path";
+    }
+    else
+    {
+	$ref->{$var} = $path;
+    }
+}

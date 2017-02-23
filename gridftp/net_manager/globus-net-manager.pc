@@ -1,0 +1,11 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: globus-net-manager
+Description: Globus Toolkit - Network Manager
+Version: 0.12
+Requires.private: globus-common >= 15.27, globus-xio >= 5
+Libs: -L${libdir} -lglobus_net_manager
+Cflags: -I${includedir} 

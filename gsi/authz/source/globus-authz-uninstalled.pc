@@ -1,0 +1,13 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+abs_top_srcdir=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/gsi/authz/source
+abs_top_builddir=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/gsi/authz/source
+
+Name: globus-authz
+Description: Globus Toolkit - Globus authz library
+Version: 3.10
+Requires.private: globus-common >= 14, globus-callout >= 2, globus-gssapi-gsi >= 9, globus-authz-callout-error >= 2, globus-gsi-sysconfig >= 5
+Libs: ${abs_top_builddir}/libglobus_authz.la
+Cflags: -I${abs_top_srcdir}

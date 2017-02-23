@@ -1,0 +1,10 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+path=${exec_prefix}/sbin:${exec_prefix}/bin
+
+Name: globus-gram-job-manager
+Description: Globus Toolkit - GRAM Jobmanager
+Version: 14.27
+Requires.private: globus-common >= 15, globus-gsi-credential >= 5, globus-gass-cache >= 8, globus-gass-transfer >= 7, globus-gram-protocol >= 11, globus-gssapi-gsi >= 10, globus-gss-assist >= 8, globus-gsi-sysconfig >= 5, globus-callout >= 2, globus-xio >= 3, globus-xio-popen-driver >= 2, globus-rsl >= 9, globus-gram-job-manager-callout-error >= 2, globus-scheduler-event-generator >= 4, globus-usage >= 3, openssl >= 0.9.8

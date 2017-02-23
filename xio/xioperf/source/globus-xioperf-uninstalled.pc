@@ -1,0 +1,9 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: globus-xioperf
+Description: Globus Toolkit - XIO Performance Tool
+Version: 4.4
+Requires.private: globus-common >= 14, globus-xio >= 3

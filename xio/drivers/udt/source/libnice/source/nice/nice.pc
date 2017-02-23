@@ -1,0 +1,13 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libnice
+Description: ICE library
+Requires: glib-2.0 >= 2.10.0
+Version: 0.1.5
+Libs: -L${libdir} -lnice -pthread -L/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/xio/drivers/udt/source/glib2/lib -lgthread-2.0 -lrt -lgio-2.0 -lgobject-2.0 -lglib-2.0  
+Libs.private: 
+Cflags: -pthread -I/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/xio/drivers/udt/source/glib2/include/glib-2.0 -I/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/xio/drivers/udt/source/glib2/lib/glib-2.0/include   -I${includedir} -I${includedir}/nice
+

@@ -1,0 +1,10 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+path=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/gram/gatekeeper/source
+
+Name: globus-gatekeeper
+Description: Globus Toolkit - Globus Gatekeeper
+Version: 10.10
+Requires.private: globus-common >= 14, globus-gss-assist >= 8, globus-gssapi-gsi >= 9, openssl >= 0.9.8

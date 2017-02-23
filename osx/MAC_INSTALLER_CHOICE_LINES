@@ -46,6 +46,10 @@
         <line choice="org.globus.package.globus_gridmap_eppn_callout"/>
         <line choice="org.globus.package.globus_proxy_utils"/>
     </line>
+    <line choice="org.globus.bundle.udt">
+
+        <line choice="org.globus.package.globus_xio_udt_driver"/>
+    </line>
     <line choice="org.globus.bundle.gram5">
 
         <line choice="org.globus.package.globus_gram_protocol"/>

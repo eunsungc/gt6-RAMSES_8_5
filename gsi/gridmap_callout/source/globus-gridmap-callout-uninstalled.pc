@@ -1,0 +1,13 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+abs_top_srcdir=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/gsi/gridmap_callout/source
+abs_top_builddir=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/gsi/gridmap_callout/source
+
+Name: globus-gridmap-callout
+Description: Globus Toolkit - Globus Gridmap Callout
+Version: 1.0
+Requires.private: globus-common >= 14, globus-gssapi-gsi >= 4, globus-gss-assist >= 3, globus-gridmap-callout-error >= 2, globus-gsi-credential >= 6
+Libs: ${abs_top_builddir}/libglobus_gridmap_callout.la
+Cflags: -I${abs_top_srcdir}

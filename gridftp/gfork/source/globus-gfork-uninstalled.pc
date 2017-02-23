@@ -1,0 +1,14 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+abs_top_builddir=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/gridftp/gfork/source
+abs_top_srcdir=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/gridftp/gfork/source
+
+Name: globus-gfork
+Description: Globus Toolkit - GFork
+Version: 4.8
+Requires.private: globus-common >= 14, globus-xio >= 3
+Libs: ${abs_top_builddir}/libglobus_gfork.la
+Libs.private: 
+Cflags: -I${abs_top_srcdir} 

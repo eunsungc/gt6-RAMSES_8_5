@@ -1,0 +1,13 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+path=${exec_prefix}/bin:${exec_prefix}/sbin
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+thread_models= pthread
+
+Name: globus-common
+Description: Globus Toolkit - Common Library
+Version: 15.31
+Libs: -L${libdir} -lglobus_common
+Libs.private: -ldl  -lpthread -lltdl
+Cflags:  -I${includedir}

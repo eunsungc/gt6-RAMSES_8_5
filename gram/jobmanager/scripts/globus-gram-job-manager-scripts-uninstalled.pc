@@ -1,0 +1,10 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+path=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/gram/jobmanager/scripts
+perl5lib=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/gram/jobmanager/scripts
+
+Name: globus-gram-job-manager-scripts
+Description: Globus Toolkit - GRAM Job ManagerScripts
+Version: 6.7

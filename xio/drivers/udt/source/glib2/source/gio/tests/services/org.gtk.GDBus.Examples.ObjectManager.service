@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=org.gtk.GDBus.Examples.ObjectManager
+Exec=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/xio/drivers/udt/source/glib2/source/gio/tests/gdbus-example-objectmanager-server

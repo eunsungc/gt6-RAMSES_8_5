@@ -1,0 +1,8 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: globus-gram-audit
+Description: Globus Toolkit - GRAM Jobmanager Auditing
+Version: 4.4

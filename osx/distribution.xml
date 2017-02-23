@@ -1,0 +1,649 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<installer-gui-script minSpecVersion="1">
+    <title>Globus Toolkit</title>
+    <organization>org.globus</organization>
+    <domains enable_localSystem="true" enable_currentUserHome="true"/>
+    <options customize="allow" require-scripts="true" />
+    <background file="logo.png" scaling="proportional" alignment="bottomleft"/>
+    <license file="/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/GLOBUS_LICENSE" mime-type="text/plain" />
+
+    <pkg-ref id="org.globus.globus_common" version="15.31">globus_common-15.31.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_xio" version="5.9">globus_xio-5.9.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_gfork" version="4.8">globus_gfork-4.8.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_gsi_openssl_error" version="3.5">globus_gsi_openssl_error-3.5.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_gsi_proxy_ssl" version="5.7">globus_gsi_proxy_ssl-5.7.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_openssl_module" version="4.6">globus_openssl_module-4.6.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_gsi_cert_utils" version="9.11">globus_gsi_cert_utils-9.11.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_gsi_sysconfig" version="6.8">globus_gsi_sysconfig-6.8.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_callout" version="3.13">globus_callout-3.13.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_gsi_callback" version="5.8">globus_gsi_callback-5.8.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_gsi_credential" version="7.9">globus_gsi_credential-7.9.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_gsi_proxy_core" version="7.7">globus_gsi_proxy_core-7.7.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_gssapi_gsi" version="11.21">globus_gssapi_gsi-11.21.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_gss_assist" version="10.15">globus_gss_assist-10.15.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_gssapi_error" version="5.4">globus_gssapi_error-5.4.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_xio_gsi_driver" version="3.8">globus_xio_gsi_driver-3.8.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_io" version="11.4">globus_io-11.4.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_ftp_control" version="6.7">globus_ftp_control-6.7.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_usage" version="4.4">globus_usage-4.4.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_xio_pipe_driver" version="3.7">globus_xio_pipe_driver-3.7.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_gridftp_server_control" version="3.7">globus_gridftp_server_control-3.7.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_authz_callout_error" version="3.5">globus_authz_callout_error-3.5.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_authz" version="3.10">globus_authz-3.10.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_xio_rate_driver" version="1.7">globus_xio_rate_driver-1.7.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_xio_popen_driver" version="3.5">globus_xio_popen_driver-3.5.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_xio_udt_driver" version="1.18">globus_xio_udt_driver-1.18.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_net_manager" version="0.12">globus_net_manager-0.12.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_gridftp_server" version="8.5">globus_gridftp_server-8.5.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_gram_protocol" version="12.12">globus_gram_protocol-12.12.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_gass_transfer" version="8.8">globus_gass_transfer-8.8.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_ftp_client" version="8.24">globus_ftp_client-8.24.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_gass_copy" version="9.17">globus_gass_copy-9.17.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_gass_cache" version="9.7">globus_gass_cache-9.7.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_rsl" version="10.10">globus_rsl-10.10.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_xio_gridftp_multicast" version="1.6">globus_xio_gridftp_multicast-1.6.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_simple_ca" version="4.22">globus_simple_ca-4.22.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_gridmap_callout_error" version="2.4">globus_gridmap_callout_error-2.4.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_gridmap_callout" version="1.0">globus_gridmap_callout-1.0.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_gass_server_ez" version="5.7">globus_gass_server_ez-5.7.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_xio_gridftp_driver" version="2.12">globus_xio_gridftp_driver-2.12.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_gridmap_verify_myproxy_callout" version="2.7">globus_gridmap_verify_myproxy_callout-2.7.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_gridmap_eppn_callout" version="1.8">globus_gridmap_eppn_callout-1.8.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_proxy_utils" version="6.13">globus_proxy_utils-6.13.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_gram_client" version="13.12">globus_gram_client-13.12.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_xioperf" version="4.4">globus_xioperf-4.4.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_gass_cache_program" version="6.5">globus_gass_cache_program-6.5.pkg</pkg-ref>
+    <pkg-ref id="org.globus.gsi_openssh" version="5.7">gsi_openssh-5.7.pkg</pkg-ref>
+    <pkg-ref id="org.globus.globus_gram_client_tools" version="11.7">globus_gram_client_tools-11.7.pkg</pkg-ref>
+    <pkg-ref id="org.globus.prereq.libltdl" version="2.4.2">ltdl-2.4.2.pkg</pkg-ref>
+
+    <choices-outline>
+        <line choice="org.globus.package.libltdl"/>
+    <line choice="org.globus.bundle.ccommonlibs">
+
+        <line choice="org.globus.package.globus_common"/>
+        <line choice="org.globus.package.globus_xio"/>
+        <line choice="org.globus.package.globus_callout"/>
+        <line choice="org.globus.package.globus_xio_gsi_driver"/>
+        <line choice="org.globus.package.globus_io"/>
+        <line choice="org.globus.package.globus_usage"/>
+        <line choice="org.globus.package.globus_xio_pipe_driver"/>
+        <line choice="org.globus.package.globus_xio_rate_driver"/>
+        <line choice="org.globus.package.globus_xio_popen_driver"/>
+        <line choice="org.globus.package.globus_gass_transfer"/>
+        <line choice="org.globus.package.globus_xioperf"/>
+    </line>
+    <line choice="org.globus.bundle.gridftp">
+
+        <line choice="org.globus.package.globus_gfork"/>
+        <line choice="org.globus.package.globus_ftp_control"/>
+        <line choice="org.globus.package.globus_gridftp_server_control"/>
+        <line choice="org.globus.package.globus_net_manager"/>
+        <line choice="org.globus.package.globus_gridftp_server"/>
+        <line choice="org.globus.package.globus_ftp_client"/>
+        <line choice="org.globus.package.globus_gass_copy"/>
+        <line choice="org.globus.package.globus_xio_gridftp_multicast"/>
+        <line choice="org.globus.package.globus_xio_gridftp_driver"/>
+    </line>
+    <line choice="org.globus.bundle.gsi">
+
+        <line choice="org.globus.package.globus_gsi_openssl_error"/>
+        <line choice="org.globus.package.globus_gsi_proxy_ssl"/>
+        <line choice="org.globus.package.globus_openssl_module"/>
+        <line choice="org.globus.package.globus_gsi_cert_utils"/>
+        <line choice="org.globus.package.globus_gsi_sysconfig"/>
+        <line choice="org.globus.package.globus_gsi_callback"/>
+        <line choice="org.globus.package.globus_gsi_credential"/>
+        <line choice="org.globus.package.globus_gsi_proxy_core"/>
+        <line choice="org.globus.package.globus_gssapi_gsi"/>
+        <line choice="org.globus.package.globus_gss_assist"/>
+        <line choice="org.globus.package.globus_gssapi_error"/>
+        <line choice="org.globus.package.globus_authz_callout_error"/>
+        <line choice="org.globus.package.globus_authz"/>
+        <line choice="org.globus.package.globus_simple_ca"/>
+        <line choice="org.globus.package.globus_gridmap_callout_error"/>
+        <line choice="org.globus.package.globus_gridmap_callout"/>
+        <line choice="org.globus.package.globus_gridmap_verify_myproxy_callout"/>
+        <line choice="org.globus.package.globus_gridmap_eppn_callout"/>
+        <line choice="org.globus.package.globus_proxy_utils"/>
+    </line>
+    <line choice="org.globus.bundle.udt">
+
+        <line choice="org.globus.package.globus_xio_udt_driver"/>
+    </line>
+    <line choice="org.globus.bundle.gram5">
+
+        <line choice="org.globus.package.globus_gram_protocol"/>
+        <line choice="org.globus.package.globus_gass_cache"/>
+        <line choice="org.globus.package.globus_rsl"/>
+        <line choice="org.globus.package.globus_gass_server_ez"/>
+        <line choice="org.globus.package.globus_gram_client"/>
+        <line choice="org.globus.package.globus_gass_cache_program"/>
+        <line choice="org.globus.package.globus_gram_client_tools"/>
+    </line>
+    <line choice="org.globus.bundle.gsi-openssh">
+
+        <line choice="org.globus.package.gsi_openssh"/>
+    </line>
+    </choices-outline>
+
+    <!-- Define each choice above -->
+    <choice id="org.globus.package.libltdl"
+        visible="false"
+        enabled="false"
+        title="libltdl"
+        description="ltdl"
+        selected="true"
+        start_selected="true">
+        <pkg-ref id="org.globus.prereq.libltdl"/>
+    </choice>
+    <choice
+        id="org.globus.bundle.ccommonlibs"
+        visible="true"
+        enabled="false"
+        title="Common Runtime Libraries and Tools"
+        description="Common Runtime Libraries and Tools"
+        selected="true"
+        start_selected="true"/>
+    <choice
+        id="org.globus.bundle.gridftp"
+        visible="true"
+        title="Globus GridFTP"
+        description="GridFTP Libraries and Tools"
+        start_selected="true"/>
+    <choice
+        id="org.globus.bundle.gsi"
+        visible="true"
+        title="Globus GSI"
+        description="Security Libraries and Tools"
+        start_selected="true"/>
+    <choice
+        id="org.globus.bundle.gram5"
+        visible="true"
+        title="Globus GRAM5"
+        description="Job Management Libraries and Tools"
+        start_selected="true"/>
+    <choice
+        id="org.globus.bundle.gram5-server"
+        visible="false"
+        title="Globus GRAM5 Server"
+        description="Job Management Server"
+        start_selected="false"/>
+    <choice
+        id="org.globus.bundle.gram5-lsf"
+        visible="false"
+        title="Globus GRAM5 Server for LSF"
+        description="Job Management Server for LSF"
+        start_selected="false"/>
+    <choice
+        id="org.globus.bundle.gram5-sge"
+        visible="false"
+        title="Globus GRAM5 Server for SGE"
+        description="Job Management Server for SGE"
+        start_selected="false"/>
+    <choice
+        id="org.globus.bundle.gram5-slurm"
+        visible="false"
+        title="Globus GRAM5 Server for SLURM"
+        description="Job Management Server for SLURM"
+        start_selected="false"/>
+    <choice
+        id="org.globus.bundle.gram5-condor"
+        visible="false"
+        title="Globus GRAM5 Server for Condor"
+        description="Job Management Server for Condor"
+        start_selected="false"/>
+    <choice
+        id="org.globus.bundle.gram5-pbs"
+        visible="false"
+        title="Globus GRAM5 Server for PBS"
+        description="Job Management Server for PBS"
+        start_selected="false"/>
+    <choice
+        id="org.globus.bundle.gsi-openssh"
+        visible="false"
+        title="GSI OpenSSH"
+        description="GSI OpenSSH"
+        start_selected="true"/>
+    <choice
+        id="org.globus.bundle.myproxy"
+        visible="false"
+        title="MyProxy"
+        description="MyProxy"
+        start_selected="true"/>
+    <choice
+        id="org.globus.bundle.udt"
+        visible="false"
+        title="Globus XIO UDT Driver"
+        description="UDT Support for XIO"
+        start_selected="false"/>
+    <choice
+        id="org.globus.bundle.gram5-auditing"
+        visible="false"
+        title="Globus GRAM5 Auditing"
+        description="GRAM5 Auditing"
+        start_selected="false"/>
+
+
+    <choice
+        id="org.globus.package.globus_common"
+        visible="false"
+        title="globus_common"
+        description="globus_common Libraries and Tools"
+        selected="choices['org.globus.package.globus_xio'].selected || choices['org.globus.package.globus_gfork'].selected || choices['org.globus.package.globus_gsi_openssl_error'].selected || choices['org.globus.package.globus_openssl_module'].selected || choices['org.globus.package.globus_gsi_cert_utils'].selected || choices['org.globus.package.globus_gsi_sysconfig'].selected || choices['org.globus.package.globus_callout'].selected || choices['org.globus.package.globus_gsi_callback'].selected || choices['org.globus.package.globus_gsi_credential'].selected || choices['org.globus.package.globus_gsi_proxy_core'].selected || choices['org.globus.package.globus_gssapi_gsi'].selected || choices['org.globus.package.globus_gss_assist'].selected || choices['org.globus.package.globus_gssapi_error'].selected || choices['org.globus.package.globus_xio_gsi_driver'].selected || choices['org.globus.package.globus_io'].selected || choices['org.globus.package.globus_ftp_control'].selected || choices['org.globus.package.globus_usage'].selected || choices['org.globus.package.globus_xio_pipe_driver'].selected || choices['org.globus.package.globus_gridftp_server_control'].selected || choices['org.globus.package.globus_authz_callout_error'].selected || choices['org.globus.package.globus_authz'].selected || choices['org.globus.package.globus_xio_popen_driver'].selected || choices['org.globus.package.globus_xio_udt_driver'].selected || choices['org.globus.package.globus_net_manager'].selected || choices['org.globus.package.globus_gridftp_server'].selected || choices['org.globus.package.globus_gram_protocol'].selected || choices['org.globus.package.globus_scheduler_event_generator'].selected || choices['org.globus.package.globus_gram_job_manager_lsf'].selected || choices['org.globus.package.globus_gass_transfer'].selected || choices['org.globus.package.globus_ftp_client'].selected || choices['org.globus.package.globus_gass_copy'].selected || choices['org.globus.package.globus_gass_cache'].selected || choices['org.globus.package.globus_rsl'].selected || choices['org.globus.package.globus_gram_job_manager_callout_error'].selected || choices['org.globus.package.globus_gram_job_manager_sge'].selected || choices['org.globus.package.globus_gridmap_callout_error'].selected || choices['org.globus.package.globus_gridmap_callout'].selected || choices['org.globus.package.globus_gass_server_ez'].selected || choices['org.globus.package.globus_xio_gridftp_driver'].selected || choices['org.globus.package.globus_gram_job_manager_fork'].selected || choices['org.globus.package.globus_proxy_utils'].selected || choices['org.globus.package.globus_gram_client'].selected || choices['org.globus.package.globus_xioperf'].selected || choices['org.globus.package.globus_gatekeeper'].selected || choices['org.globus.package.globus_gass_cache_program'].selected || choices['org.globus.package.globus_gram_job_manager_pbs'].selected || choices['org.globus.package.myproxy'].selected || choices['org.globus.package.globus_gram_client_tools'].selected || choices['org.globus.package.globus_gram_job_manager'].selected"
+        start_selected="choices['org.globus.bundle.ccommonlibs'].selected">
+        <pkg-ref id="org.globus.globus_common"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_xio"
+        visible="false"
+        title="globus_xio"
+        description="globus_xio Libraries and Tools"
+        selected="choices['org.globus.package.globus_gfork'].selected || choices['org.globus.package.globus_xio_gsi_driver'].selected || choices['org.globus.package.globus_io'].selected || choices['org.globus.package.globus_ftp_control'].selected || choices['org.globus.package.globus_usage'].selected || choices['org.globus.package.globus_xio_pipe_driver'].selected || choices['org.globus.package.globus_gridftp_server_control'].selected || choices['org.globus.package.globus_xio_rate_driver'].selected || choices['org.globus.package.globus_xio_popen_driver'].selected || choices['org.globus.package.globus_xio_udt_driver'].selected || choices['org.globus.package.globus_net_manager'].selected || choices['org.globus.package.globus_gridftp_server'].selected || choices['org.globus.package.globus_scheduler_event_generator'].selected || choices['org.globus.package.globus_gram_job_manager_lsf'].selected || choices['org.globus.package.globus_ftp_client'].selected || choices['org.globus.package.globus_xio_gridftp_multicast'].selected || choices['org.globus.package.globus_gram_job_manager_sge'].selected || choices['org.globus.package.globus_xio_gridftp_driver'].selected || choices['org.globus.package.globus_gram_job_manager_fork'].selected || choices['org.globus.package.globus_xioperf'].selected || choices['org.globus.package.globus_gram_job_manager'].selected"
+        start_selected="choices['org.globus.bundle.ccommonlibs'].selected">
+        <pkg-ref id="org.globus.globus_xio"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_gfork"
+        visible="false"
+        title="globus_gfork"
+        description="globus_gfork Libraries and Tools"
+        selected="choices['org.globus.package.globus_gridftp_server'].selected"
+        start_selected="choices['org.globus.bundle.gridftp'].selected">
+        <pkg-ref id="org.globus.globus_gfork"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_gsi_openssl_error"
+        visible="false"
+        title="globus_gsi_openssl_error"
+        description="globus_gsi_openssl_error Libraries and Tools"
+        selected="choices['org.globus.package.globus_openssl_module'].selected || choices['org.globus.package.globus_gsi_cert_utils'].selected || choices['org.globus.package.globus_gsi_sysconfig'].selected || choices['org.globus.package.globus_gsi_callback'].selected || choices['org.globus.package.globus_gsi_credential'].selected || choices['org.globus.package.globus_gsi_proxy_core'].selected || choices['org.globus.package.globus_gssapi_gsi'].selected || choices['org.globus.package.globus_gridftp_server_control'].selected || choices['org.globus.package.globus_proxy_utils'].selected"
+        start_selected="choices['org.globus.bundle.gsi'].selected">
+        <pkg-ref id="org.globus.globus_gsi_openssl_error"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_gsi_proxy_ssl"
+        visible="false"
+        title="globus_gsi_proxy_ssl"
+        description="globus_gsi_proxy_ssl Libraries and Tools"
+        selected="choices['org.globus.package.globus_openssl_module'].selected || choices['org.globus.package.globus_gsi_cert_utils'].selected || choices['org.globus.package.globus_gsi_callback'].selected || choices['org.globus.package.globus_gsi_credential'].selected || choices['org.globus.package.globus_gsi_proxy_core'].selected || choices['org.globus.package.globus_proxy_utils'].selected"
+        start_selected="choices['org.globus.bundle.gsi'].selected">
+        <pkg-ref id="org.globus.globus_gsi_proxy_ssl"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_openssl_module"
+        visible="false"
+        title="globus_openssl_module"
+        description="globus_openssl_module Libraries and Tools"
+        selected="choices['org.globus.package.globus_gsi_cert_utils'].selected || choices['org.globus.package.globus_gsi_sysconfig'].selected || choices['org.globus.package.globus_gsi_callback'].selected || choices['org.globus.package.globus_gsi_proxy_core'].selected || choices['org.globus.package.globus_gssapi_gsi'].selected || choices['org.globus.package.globus_proxy_utils'].selected"
+        start_selected="choices['org.globus.bundle.gsi'].selected">
+        <pkg-ref id="org.globus.globus_openssl_module"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_gsi_cert_utils"
+        visible="false"
+        title="globus_gsi_cert_utils"
+        description="globus_gsi_cert_utils Libraries and Tools"
+        selected="choices['org.globus.package.globus_gsi_callback'].selected || choices['org.globus.package.globus_gsi_credential'].selected || choices['org.globus.package.globus_gsi_proxy_core'].selected || choices['org.globus.package.globus_gssapi_gsi'].selected || choices['org.globus.package.globus_gss_assist'].selected || choices['org.globus.package.globus_proxy_utils'].selected"
+        start_selected="choices['org.globus.bundle.gsi'].selected">
+        <pkg-ref id="org.globus.globus_gsi_cert_utils"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_gsi_sysconfig"
+        visible="false"
+        title="globus_gsi_sysconfig"
+        description="globus_gsi_sysconfig Libraries and Tools"
+        selected="choices['org.globus.package.globus_gsi_callback'].selected || choices['org.globus.package.globus_gsi_credential'].selected || choices['org.globus.package.globus_gsi_proxy_core'].selected || choices['org.globus.package.globus_gssapi_gsi'].selected || choices['org.globus.package.globus_gss_assist'].selected || choices['org.globus.package.globus_ftp_client'].selected || choices['org.globus.package.globus_gass_copy'].selected || choices['org.globus.package.globus_gridmap_verify_myproxy_callout'].selected || choices['org.globus.package.globus_gridmap_eppn_callout'].selected || choices['org.globus.package.globus_proxy_utils'].selected || choices['org.globus.package.globus_gram_job_manager'].selected"
+        start_selected="choices['org.globus.bundle.gsi'].selected">
+        <pkg-ref id="org.globus.globus_gsi_sysconfig"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_callout"
+        visible="false"
+        title="globus_callout"
+        description="globus_callout Libraries and Tools"
+        selected="choices['org.globus.package.globus_gss_assist'].selected || choices['org.globus.package.globus_authz'].selected || choices['org.globus.package.globus_gram_job_manager'].selected"
+        start_selected="choices['org.globus.bundle.ccommonlibs'].selected">
+        <pkg-ref id="org.globus.globus_callout"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_gsi_callback"
+        visible="false"
+        title="globus_gsi_callback"
+        description="globus_gsi_callback Libraries and Tools"
+        selected="choices['org.globus.package.globus_gsi_credential'].selected || choices['org.globus.package.globus_gssapi_gsi'].selected || choices['org.globus.package.globus_ftp_client'].selected || choices['org.globus.package.globus_proxy_utils'].selected"
+        start_selected="choices['org.globus.bundle.gsi'].selected">
+        <pkg-ref id="org.globus.globus_gsi_callback"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_gsi_credential"
+        visible="false"
+        title="globus_gsi_credential"
+        description="globus_gsi_credential Libraries and Tools"
+        selected="choices['org.globus.package.globus_gsi_proxy_core'].selected || choices['org.globus.package.globus_gssapi_gsi'].selected || choices['org.globus.package.globus_gss_assist'].selected || choices['org.globus.package.globus_gridftp_server'].selected || choices['org.globus.package.globus_ftp_client'].selected || choices['org.globus.package.globus_gridmap_callout'].selected || choices['org.globus.package.globus_gridmap_verify_myproxy_callout'].selected || choices['org.globus.package.globus_gridmap_eppn_callout'].selected || choices['org.globus.package.globus_proxy_utils'].selected || choices['org.globus.package.globus_gram_job_manager'].selected"
+        start_selected="choices['org.globus.bundle.gsi'].selected">
+        <pkg-ref id="org.globus.globus_gsi_credential"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_gsi_proxy_core"
+        visible="false"
+        title="globus_gsi_proxy_core"
+        description="globus_gsi_proxy_core Libraries and Tools"
+        selected="choices['org.globus.package.globus_gssapi_gsi'].selected || choices['org.globus.package.globus_proxy_utils'].selected"
+        start_selected="choices['org.globus.bundle.gsi'].selected">
+        <pkg-ref id="org.globus.globus_gsi_proxy_core"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_gssapi_gsi"
+        visible="false"
+        title="globus_gssapi_gsi"
+        description="globus_gssapi_gsi Libraries and Tools"
+        selected="choices['org.globus.package.globus_gss_assist'].selected || choices['org.globus.package.globus_gssapi_error'].selected || choices['org.globus.package.globus_xio_gsi_driver'].selected || choices['org.globus.package.globus_io'].selected || choices['org.globus.package.globus_ftp_control'].selected || choices['org.globus.package.globus_gridftp_server_control'].selected || choices['org.globus.package.globus_authz'].selected || choices['org.globus.package.globus_gram_protocol'].selected || choices['org.globus.package.globus_gass_transfer'].selected || choices['org.globus.package.globus_ftp_client'].selected || choices['org.globus.package.globus_gass_copy'].selected || choices['org.globus.package.globus_gridmap_callout'].selected || choices['org.globus.package.globus_gass_server_ez'].selected || choices['org.globus.package.globus_gridmap_verify_myproxy_callout'].selected || choices['org.globus.package.globus_gridmap_eppn_callout'].selected || choices['org.globus.package.globus_gatekeeper'].selected || choices['org.globus.package.myproxy'].selected || choices['org.globus.package.globus_gram_job_manager'].selected"
+        start_selected="choices['org.globus.bundle.gsi'].selected">
+        <pkg-ref id="org.globus.globus_gssapi_gsi"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_gss_assist"
+        visible="false"
+        title="globus_gss_assist"
+        description="globus_gss_assist Libraries and Tools"
+        selected="choices['org.globus.package.globus_gssapi_error'].selected || choices['org.globus.package.globus_xio_gsi_driver'].selected || choices['org.globus.package.globus_io'].selected || choices['org.globus.package.globus_ftp_control'].selected || choices['org.globus.package.globus_gridftp_server_control'].selected || choices['org.globus.package.globus_gridftp_server'].selected || choices['org.globus.package.globus_gram_protocol'].selected || choices['org.globus.package.globus_gass_transfer'].selected || choices['org.globus.package.globus_gridmap_callout'].selected || choices['org.globus.package.globus_gass_server_ez'].selected || choices['org.globus.package.globus_gridmap_verify_myproxy_callout'].selected || choices['org.globus.package.globus_gridmap_eppn_callout'].selected || choices['org.globus.package.globus_proxy_utils'].selected || choices['org.globus.package.globus_gram_client'].selected || choices['org.globus.package.globus_gatekeeper'].selected || choices['org.globus.package.myproxy'].selected || choices['org.globus.package.gsi_openssh'].selected || choices['org.globus.package.globus_gram_client_tools'].selected || choices['org.globus.package.globus_gram_job_manager'].selected"
+        start_selected="choices['org.globus.bundle.gsi'].selected">
+        <pkg-ref id="org.globus.globus_gss_assist"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_gssapi_error"
+        visible="false"
+        title="globus_gssapi_error"
+        description="globus_gssapi_error Libraries and Tools"
+        selected="choices['org.globus.package.globus_xio_gsi_driver'].selected || choices['org.globus.package.globus_io'].selected || choices['org.globus.package.globus_ftp_control'].selected || choices['org.globus.package.globus_gridftp_server_control'].selected || choices['org.globus.package.globus_gass_copy'].selected || choices['org.globus.package.globus_gridmap_callout_error'].selected"
+        start_selected="choices['org.globus.bundle.gsi'].selected">
+        <pkg-ref id="org.globus.globus_gssapi_error"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_xio_gsi_driver"
+        visible="false"
+        title="globus_xio_gsi_driver"
+        description="globus_xio_gsi_driver Libraries and Tools"
+        selected="choices['org.globus.package.globus_io'].selected || choices['org.globus.package.globus_gridftp_server_control'].selected || choices['org.globus.package.globus_gridftp_server'].selected || choices['org.globus.package.globus_scheduler_event_generator'].selected || choices['org.globus.package.globus_xio_gridftp_multicast'].selected || choices['org.globus.package.globus_xio_gridftp_driver'].selected"
+        start_selected="choices['org.globus.bundle.ccommonlibs'].selected">
+        <pkg-ref id="org.globus.globus_xio_gsi_driver"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_io"
+        visible="false"
+        title="globus_io"
+        description="globus_io Libraries and Tools"
+        selected="choices['org.globus.package.globus_ftp_control'].selected || choices['org.globus.package.globus_gram_protocol'].selected || choices['org.globus.package.globus_gass_transfer'].selected || choices['org.globus.package.globus_gass_copy'].selected || choices['org.globus.package.globus_gram_client'].selected"
+        start_selected="choices['org.globus.bundle.ccommonlibs'].selected">
+        <pkg-ref id="org.globus.globus_io"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_ftp_control"
+        visible="false"
+        title="globus_ftp_control"
+        description="globus_ftp_control Libraries and Tools"
+        selected="choices['org.globus.package.globus_gridftp_server'].selected || choices['org.globus.package.globus_ftp_client'].selected || choices['org.globus.package.globus_gass_copy'].selected"
+        start_selected="choices['org.globus.bundle.gridftp'].selected">
+        <pkg-ref id="org.globus.globus_ftp_control"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_usage"
+        visible="false"
+        title="globus_usage"
+        description="globus_usage Libraries and Tools"
+        selected="choices['org.globus.package.globus_gridftp_server'].selected || choices['org.globus.package.myproxy'].selected || choices['org.globus.package.gsi_openssh'].selected || choices['org.globus.package.globus_gram_job_manager'].selected"
+        start_selected="choices['org.globus.bundle.ccommonlibs'].selected">
+        <pkg-ref id="org.globus.globus_usage"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_xio_pipe_driver"
+        visible="false"
+        title="globus_xio_pipe_driver"
+        description="globus_xio_pipe_driver Libraries and Tools"
+        selected="choices['org.globus.package.globus_gridftp_server_control'].selected"
+        start_selected="choices['org.globus.bundle.ccommonlibs'].selected">
+        <pkg-ref id="org.globus.globus_xio_pipe_driver"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_gridftp_server_control"
+        visible="false"
+        title="globus_gridftp_server_control"
+        description="globus_gridftp_server_control Libraries and Tools"
+        selected="choices['org.globus.package.globus_gridftp_server'].selected"
+        start_selected="choices['org.globus.bundle.gridftp'].selected">
+        <pkg-ref id="org.globus.globus_gridftp_server_control"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_authz_callout_error"
+        visible="false"
+        title="globus_authz_callout_error"
+        description="globus_authz_callout_error Libraries and Tools"
+        selected="choices['org.globus.package.globus_authz'].selected"
+        start_selected="choices['org.globus.bundle.gsi'].selected">
+        <pkg-ref id="org.globus.globus_authz_callout_error"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_authz"
+        visible="false"
+        title="globus_authz"
+        description="globus_authz Libraries and Tools"
+        selected="choices['org.globus.package.globus_gridftp_server'].selected"
+        start_selected="choices['org.globus.bundle.gsi'].selected">
+        <pkg-ref id="org.globus.globus_authz"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_xio_rate_driver"
+        visible="false"
+        title="globus_xio_rate_driver"
+        description="globus_xio_rate_driver Libraries and Tools"
+        start_selected="choices['org.globus.bundle.ccommonlibs'].selected">
+        <pkg-ref id="org.globus.globus_xio_rate_driver"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_xio_popen_driver"
+        visible="false"
+        title="globus_xio_popen_driver"
+        description="globus_xio_popen_driver Libraries and Tools"
+        selected="choices['org.globus.package.globus_ftp_client'].selected || choices['org.globus.package.globus_gram_job_manager'].selected"
+        start_selected="choices['org.globus.bundle.ccommonlibs'].selected">
+        <pkg-ref id="org.globus.globus_xio_popen_driver"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_xio_udt_driver"
+        visible="false"
+        title="globus_xio_udt_driver"
+        description="globus_xio_udt_driver Libraries and Tools"
+        start_selected="choices['org.globus.bundle.udt'].selected">
+        <pkg-ref id="org.globus.globus_xio_udt_driver"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_net_manager"
+        visible="false"
+        title="globus_net_manager"
+        description="globus_net_manager Libraries and Tools"
+        start_selected="choices['org.globus.bundle.gridftp'].selected">
+        <pkg-ref id="org.globus.globus_net_manager"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_gridftp_server"
+        visible="false"
+        title="globus_gridftp_server"
+        description="globus_gridftp_server Libraries and Tools"
+        selected="choices['org.globus.package.gridftp_hdfs'].selected"
+        start_selected="choices['org.globus.bundle.gridftp'].selected">
+        <pkg-ref id="org.globus.globus_gridftp_server"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_gram_protocol"
+        visible="false"
+        title="globus_gram_protocol"
+        description="globus_gram_protocol Libraries and Tools"
+        selected="choices['org.globus.package.globus_scheduler_event_generator'].selected || choices['org.globus.package.globus_gram_job_manager_lsf'].selected || choices['org.globus.package.globus_gram_job_manager_sge'].selected || choices['org.globus.package.globus_gram_job_manager_fork'].selected || choices['org.globus.package.globus_gram_client'].selected || choices['org.globus.package.globus_gram_client_tools'].selected || choices['org.globus.package.globus_gram_job_manager'].selected"
+        start_selected="choices['org.globus.bundle.gram5'].selected">
+        <pkg-ref id="org.globus.globus_gram_protocol"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_gass_transfer"
+        visible="false"
+        title="globus_gass_transfer"
+        description="globus_gass_transfer Libraries and Tools"
+        selected="choices['org.globus.package.globus_gass_copy'].selected || choices['org.globus.package.globus_gass_server_ez'].selected || choices['org.globus.package.globus_gass_cache_program'].selected || choices['org.globus.package.globus_gram_client_tools'].selected || choices['org.globus.package.globus_gram_job_manager'].selected"
+        start_selected="choices['org.globus.bundle.ccommonlibs'].selected">
+        <pkg-ref id="org.globus.globus_gass_transfer"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_ftp_client"
+        visible="false"
+        title="globus_ftp_client"
+        description="globus_ftp_client Libraries and Tools"
+        selected="choices['org.globus.package.globus_gass_copy'].selected || choices['org.globus.package.globus_xio_gridftp_multicast'].selected || choices['org.globus.package.globus_xio_gridftp_driver'].selected"
+        start_selected="choices['org.globus.bundle.gridftp'].selected">
+        <pkg-ref id="org.globus.globus_ftp_client"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_gass_copy"
+        visible="false"
+        title="globus_gass_copy"
+        description="globus_gass_copy Libraries and Tools"
+        selected="choices['org.globus.package.globus_gass_cache_program'].selected"
+        start_selected="choices['org.globus.bundle.gridftp'].selected">
+        <pkg-ref id="org.globus.globus_gass_copy"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_gass_cache"
+        visible="false"
+        title="globus_gass_cache"
+        description="globus_gass_cache Libraries and Tools"
+        selected="choices['org.globus.package.globus_gass_cache_program'].selected || choices['org.globus.package.globus_gram_job_manager'].selected"
+        start_selected="choices['org.globus.bundle.gram5'].selected">
+        <pkg-ref id="org.globus.globus_gass_cache"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_rsl"
+        visible="false"
+        title="globus_rsl"
+        description="globus_rsl Libraries and Tools"
+        selected="choices['org.globus.package.globus_gram_client'].selected || choices['org.globus.package.globus_gram_client_tools'].selected || choices['org.globus.package.globus_gram_job_manager'].selected"
+        start_selected="choices['org.globus.bundle.gram5'].selected">
+        <pkg-ref id="org.globus.globus_rsl"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_xio_gridftp_multicast"
+        visible="false"
+        title="globus_xio_gridftp_multicast"
+        description="globus_xio_gridftp_multicast Libraries and Tools"
+        start_selected="choices['org.globus.bundle.gridftp'].selected">
+        <pkg-ref id="org.globus.globus_xio_gridftp_multicast"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_simple_ca"
+        visible="false"
+        title="globus_simple_ca"
+        description="globus_simple_ca Libraries and Tools"
+        start_selected="choices['org.globus.bundle.gsi'].selected">
+        <pkg-ref id="org.globus.globus_simple_ca"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_gridmap_callout_error"
+        visible="false"
+        title="globus_gridmap_callout_error"
+        description="globus_gridmap_callout_error Libraries and Tools"
+        selected="choices['org.globus.package.globus_gridmap_callout'].selected || choices['org.globus.package.globus_gridmap_verify_myproxy_callout'].selected || choices['org.globus.package.globus_gridmap_eppn_callout'].selected"
+        start_selected="choices['org.globus.bundle.gsi'].selected">
+        <pkg-ref id="org.globus.globus_gridmap_callout_error"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_gridmap_callout"
+        visible="false"
+        title="globus_gridmap_callout"
+        description="globus_gridmap_callout Libraries and Tools"
+        start_selected="choices['org.globus.bundle.gsi'].selected">
+        <pkg-ref id="org.globus.globus_gridmap_callout"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_gass_server_ez"
+        visible="false"
+        title="globus_gass_server_ez"
+        description="globus_gass_server_ez Libraries and Tools"
+        selected="choices['org.globus.package.globus_gass_cache_program'].selected || choices['org.globus.package.globus_gram_client_tools'].selected"
+        start_selected="choices['org.globus.bundle.gram5'].selected">
+        <pkg-ref id="org.globus.globus_gass_server_ez"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_xio_gridftp_driver"
+        visible="false"
+        title="globus_xio_gridftp_driver"
+        description="globus_xio_gridftp_driver Libraries and Tools"
+        start_selected="choices['org.globus.bundle.gridftp'].selected">
+        <pkg-ref id="org.globus.globus_xio_gridftp_driver"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_gridmap_verify_myproxy_callout"
+        visible="false"
+        title="globus_gridmap_verify_myproxy_callout"
+        description="globus_gridmap_verify_myproxy_callout Libraries and Tools"
+        start_selected="choices['org.globus.bundle.gsi'].selected">
+        <pkg-ref id="org.globus.globus_gridmap_verify_myproxy_callout"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_gridmap_eppn_callout"
+        visible="false"
+        title="globus_gridmap_eppn_callout"
+        description="globus_gridmap_eppn_callout Libraries and Tools"
+        start_selected="choices['org.globus.bundle.gsi'].selected">
+        <pkg-ref id="org.globus.globus_gridmap_eppn_callout"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_proxy_utils"
+        visible="false"
+        title="globus_proxy_utils"
+        description="globus_proxy_utils Libraries and Tools"
+        selected="choices['org.globus.package.myproxy'].selected"
+        start_selected="choices['org.globus.bundle.gsi'].selected">
+        <pkg-ref id="org.globus.globus_proxy_utils"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_gram_client"
+        visible="false"
+        title="globus_gram_client"
+        description="globus_gram_client Libraries and Tools"
+        selected="choices['org.globus.package.globus_gass_cache_program'].selected || choices['org.globus.package.globus_gram_client_tools'].selected"
+        start_selected="choices['org.globus.bundle.gram5'].selected">
+        <pkg-ref id="org.globus.globus_gram_client"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_xioperf"
+        visible="false"
+        title="globus_xioperf"
+        description="globus_xioperf Libraries and Tools"
+        start_selected="choices['org.globus.bundle.ccommonlibs'].selected">
+        <pkg-ref id="org.globus.globus_xioperf"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_gass_cache_program"
+        visible="false"
+        title="globus_gass_cache_program"
+        description="globus_gass_cache_program Libraries and Tools"
+        start_selected="choices['org.globus.bundle.gram5'].selected">
+        <pkg-ref id="org.globus.globus_gass_cache_program"/>
+    </choice>
+    <choice
+        id="org.globus.package.gsi_openssh"
+        visible="false"
+        title="gsi_openssh"
+        description="gsi_openssh Libraries and Tools"
+        start_selected="choices['org.globus.bundle.gsi-openssh'].selected">
+        <pkg-ref id="org.globus.gsi_openssh"/>
+    </choice>
+    <choice
+        id="org.globus.package.globus_gram_client_tools"
+        visible="false"
+        title="globus_gram_client_tools"
+        description="globus_gram_client_tools Libraries and Tools"
+        selected="choices['org.globus.package.globus_gram_job_manager'].selected"
+        start_selected="choices['org.globus.bundle.gram5'].selected">
+        <pkg-ref id="org.globus.globus_gram_client_tools"/>
+    </choice>
+
+</installer-gui-script>

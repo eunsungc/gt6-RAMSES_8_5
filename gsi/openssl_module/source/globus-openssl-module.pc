@@ -1,0 +1,11 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: globus-openssl-module
+Description: Globus Toolkit - Globus OpenSSL Module Wrapper
+Version: 4.6
+Requires.private: globus-common >= 14, globus-gsi-proxy-ssl >= 4, globus-gsi-openssl-error >= 2, openssl >= 0.9.8
+Libs: -L${libdir} -lglobus_openssl
+Cflags: -I${includedir} 

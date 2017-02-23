@@ -1,0 +1,13 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/xio/drivers/gsi
+includedir=${prefix}/include
+abs_top_builddir=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/xio/drivers/gsi
+abs_top_srcdir=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/xio/drivers/gsi
+dlopen=-dlopen /mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/xio/drivers/gsi/libglobus_xio_gsi_driver.la
+
+Name: globus-xio-gsi-driver
+Description: Globus Toolkit - Globus XIO GSI Driver
+Version: 3.8
+Requires.private: globus-xio >= 3, globus-gss-assist >= 8, globus-gssapi-error >= 4, globus-gssapi-gsi >= 9, globus-common >= 14
+Cflags: -I${abs_top_srcdir}

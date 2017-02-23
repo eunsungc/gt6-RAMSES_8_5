@@ -1,0 +1,12 @@
+prefix=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/xio/drivers/udt/source/glib2
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: GObject
+Description: GLib Type, Object, Parameter and Signal Library
+Requires: glib-2.0
+Version: 2.36.4
+Libs: -L${libdir} -lgobject-2.0
+Libs.private: -L/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/xio/drivers/udt/source/libffi/lib -lffi  
+Cflags:

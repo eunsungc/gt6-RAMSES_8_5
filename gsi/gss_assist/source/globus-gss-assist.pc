@@ -1,0 +1,11 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: globus-gss-assist
+Description: Globus Toolkit - GSSAPI Assist library
+Version: 10.15
+Libs: -L${libdir} -lglobus_gss_assist
+Requires.private: globus-common >= 14, globus-gsi-sysconfig >= 5, globus-gsi-cert-utils >= 8, globus-gssapi-gsi >= 9, globus-callout >= 2, globus-gsi-credential >= 6
+Cflags: -I${includedir}

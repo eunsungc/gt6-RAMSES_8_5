@@ -1,0 +1,13 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+abs_top_srcdir=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/gsi/authz/error
+abs_top_builddir=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/gsi/authz/error
+
+Name: globus-authz-callout-error
+Description: Globus Toolkit - Globus authz error library (used by globus authz callouts)
+Version: 3.5
+Requires.private: globus-common >= 14
+Libs: ${abs_top_builddir}/libglobus_gsi_authz_callout_error.la
+Cflags: -I${abs_top_srcdir}

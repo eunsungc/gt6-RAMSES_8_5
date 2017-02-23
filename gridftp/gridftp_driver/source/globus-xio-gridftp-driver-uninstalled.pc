@@ -1,0 +1,12 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+abs_top_srcdir=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/gridftp/gridftp_driver/source
+abs_top_builddir=/mnt/hgfs/SrcRepos/gt6-RAMSES_8_5/gridftp/gridftp_driver/source
+
+Name: globus-xio-gridftp-driver
+Description: Globus Toolkit - Globus XIO GridFTP Driver
+Version: 2.12
+Requires.private: globus-common >= 14, globus-xio >= 3, globus-ftp-client >= 7, globus-xio-gsi-driver >= 2
+Cflags: -I${abs_top_srcdir}

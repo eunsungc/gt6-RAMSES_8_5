@@ -1,0 +1,10 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: globus-xio-rate-driver
+Description: Globus Toolkit - Globus XIO Rate Limiting Driver
+Version: 1.7
+Requires.private: globus-common >= 0, globus-xio >= 0
+Cflags: -I${includedir}

@@ -1,0 +1,11 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: globus-gram-job-manager-callout-error
+Description: Globus Toolkit - Globus GRAM Jobmanager Callout Errors
+Version: 3.5
+Requires.private: globus-common >= 14
+Libs: -L${libdir} -lglobus_gram_job_manager_callout_error
+Cflags: -I${includedir}

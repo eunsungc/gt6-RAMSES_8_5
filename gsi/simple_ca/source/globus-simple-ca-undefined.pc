@@ -1,0 +1,9 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: globus-simple-ca
+Description: Globus Toolkit - Simple CA Utility
+Version: 4.22
+Requires.private: globus-common >= 14

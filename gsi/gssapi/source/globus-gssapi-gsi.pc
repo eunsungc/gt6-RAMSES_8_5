@@ -1,0 +1,11 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: globus-gssapi-gsi
+Description: Globus Toolkit - GSSAPI library
+Version: 11.21
+Requires.private: globus-common >= 14, globus-openssl-module >= 3, globus-gsi-openssl-error >= 2, globus-gsi-cert-utils >= 8, globus-gsi-credential >= 5, globus-gsi-callback >= 4, globus-gsi-proxy-core >= 6, globus-gsi-sysconfig >= 5, openssl >= 0.9.8
+Libs: -L${libdir} -lglobus_gssapi_gsi
+Cflags: -I${includedir}

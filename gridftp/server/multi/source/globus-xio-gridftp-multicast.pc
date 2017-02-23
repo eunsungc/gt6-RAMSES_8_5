@@ -1,0 +1,10 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: globus-xio-gridftp-multicast
+Description: Globus Toolkit - Globus XIO GridFTP Multicast Driver
+Version: 1.6
+Requires.private: globus-xio >= 0, globus-common >= 14, globus-ftp-client >= 2
+Cflags: -I${includedir}

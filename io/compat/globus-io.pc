@@ -1,0 +1,11 @@
+prefix=/home/esjung/gt6_inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: globus-io
+Description: Globus Toolkit - Uniform I/O interface to stream and datagram style communications
+Version: 11.4
+Requires.private: globus-common >= 14, globus-xio >= 3, globus-gss-assist >= 8, globus-gssapi-gsi >= 10, globus-xio-gsi-driver >= 2, globus-gssapi-error >= 4
+Libs: -L${libdir} -lglobus_io
+Cflags: -I${includedir}

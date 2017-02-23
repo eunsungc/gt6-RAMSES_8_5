@@ -223,6 +223,14 @@
         <pkg-ref id="org.globus.globus_xio_popen_driver"/>
     </choice>
     <choice
+        id="org.globus.package.globus_xio_udt_driver"
+        visible="false"
+        title="globus_xio_udt_driver"
+        description="globus_xio_udt_driver Libraries and Tools"
+        start_selected="choices['org.globus.bundle.udt'].selected">
+        <pkg-ref id="org.globus.globus_xio_udt_driver"/>
+    </choice>
+    <choice
         id="org.globus.package.globus_net_manager"
         visible="false"
         title="globus_net_manager"
