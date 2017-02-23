@@ -2,6 +2,7 @@
 version 1439213997
 
 # Install procedure
+0. yum install packages for gcc, sed, make, openssl-devel > 0.9.8, perl > 5.10, pkg-config
 1. install netlogger library; cd calipers and follow appropriate installation procedures.
 2. `git clone -b netlogger https://github.com/eunsungc/gt6-RAMSES_8_5`
 3. `cd gt6-RAMSES_8_5`
