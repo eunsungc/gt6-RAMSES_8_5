@@ -2,7 +2,7 @@
 version 1439213997
 
 # Install procedure
-1. yum install packages for gcc, g++, sed, make, openssl-devel 0.9.8 or higher, perl 5.10 or higher, pkg-config, uuid, uuid-devel, libuuid, libuuid-devel
+1. yum install packages for gcc, g++, sed, make, xz, openssl-devel 0.9.8 or higher, perl 5.10 or higher, pkg-config, uuid, uuid-devel, libuuid, libuuid-devel
 1. install netlogger library; cd calipers and follow appropriate installation procedures.
 1. [obsolete] install xdd; ./configure --disable-xfs --disable-xddmcp
    - [CAVEAT] In some cases you have to remove the directory of calipers/xdd for gridftp compile; \rm -rf calipers, xdd
