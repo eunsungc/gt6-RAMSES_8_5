@@ -10217,7 +10217,8 @@ response_exit:
             //    ramses_log.protocol = globus_common_create_string("%s", "TCP");
             ramses_log.writing = strcmp(type, "STOR") == 0 ? 1 : 0;
             ramses_log.transferID = op->session_handle->taskid;
-            ramses_log.start_timestamp = globus_common_create_string("%ld.%01ld", op->start_timeval.tv_sec, op->start_timeval.tv_usec / 100000); // op->start_timeval
+            // higher precision. 2017. 3. 2.
+            ramses_log.start_timestamp = globus_common_create_string("%ld.%06ld", op->start_timeval.tv_sec, op->start_timeval.tv_usec / 100000); // op->start_timeval
             ramses_log.user = op->session_handle->username;
             ramses_log.file = info->pathname;
             ramses_log.tcp_bufsize  = op->data_handle->info.tcp_bufsize;

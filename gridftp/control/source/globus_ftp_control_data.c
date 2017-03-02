@@ -3877,7 +3877,7 @@ globus_ftp_control_data_get_retransmit_count(
         struct timeval now;
                                                                                 
         gettimeofday(&now, NULL);
-        sprintf(buf, "%ld.%01ld", now.tv_sec, now.tv_usec / 100000);
+        sprintf(buf, "%ld.%06ld", now.tv_sec, now.tv_usec / 100000); // higher precision. 2017. 3. 2.
 
         root_json = json_object();
         streams_json = json_array();
