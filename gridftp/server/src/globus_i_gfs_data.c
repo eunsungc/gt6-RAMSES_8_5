@@ -8458,8 +8458,9 @@ printf("%s(%s)\n", __func__, __FILE__);
     {
         /* globus_assert(data_handle->outstanding_op == NULL); */
         data_handle->outstanding_op = op;
-    globus_assert(data_handle->state == GLOBUS_L_GFS_DATA_HANDLE_VALID);
-/*        || data_handle->state == GLOBUS_L_GFS_DATA_HANDLE_TE_VALID);*/
+    // esjung; uncomment TE_VALID
+    globus_assert(data_handle->state == GLOBUS_L_GFS_DATA_HANDLE_VALID
+        || data_handle->state == GLOBUS_L_GFS_DATA_HANDLE_TE_VALID);
     data_handle->state = GLOBUS_L_GFS_DATA_HANDLE_INUSE;
     }
 
@@ -9352,10 +9353,10 @@ printf("%s(%s)\n", __func__, __FILE__);
 
     /* events and disconnects cannot happen while i am in this
         function */
-    globus_assert(data_handle->state == GLOBUS_L_GFS_DATA_HANDLE_VALID);
-/*
+    // esjung; uncomment the TE_VALID option.
+    globus_assert(data_handle->state == GLOBUS_L_GFS_DATA_HANDLE_VALID
         || data_handle->state == GLOBUS_L_GFS_DATA_HANDLE_TE_VALID);
-*/
+
     data_handle->state = GLOBUS_L_GFS_DATA_HANDLE_INUSE;
 
     if(!data_handle->is_mine)
