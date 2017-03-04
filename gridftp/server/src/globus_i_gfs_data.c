@@ -11987,6 +11987,7 @@ printf("%s(%s)\n", __func__, __FILE__);
     session_handle = (globus_l_gfs_data_session_t *) session_arg;
     if(session_handle != NULL)
     {
+        globus_mutex_lock(&session_handle->mutex);
         // netlogger -- start
 #ifdef _RAMSES_DEBUG_
         printf("nlcali_free -- net_spent_time: %x, storage_spent_time: %x\n", session_handle->net_spent_time, session_handle->storage_spent_time);
@@ -12001,7 +12002,6 @@ printf("%s(%s)\n", __func__, __FILE__);
         }
         // netlogger -- end
         
-        globus_mutex_lock(&session_handle->mutex);
         {
             session_handle->ref--;
             /* can't jsut free bcause we may be waiting on a force close */
